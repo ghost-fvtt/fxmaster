@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "author": "U~man",
   "scripts": [
-    "BubblesWeatherEffect.js",
+    "bubbles/BubblesWeatherEffect.js",
+    "clouds/CloudsWeatherEffect.js",
+    "embers/EmbersWeatherEffect.js",
     "fxmaster.js"
   ],
   "esmodules": [

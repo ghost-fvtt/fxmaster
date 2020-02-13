@@ -41,19 +41,19 @@ class BubblesWeatherEffect extends SpecialEffect {
             framerate: "matchLife",
             textures: [
                 {
-                    texture: "/modules/fxmaster/particles/Bubbles99.png",
+                    texture: "/modules/fxmaster/bubbles/assets/Bubbles99.png",
                     count: 200
                 },
                 {
-                    texture: "/modules/fxmaster/particles/Pop1.png",
+                    texture: "/modules/fxmaster/bubbles/assets/Pop1.png",
                     count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/particles/Pop2.png",
+                    texture: "/modules/fxmaster/bubbles/assets/Pop2.png",
                     count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/particles/Pop3.png",
+                    texture: "/modules/fxmaster/bubbles/assets/Pop3.png",
                     count: 1
                 }
             ]
