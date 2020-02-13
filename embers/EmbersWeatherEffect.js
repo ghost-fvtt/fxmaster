@@ -46,9 +46,9 @@ EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},
-            {"value": 0.9, "time":1},
-            {"value": 0.9, "time":4},
-            {"value": 0, "time":5}
+            {"value": 0.9, "time":0.3},
+            {"value": 0.9, "time":0.95},
+            {"value": 0, "time":1}
         ],
     },
     "scale": {

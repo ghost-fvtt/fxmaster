@@ -30,7 +30,7 @@ class CloudsWeatherEffect extends SpecialEffect {
                 x: d.paddingX,
                 y: d.paddingY - 1024,
                 w: d.sceneWidth,
-                h: 0
+                h: d.sceneHeight
             },
         }, { inplace: false });
         // Animation
@@ -47,8 +47,13 @@ class CloudsWeatherEffect extends SpecialEffect {
 
 CloudsWeatherEffect.CLOUDS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
-        "start": 0.6,
-        "end": 0.4
+        "list": [
+            {"value": 0, "time":0},
+            {"value": 0.6, "time":0.1},
+            {"value": 0.6, "time":0.9},
+            {"value": 0, "time":1}
+        ],
+        "isStepped": false
     },
     "scale": {
         "start": 0.8,
