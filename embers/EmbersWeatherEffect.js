@@ -1,27 +1,24 @@
+
+
 class EmbersWeatherEffect extends SpecialEffect {
     static get label() {
         return "Embers";
     }
 
-    /* -------------------------------------------- */
-
     static get effectOptions() {
         const options = super.effectOptions;
-        options.density.min = 0.05;
-        options.density.value = 0.25;
+        options.density.min = 0.15;
+        options.density.value = 0.7;
         options.density.max = 1;
         options.density.step = 0.05;
         return options;
     }
 
-    /* -------------------------------------------- */
-
     getParticleEmitters() {
         return [this._getEmbersEmitter(this.parent)];
     }
 
-    /* -------------------------------------------- */
-
+    // This is where the magic happens
     _getEmbersEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
@@ -35,9 +32,10 @@ class EmbersWeatherEffect extends SpecialEffect {
             maxParticles: p,
             frequency: this.constructor.EMBERS_CONFIG.lifetime.min / p
         }, { inplace: false });
-        // Animation
+
+        // Assets are selected randomly from the list for each particle
         const art = [
-            "/modules/fxmaster/embers/assets/particle.png"
+            "/modules/fxmaster/embers/assets/ember.png"
         ]
         var emitter = new PIXI.particles.Emitter(parent, art, config);
         return emitter;
@@ -46,12 +44,16 @@ class EmbersWeatherEffect extends SpecialEffect {
 
 EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
-        "start": 0.9,
-        "end": 0
+        "list": [
+            {"value": 0, "time":0},
+            {"value": 0.9, "time":1},
+            {"value": 0.9, "time":4},
+            {"value": 0, "time":5}
+        ],
     },
     "scale": {
-        "start": 0.3,
-        "end": 0.05,
+        "start": 0.2,
+        "end": 0.01,
         "minimumScaleMultiplier": 0.9
     },
     "speed": {
@@ -60,8 +62,8 @@ EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
         "minimumSpeedMultiplier": 0.6
     },
     "color": {
-        "start": "ff622c",
-        "end": "fff191"
+        "start": "fff191",
+        "end": "ff622c"
     },
 	"acceleration": {
 		"x": 1,
@@ -80,7 +82,6 @@ EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
         "min": 5,
         "max": 8
     },
-    "maxParticles": 200,
-    "blendMode": "normal",
-    "emitterLifetime": 0
+    "blendMode": "screen",
+    "emitterLifetime": -1
 }, { inplace: false });
