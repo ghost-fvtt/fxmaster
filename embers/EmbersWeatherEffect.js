@@ -38,6 +38,7 @@ class EmbersWeatherEffect extends SpecialEffect {
             "/modules/fxmaster/embers/assets/ember.png"
         ]
         var emitter = new PIXI.particles.Emitter(parent, art, config);
+        emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);
         return emitter;
     }
 };
@@ -52,9 +53,9 @@ EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
         ],
     },
     "scale": {
-        "start": 0.2,
+        "start": 0.15,
         "end": 0.01,
-        "minimumScaleMultiplier": 0.9
+        "minimumScaleMultiplier": 0.85
     },
     "speed": {
         "start": 40,
@@ -62,8 +63,11 @@ EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
         "minimumSpeedMultiplier": 0.6
     },
     "color": {
-        "start": "fff191",
-        "end": "ff622c"
+        "list": [
+            {"value":"f77300", "time":0},
+            {"value":"f72100", "time":1}
+        ],
+        "isStepped": false
     },
 	"acceleration": {
 		"x": 1,

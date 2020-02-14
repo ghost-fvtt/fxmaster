@@ -42,7 +42,7 @@ class BubblesWeatherEffect extends SpecialEffect {
             textures: [
                 {
                     texture: "/modules/fxmaster/bubbles/assets/Bubbles99.png",
-                    count: 200
+                    count: 400
                 },
                 {
                     texture: "/modules/fxmaster/bubbles/assets/Pop1.png",
@@ -66,8 +66,12 @@ class BubblesWeatherEffect extends SpecialEffect {
 
 BubblesWeatherEffect.BUBBLES_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
-        "start": 0.9,
-        "end": 0.5
+        "list": [
+            {"value": 0, "time":0},
+            {"value": 0.9, "time":0.1},
+            {"value": 0.9, "time":0.90},
+            {"value": 1, "time":1}
+        ],
     },
     "scale": {
         "start": 0.25,
