@@ -36,7 +36,7 @@ class BubblesWeatherEffect extends SpecialEffect {
             frequency: this.constructor.BUBBLES_CONFIG.lifetime.min / p
         }, { inplace: false });
         const art = [
-            "/modules/fxmaster/bubbles/assets/Bubbles99.png"
+            "/modules/fxmaster/bubbles/assets/bubbles.png"
         ];
         var emitter = new PIXI.particles.Emitter(parent, art, config);
         return emitter;
