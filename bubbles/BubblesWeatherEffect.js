@@ -7,10 +7,10 @@ class BubblesWeatherEffect extends SpecialEffect {
 
     static get effectOptions() {
         const options = super.effectOptions;
-        options.density.min = 0.05;
-        options.density.value = 0.25;
-        options.density.max = 1;
-        options.density.step = 0.05;
+        options.density.min = 0.03;
+        options.density.value = 0.15;
+        options.density.max = 0.4;
+        options.density.step = 0.01;
         return options;
     }
 
@@ -35,31 +35,10 @@ class BubblesWeatherEffect extends SpecialEffect {
             maxParticles: p,
             frequency: this.constructor.BUBBLES_CONFIG.lifetime.min / p
         }, { inplace: false });
-        // Animation
-        const anim_sheet =
-        {
-            framerate: "matchLife",
-            textures: [
-                {
-                    texture: "/modules/fxmaster/bubbles/assets/Bubbles99.png",
-                    count: 400
-                },
-                {
-                    texture: "/modules/fxmaster/bubbles/assets/Pop1.png",
-                    count: 1
-                },
-                {
-                    texture: "/modules/fxmaster/bubbles/assets/Pop2.png",
-                    count: 1
-                },
-                {
-                    texture: "/modules/fxmaster/bubbles/assets/Pop3.png",
-                    count: 1
-                }
-            ]
-        };
-        var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
-        emitter.particleConstructor = PIXI.particles.AnimatedParticle;
+        const art = [
+            "/modules/fxmaster/bubbles/assets/Bubbles99.png"
+        ];
+        var emitter = new PIXI.particles.Emitter(parent, art, config);
         return emitter;
     }
 };
@@ -67,10 +46,10 @@ class BubblesWeatherEffect extends SpecialEffect {
 BubblesWeatherEffect.BUBBLES_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
-            {"value": 0, "time":0},
-            {"value": 0.9, "time":0.1},
-            {"value": 0.9, "time":0.90},
-            {"value": 1, "time":1}
+            { "value": 0, "time": 0 },
+            { "value": 0.85, "time": 0.05 },
+            { "value": 0.85, "time": 0.98 },
+            { "value": 0, "time": 1 }
         ],
     },
     "scale": {
@@ -81,7 +60,7 @@ BubblesWeatherEffect.BUBBLES_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, 
     "speed": {
         "start": 20,
         "end": 60,
-		"minimumSpeedMultiplier": 0.6
+        "minimumSpeedMultiplier": 0.6
     },
     "color": {
         "start": "ffffff",
@@ -97,10 +76,9 @@ BubblesWeatherEffect.BUBBLES_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, 
         "max": 200
     },
     "lifetime": {
-        "min": 10,
+        "min": 8,
         "max": 10
     },
-    "maxParticles": 500,
     "blendMode": "normal",
     "emitterLifetime": 0
-}, {inplace: false});
+}, { inplace: false });
