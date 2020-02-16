@@ -8,9 +8,9 @@ class CloudsWeatherEffect extends SpecialEffect {
     static get effectOptions() {
         const options = super.effectOptions;
         options.density.min = 0.2;
-        options.density.value = 0.9;
-        options.density.max = 1;
-        options.density.step = 0.1;
+        options.density.value = 0.3;
+        options.density.max = 0.6;
+        options.density.step = 0.05;
         return options;
     }
 
@@ -49,8 +49,8 @@ CloudsWeatherEffect.CLOUDS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},
-            {"value": 0.6, "time":0.1},
-            {"value": 0.6, "time":0.9},
+            {"value": 0.5, "time":0.05},
+            {"value": 0.5, "time":0.95},
             {"value": 0, "time":1}
         ],
         "isStepped": false
