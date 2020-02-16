@@ -8,9 +8,9 @@ class CloudsWeatherEffect extends SpecialEffect {
     static get effectOptions() {
         const options = super.effectOptions;
         options.density.min = 0.2;
-        options.density.value = 0.9;
-        options.density.max = 1;
-        options.density.step = 0.1;
+        options.density.value = 0.3;
+        options.density.max = 0.6;
+        options.density.step = 0.05;
         return options;
     }
 
@@ -25,7 +25,7 @@ class CloudsWeatherEffect extends SpecialEffect {
     _getCloudEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-        const config = mergeObject(this.constructor.CLOUDS_CONFIG, {
+        const config = mergeObject(this.constructor.CONFIG, {
             spawnRect: {
                 x: d.paddingX,
                 y: d.paddingY - 1024,
@@ -45,12 +45,12 @@ class CloudsWeatherEffect extends SpecialEffect {
     }
 };
 
-CloudsWeatherEffect.CLOUDS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+CloudsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},
-            {"value": 0.6, "time":0.1},
-            {"value": 0.6, "time":0.9},
+            {"value": 0.5, "time":0.05},
+            {"value": 0.5, "time":0.95},
             {"value": 0, "time":1}
         ],
         "isStepped": false

@@ -1,0 +1,28 @@
+Hooks.on('getSceneControlButtons', (controls) => {
+    if (game.user.isGM) {
+        controls.push({
+            name: "effects",
+            title: "CONTROLS.Effects",
+            icon: "fas fa-magic",
+            layer: 'FXMasterLayer',
+            tools: [
+                {
+                    name: "weather",
+                    title: "CONTROLS.Weather",
+                    icon: "fas fa-cloud-sun",
+                    onClick: () => {
+                        new EffectsConfig().render(true);
+                    }
+                },
+                // {
+                //     name: "filters",
+                //     title: "CONTROLS.Filters",
+                //     icon: "fas fa-palette",
+                //     onClick: () => {
+                //         new EffectsConfig().render(true);
+                //     }
+                // },
+            ]
+        });
+    }
+});

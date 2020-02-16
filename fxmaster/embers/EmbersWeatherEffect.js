@@ -22,7 +22,7 @@ class EmbersWeatherEffect extends SpecialEffect {
     _getEmbersEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-        const config = mergeObject(this.constructor.EMBERS_CONFIG, {
+        const config = mergeObject(this.constructor.CONFIG, {
             spawnRect: {
                 x: d.paddingX,
                 y: d.paddingY,
@@ -30,7 +30,7 @@ class EmbersWeatherEffect extends SpecialEffect {
                 h: d.sceneHeight
             },
             maxParticles: p,
-            frequency: this.constructor.EMBERS_CONFIG.lifetime.min / p
+            frequency: this.constructor.CONFIG.lifetime.min / p
         }, { inplace: false });
 
         // Assets are selected randomly from the list for each particle
@@ -43,7 +43,7 @@ class EmbersWeatherEffect extends SpecialEffect {
     }
 };
 
-EmbersWeatherEffect.EMBERS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+EmbersWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},

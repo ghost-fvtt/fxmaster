@@ -1,0 +1,18 @@
+<form>
+    <div>
+        {{#each effects}}
+        <div class="flexrow">
+            <h4>{{this.label}}</h4>
+            <div class="flexrow">
+                <input type='range' name='{{this.label}}_range' value="{{Config 'density' this.label}}"/>
+                <input type='checkbox' name='{{this.label}}' {{checked (isEffectActive this.label)}} />
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <footer class="form-footer">
+        <button type="submit" name="submit">
+            <i class="fas fa-save"></i> {{localize "SaveChanges"}}
+        </button>
+    </footer>
+</form>
