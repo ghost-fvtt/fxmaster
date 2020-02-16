@@ -1,4 +1,5 @@
 {
-    "EFFECTSMANAGE.Title": "Gestion des Effets Spéciaux",
-    "CONTROLS.Effects": "Outils d'Effet"
+    "WEATHERMANAGE.Title": "Gestion des Effets Météo",
+    "CONTROLS.Effects": "Outils d'Effet",
+    "CONTROLS.Weather": "Outils de Météo"
 }

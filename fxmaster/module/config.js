@@ -4,7 +4,6 @@ Handlebars.registerHelper('eq', function (a, b) {
 
 Handlebars.registerHelper('isEffectActive', function (name) {
     let flags = canvas.scene.data.flags.fxmaster;
-    let is_found = false;
     if (flags && flags.effects) {
         let objKeys = Object.keys(flags.effects);
         for (let i = 0; i < objKeys.length; ++i) {
@@ -17,15 +16,29 @@ Handlebars.registerHelper('isEffectActive', function (name) {
     return false;
 });
 
+Handlebars.registerHelper('Config', function (key, name) {
+    let flags = canvas.scene.data.flags.fxmaster;
+    if (flags && flags.effects) {
+        let objKeys = Object.keys(flags.effects);
+        for (let i = 0; i < objKeys.length; ++i) {
+            let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
+            if (weather.label === name) {
+                return flags.effects[objKeys[i]].config[key];
+            }
+        }
+    }
+    return {};
+});
+
 class EffectsConfig extends FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
-        options.title = game.i18n.localize("EFFECTSMANAGE.Title");
+        options.title = game.i18n.localize("WEATHERMANAGE.Title");
         options.id = "effects-config";
         options.template = "modules/fxmaster/templates/effects-config.html";
         options.popOut = true;
         options.editable = game.user.isGM;
-        options.width = 400;
+        options.width = 300;
         return options;
     }
 
@@ -57,7 +70,7 @@ class EffectsConfig extends FormApplication {
         Object.keys(CONFIG.weatherEffects).forEach(key => {
             let label = CONFIG.weatherEffects[key].label;
             if (formData[label]) {
-                effects[randomID()] = { type: key, config: {} };
+                effects[randomID()] = { type: key, config: { density: (formData[label + "_range"]) } };
             }
         })
         canvas.scene.update({ "flags.fxmaster.effects": null }).then(_ => {

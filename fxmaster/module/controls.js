@@ -5,14 +5,24 @@ Hooks.on('getSceneControlButtons', (controls) => {
             title: "CONTROLS.Effects",
             icon: "fas fa-magic",
             layer: 'FXMasterLayer',
-            tools: [{
-                name: "configure",
-                title: "CONTROLS.Config",
-                icon: "fas fa-cog",
-                onClick: () => {
-                    new EffectsConfig().render(true);
-                }
-            }]
+            tools: [
+                {
+                    name: "weather",
+                    title: "CONTROLS.Weather",
+                    icon: "fas fa-cloud-sun",
+                    onClick: () => {
+                        new EffectsConfig().render(true);
+                    }
+                },
+                // {
+                //     name: "filters",
+                //     title: "CONTROLS.Filters",
+                //     icon: "fas fa-palette",
+                //     onClick: () => {
+                //         new EffectsConfig().render(true);
+                //     }
+                // },
+            ]
         });
     }
 });

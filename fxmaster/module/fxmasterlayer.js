@@ -67,9 +67,16 @@ class FXMasterLayer extends PlaceablesLayer {
           type: flags.effects[key].type,
           fx: new CONFIG.weatherEffects[flags.effects[key].type](this.weather)
         };
+        // Adjust density
+        let factor = 2 * flags.effects[key].config.density / 100;
+        this.effects[key].fx.emitters.forEach(el => {
+          el.frequency *= factor;
+          el.maxParticles *= factor;
+        });
         this.effects[key].fx.play();
       });
     }
+
     // Clean old effects
     if (this.effects) {
       Object.keys(this.effects).forEach(key => {

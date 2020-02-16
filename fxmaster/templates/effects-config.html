@@ -1,26 +1,18 @@
 <form>
     <div>
         {{#each effects}}
-        {{#unless (eq effects.label "Custom")}}
-        <div class="flex flexrow">
-            <div class="flex3 flexcol">
-                <strong>{{this.label}}</strong>
-            </div>
-            <div class="flexcol">
-                <i>{{localize "Activate"}}</i>
-            </div>
-            <div class="flexcol">
-                <label class="checkbox">
-                    <input type='checkbox' name='{{this.label}}' {{checked (isEffectActive this.label)}} />
+        <div class="flexrow">
+            <h4>{{this.label}}</h4>
+            <div class="flexrow">
+                <input type='range' name='{{this.label}}_range' value="{{Config 'density' this.label}}"/>
+                <input type='checkbox' name='{{this.label}}' {{checked (isEffectActive this.label)}} />
             </div>
         </div>
-        {{/unless}}
         {{/each}}
-        <footer class="form-footer">
-            <button type="submit" name="submit">
-                <i class="fas fa-save"></i> {{localize "SaveChanges"}}
-            </button>
-        </footer>
-
     </div>
+    <footer class="form-footer">
+        <button type="submit" name="submit">
+            <i class="fas fa-save"></i> {{localize "SaveChanges"}}
+        </button>
+    </footer>
 </form>

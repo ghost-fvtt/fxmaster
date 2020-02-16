@@ -25,7 +25,7 @@ class CloudsWeatherEffect extends SpecialEffect {
     _getCloudEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-        const config = mergeObject(this.constructor.CLOUDS_CONFIG, {
+        const config = mergeObject(this.constructor.CONFIG, {
             spawnRect: {
                 x: d.paddingX,
                 y: d.paddingY - 1024,
@@ -45,7 +45,7 @@ class CloudsWeatherEffect extends SpecialEffect {
     }
 };
 
-CloudsWeatherEffect.CLOUDS_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+CloudsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},
