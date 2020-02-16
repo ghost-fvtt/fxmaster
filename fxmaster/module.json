@@ -2,7 +2,7 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather effects</p>",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "U~man",
   "scripts": [
     "bubbles/BubblesWeatherEffect.js",
@@ -13,7 +13,8 @@
     "module/fxmasterlayer.js",
     "module/controls.js",
     "module/config.js",
-    "module/fxmaster.js"
+    "module/fxmaster.js",
+    "filters/pixi-filters.js"
   ],
   "esmodules": [],
   "styles": [],
@@ -30,7 +31,6 @@
       "path": "lang/fr.json"
     }
   ],
-	"socket": true,
   "url": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster",
   "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/fxmaster/module.json",
   "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/jobs/artifacts/master/raw/fxmaster.zip?job=build",
