@@ -2,6 +2,21 @@ Handlebars.registerHelper('eq', function (a, b) {
     return a == b;
 });
 
+Handlebars.registerHelper('isEffectActive', function (name) {
+    let flags = canvas.scene.data.flags.fxmaster;
+    let is_found = false;
+    if (flags && flags.effects) {
+        let objKeys = Object.keys(flags.effects);
+        for (let i = 0; i < objKeys.length; ++i) {
+            let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
+            if (weather.label === name) {
+                return true;
+            }
+        }
+    }
+    return false;
+});
+
 class EffectsConfig extends FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
@@ -23,7 +38,6 @@ class EffectsConfig extends FormApplication {
     getData() {
         // Return data to the template
         return {
-            user: game.user,
             effects: CONFIG.weatherEffects
         }
     }
@@ -41,7 +55,8 @@ class EffectsConfig extends FormApplication {
     _updateObject(_, formData) {
         let effects = {};
         Object.keys(CONFIG.weatherEffects).forEach(key => {
-            if (formData[CONFIG.weatherEffects[key].label]) {
+            let label = CONFIG.weatherEffects[key].label;
+            if (formData[label]) {
                 effects[randomID()] = { type: key, config: {} };
             }
         })

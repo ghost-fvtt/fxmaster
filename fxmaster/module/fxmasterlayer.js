@@ -36,7 +36,16 @@ class FXMasterLayer extends PlaceablesLayer {
   /* -------------------------------------------- */
 
   drawWeather() {
-    if (!this.weather) this.weather = this.addChild(new PIXI.Container());
+    if (!this.weather) {
+      this.weather = this.addChild(new PIXI.Container());
+      const graphics = new PIXI.Graphics();
+      const d = canvas.dimensions;
+      graphics.beginFill(0xFFFFFF);
+      graphics.drawRect(d.paddingX, d.paddingY, d.sceneWidth, d.sceneHeight);
+      graphics.endFill();
+      this.addChild(graphics);
+      this.weather.mask = graphics;
+    }
     const flags = canvas.scene.data.flags.fxmaster;
     let ids = [];
     if (!this.effects) this.effects = {};

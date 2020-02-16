@@ -11,7 +11,7 @@
             </div>
             <div class="flexcol">
                 <label class="checkbox">
-                    <input type='checkbox' name='{{this.label}}' {{checked true}} />
+                    <input type='checkbox' name='{{this.label}}' {{checked (isEffectActive this.label)}} />
             </div>
         </div>
         {{/unless}}
