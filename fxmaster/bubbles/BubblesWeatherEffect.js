@@ -25,7 +25,7 @@ class BubblesWeatherEffect extends SpecialEffect {
     _getBubbleEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-        const config = mergeObject(this.constructor.BUBBLES_CONFIG, {
+        const config = mergeObject(this.constructor.CONFIG, {
             spawnRect: {
                 x: d.paddingX,
                 y: d.paddingY,
@@ -33,7 +33,7 @@ class BubblesWeatherEffect extends SpecialEffect {
                 h: d.sceneHeight
             },
             maxParticles: p,
-            frequency: this.constructor.BUBBLES_CONFIG.lifetime.min / p
+            frequency: this.constructor.CONFIG.lifetime.min / p
         }, { inplace: false });
         const art = [
             "/modules/fxmaster/bubbles/assets/bubbles.png"
@@ -43,7 +43,7 @@ class BubblesWeatherEffect extends SpecialEffect {
     }
 };
 
-BubblesWeatherEffect.BUBBLES_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+BubblesWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             { "value": 0, "time": 0 },
