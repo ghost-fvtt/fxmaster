@@ -65,7 +65,6 @@ class FXMasterLayer extends PlaceablesLayer {
         }
       });
     }
-    console.log(this.effects);
   }
 
   /* -------------------------------------------- */
