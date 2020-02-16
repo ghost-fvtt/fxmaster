@@ -9,3 +9,7 @@ Hooks.once('canvasInit', (canvas) => {
   canvas.fxmaster = canvas.stage.addChild(new FXMasterLayer(canvas));
   canvas.fxmaster.draw();
 });
+
+Hooks.on("updateScene", () => {
+  canvas.fxmaster.draw();
+});

@@ -29,7 +29,6 @@ class FXMasterLayer extends PlaceablesLayer {
   /* -------------------------------------------- */
 
   async draw() {
-    await super.draw()
     // Draw the weather layer
     this.drawWeather();
   }
@@ -38,20 +37,35 @@ class FXMasterLayer extends PlaceablesLayer {
 
   drawWeather() {
     if (!this.weather) this.weather = this.addChild(new PIXI.Container());
-    if (!this.weatherEffects) this.weatherEffects = [];
-    this.weatherEffects.forEach((effect, key) => {
-      effect.fx.stop();
-      this.weatherEffects.splice(key);
-    });
-    if (this.effects) {
-      this.effects.forEach(effect => {
-        console.log(effect);
-        const weatherEffect = new effect.fx(this.weather);
-        console.log(weatherEffect);
-        weatherEffect.play();
-        this.weatherEffects.push({scene: effect.scene, fx: weatherEffect});
+    const flags = canvas.scene.data.flags.fxmaster;
+    let ids = [];
+    if (!this.effects) this.effects = {};
+    if (flags && flags.effects) {
+      Object.keys(flags.effects).forEach(key => {
+        // Remember Ids
+        ids.push(key);
+
+        // Effect already exists  
+        if (this.effects[key]) {
+          return;
+        }
+        this.effects[key] = {
+          type: flags.effects[key].type,
+          fx: new CONFIG.weatherEffects[flags.effects[key].type](this.weather)
+        };
+        this.effects[key].fx.play();
       });
     }
+    // Clean old effects
+    if (this.effects) {
+      Object.keys(this.effects).forEach(key => {
+        if (!ids.includes(key)) {
+          this.effects[key].fx.stop();
+          delete this.effects[key];
+        }
+      });
+    }
+    console.log(this.effects);
   }
 
   /* -------------------------------------------- */

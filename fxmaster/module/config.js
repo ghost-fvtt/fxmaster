@@ -39,13 +39,15 @@ class EffectsConfig extends FormApplication {
      * @private
      */
     _updateObject(_, formData) {
-        if (!canvas.fxmaster.effects) canvas.fxmaster.effects = [];
+        let effects = {};
         Object.keys(CONFIG.weatherEffects).forEach(key => {
             if (formData[CONFIG.weatherEffects[key].label]) {
-                canvas.fxmaster.effects.push({scene: canvas.scene, fx: CONFIG.weatherEffects[key]});
+                effects[randomID()] = { type: key, config: {} };
             }
         })
-        canvas.fxmaster.draw();
+        canvas.scene.update({ "flags.fxmaster.effects": null }).then(_ => {
+            canvas.scene.update({ "flags.fxmaster.effects": effects });
+        });
     }
 }
 
