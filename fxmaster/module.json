@@ -9,7 +9,7 @@
     "clouds/CloudsWeatherEffect.js",
     "embers/EmbersWeatherEffect.js",
     "crows/CrowsWeatherEffect.js",
-    "custom/CustomWeatherEffect.js",
+    "fog/FogWeatherEffect.js",
     "module/fxmasterlayer.js",
     "module/controls.js",
     "module/config.js",
