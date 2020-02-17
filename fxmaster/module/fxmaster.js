@@ -4,6 +4,7 @@ Hooks.once("init", function() {
   CONFIG.weatherEffects.embers = EmbersWeatherEffect;
   CONFIG.weatherEffects.crows = CrowsWeatherEffect;
   CONFIG.weatherEffects.fog = FogWeatherEffect;
+  CONFIG.weatherEffects.thunder = ThunderWeatherEffect;
 });
 
 Hooks.once('canvasInit', (canvas) => {

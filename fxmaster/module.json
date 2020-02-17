@@ -6,6 +6,7 @@
   "author": "U~man",
   "scripts": [
     "bubbles/BubblesWeatherEffect.js",
+    "thunder/ThunderWeatherEffect.js",
     "clouds/CloudsWeatherEffect.js",
     "embers/EmbersWeatherEffect.js",
     "crows/CrowsWeatherEffect.js",

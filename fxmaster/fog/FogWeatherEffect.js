@@ -17,12 +17,12 @@ class FogWeatherEffect extends SpecialEffect {
     /* -------------------------------------------- */
 
     getParticleEmitters() {
-        return [this._getCloudEmitter(this.parent)];
+        return [this._getFogEmitter(this.parent)];
     }
 
     /* -------------------------------------------- */
 
-    _getCloudEmitter(parent) {
+    _getFogEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
         const config = mergeObject(this.constructor.CONFIG, {
