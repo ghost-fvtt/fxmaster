@@ -100,12 +100,22 @@ class FXMasterLayer extends PlaceablesLayer {
     factor = 2 * flags.effects[id].config.scale / 100;
     this.effects[id].fx.emitters.forEach(el => {
       el.startScale.value *= factor;
+      let node = el.startScale.next;
+      while (node) {
+        node.value *= factor;
+        node = node.next;
+      }
     });
 
     // Adjust speed
     factor = 2 * flags.effects[id].config.speed / 100;
     this.effects[id].fx.emitters.forEach(el => {
       el.startSpeed.value *= factor;
+      let node = el.startSpeed.next;
+      while (node) {
+        node.value *= factor;
+        node = node.next;
+      }
     });
 
     // Adjust tint
@@ -113,6 +123,11 @@ class FXMasterLayer extends PlaceablesLayer {
       this.effects[id].fx.emitters.forEach(el => {
         let colors = hexToRGB(colorStringToHex(flags.effects[id].config.tint));
         el.startColor.value = { r: colors[0] * 255, g: colors[1] * 255, b: colors[2] * 255 };
+        let node = el.startColor.next;
+        while (node) {
+          node.value = { r: colors[0] * 255, g: colors[1] * 255, b: colors[2] * 255 };
+          node = node.next;
+        }
       });
     }
   }
