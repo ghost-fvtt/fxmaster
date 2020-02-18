@@ -7,7 +7,6 @@ Hooks.once("init", function() {
 
 Hooks.once('canvasInit', (canvas) => {
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
-  canvas.fxmaster.draw();
 });
 
 Hooks.on("updateScene", () => {
