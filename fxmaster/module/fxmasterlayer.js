@@ -47,7 +47,11 @@ class FXMasterLayer extends PlaceablesLayer {
     const d = canvas.dimensions;
     this.mask.clear();
     this.mask.beginFill(0xFFFFFF);
-    this.mask.drawRect(d.paddingX - d.shiftX, d.paddingY - d.shiftY, d.sceneWidth, d.sceneHeight);
+    if (canvas.background.img) {
+      this.mask.drawRect(d.paddingX - d.shiftX, d.paddingY - d.shiftY, d.sceneWidth, d.sceneHeight);
+    } else {
+      this.mask.drawRect(0, 0, d.width, d.height);
+    }
     this.mask.endFill();
     this.weather.mask = this.mask;
 
