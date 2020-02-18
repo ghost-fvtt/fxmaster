@@ -55,6 +55,7 @@ class FXMasterLayer extends PlaceablesLayer {
     this.mask.endFill();
     this.weather.mask = this.mask;
 
+    // Updating scene weather
     const flags = canvas.scene.data.flags.fxmaster;
     let ids = [];
     if (!this.effects) this.effects = {};

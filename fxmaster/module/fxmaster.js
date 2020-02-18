@@ -7,12 +7,11 @@ Hooks.once("init", function() {
 });
 
 Hooks.once('canvasInit', (canvas) => {
-  // FilterManager.initialize();
-  // FilterManager.update();
+  filterManager.initialize();
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
 Hooks.on("updateScene", () => {
+  filterManager.draw();
   canvas.fxmaster.draw();
-  // FilterManager.update();
 });

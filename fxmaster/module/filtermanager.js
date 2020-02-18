@@ -1,42 +1,71 @@
 class FilterManager {
-    static initialize() {
+    initialize() {
         canvas.stage.filters = [];
-        this.filters = [];
-        this.activeFilters = [];
+        this.filterInfos = {};
+        this.filters = {};
+        let flags = canvas.scene.data.flags.fxmaster;
+        if (flags && flags.filters) {
+            this.filterInfos = flags.filters;
+        }
+        this.draw();
     }
 
-    static addFilter(filt, opts) {
-        this.filters.push({ filter: filt, options: opts });
+    addFilter(filt, opts) {
+        let filterInfos = {};
+        if (canvas.scene.data.flags.fxmaster && canvas.scene.data.flags.fxmaster)
+            filterInfos = canvas.scene.data.flags.fxmaster.filters;
+        filterInfos[filt] = opts;
+        canvas.scene.update({ "flags.fxmaster.filters": null }).then(_ => {
+            canvas.scene.update({ "flags.fxmaster.filters": filterInfos });
+        });
     }
 
-    static removeFilter(filter) {
-        for (let i = 0; i < this.filters.length; ++i) {
-            if (this.filters[i].filter == filter) {
-                this.filters.splice(i);
-                return true;
-            }
+    removeFilter(filter) {
+        let filterInfos = {};
+        if (canvas.scene.data.flags.fxmaster && canvas.scene.data.flags.fxmaster)
+            filterInfos = canvas.scene.data.flags.fxmaster.filters;
+        if (filterInfos && filterInfos[filter]) {
+            delete filterInfos[filter];
+            canvas.scene.update({ "flags.fxmaster.filters": null }).then(_ => {
+                canvas.scene.update({ "flags.fxmaster.filters": filterInfos });
+            });
+            return true;
         }
         return false;
     }
 
-    static switchFilter(filter, options) {
+    switchFilter(filter, options) {
         if (!this.removeFilter(filter)) {
             this.addFilter(filter, options);
         }
-        canvas.scene.update({ "flags.fxmaster.filters": this.filters });
     }
 
-    static update() {
+    draw() {
+        if (!canvas.scene.data.flags.fxmaster || !canvas.scene.data.flags.fxmaster.filters)
+            return;
         let saved_filters = canvas.scene.data.flags.fxmaster.filters;
-        canvas.stage.filters = [];
-        for (let i = 0; i < saved_filters.length; ++i) {
-            switch (saved_filters[i].filter) {
-                case "AdjustmentFilter":
-                    canvas.stage.filters.push(new PIXI.filters.AdjustmentFilter(saved_filters[i].options));
-                    break;
-                default:
-                    break;
+
+        const filterMap =
+        {
+            "AdjustmentFilter": PIXI.filters.AdjustmentFilter
+        };
+
+        // Remove unused
+        Object.keys(this.filters).forEach(f => {
+            if (!saved_filters[f])
+                delete this.filters[f];
+        });
+
+        // Add new
+        Object.keys(saved_filters).forEach(f => {
+            if (filterMap[f]) {
+                if (!this.filters[f])
+                    this.filters[f] = new filterMap[f](saved_filters[f]);
             }
-        }
+        });
+        
+        canvas.stage.filters = Object.values(this.filters);
     }
 }
+
+const filterManager = new FilterManager();
