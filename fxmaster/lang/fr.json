@@ -1,5 +1,9 @@
 {
     "WEATHERMANAGE.Title": "Gestion des Effets Météo",
     "CONTROLS.Effects": "Outils d'Effet",
-    "CONTROLS.Weather": "Outils de Météo"
+    "CONTROLS.Weather": "Outils de Météo",
+    "CONTROLS.Filter": "Outils de Filtre",
+    "FXMASTER.Tint": "Teinte",
+    "FXMASTER.Scale": "Échelle",
+    "FXMASTER.Speed": "Vitesse"
 }

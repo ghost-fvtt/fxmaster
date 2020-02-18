@@ -1,5 +1,10 @@
 {
     "WEATHERMANAGE.Title": "Weather Effects Management",
     "CONTROLS.Effects": "Effect Controls",
-    "CONTROLS.Weather": "Weather Controls"
+    "CONTROLS.Weather": "Weather Controls",
+    "CONTROLS.Filter": "Filter Controls",
+    "FXMASTER.Density": "Density",
+    "FXMASTER.Tint": "Tint",
+    "FXMASTER.Scale": "Scale",
+    "FXMASTER.Speed": "Speed"
 }

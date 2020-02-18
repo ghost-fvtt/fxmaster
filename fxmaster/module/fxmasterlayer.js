@@ -72,12 +72,7 @@ class FXMasterLayer extends PlaceablesLayer {
           type: flags.effects[key].type,
           fx: new CONFIG.weatherEffects[flags.effects[key].type](this.weather)
         };
-        // Adjust density
-        let factor = 2 * flags.effects[key].config.density / 100;
-        this.effects[key].fx.emitters.forEach(el => {
-          el.frequency *= factor;
-          el.maxParticles *= factor;
-        });
+        this.configureEffect(key);
         this.effects[key].fx.play();
       });
     }
@@ -89,6 +84,35 @@ class FXMasterLayer extends PlaceablesLayer {
           this.effects[key].fx.stop();
           delete this.effects[key];
         }
+      });
+    }
+  }
+
+  configureEffect(id) {
+    const flags = canvas.scene.data.flags.fxmaster;
+    // Adjust density
+    let factor = 2 * flags.effects[id].config.density / 100;
+    this.effects[id].fx.emitters.forEach(el => {
+      el.frequency *= factor;
+      el.maxParticles *= factor;
+    });
+    // Adjust scale
+    factor = 2 * flags.effects[id].config.scale / 100;
+    this.effects[id].fx.emitters.forEach(el => {
+      el.startScale.value *= factor;
+    });
+
+    // Adjust speed
+    factor = 2 * flags.effects[id].config.speed / 100;
+    this.effects[id].fx.emitters.forEach(el => {
+      el.startSpeed.value *= factor;
+    });
+
+    // Adjust tint
+    if (flags.effects[id].config.apply_tint) {
+      this.effects[id].fx.emitters.forEach(el => {
+        let colors = hexToRGB(colorStringToHex(flags.effects[id].config.tint));
+        el.startColor.value = { r: colors[0] * 255, g: colors[1] * 255, b: colors[2] * 255 };
       });
     }
   }

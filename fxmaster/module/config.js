@@ -39,6 +39,7 @@ class EffectsConfig extends FormApplication {
         options.popOut = true;
         options.editable = game.user.isGM;
         options.width = 300;
+        options.height = 500;
         return options;
     }
 
@@ -70,7 +71,16 @@ class EffectsConfig extends FormApplication {
         Object.keys(CONFIG.weatherEffects).forEach(key => {
             let label = CONFIG.weatherEffects[key].label;
             if (formData[label]) {
-                effects[randomID()] = { type: key, config: { density: (formData[label + "_range"]) } };
+                effects[randomID()] = {
+                    type: key, config:
+                    {
+                        density: (formData[label + "_density"]),
+                        speed: (formData[label + "_speed"]),
+                        scale: (formData[label + "_scale"]),
+                        tint: (formData[label + "_tint"]),
+                        apply_tint: (formData[label + "_apply_tint"])
+                    }
+                };
             }
         })
         canvas.scene.update({ "flags.fxmaster.effects": null }).then(_ => {
