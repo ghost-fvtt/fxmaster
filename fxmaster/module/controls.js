@@ -1,5 +1,3 @@
-// let lighton = true;
-
 Hooks.on('getSceneControlButtons', (controls) => {
     if (game.user.isGM) {
         controls.push({
@@ -16,22 +14,14 @@ Hooks.on('getSceneControlButtons', (controls) => {
                         new EffectsConfig().render(true);
                     }
                 },
-                // {
-                //     name: "filters",
-                //     title: "CONTROLS.Filters",
-                //     icon: "fas fa-moon",
-                //     onClick: () => {
-                //         // Add filter
-                //         if (lighton) {
-                //             let filt = new PIXI.filters.AdjustmentFilter({blue: 1.5, brightness: 0.65});
-                //             canvas.stage.filters = [filt];
-                //             lighton = false;
-                //         } else {
-                //             canvas.stage.filters = [];
-                //             lighton = true;
-                //         }
-                //     }
-                // },
+                {
+                    name: "filters",
+                    title: "CONTROLS.Filters",
+                    icon: "fas fa-moon",
+                    onClick: () => {
+                        FilterManager.switchFilter("AdjustmentFilter", { blue: 1.5, brightness: 0.65 })
+                    }
+                },
             ]
         });
     }

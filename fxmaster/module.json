@@ -6,7 +6,6 @@
   "author": "U~man",
   "scripts": [
     "bubbles/BubblesWeatherEffect.js",
-    "thunder/ThunderWeatherEffect.js",
     "clouds/CloudsWeatherEffect.js",
     "embers/EmbersWeatherEffect.js",
     "crows/CrowsWeatherEffect.js",
@@ -15,6 +14,7 @@
     "module/controls.js",
     "module/config.js",
     "module/fxmaster.js",
+    "module/filtermanager.js",
     "filters/pixi-filters.js"
   ],
   "esmodules": [],

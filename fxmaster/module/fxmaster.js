@@ -4,13 +4,15 @@ Hooks.once("init", function() {
   CONFIG.weatherEffects.embers = EmbersWeatherEffect;
   CONFIG.weatherEffects.crows = CrowsWeatherEffect;
   CONFIG.weatherEffects.fog = FogWeatherEffect;
-  CONFIG.weatherEffects.thunder = ThunderWeatherEffect;
 });
 
 Hooks.once('canvasInit', (canvas) => {
+  // FilterManager.initialize();
+  // FilterManager.update();
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
 Hooks.on("updateScene", () => {
   canvas.fxmaster.draw();
+  // FilterManager.update();
 });
