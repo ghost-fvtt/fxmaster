@@ -6,8 +6,9 @@ class FilterManager {
         let flags = canvas.scene.data.flags.fxmaster;
         if (flags && flags.filters) {
             this.filterInfos = flags.filters;
+        } else {
+            canvas.scene.data.flags.fxmaster.filters = {};
         }
-        this.draw();
     }
 
     addFilter(filt, opts) {
@@ -15,8 +16,8 @@ class FilterManager {
         if (canvas.scene.data.flags.fxmaster && canvas.scene.data.flags.fxmaster)
             filterInfos = canvas.scene.data.flags.fxmaster.filters;
         filterInfos[filt] = opts;
-        canvas.scene.update({ "flags.fxmaster.filters": null }).then(_ => {
-            canvas.scene.update({ "flags.fxmaster.filters": filterInfos });
+        canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
+            canvas.scene.setFlag("fxmaster", "filters", filterInfos);
         });
     }
 
@@ -26,8 +27,8 @@ class FilterManager {
             filterInfos = canvas.scene.data.flags.fxmaster.filters;
         if (filterInfos && filterInfos[filter]) {
             delete filterInfos[filter];
-            canvas.scene.update({ "flags.fxmaster.filters": null }).then(_ => {
-                canvas.scene.update({ "flags.fxmaster.filters": filterInfos });
+            canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
+                canvas.scene.setFlag("fxmaster", "filters", filterInfos);
             });
             return true;
         }
@@ -63,7 +64,6 @@ class FilterManager {
                     this.filters[f] = new filterMap[f](saved_filters[f]);
             }
         });
-        
         canvas.stage.filters = Object.values(this.filters);
     }
 }

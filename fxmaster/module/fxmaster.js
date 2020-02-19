@@ -1,4 +1,4 @@
-Hooks.once("init", function() {
+Hooks.once("init", function () {
   CONFIG.weatherEffects.bubbles = BubblesWeatherEffect;
   CONFIG.weatherEffects.clouds = CloudsWeatherEffect;
   CONFIG.weatherEffects.embers = EmbersWeatherEffect;
@@ -11,7 +11,11 @@ Hooks.once('canvasInit', (canvas) => {
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
-Hooks.on("updateScene", () => {
+Hooks.on('canvasReady', (_) => {
+  filterManager.draw();
+});
+
+Hooks.on("updateScene", (scene, data, options) => {
   filterManager.draw();
   canvas.fxmaster.draw();
 });

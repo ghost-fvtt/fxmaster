@@ -83,8 +83,8 @@ class EffectsConfig extends FormApplication {
                 };
             }
         })
-        canvas.scene.update({ "flags.fxmaster.effects": null }).then(_ => {
-            canvas.scene.update({ "flags.fxmaster.effects": effects });
+        canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
+            canvas.scene.setFlag("fxmaster", "effects", effects);
         });
     }
 }
