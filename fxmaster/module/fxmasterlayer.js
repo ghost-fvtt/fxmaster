@@ -125,7 +125,7 @@ class FXMasterLayer extends PlaceablesLayer {
         el.startColor.value = { r: colors[0] * 255, g: colors[1] * 255, b: colors[2] * 255 };
         let node = el.startColor.next;
         while (node) {
-          node.value = { r: colors[0] * 255, g: colors[1] * 255, b: colors[2] * 255 };
+          node.value = el.startColor.value;
           node = node.next;
         }
       });

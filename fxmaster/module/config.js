@@ -27,7 +27,7 @@ Handlebars.registerHelper('Config', function (key, name) {
             }
         }
     }
-    return {};
+    return null;
 });
 
 class EffectsConfig extends FormApplication {
