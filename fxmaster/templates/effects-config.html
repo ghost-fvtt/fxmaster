@@ -1,29 +1,32 @@
 <form>
-    <div>
+    <div class="fxmaster">
         {{#each effects}}
-        <div class="flexrow">
-            <input type='checkbox' name='{{this.label}}' {{checked (isEffectActive this.label)}} />
-            <u><strong>{{this.label}}</strong></u>
+        <input class="config" type='checkbox' name='{{this.label}}' id="{{this.label}}"
+            {{checked (isEffectActive this.label)}} />
+        <div class="flexcolumn config weather">
+            <div class="flexrow">
+                <label for="{{this.label}}">{{this.label}}</label>
+            </div>
+            <div class="flexrow config hide">
+                <strong>{{localize "FXMASTER.Density"}}</strong>
+                <input class="flex2" type='range' name='{{this.label}}_density'
+                    value="{{Config 'density' this.label}}" />
+            </div>
+            <div class="flexrow config hide">
+                <strong>{{localize "FXMASTER.Speed"}}</strong>
+                <input class="flex2" type='range' name='{{this.label}}_speed' value="{{Config 'speed' this.label}}" />
+            </div>
+            <div class="flexrow config hide">
+                <strong>{{localize "FXMASTER.Scale"}}</strong>
+                <input class="flex2" type='range' name='{{this.label}}_scale' value="{{Config 'scale' this.label}}" />
+            </div>
+            <div class="flexrow config hide">
+                <strong>{{localize "FXMASTER.Tint"}}</strong>
+                <input type='checkbox' name='{{this.label}}_apply_tint' {{checked (Config 'apply_tint' this.label)}} />
+                <input class="flex2" type='color' name='{{this.label}}_tint' value="{{Config 'tint' this.label}}" />
+            </div>
         </div>
-        <div class="flexrow">
-            <strong>{{localize "FXMASTER.Density"}}</strong>
-            <input class="flex2" type='range' name='{{this.label}}_density' value="{{Config 'density' this.label}}" />
-        </div>
-        <div class="flexrow">
-            <strong>{{localize "FXMASTER.Speed"}}</strong>
-            <input class="flex2" type='range' name='{{this.label}}_speed' value="{{Config 'speed' this.label}}" />
-        </div>
-        <div class="flexrow">
-            <strong>{{localize "FXMASTER.Scale"}}</strong>
-            <input class="flex2" type='range' name='{{this.label}}_scale' value="{{Config 'scale' this.label}}" />
-        </div>
-        <div class="flexrow">
-            <strong>{{localize "FXMASTER.Tint"}}</strong>
-            <input type='checkbox' name='{{this.label}}_apply_tint' {{checked (Config 'apply_tint' this.label)}} />
-            <input class="flex2" type='color' name='{{this.label}}_tint' value="{{Config 'tint' this.label}}" />
-        </div>
-    </div>
-    {{/each}}
+        {{/each}}
     </div>
     <footer class="form-footer">
         <button type="submit" name="submit">

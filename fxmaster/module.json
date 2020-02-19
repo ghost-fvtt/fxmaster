@@ -18,7 +18,9 @@
     "filters/pixi-filters.js"
   ],
   "esmodules": [],
-  "styles": [],
+  "styles": [
+    "css/weatherconfig.css"
+  ],
   "packs": [],
   "languages": [
     {
