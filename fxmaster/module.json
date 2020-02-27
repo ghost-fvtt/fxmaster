@@ -15,7 +15,16 @@
     "module/config.js",
     "module/fxmaster.js",
     "module/filtermanager.js",
-    "filters/pixi-filters.js"
+    "filters/pixi-filters.js",
+    "gsap/CSSRulePlugin.min.js",
+    "gsap/Draggable.min.js",
+    "gsap/EaselPlugin.min.js",
+    "gsap/EasePack.min.js",
+    "gsap/gsap.min.js",
+    "gsap/MotionPathPlugin.min.js",
+    "gsap/PixiPlugin.min.js",
+    "gsap/ScrollToPlugin.min.js",
+    "gsap/TextPlugin.min.js"
   ],
   "esmodules": [],
   "styles": [

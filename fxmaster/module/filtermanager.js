@@ -1,8 +1,17 @@
 class FilterManager {
     initialize() {
-        canvas.stage.filters = [];
+        this.filters = {
+            AdjustmentFilter: new PIXI.filters.AdjustmentFilter
+        }
+        canvas.background.filters = Object.values(this.filters);
+        canvas.tiles.filters = Object.values(this.filters);
+        canvas.effects.filters = Object.values(this.filters);
+        canvas.tokens.filters = Object.values(this.filters);
         this.filterInfos = {};
-        this.filters = {};
+        this.hardRefresh();
+    }
+
+    update() {
         let flags = canvas.scene.data.flags.fxmaster;
         if (flags && flags.filters) {
             this.filterInfos = flags.filters;
@@ -11,60 +20,45 @@ class FilterManager {
         }
     }
 
-    addFilter(filt, opts) {
-        let filterInfos = {};
-        if (canvas.scene.data.flags.fxmaster && canvas.scene.data.flags.fxmaster)
-            filterInfos = canvas.scene.data.flags.fxmaster.filters;
-        filterInfos[filt] = opts;
-        canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
-            canvas.scene.setFlag("fxmaster", "filters", filterInfos);
-        });
+    hardRefresh()
+    {
+        this.update();
+        if (!this.filterInfos) return;
+        Object.keys(this.filterInfos).forEach(f => {
+            console.log(this.filters[f], this.filterInfos[f]);
+            Object.assign(this.filters[f], this.filterInfos[f]);
+        })
     }
 
-    removeFilter(filter) {
-        let filterInfos = {};
-        if (canvas.scene.data.flags.fxmaster && canvas.scene.data.flags.fxmaster)
-            filterInfos = canvas.scene.data.flags.fxmaster.filters;
-        if (filterInfos && filterInfos[filter]) {
-            delete filterInfos[filter];
-            canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
-                canvas.scene.setFlag("fxmaster", "filters", filterInfos);
-            });
-            return true;
-        }
-        return false;
+    dump() {
+        canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
+            canvas.scene.setFlag("fxmaster", "filters", this.filterInfos);
+        });
     }
 
     switchFilter(filter, options) {
-        if (!this.removeFilter(filter)) {
-            this.addFilter(filter, options);
-        }
+        this.update();
+        if (!this.filterInfos[filter]) this.filterInfos[filter] = {};
+        Object.keys(options).forEach((opt) => {
+            if (this.filterInfos[filter][opt] === options[opt]) {
+                this.filterInfos[filter][opt] = 1;
+            } else {
+                this.filterInfos[filter][opt] = options[opt];
+            }
+        });
+        this.dump();
     }
 
     draw() {
-        if (!canvas.scene.data.flags.fxmaster || !canvas.scene.data.flags.fxmaster.filters)
-            return;
-        let saved_filters = canvas.scene.data.flags.fxmaster.filters;
-
-        const filterMap =
-        {
-            "AdjustmentFilter": PIXI.filters.AdjustmentFilter
-        };
-
-        // Remove unused
-        Object.keys(this.filters).forEach(f => {
-            if (!saved_filters[f])
-                delete this.filters[f];
-        });
-
-        // Add new
-        Object.keys(saved_filters).forEach(f => {
-            if (filterMap[f]) {
-                if (!this.filters[f])
-                    this.filters[f] = new filterMap[f](saved_filters[f]);
+        this.update();
+        Object.keys(this.filterInfos).forEach((f) => {
+            let anim = {
+                ease: Linear.easeNone,
+                repeat: 0
             }
-        });
-        canvas.stage.filters = Object.values(this.filters);
+            Object.assign(anim, this.filterInfos[f]);
+            gsap.to(this.filters[f], 5, anim);
+        })
     }
 }
 

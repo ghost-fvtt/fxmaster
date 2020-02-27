@@ -19,7 +19,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     title: "CONTROLS.Filters",
                     icon: "fas fa-moon",
                     onClick: () => {
-                        filterManager.switchFilter("AdjustmentFilter", { blue: 1.25, brightness: 0.65 })
+                        filterManager.switchFilter("AdjustmentFilter", { blue: 1.25, brightness: 0.60 })
                     }
                 },
             ]

@@ -12,7 +12,7 @@ Hooks.once('canvasInit', (canvas) => {
 });
 
 Hooks.on('canvasReady', (_) => {
-  filterManager.draw();
+  filterManager.hardRefresh();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
