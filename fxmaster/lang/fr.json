@@ -2,9 +2,11 @@
     "WEATHERMANAGE.Title": "Gestion des Effets Météo",
     "CONTROLS.Effects": "Outils d'Effet",
     "CONTROLS.Weather": "Outils de Météo",
-    "CONTROLS.Filter": "Outils de Filtre",
+    "CONTROLS.Daylight": "Filtre lumineux",
+    "CONTROLS.Underwater": "Filtre sous-marin",
     "FXMASTER.Tint": "Teinte",
     "FXMASTER.Scale": "Échelle",
     "FXMASTER.Speed": "Vitesse",
+    "FXMASTER.Direction": "Direction",
     "FXMASTER.SaveChanges": "Sauvegarder les Modifications"
 }

@@ -35,7 +35,7 @@ class EmbersWeatherEffect extends SpecialEffect {
 
         // Assets are selected randomly from the list for each particle
         const art = [
-            "/modules/fxmaster/embers/assets/ember.png"
+            "/modules/fxmaster/effects/assets/ember.png"
         ]
         var emitter = new PIXI.particles.Emitter(parent, art, config);
         emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);

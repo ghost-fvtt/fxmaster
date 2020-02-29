@@ -78,6 +78,7 @@ class EffectsConfig extends FormApplication {
                         speed: (formData[label + "_speed"]),
                         scale: (formData[label + "_scale"]),
                         tint: (formData[label + "_tint"]),
+                        direction: (formData[label + "_direction"]),
                         apply_tint: (formData[label + "_apply_tint"])
                     }
                 };

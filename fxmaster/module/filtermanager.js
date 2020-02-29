@@ -1,12 +1,38 @@
+class DizzyFilter extends PIXI.filters.DisplacementFilter {
+    constructor() {
+        // Init displacement filter
+        let dizzyMap = new PIXI.Sprite.from("/modules/fxmaster/filters/assets/clouds.png");
+        super(dizzyMap);
+        this.dizzyMap = dizzyMap;
+        this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+        this.dizzyMap.anchor.set(0.5);
+        this.dizzyMap.alpha = 0.5;
+        this.dizzyMap.x = canvas.scene.data.width / 2;
+        this.dizzyMap.y = canvas.scene.data.height / 2;
+        canvas.background.addChild(this.dizzyMap);
+        let anim = {
+            ease: Linear.easeNone,
+            repeat: -1,
+            x: 256
+        }
+        gsap.to(this.dizzyMap, 100, anim);
+
+        // Default is to not display it
+        this.enabled = false;
+    }
+}
+
 class FilterManager {
     initialize() {
         this.filters = {
-            AdjustmentFilter: new PIXI.filters.AdjustmentFilter
+            AdjustmentFilter: new PIXI.filters.AdjustmentFilter,
+            DizzyFilter: new DizzyFilter
         }
         canvas.background.filters = Object.values(this.filters);
         canvas.tiles.filters = Object.values(this.filters);
         canvas.effects.filters = Object.values(this.filters);
         canvas.tokens.filters = Object.values(this.filters);
+
         this.filterInfos = {};
         this.hardRefresh();
     }
@@ -16,12 +42,11 @@ class FilterManager {
         if (flags && flags.filters) {
             this.filterInfos = flags.filters;
         } else {
-            canvas.scene.data.flags.fxmaster.filters = {};
+            canvas.scene.setFlag("fxmaster", "filters", null);
         }
     }
 
-    hardRefresh()
-    {
+    hardRefresh() {
         this.update();
         if (!this.filterInfos) return;
         Object.keys(this.filterInfos).forEach(f => {
@@ -36,14 +61,14 @@ class FilterManager {
         });
     }
 
-    switchFilter(filter, options) {
+    switchFilter(filter, options1, options2) {
         this.update();
         if (!this.filterInfos[filter]) this.filterInfos[filter] = {};
-        Object.keys(options).forEach((opt) => {
-            if (this.filterInfos[filter][opt] === options[opt]) {
-                this.filterInfos[filter][opt] = 1;
+        Object.keys(options1).forEach((opt) => {
+            if (this.filterInfos[filter][opt] !== options1[opt]) {
+                this.filterInfos[filter][opt] = options1[opt];
             } else {
-                this.filterInfos[filter][opt] = options[opt];
+                this.filterInfos[filter][opt] = options2[opt];
             }
         });
         this.dump();
@@ -57,7 +82,7 @@ class FilterManager {
                 repeat: 0
             }
             Object.assign(anim, this.filterInfos[f]);
-            gsap.to(this.filters[f], 5, anim);
+            gsap.to(this.filters[f], 3, anim);
         })
     }
 }

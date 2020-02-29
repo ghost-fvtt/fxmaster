@@ -39,27 +39,27 @@ class CrowsWeatherEffect extends SpecialEffect {
             framerate: "10",
             textures: [
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow1.png",
+                    texture: "/modules/fxmaster/effects/assets/crow1.png",
                     count: 4
                 },
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow2.png",
+                    texture: "/modules/fxmaster/effects/assets/crow2.png",
                     count: 2
                 },
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow3.png",
+                    texture: "/modules/fxmaster/effects/assets/crow3.png",
                     count: 2
                 },
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow4.png",
+                    texture: "/modules/fxmaster/effects/assets/crow4.png",
                     count: 2
                 },
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow3.png",
+                    texture: "/modules/fxmaster/effects/assets/crow3.png",
                     count: 2
                 },
                 {
-                    texture: "/modules/fxmaster/crows/assets/crow2.png",
+                    texture: "/modules/fxmaster/effects/assets/crow2.png",
                     count: 2
                 },
             ],
