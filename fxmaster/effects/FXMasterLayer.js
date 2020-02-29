@@ -130,6 +130,13 @@ class FXMasterLayer extends PlaceablesLayer {
         }
       });
     }
+
+    // Adjust direction
+    factor = 360 * (flags.effects[id].config.direction - 50) / 100;
+    this.effects[id].fx.emitters.forEach(el => {
+      el.minStartRotation += factor;
+      el.maxStartRotation += factor;
+    });
   }
 
   /* -------------------------------------------- */

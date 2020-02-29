@@ -1,19 +1,21 @@
 .fxmaster .config.weather {
     padding: 4px;
     border-bottom: 1px solid #333;
+    list-style: none;
 }
 
-.fxmaster .config[type=checkbox]:checked + .config.weather {
-    border-radius: 3px;
-    background-color: #964c0788;
+.fxmaster.directory-list {
+    overflow-y: auto;
+    height: 370px;
 }
 
-.fxmaster .config.weather {
-    box-shadow: none;
+.fxmaster .config.collapsible.collapsed {
+    padding: 0;
+    display: none;
+    overflow: hidden;
 }
 
 .fxmaster .config label {
-    text-decoration: underline;
     font-weight: bolder;
     font-size: 16px;
     cursor: pointer;
@@ -23,6 +25,6 @@
     text-shadow: 0 0 4px #ff6400;
 }
 
-.fxmaster .config[type=checkbox] {
+.fxmaster .config.weather input[type=checkbox].effect {
     display: none;
 }

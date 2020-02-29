@@ -26,7 +26,6 @@ class FilterManager {
         this.update();
         if (!this.filterInfos) return;
         Object.keys(this.filterInfos).forEach(f => {
-            console.log(this.filters[f], this.filterInfos[f]);
             Object.assign(this.filters[f], this.filterInfos[f]);
         })
     }
