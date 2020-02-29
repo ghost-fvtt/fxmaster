@@ -27,7 +27,7 @@ Handlebars.registerHelper('Config', function (key, name) {
             }
         }
     }
-    return {};
+    return null;
 });
 
 class EffectsConfig extends FormApplication {
@@ -39,6 +39,7 @@ class EffectsConfig extends FormApplication {
         options.popOut = true;
         options.editable = game.user.isGM;
         options.width = 300;
+        options.height = 450;
         return options;
     }
 
@@ -51,13 +52,75 @@ class EffectsConfig extends FormApplication {
     getData() {
         // Return data to the template
         return {
-            effects: CONFIG.weatherEffects
+            effects: CONFIG.weatherEffects,
+            currentEffects: canvas.scene.getFlag("fxmaster", "effects")
         }
     }
+
+	// render(force=false, options={}) {
+    //     super._render(force, options);
+    //     console.log('render');
+    //     let collapsible = $('.config.weather');
+    //     for (let i = 0; i < collapsible.length; ++i) {
+    //         console.log($(collapsible[i]));
+    //         if ($(collapsible[i]).children("input[type=checkbox]:checked").length != 0) {
+    //             console.log('collapse');
+    //             collapsible[i].addClass('collapsed');
+    //         }
+    //     }
+    //     return this;
+    // }
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
+
+    /** @override */
+    activateListeners(html) {
+        super.activateListeners(html);
+        html.find(".config.weather .weather-collapse").click(event => this._onWeatherCollapse(event));
+    }
+
+    /**
+     * Handle Weather collapse toggle
+     * @private
+     */
+    _onWeatherCollapse(event) {
+        let li = $(event.currentTarget).parents(".config.weather"),
+            expanded = li.children("input[type=checkbox]:checked").length != 0;
+        this._collapse(li, expanded);
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Helper method to render the expansion or collapse of playlists
+     * @param {HTMLElement} li
+     * @param {boolean} collapse
+     * @param {number} speed
+     * @private
+     */
+    _collapse(li, collapse, speed = 250) {
+        li = $(li);
+        let ol = li.children(".config.collapsible"),
+            icon = li.find(".weather.config .collapsible i.fa");
+
+        // Collapse the Playlist
+        if (collapse) {
+            ol.slideUp(speed, () => {
+                li.addClass("collapsed");
+                icon.removeClass("fa-angle-down").addClass("fa-angle-up");
+            });
+        }
+
+        // Expand the Playlist
+        else {
+            ol.slideDown(speed, () => {
+                li.removeClass("collapsed");
+                icon.removeClass("fa-angle-up").addClass("fa-angle-down");
+            });
+        }
+    }
 
     /**
      * This method is called upon form submission after form data is validated
@@ -70,11 +133,21 @@ class EffectsConfig extends FormApplication {
         Object.keys(CONFIG.weatherEffects).forEach(key => {
             let label = CONFIG.weatherEffects[key].label;
             if (formData[label]) {
-                effects[randomID()] = { type: key, config: { density: (formData[label + "_range"]) } };
+                effects[randomID()] = {
+                    type: key, config:
+                    {
+                        density: (formData[label + "_density"]),
+                        speed: (formData[label + "_speed"]),
+                        scale: (formData[label + "_scale"]),
+                        tint: (formData[label + "_tint"]),
+                        direction: (formData[label + "_direction"]),
+                        apply_tint: (formData[label + "_apply_tint"])
+                    }
+                };
             }
         })
-        canvas.scene.update({ "flags.fxmaster.effects": null }).then(_ => {
-            canvas.scene.update({ "flags.fxmaster.effects": effects });
+        canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
+            canvas.scene.setFlag("fxmaster", "effects", effects);
         });
     }
 }

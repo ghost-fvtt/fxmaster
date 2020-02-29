@@ -5,19 +5,32 @@
   "version": "0.3.2",
   "author": "U~man",
   "scripts": [
-    "bubbles/BubblesWeatherEffect.js",
-    "clouds/CloudsWeatherEffect.js",
-    "embers/EmbersWeatherEffect.js",
-    "crows/CrowsWeatherEffect.js",
-    "custom/CustomWeatherEffect.js",
-    "module/fxmasterlayer.js",
+    "effects/BubblesWeatherEffect.js",
+    "effects/CloudsWeatherEffect.js",
+    "effects/EmbersWeatherEffect.js",
+    "effects/CrowsWeatherEffect.js",
+    "effects/FogWeatherEffect.js",
+    "effects/FXMasterLayer.js",
+    "filters/DizzyFilter.js",
+    "filters/FilterManager.js",
     "module/controls.js",
     "module/config.js",
     "module/fxmaster.js",
-    "filters/pixi-filters.js"
+    "libs/filters/pixi-filters.js",
+    "libs/gsap/CSSRulePlugin.min.js",
+    "libs/gsap/Draggable.min.js",
+    "libs/gsap/EaselPlugin.min.js",
+    "libs/gsap/EasePack.min.js",
+    "libs/gsap/gsap.min.js",
+    "libs/gsap/MotionPathPlugin.min.js",
+    "libs/gsap/PixiPlugin.min.js",
+    "libs/gsap/ScrollToPlugin.min.js",
+    "libs/gsap/TextPlugin.min.js"
   ],
   "esmodules": [],
-  "styles": [],
+  "styles": [
+    "css/weatherconfig.css"
+  ],
   "packs": [],
   "languages": [
     {
