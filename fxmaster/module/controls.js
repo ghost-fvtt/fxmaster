@@ -19,7 +19,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     title: "CONTROLS.Daylight",
                     icon: "fas fa-moon",
                     onClick: () => {
-                        filterManager.switchFilter("AdjustmentFilter", 3, { blue: 1.3, brightness: 0.60 }, { blue: 1, brightness: 1 });
+                        filterManager.switchFilter("AdjustmentFilter", { blue: 1.3, brightness: 0.60 }, { blue: 1, brightness: 1 });
                     }
                 },
                 {
@@ -27,7 +27,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     title: "CONTROLS.Underwater",
                     icon: "fas fa-water",
                     onClick: () => {
-                        filterManager.switchFilter("DizzyFilter", 0, { enabled: true }, { enabled: false });
+                        filterManager.switchFilter("DizzyFilter", { enabled: true, alpha: 1 }, { enabled: false, alpha: 0 });
                     }
                 },
             ]
