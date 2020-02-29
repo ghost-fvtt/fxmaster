@@ -17,7 +17,7 @@ class FilterManager {
         let flags = canvas.scene.data.flags.fxmaster;
         if (flags && flags.filters) {
             this.filterInfos = flags.filters;
-        } else {
+        } else if (game.user.isGM){
             canvas.scene.setFlag("fxmaster", "filters", {});
         }
     }
