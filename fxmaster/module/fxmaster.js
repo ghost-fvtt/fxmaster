@@ -12,7 +12,9 @@ Hooks.once('canvasInit', (canvas) => {
 });
 
 Hooks.on('canvasReady', (_) => {
-  filterManager.hardRefresh();
+  if (game.user.isGM) {
+    filterManager.hardRefresh();
+  }
 });
 
 Hooks.on("updateScene", (scene, data, options) => {

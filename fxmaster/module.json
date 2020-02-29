@@ -2,7 +2,7 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather effects</p>",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "U~man",
   "scripts": [
     "effects/BubblesWeatherEffect.js",
