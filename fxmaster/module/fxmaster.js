@@ -3,6 +3,7 @@ Hooks.once("init", function () {
   CONFIG.weatherEffects.clouds = CloudsWeatherEffect;
   CONFIG.weatherEffects.embers = EmbersWeatherEffect;
   CONFIG.weatherEffects.crows = CrowsWeatherEffect;
+  CONFIG.weatherEffects.bats = BatsWeatherEffect;
   CONFIG.weatherEffects.fog = FogWeatherEffect;
 });
 
@@ -12,9 +13,7 @@ Hooks.once('canvasInit', (canvas) => {
 });
 
 Hooks.on('canvasReady', (_) => {
-  if (game.user.isGM) {
-    filterManager.hardRefresh();
-  }
+  filterManager.hardRefresh();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {

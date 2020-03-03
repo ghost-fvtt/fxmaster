@@ -9,6 +9,7 @@
     "effects/CloudsWeatherEffect.js",
     "effects/EmbersWeatherEffect.js",
     "effects/CrowsWeatherEffect.js",
+    "effects/BatsWeatherEffect.js",
     "effects/FogWeatherEffect.js",
     "effects/FXMasterLayer.js",
     "filters/DizzyFilter.js",
