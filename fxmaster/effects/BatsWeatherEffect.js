@@ -1,25 +1,25 @@
 
 
-class CrowsWeatherEffect extends SpecialEffect {
+class BatsWeatherEffect extends SpecialEffect {
     static get label() {
-        return "Crows";
+        return "Bats";
     }
 
     static get effectOptions() {
         const options = super.effectOptions;
-        options.density.min = 0.001;
-        options.density.value = 0.006;
-        options.density.max = 0.01;
-        options.density.step = 0.001;
+        options.density.min = 0.01;
+        options.density.value = 0.05;
+        options.density.max = 0.1;
+        options.density.step = 0.01;
         return options;
     }
 
     getParticleEmitters() {
-        return [this._getCrowsEmitter(this.parent)];
+        return [this._getBatsEmitter(this.parent)];
     }
 
     // This is where the magic happens
-    _getCrowsEmitter(parent) {
+    _getBatsEmitter(parent) {
         const d = canvas.dimensions;
         const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
         const config = mergeObject(this.constructor.CONFIG, {
@@ -36,32 +36,40 @@ class CrowsWeatherEffect extends SpecialEffect {
         // Assets are selected randomly from the list for each particle
         const anim_sheet =
         {
-            framerate: "15",
+            framerate: "30",
             textures: [
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven1.png",
-                    count: 20
+                    texture: "/modules/fxmaster/effects/assets/bat0.png",
+                    count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven2.png",
-                    count: 3
+                    texture: "/modules/fxmaster/effects/assets/bat1.png",
+                    count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven3.png",
+                    texture: "/modules/fxmaster/effects/assets/bat2.png",
+                    count: 1
+                },
+                {
+                    texture: "/modules/fxmaster/effects/assets/bat3.png",
+                    count: 1
+                },
+                {
+                    texture: "/modules/fxmaster/effects/assets/bat4.png",
                     count: 2
                 },
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven4.png",
-                    count: 2
+                    texture: "/modules/fxmaster/effects/assets/bat3.png",
+                    count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven3.png",
-                    count: 2
+                    texture: "/modules/fxmaster/effects/assets/bat2.png",
+                    count: 1
                 },
                 {
-                    texture: "/modules/fxmaster/effects/assets/raven2.png",
-                    count: 3
-                },
+                    texture: "/modules/fxmaster/effects/assets/bat1.png",
+                    count: 1
+                }
             ],
             loop: true
         };
@@ -71,7 +79,7 @@ class CrowsWeatherEffect extends SpecialEffect {
     }
 };
 
-CrowsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+BatsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     "alpha": {
         "list": [
             {"value": 0, "time":0},
@@ -83,17 +91,17 @@ CrowsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     },
     "scale": {
         "list": [
-            {"value": 0.03, "time":0},
-            {"value": 0.12, "time":0.1},
-            {"value": 0.12, "time":0.9},
-            {"value": 0.03, "time":1}
+            {"value": 0.02, "time":0},
+            {"value": 0.10, "time":0.05},
+            {"value": 0.10, "time":0.95},
+            {"value": 0.02, "time":1}
         ],
         "isStepped": false
     },
     "speed": {
-        "start": 90,
-        "end": 100,
-        "minimumSpeedMultiplier": 0.6
+        "start": 200,
+        "end": 260,
+        "minimumSpeedMultiplier": 0.8
     },
     "acceleration": {
         "x": 0,
@@ -101,7 +109,7 @@ CrowsWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
     },
     "startRotation": {
         "min": 0,
-        "max": 365
+        "max": 360
     },
     "rotation": 180,
     "rotationSpeed": {

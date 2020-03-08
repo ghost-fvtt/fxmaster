@@ -2,43 +2,49 @@
     <div class="directory-list fxmaster">
         {{#each effects}}
         <li class="directory-item config weather">
-            <input type='checkbox' name='{{this.label}}' id="{{this.label}}" class="effect" {{checked (isEffectActive this.label)}} />
+            <input type='checkbox' name='{{this.label}}' id="{{this.label}}" class="effect"
+                {{checked (isEffectActive this.label)}} />
             <header class="flexrow">
                 <label for="{{this.label}}" class="weather-collapse">{{this.label}} <i
                         class="fa fa-angle-down"></i></label>
             </header>
             {{#if (isEffectActive this.label)}}
             <ol class="config collapsible">
-            {{else}}
+                {{else}}
                 <ol class="config collapsible collapsed">
-            {{/if}}
-                <li class="flexrow">
-                    <strong>{{localize "FXMASTER.Density"}}</strong>
-                    <input class="flex2" type='range' name='{{this.label}}_density'
-                        value="{{Config 'density' this.label}}" />
-                </li>
-                <li class="flexrow">
-                    <strong>{{localize "FXMASTER.Speed"}}</strong>
-                    <input class="flex2" type='range' name='{{this.label}}_speed'
-                        value="{{Config 'speed' this.label}}" />
-                </li>
-                <li class="flexrow">
-                    <strong>{{localize "FXMASTER.Direction"}}</strong>
-                    <input class="flex2" type='range' name='{{this.label}}_direction'
-                        value="{{Config 'direction' this.label}}" />
-                </li>
-                <li class="flexrow">
-                    <strong>{{localize "FXMASTER.Scale"}}</strong>
-                    <input class="flex2" type='range' name='{{this.label}}_scale'
-                        value="{{Config 'scale' this.label}}" />
-                </li>
-                <li class="flexrow">
-                    <strong>{{localize "FXMASTER.Tint"}}</strong>
-                    <input type='checkbox' name='{{this.label}}_apply_tint'
-                        {{checked (Config 'apply_tint' this.label)}} />
-                    <input class="flex2" type='color' name='{{this.label}}_tint' value="{{Config 'tint' this.label}}" />
-                </li>
-            </ol>
+                    {{/if}}
+                    <li class="flexrow">
+                        <strong>{{localize "FXMASTER.Density"}}</strong>
+                        <input class="flex2" type='range' name='{{this.label}}_density'
+                            value="{{Config 'density' this.label}}" />
+                    </li>
+                    <li class="flexrow">
+                        <strong>{{localize "FXMASTER.Speed"}}</strong>
+                        <input class="flex2" type='range' name='{{this.label}}_speed'
+                            value="{{Config 'speed' this.label}}" />
+                    </li>
+                    <li class="flexrow">
+                        <strong>{{localize "FXMASTER.Direction"}}</strong>
+                        <input class="flex2" type='range' name='{{this.label}}_direction'
+                            value="{{Config 'direction' this.label}}" />
+                    </li>
+                    <li class="flexrow">
+                        <strong>{{localize "FXMASTER.Scale"}}</strong>
+                        <input class="flex2" type='range' name='{{this.label}}_scale'
+                            value="{{Config 'scale' this.label}}" />
+                    </li>
+                    <li class="flexrow">
+                        <strong>{{localize "FXMASTER.Tint"}}</strong>
+                        <input type='checkbox' name='{{this.label}}_apply_tint'
+                            {{checked (Config 'apply_tint' this.label)}} />
+                        {{#if (Config 'tint' this.label)}}
+                        <input class="flex2" type='color' name='{{this.label}}_tint'
+                            value="{{Config 'tint' this.label}}" />
+                        {{else}}
+                        <input class="flex2" type='color' name='{{this.label}}_tint'/>
+                        {{/if}}
+                    </li>
+                </ol>
         </li>
         {{/each}}
     </div>

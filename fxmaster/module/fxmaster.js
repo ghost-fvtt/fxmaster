@@ -1,23 +1,31 @@
 Hooks.once("init", function () {
-  CONFIG.weatherEffects.bubbles = BubblesWeatherEffect;
-  CONFIG.weatherEffects.clouds = CloudsWeatherEffect;
-  CONFIG.weatherEffects.embers = EmbersWeatherEffect;
-  CONFIG.weatherEffects.crows = CrowsWeatherEffect;
-  CONFIG.weatherEffects.fog = FogWeatherEffect;
+  mergeObject(CONFIG.weatherEffects, {
+    bubbles: BubblesWeatherEffect,
+    clouds: CloudsWeatherEffect,
+    embers: EmbersWeatherEffect,
+    crows: CrowsWeatherEffect,
+    bats: BatsWeatherEffect,
+    fog: FogWeatherEffect,
+    raintop: RaintopWeatherEffect
+  });
 });
 
 Hooks.once('canvasInit', (canvas) => {
-  filterManager.initialize();
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
 Hooks.on('canvasReady', (_) => {
-  if (game.user.isGM) {
-    filterManager.hardRefresh();
-  }
+  // filterManager.apply();
+  canvas.fxmaster.updateMask();
+  canvas.fxmaster.drawWeather();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
-  filterManager.draw();
-  canvas.fxmaster.draw();
+  canvas.fxmaster.updateMask();
+  if (hasProperty(data, "flags.fxmaster.filters")) {
+    // filterManager.update();
+  }
+  if (hasProperty(data, "flags.fxmaster.effects")) {
+    canvas.fxmaster.drawWeather();
+  }
 });

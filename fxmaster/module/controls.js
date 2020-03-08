@@ -14,22 +14,39 @@ Hooks.on('getSceneControlButtons', (controls) => {
                         new EffectsConfig().render(true);
                     }
                 },
-                {
-                    name: "daylight",
-                    title: "CONTROLS.Daylight",
-                    icon: "fas fa-moon",
-                    onClick: () => {
-                        filterManager.switchFilter("AdjustmentFilter", { blue: 1.3, brightness: 0.60 }, { blue: 1, brightness: 1 });
-                    }
-                },
-                {
-                    name: "underwater",
-                    title: "CONTROLS.Underwater",
-                    icon: "fas fa-water",
-                    onClick: () => {
-                        filterManager.switchFilter("DizzyFilter", { enabled: true, alpha: 1 }, { enabled: false, alpha: 0 });
-                    }
-                },
+                // {
+                //     name: "underwater",
+                //     title: "CONTROLS.Underwater",
+                //     icon: "fas fa-water",
+                //     onClick: () => {
+                //         filterManager.switch("DizzyFilter");
+                //     }
+                // },
+                // {
+                //     name: "specialfx",
+                //     title: "CONTROLS.SpecialFX",
+                //     icon: "fas fa-fire",
+                    // onClick: () => {
+                        // effects = {};
+                        // effects[randomID()] = {
+                        //     type: 'bubbles',
+                        //     config: {
+                        //         density: 50,
+                        //         speed: 50,
+                        //         scale: 50,
+                        //         tint: "#000000",
+                        //         direction: 50,
+                        //         apply_tint: false
+                        //     }
+                        // };
+                        // let bubbles = new BubblesWeatherEffect(canvas.fxmaster.weather);
+                        // console.log(bubbles.emitters);
+                        // bubbles.emitters[0].emitterLifetime = 1;
+                        // bubbles.emitters[0].spawnType  = 'point';
+                        // bubbles.emitters[0].pos = {x: 100, y: 100};
+                        // bubbles.play();
+                    // }
+                // },
             ]
         });
     }

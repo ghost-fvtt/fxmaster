@@ -1,5 +1,10 @@
 class FXMasterLayer extends PlaceablesLayer {
 
+  constructor() {
+    super();
+    this.effects = {};
+  }
+
   /** @extends {PlaceablesLayer.layerOptions} */
   static get layerOptions() {
     return mergeObject(super.layerOptions, {
@@ -7,7 +12,7 @@ class FXMasterLayer extends PlaceablesLayer {
     });
   }
 
-  /** @override */
+  // /** @override */
   static get dataArray() {
     return "notes";
   }
@@ -26,65 +31,53 @@ class FXMasterLayer extends PlaceablesLayer {
     super.activate();
   }
 
-  /* -------------------------------------------- */
-
   async draw() {
-    // Draw the weather layer
-    this.drawWeather();
+    super.draw();
   }
 
   /* -------------------------------------------- */
 
-  drawWeather() {
-    if (!this.weather) {
-      this.weather = this.addChild(new PIXI.Container());
-    }
+  updateMask() {
     // Setup scene mask
-    if (!this.mask) {
-      this.mask = new PIXI.Graphics();
-      this.addChild(this.mask);
-    }
+    if (this.mask)
+      this.removeChild(this.mask);
+    this.mask = new PIXI.Graphics;
+    this.addChild(this.mask);
     const d = canvas.dimensions;
-    this.mask.clear();
     this.mask.beginFill(0xFFFFFF);
     if (canvas.background.img) {
       this.mask.drawRect(d.paddingX - d.shiftX, d.paddingY - d.shiftY, d.sceneWidth, d.sceneHeight);
     } else {
       this.mask.drawRect(0, 0, d.width, d.height);
     }
-    this.mask.endFill();
-    this.weather.mask = this.mask;
+  }
 
+  drawWeather() {
     // Updating scene weather
     const flags = canvas.scene.data.flags.fxmaster;
-    let ids = [];
-    if (!this.effects) this.effects = {};
     if (flags && flags.effects) {
-      Object.keys(flags.effects).forEach(key => {
-        // Remember Ids
-        ids.push(key);
-
+      const keys = Object.keys(flags.effects);
+      for (let i = 0; i < keys.length; ++i) {
         // Effect already exists  
-        if (this.effects[key]) {
-          return;
+        if (this.effects[keys[i]]) {
+          continue;
         }
-        this.effects[key] = {
-          type: flags.effects[key].type,
-          fx: new CONFIG.weatherEffects[flags.effects[key].type](this.weather)
+        this.effects[keys[i]] = {
+          type: flags.effects[keys[i]].type,
+          fx: new CONFIG.weatherEffects[flags.effects[keys[i]].type](canvas.fxmaster)
         };
-        this.configureEffect(key);
-        this.effects[key].fx.play();
-      });
+        this.configureEffect(keys[i]);
+        this.effects[keys[i]].fx.play();
+      };
     }
 
     // Clean old effects
-    if (this.effects) {
-      Object.keys(this.effects).forEach(key => {
-        if (!ids.includes(key)) {
-          this.effects[key].fx.stop();
-          delete this.effects[key];
-        }
-      });
+    const effKeys = Object.keys(this.effects);
+    for (let i = 0; i < effKeys.length; ++i) {
+      if (!flags || !flags.effects || !hasProperty(flags.effects, effKeys[i])) {
+        this.effects[effKeys[i]].fx.stop();
+        delete this.effects[effKeys[i]];
+      }
     }
   }
 
