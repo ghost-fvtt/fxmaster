@@ -74,7 +74,7 @@ class FXMasterLayer extends PlaceablesLayer {
     // Clean old effects
     const effKeys = Object.keys(this.effects);
     for (let i = 0; i < effKeys.length; ++i) {
-      if (!flags.effects || !hasProperty(flags.effects, effKeys[i])) {
+      if (!flags || !flags.effects || !hasProperty(flags.effects, effKeys[i])) {
         this.effects[effKeys[i]].fx.stop();
         delete this.effects[effKeys[i]];
       }

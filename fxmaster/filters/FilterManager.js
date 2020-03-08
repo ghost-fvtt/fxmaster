@@ -1,33 +1,41 @@
 class FilterManager {
-    initialize() {
+    constructor() {
         this.filters = {
-            AdjustmentFilter: new PIXI.filters.AdjustmentFilter,
             DizzyFilter: new DizzyFilter
         }
-        canvas.background.filters = Object.values(this.filters);
-        canvas.tiles.filters = Object.values(this.filters);
-        canvas.effects.filters = Object.values(this.filters);
-        canvas.tokens.filters = Object.values(this.filters);
+    }
 
-        this.filterInfos = {};
-        this.hardRefresh();
+    apply() {
+        const keys = Object.keys(this.filters);
+        for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]].apply();
+        }
+        // canvas.background.filters = Object.values(this.filters);
+        // canvas.tiles.filters = Object.values(this.filters);
+        // canvas.effects.filters = Object.values(this.filters);
+        // canvas.tokens.filters = Object.values(this.filters);
     }
 
     update() {
-        let flags = canvas.scene.data.flags.fxmaster;
-        if (flags && flags.filters) {
-            this.filterInfos = flags.filters;
-        } else if (game.user.isGM){
-            canvas.scene.setFlag("fxmaster", "filters", {});
+        // const flags = canvas.scene.data.flags.fxmaster;
+        // if (flags && flags.filters) {
+        //     this.filterInfos = flags.filters;
+        // } else if (game.user.isGM) {
+        //     canvas.scene.setFlag("fxmaster", "filters", {});
+        // }
+        const keys = Object.keys(this.filters);
+        for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]].update();
         }
     }
 
     hardRefresh() {
         this.update();
         if (!this.filterInfos) return;
-        Object.keys(this.filterInfos).forEach(f => {
-            Object.assign(this.filters[f], this.filterInfos[f]);
-        })
+        const keys = Object.keys(this.filterInfos);
+        for (let i = 0; i < keys.length; ++i) {
+            Object.assign(this.filters[keys[i]], this.filterInfos[keys[i]]);
+        }
     }
 
     dump() {
@@ -36,30 +44,9 @@ class FilterManager {
         });
     }
 
-    switchFilter(filter, options1, options2) {
-        this.update();
-        if (!this.filterInfos[filter]) this.filterInfos[filter] = {};
-        Object.keys(options1).forEach((opt) => {
-            if (this.filterInfos[filter][opt] !== options1[opt]) {
-                this.filterInfos[filter][opt] = options1[opt];
-            } else {
-                this.filterInfos[filter][opt] = options2[opt];
-            }
-        });
-        this.dump();
-    }
-
-    draw() {
-        this.update();
-        Object.keys(this.filterInfos).forEach((f) => {
-            let anim = {
-                ease: Linear.easeNone,
-                repeat: 0
-            }
-            Object.assign(anim, this.filterInfos[f]);
-            gsap.to(this.filters[f], 1, anim);
-        })
+    switch(filter) {
+        this.filters[filter].switch();
     }
 }
 
-const filterManager = new FilterManager();
+// const filterManager = new FilterManager();
