@@ -80,5 +80,5 @@ BubblesWeatherEffect.CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
         "max": 10
     },
     "blendMode": "normal",
-    "emitterLifetime": -1
+    "emitterLifetime": 0
 }, { inplace: false });

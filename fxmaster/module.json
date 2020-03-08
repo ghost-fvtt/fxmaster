@@ -11,6 +11,7 @@
     "effects/CrowsWeatherEffect.js",
     "effects/BatsWeatherEffect.js",
     "effects/FogWeatherEffect.js",
+    "effects/RaintopWeatherEffect.js",
     "effects/FXMasterLayer.js",
     "filters/DizzyFilter.js",
     "filters/FilterManager.js",
@@ -28,7 +29,8 @@
     "libs/gsap/ScrollToPlugin.min.js",
     "libs/gsap/TextPlugin.min.js"
   ],
-  "esmodules": [],
+  "esmodules": [
+  ],
   "styles": [
     "css/weatherconfig.css"
   ],

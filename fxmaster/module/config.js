@@ -32,15 +32,19 @@ Handlebars.registerHelper('Config', function (key, name) {
 
 class EffectsConfig extends FormApplication {
     static get defaultOptions() {
-        const options = super.defaultOptions;
-        options.title = game.i18n.localize("WEATHERMANAGE.Title");
-        options.id = "effects-config";
-        options.template = "modules/fxmaster/templates/effects-config.html";
-        options.popOut = true;
-        options.editable = game.user.isGM;
-        options.width = 300;
-        options.height = 450;
-        return options;
+        return mergeObject(super.defaultOptions, {
+            classes: ["form"],
+            closeOnSubmit: true,
+            submitOnChange: false,
+            submitOnClose: false,
+            popOut: true,
+            editable: game.user.isGM,
+            width: 300,
+            height: 450,
+            template: "modules/fxmaster/templates/effects-config.html",
+            id: "effects-config",
+            title: game.i18n.localize("WEATHERMANAGE.Title")
+        });
     }
 
     /* -------------------------------------------- */
@@ -57,7 +61,7 @@ class EffectsConfig extends FormApplication {
         }
     }
 
-	// render(force=false, options={}) {
+    // render(force=false, options={}) {
     //     super._render(force, options);
     //     console.log('render');
     //     let collapsible = $('.config.weather');

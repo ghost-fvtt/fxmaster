@@ -40,11 +40,11 @@ class CrowsWeatherEffect extends SpecialEffect {
             textures: [
                 {
                     texture: "/modules/fxmaster/effects/assets/raven1.png",
-                    count: 6
+                    count: 20
                 },
                 {
                     texture: "/modules/fxmaster/effects/assets/raven2.png",
-                    count: 2
+                    count: 3
                 },
                 {
                     texture: "/modules/fxmaster/effects/assets/raven3.png",
@@ -60,7 +60,7 @@ class CrowsWeatherEffect extends SpecialEffect {
                 },
                 {
                     texture: "/modules/fxmaster/effects/assets/raven2.png",
-                    count: 2
+                    count: 3
                 },
             ],
             loop: true
