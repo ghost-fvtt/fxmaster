@@ -3,6 +3,7 @@ class FXMasterLayer extends PlaceablesLayer {
   constructor() {
     super();
     this.effects = {};
+    this.weather = null;
   }
 
   /** @extends {PlaceablesLayer.layerOptions} */
@@ -52,32 +53,41 @@ class FXMasterLayer extends PlaceablesLayer {
     }
   }
 
+  /** @override */
+  tearDown() {
+    this.weather = null;
+    const effKeys = Object.keys(this.effects);
+    for (let i = 0; i < effKeys.length; ++i) {
+      this.effects[effKeys[i]].fx.stop();
+      delete this.effects[effKeys[i]];
+    }
+    return super.tearDown();
+  }
+
   drawWeather() {
+    if (!this.weather) this.weather = this.addChild(new PIXI.Container());
+    const effKeys = Object.keys(this.effects);
+    for (let i = 0; i < effKeys.length; ++i) {
+      this.effects[effKeys[i]].fx.stop();
+    }
+
     // Updating scene weather
     const flags = canvas.scene.data.flags.fxmaster;
     if (flags && flags.effects) {
       const keys = Object.keys(flags.effects);
       for (let i = 0; i < keys.length; ++i) {
         // Effect already exists  
-        if (this.effects[keys[i]]) {
+        if (hasProperty(this.effects, keys[i])) {
+          this.effects[keys[i]].fx.play();
           continue;
         }
         this.effects[keys[i]] = {
           type: flags.effects[keys[i]].type,
-          fx: new CONFIG.weatherEffects[flags.effects[keys[i]].type](canvas.fxmaster)
+          fx: new CONFIG.weatherEffects[flags.effects[keys[i]].type](this.weather)
         };
         this.configureEffect(keys[i]);
         this.effects[keys[i]].fx.play();
       };
-    }
-
-    // Clean old effects
-    const effKeys = Object.keys(this.effects);
-    for (let i = 0; i < effKeys.length; ++i) {
-      if (!flags || !flags.effects || !hasProperty(flags.effects, effKeys[i])) {
-        this.effects[effKeys[i]].fx.stop();
-        delete this.effects[effKeys[i]];
-      }
     }
   }
 

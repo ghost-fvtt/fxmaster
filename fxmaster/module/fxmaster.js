@@ -22,10 +22,8 @@ Hooks.on('canvasReady', (_) => {
 
 Hooks.on("updateScene", (scene, data, options) => {
   canvas.fxmaster.updateMask();
-  if (hasProperty(data, "flags.fxmaster.filters")) {
+  canvas.fxmaster.drawWeather();
+  // if (hasProperty(data, "flags.fxmaster.filters")) {
     // filterManager.update();
-  }
-  if (hasProperty(data, "flags.fxmaster.effects")) {
-    canvas.fxmaster.drawWeather();
-  }
+  // }
 });
