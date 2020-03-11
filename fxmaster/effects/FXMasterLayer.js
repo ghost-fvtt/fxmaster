@@ -1,4 +1,4 @@
-class FXMasterLayer extends PlaceablesLayer {
+class FXMasterLayer extends CanvasLayer {
 
   constructor() {
     super();
@@ -6,31 +6,9 @@ class FXMasterLayer extends PlaceablesLayer {
     this.weather = null;
   }
 
-  /** @extends {PlaceablesLayer.layerOptions} */
-  static get layerOptions() {
-    return mergeObject(super.layerOptions, {
-      canDragCreate: false
-    });
-  }
-
-  // /** @override */
-  static get dataArray() {
-    return "notes";
-  }
-
-  /** @override */
-  static get placeableClass() {
-    return Note;
-  }
-
   /* -------------------------------------------- */
   /*  Methods
   /* -------------------------------------------- */
-
-  /** @extends {PlaceablesLayer.activate} */
-  activate() {
-    super.activate();
-  }
 
   async draw() {
     super.draw();
@@ -140,30 +118,5 @@ class FXMasterLayer extends PlaceablesLayer {
       el.minStartRotation += factor;
       el.maxStartRotation += factor;
     });
-  }
-
-  /* -------------------------------------------- */
-
-  /** @extends {PlaceablesLayer.deactivate} */
-  deactivate() {
-    super.deactivate();
-  }
-
-  /* -------------------------------------------- */
-  /*  Event Listeners and Handlers                */
-  /* -------------------------------------------- */
-
-  /** @override */
-  _onMouseDown(event) { }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Handle JournalEntry entity drop data
-   * @param {Event} event
-   * @param {JournalEntry} entry
-   * @private
-   */
-  _onDropEntity(event, entry) {
   }
 }

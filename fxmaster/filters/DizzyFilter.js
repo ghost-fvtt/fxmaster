@@ -1,36 +1,45 @@
-class DizzyFilter extends PIXI.filters.DisplacementFilter {
-    constructor() {
+class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
+    constructor(options) {
         let dizzyMap = new PIXI.Sprite.from("/modules/fxmaster/filters/assets/clouds.png");
         super(dizzyMap);
-        this.enabled = false;
         this.dizzyMap = dizzyMap;
-        this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-        this.dizzyMap.anchor.set(0.5);
-        this.scale.x = 50;
-        this.scale.y = 50;
-    }
+        this.transition = null;
+        this.enabled = true;
 
-    apply() {
+        this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
         this.dizzyMap.x = canvas.scene.data.width / 2;
         this.dizzyMap.y = canvas.scene.data.height / 2;
-        canvas.background.addChild(this.dizzyMap);
-    }
-
-    update() {
-        if (this.enabled) {
-            console.log("Drawing Dizzy Filter");
-            Animation
-            let anim = {
-                ease: Linear.easeNone,
-                repeat: -1,
-                x: 256
-            }
-            this.transition = gsap.to(this.dizzyMap, 100, anim);
+        this.dizzyMap.anchor.set(0.5);
+        canvas.fxmaster.addChild(this.dizzyMap);
+        let anim = {
+            ease: Linear.easeNone,
+            repeat: -1,
+            x: 256
         }
+        this.transition = gsap.to(this.maskSprite, 50, anim);
     }
 
-    switch() {
-        this.enabled = !this.enabled;
-        this.update();
+    static get label() {
+        return "Dizzy";
+    }
+
+    play() {}
+
+    configure(opts) {
+        if (!opts) return;
+        const keys = Object.keys(opts);
+        for (let i = 0; i < keys.length; ++i) {
+            this[keys[i]] = opts[keys[i]];
+        }
+        this.play();
+    }
+
+    // So we can destroy object afterwards
+    stop() {
+        return new Promise((resolve, reject) => {
+            this.enabled = false;
+            this.transition.kill();
+            resolve();
+        });
     }
 }

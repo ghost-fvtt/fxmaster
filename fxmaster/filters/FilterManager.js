@@ -1,41 +1,37 @@
 class FilterManager {
     constructor() {
-        this.filters = {
-            DizzyFilter: new DizzyFilter
-        }
+        this.filters = {}
     }
 
-    apply() {
-        const keys = Object.keys(this.filters);
-        for (let i = 0; i < keys.length; ++i) {
-            this.filters[keys[i]].apply();
-        }
-        // canvas.background.filters = Object.values(this.filters);
-        // canvas.tiles.filters = Object.values(this.filters);
-        // canvas.effects.filters = Object.values(this.filters);
-        // canvas.tokens.filters = Object.values(this.filters);
+    activate() {
+        this.update();
+    }
+
+    addFilter(filter, options) {
+        this.filterInfos[randomID()] = {
+            type: filter,
+            options: options
+        };
+        this.dump();
     }
 
     update() {
-        // const flags = canvas.scene.data.flags.fxmaster;
-        // if (flags && flags.filters) {
-        //     this.filterInfos = flags.filters;
-        // } else if (game.user.isGM) {
-        //     canvas.scene.setFlag("fxmaster", "filters", {});
-        // }
-        const keys = Object.keys(this.filters);
-        for (let i = 0; i < keys.length; ++i) {
-            this.filters[keys[i]].update();
+        const flags = canvas.scene.data.flags.fxmaster;
+        if (flags && flags.filters) {
+            this.filterInfos = flags.filters;
+        } else if (game.user.isGM) {
+            canvas.scene.setFlag("fxmaster", "filters", {});
         }
-    }
-
-    hardRefresh() {
-        this.update();
-        if (!this.filterInfos) return;
         const keys = Object.keys(this.filterInfos);
         for (let i = 0; i < keys.length; ++i) {
-            Object.assign(this.filters[keys[i]], this.filterInfos[keys[i]]);
+            if (this.filters[keys[i]]) {
+                continue;
+            }
+            this.filters[keys[i]] = new CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type](this.filterInfos[keys[i]].options);
         }
+        canvas.background.filters = Object.values(this.filters);
+        canvas.tiles.filters = Object.values(this.filters);
+        canvas.tokens.filters = Object.values(this.filters);
     }
 
     dump() {
@@ -44,9 +40,29 @@ class FilterManager {
         });
     }
 
+    clear() {
+        const keys = Object.keys(this.filters);
+        for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]].stop().then((_, res) => {
+                delete this.filters[keys[i]];
+            });
+        }
+    }
+
     switch(filter) {
-        this.filters[filter].switch();
+        const keys = Object.keys(this.filters);
+        for (let i = 0; i < keys.length; ++i) {
+            console.log(this.filters[keys[i]]);
+            if (this.filterInfos[keys[i]].type == filter) {
+                delete this.filterInfos[keys[i]];
+                this.filters[keys[i]].stop().then((_, res) => {
+                    delete this.filters[keys[i]];
+                });
+                return;
+            }
+        }
+        this.addFilter(filter, {});
     }
 }
 
-// const filterManager = new FilterManager();
+const filterManager = new FilterManager();

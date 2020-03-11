@@ -12,16 +12,18 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     icon: "fas fa-cloud-rain",
                     onClick: () => {
                         new EffectsConfig().render(true);
-                    }
+                    },
+                    button: true
                 },
-                // {
-                //     name: "underwater",
-                //     title: "CONTROLS.Underwater",
-                //     icon: "fas fa-water",
-                //     onClick: () => {
-                //         filterManager.switch("DizzyFilter");
-                //     }
-                // },
+                {
+                    name: "underwater",
+                    title: "CONTROLS.Underwater",
+                    icon: "fas fa-water",
+                    onClick: () => {
+                        filterManager.switch("dizzy");
+                    },
+                    button: true
+                },
                 // {
                 //     name: "specialfx",
                 //     title: "CONTROLS.SpecialFX",
