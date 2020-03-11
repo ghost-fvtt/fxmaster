@@ -1,4 +1,4 @@
-class FXMasterLayer extends CanvasLayer {
+export class FXMasterLayer extends CanvasLayer {
 
   constructor() {
     super();

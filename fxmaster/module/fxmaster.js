@@ -1,3 +1,15 @@
+import {BubblesWeatherEffect} from "../effects/BubblesWeatherEffect.js";
+import {CloudsWeatherEffect} from "../effects/CloudsWeatherEffect.js";
+import {EmbersWeatherEffect} from "../effects/EmbersWeatherEffect.js";
+import {CrowsWeatherEffect} from "../effects/CrowsWeatherEffect.js";
+import {BatsWeatherEffect} from "../effects/BatsWeatherEffect.js";
+import {FogWeatherEffect} from "../effects/FogWeatherEffect.js";
+import {RaintopWeatherEffect} from "../effects/RaintopWeatherEffect.js";
+import {FXColorFilter} from "../filters/FXColorFilter.js";
+import {FXDizzyFilter} from "../filters/FXDizzyFilter.js";
+import {FXMasterLayer} from "../effects/FXMasterLayer.js";
+import {filterManager} from "../filters/FilterManager.js";
+
 Hooks.once("init", function () {
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
@@ -14,7 +26,8 @@ Hooks.once("init", function () {
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
   mergeObject(CONFIG.fxmaster, {
     filters: {
-      dizzy: FXDizzyFilter
+      dizzy: FXDizzyFilter,
+      color: FXColorFilter
     }
   });
 });
@@ -25,6 +38,7 @@ Hooks.once('canvasInit', (canvas) => {
 
 Hooks.on('canvasInit', canvas => {
   filterManager.clear();
+  filterManager.switch("color");
 });
 
 Hooks.on('canvasReady', (_) => {

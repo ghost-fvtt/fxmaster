@@ -1,10 +1,9 @@
-class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
+export class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
     constructor(options) {
         let dizzyMap = new PIXI.Sprite.from("/modules/fxmaster/filters/assets/clouds.png");
         super(dizzyMap);
         this.dizzyMap = dizzyMap;
         this.transition = null;
-        this.enabled = true;
 
         this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
         this.dizzyMap.x = canvas.scene.data.width / 2;
@@ -17,13 +16,18 @@ class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
             x: 256
         }
         this.transition = gsap.to(this.maskSprite, 50, anim);
+
+        this.enabled = false;
+        this.play();
     }
 
     static get label() {
         return "Dizzy";
     }
 
-    play() {}
+    play() {
+        this.enabled = true;
+    }
 
     configure(opts) {
         if (!opts) return;

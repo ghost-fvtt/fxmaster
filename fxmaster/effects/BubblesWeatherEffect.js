@@ -1,4 +1,4 @@
-class BubblesWeatherEffect extends SpecialEffect {
+export class BubblesWeatherEffect extends SpecialEffect {
     static get label() {
         return "Bubbles";
     }

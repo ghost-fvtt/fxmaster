@@ -1,6 +1,6 @@
 
 
-class CrowsWeatherEffect extends SpecialEffect {
+export class CrowsWeatherEffect extends SpecialEffect {
     static get label() {
         return "Crows";
     }

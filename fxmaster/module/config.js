@@ -30,7 +30,7 @@ Handlebars.registerHelper('Config', function (key, name) {
     return null;
 });
 
-class EffectsConfig extends FormApplication {
+export class EffectsConfig extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["form"],

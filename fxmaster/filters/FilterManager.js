@@ -62,7 +62,7 @@ class FilterManager {
         this.dump();
     }
 
-    switch(filter) {
+    switch(filter, opts) {
         const keys = Object.keys(this.filters);
         for (let i = 0; i < keys.length; ++i) {
             if (this.filterInfos[keys[i]].type == filter) {
@@ -74,8 +74,8 @@ class FilterManager {
                 return;
             }
         }
-        this.addFilter(filter, {});
+        this.addFilter(filter, opts);
     }
 }
 
-const filterManager = new FilterManager();
+export const filterManager = new FilterManager();
