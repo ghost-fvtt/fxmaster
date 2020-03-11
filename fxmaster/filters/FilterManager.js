@@ -5,7 +5,22 @@ class FilterManager {
     }
 
     activate() {
-        this.update();
+        const flags = canvas.scene.data.flags.fxmaster;
+        if (flags && flags.filters) {
+            this.filterInfos = flags.filters;
+        }
+
+        // create new effects
+        const keys = Object.keys(this.filterInfos);
+        for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]] = new CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type](this.filterInfos[keys[i]].options);
+            this.filters[keys[i]].skipFading = true;
+            this.filters[keys[i]].play();
+        }
+
+        canvas.background.filters = Object.values(this.filters);
+        canvas.tiles.filters = Object.values(this.filters);
+        canvas.tokens.filters = Object.values(this.filters);
     }
 
     update() {
@@ -34,6 +49,7 @@ class FilterManager {
                 continue;
             }
             this.filters[keys[i]] = new CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type](this.filterInfos[keys[i]].options);
+            this.filters[keys[i]].play();
         }
 
         canvas.background.filters = Object.values(this.filters);

@@ -3,7 +3,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         super();
         this.options = options;
         this.enabled = false;
-        this.play();
+        this.skipFading = false;
     }
 
     static get label() {
@@ -12,6 +12,13 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
 
     play() {
         this.enabled = true;
+        if (this.skipFading) {
+            this.skipFading = false;
+            this.blue = this.options.blue;
+            this.red = this.options.red;
+            this.green = this.options.green;
+            return;
+        }
         let anim = {
             ease: Linear.easeNone,
             repeat: 0,
@@ -27,6 +34,10 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
     // So we can destroy object afterwards
     stop() {
         return new Promise((resolve, reject) => {
+            if (this.skipFading) {
+                this.enabled = false;
+                resolve();
+            }
             let anim = {
                 ease: Linear.easeNone,
                 repeat: 0,
