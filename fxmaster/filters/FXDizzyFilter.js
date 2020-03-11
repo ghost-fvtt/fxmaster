@@ -9,15 +9,14 @@ export class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
         this.dizzyMap.x = canvas.scene.data.width / 2;
         this.dizzyMap.y = canvas.scene.data.height / 2;
         this.dizzyMap.anchor.set(0.5);
-        canvas.fxmaster.addChild(this.dizzyMap);
+        canvas.background.addChild(this.dizzyMap);
+        this.enabled = false;
         let anim = {
             ease: Linear.easeNone,
             repeat: -1,
             x: 256
         }
-        this.transition = gsap.to(this.maskSprite, 50, anim);
-
-        this.enabled = false;
+        this.transition = gsap.to(this.maskSprite, 40, anim);
         this.play();
     }
 
@@ -41,8 +40,8 @@ export class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
     // So we can destroy object afterwards
     stop() {
         return new Promise((resolve, reject) => {
-            this.enabled = false;
             this.transition.kill();
+            this.enabled = false;
             resolve();
         });
     }

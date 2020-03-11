@@ -1,5 +1,6 @@
 import { filterManager } from "../filters/FilterManager.js";
 import { EffectsConfig } from "./config.js";
+import { ColorizeConfig } from "./config.js";
 
 Hooks.on('getSceneControlButtons', (controls) => {
     if (game.user.isGM) {
@@ -23,8 +24,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     title: "CONTROLS.Colorize",
                     icon: "fas fa-palette",
                     onClick: () => {
-                        
-                        filterManager.switch("color");
+                        new ColorizeConfig().render(true);
                     },
                     button: true
                 },
@@ -33,7 +33,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                     title: "CONTROLS.Underwater",
                     icon: "fas fa-water",
                     onClick: () => {
-                        filterManager.switch("dizzy");
+                        filterManager.switch("dizzy", null, {});
                     },
                     button: true
                 },

@@ -1,8 +1,8 @@
 {
   "name": "fxmaster",
   "title": "FXMaster",
-  "description": "<p>Adds various weather effects</p>",
-  "version": "0.4.1",
+  "description": "<p>Adds various weather and filter effects</p>",
+  "version": "0.5.0",
   "author": "U~man",
   "scripts": [
     "libs/gsap/CSSRulePlugin.min.js",
@@ -51,5 +51,5 @@
   "url": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster",
   "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/fxmaster/module.json",
   "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/jobs/artifacts/master/raw/fxmaster.zip?job=build",
-  "minimumCoreVersion": "0.5.0"
+  "minimumCoreVersion": "0.5.1"
 }

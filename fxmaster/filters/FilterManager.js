@@ -18,6 +18,8 @@ class FilterManager {
         const effkeys = Object.keys(this.filters);
         for (let i = 0; i < effkeys.length; ++i) {
             if (this.filterInfos[effkeys[i]]) {
+                this.filters[effkeys[i]].options = this.filterInfos[effkeys[i]].options;
+                this.filters[effkeys[i]].play();
                 continue;
             }
             this.filters[effkeys[i]].stop().then((_, res) => {
@@ -62,10 +64,15 @@ class FilterManager {
         this.dump();
     }
 
-    switch(filter, opts) {
+    switch (filter, state, opts) {
         const keys = Object.keys(this.filters);
         for (let i = 0; i < keys.length; ++i) {
             if (this.filterInfos[keys[i]].type == filter) {
+                if (state === true) {
+                    this.filterInfos[keys[i]].options = opts;
+                    this.dump();
+                    return;
+                }
                 delete this.filterInfos[keys[i]];
                 this.filters[keys[i]].stop().then((_, res) => {
                     delete this.filters[keys[i]];
@@ -74,7 +81,9 @@ class FilterManager {
                 return;
             }
         }
-        this.addFilter(filter, opts);
+        if (state === true || state === null) {
+            this.addFilter(filter, opts);
+        }
     }
 }
 

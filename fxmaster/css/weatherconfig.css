@@ -4,9 +4,14 @@
     list-style: none;
 }
 
-.fxmaster.directory-list {
+.fxmaster.effects.directory-list {
     overflow-y: auto;
     height: 370px;
+}
+
+.fxmaster.filters.directory-list {
+    overflow-y: auto;
+    height: 35px;
 }
 
 .fxmaster .config.collapsible.collapsed {
