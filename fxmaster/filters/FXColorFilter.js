@@ -29,14 +29,19 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         this.transition = gsap.to(this, 4, anim);
     }
 
-    configure(opts) {}
+    configure(opts) { }
 
     // So we can destroy object afterwards
     stop() {
         return new Promise((resolve, reject) => {
             if (this.skipFading) {
+                this.skipFading = false;
                 this.enabled = false;
+                this.red = 1;
+                this.blue = 1;
+                this.green = 1;
                 resolve();
+                return;
             }
             let anim = {
                 ease: Linear.easeNone,

@@ -80,24 +80,26 @@ class FilterManager {
         this.dump();
     }
 
-    switch (filter, state, opts) {
+    switch(filter, activate, opts) {
         const keys = Object.keys(this.filters);
+        let count = 0;
         for (let i = 0; i < keys.length; ++i) {
             if (this.filterInfos[keys[i]].type == filter) {
-                if (state === true) {
+                count++;
+                if (activate === true) {
                     this.filterInfos[keys[i]].options = opts;
                     this.dump();
-                    return;
+                    count++;
+                    continue;
                 }
-                delete this.filterInfos[keys[i]];
                 this.filters[keys[i]].stop().then((_, res) => {
                     delete this.filters[keys[i]];
                 });
+                delete this.filterInfos[keys[i]];
                 this.dump();
-                return;
             }
         }
-        if (state === true || state === null) {
+        if (count == 0 && (activate === true || activate === null)) {
             this.addFilter(filter, opts);
         }
     }
