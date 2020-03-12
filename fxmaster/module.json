@@ -2,7 +2,7 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "U~man",
   "scripts": [
     "libs/gsap/CSSRulePlugin.min.js",
