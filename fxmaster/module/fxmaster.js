@@ -57,7 +57,7 @@ Hooks.once("init", function () {
 Hooks.once('canvasInit', (canvas) => {
     // Migration
     let version = canvas.scene.getFlag('fxmaster', 'version');
-    if (version !== '0.5.1' && canvas.scene.getFlag('fxmaster', 'filters') !== null) {
+    if (version !== '0.5.1') {
         ui.notifications.info("FXMaster, due to recent breaking changes, filters will be cleared");
         game.scenes.entities.forEach(scene => {
             scene.setFlag('fxmaster', 'filters', null);
