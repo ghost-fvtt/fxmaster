@@ -1,6 +1,6 @@
 
 
-class BatsWeatherEffect extends SpecialEffect {
+export class BatsWeatherEffect extends SpecialEffect {
     static get label() {
         return "Bats";
     }

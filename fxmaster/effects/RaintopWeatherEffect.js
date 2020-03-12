@@ -1,4 +1,4 @@
-class RaintopWeatherEffect extends SpecialEffect {
+export class RaintopWeatherEffect extends SpecialEffect {
     static get label() {
         return "Topdown Rain";
     }

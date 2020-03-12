@@ -1,4 +1,4 @@
-class FogWeatherEffect extends SpecialEffect {
+export class FogWeatherEffect extends SpecialEffect {
     static get label() {
         return "Fog";
     }

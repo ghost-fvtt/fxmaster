@@ -1,10 +1,22 @@
 {
   "name": "fxmaster",
   "title": "FXMaster",
-  "description": "<p>Adds various weather effects</p>",
-  "version": "0.4.1",
+  "description": "<p>Adds various weather and filter effects</p>",
+  "version": "0.5.0",
   "author": "U~man",
   "scripts": [
+    "libs/gsap/CSSRulePlugin.min.js",
+    "libs/gsap/Draggable.min.js",
+    "libs/gsap/EaselPlugin.min.js",
+    "libs/gsap/EasePack.min.js",
+    "libs/gsap/gsap.min.js",
+    "libs/filters/pixi-filters.js",
+    "libs/gsap/MotionPathPlugin.min.js",
+    "libs/gsap/PixiPlugin.min.js",
+    "libs/gsap/ScrollToPlugin.min.js",
+    "libs/gsap/TextPlugin.min.js"
+  ],
+  "esmodules": [
     "effects/BubblesWeatherEffect.js",
     "effects/CloudsWeatherEffect.js",
     "effects/EmbersWeatherEffect.js",
@@ -13,23 +25,12 @@
     "effects/FogWeatherEffect.js",
     "effects/RaintopWeatherEffect.js",
     "effects/FXMasterLayer.js",
-    "filters/DizzyFilter.js",
-    "filters/FilterManager.js",
     "module/controls.js",
     "module/config.js",
     "module/fxmaster.js",
-    "libs/filters/pixi-filters.js",
-    "libs/gsap/CSSRulePlugin.min.js",
-    "libs/gsap/Draggable.min.js",
-    "libs/gsap/EaselPlugin.min.js",
-    "libs/gsap/EasePack.min.js",
-    "libs/gsap/gsap.min.js",
-    "libs/gsap/MotionPathPlugin.min.js",
-    "libs/gsap/PixiPlugin.min.js",
-    "libs/gsap/ScrollToPlugin.min.js",
-    "libs/gsap/TextPlugin.min.js"
-  ],
-  "esmodules": [
+    "filters/FXDizzyFilter.js",
+    "filters/FilterManager.js",
+    "filters/FXColorFilter.js"
   ],
   "styles": [
     "css/weatherconfig.css"
@@ -50,5 +51,5 @@
   "url": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster",
   "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/fxmaster/module.json",
   "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/jobs/artifacts/master/raw/fxmaster.zip?job=build",
-  "minimumCoreVersion": "0.5.0"
+  "minimumCoreVersion": "0.5.1"
 }

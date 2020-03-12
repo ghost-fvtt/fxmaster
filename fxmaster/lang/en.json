@@ -1,10 +1,12 @@
 {
     "WEATHERMANAGE.Title": "Weather Effects Management",
+    "FILTERMANAGE.Title": "Filter Effects Management",
     "CONTROLS.Effects": "Effect Controls",
     "CONTROLS.Weather": "Weather Controls",
     "CONTROLS.Daylight": "Daylight Filter",
     "CONTROLS.Underwater": "Underwater Filter",
     "CONTROLS.SpecialFX": "Special Effects",
+    "CONTROLS.Colorize": "Colorize Effects",
     "FXMASTER.Density": "Density",
     "FXMASTER.Tint": "Tint",
     "FXMASTER.Scale": "Scale",

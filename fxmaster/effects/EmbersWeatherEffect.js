@@ -1,6 +1,6 @@
 
 
-class EmbersWeatherEffect extends SpecialEffect {
+export class EmbersWeatherEffect extends SpecialEffect {
     static get label() {
         return "Embers";
     }
