@@ -66,6 +66,7 @@ class FilterManager {
     clear() {
         const keys = Object.keys(this.filters);
         for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]].skipFading = true;
             this.filters[keys[i]].stop().then((_, res) => {
                 delete this.filters[keys[i]];
             });
@@ -84,7 +85,7 @@ class FilterManager {
         const keys = Object.keys(this.filters);
         let count = 0;
         for (let i = 0; i < keys.length; ++i) {
-            if (this.filterInfos[keys[i]].type == filter) {
+            if (this.filterInfos[keys[i]] && this.filterInfos[keys[i]].type == filter) {
                 count++;
                 if (activate === true) {
                     this.filterInfos[keys[i]].options = opts;

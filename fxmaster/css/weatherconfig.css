@@ -5,7 +5,7 @@
 }
 
 .fxmaster.effects.directory-list {
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 370px;
 }
 
@@ -14,8 +14,11 @@
     height: 35px;
 }
 
-.fxmaster .config.collapsible.collapsed {
+.fxmaster .config.collapsible {
     padding: 0;
+}
+
+.fxmaster .config.collapsible.collapsed {
     display: none;
     overflow: hidden;
 }
@@ -28,8 +31,4 @@
 
 .fxmaster .config label:hover {
     text-shadow: 0 0 4px #ff6400;
-}
-
-.fxmaster .config.weather input[type=checkbox].effect {
-    display: none;
 }
