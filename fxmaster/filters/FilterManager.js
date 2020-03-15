@@ -66,6 +66,7 @@ class FilterManager {
     clear() {
         const keys = Object.keys(this.filters);
         for (let i = 0; i < keys.length; ++i) {
+            this.filters[keys[i]].skipFading = true;
             this.filters[keys[i]].stop().then((_, res) => {
                 delete this.filters[keys[i]];
             });

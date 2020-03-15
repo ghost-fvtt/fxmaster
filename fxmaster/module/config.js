@@ -158,7 +158,7 @@ export class ColorizeConfig extends FormApplication {
             popOut: true,
             editable: game.user.isGM,
             width: 300,
-            height: 135,
+            height: 140,
             template: "modules/fxmaster/templates/colorize-config.html",
             id: "filter-config",
             title: game.i18n.localize("FILTERMANAGE.Title")
