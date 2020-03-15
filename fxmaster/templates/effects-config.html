@@ -2,11 +2,10 @@
     <div class="directory-list effects fxmaster">
         {{#each effects}}
         <li class="directory-item config weather">
-            <input type='checkbox' name='{{this.label}}' id="{{this.label}}" class="effect"
-                {{checked (isEffectActive this.label)}} />
             <header class="flexrow">
-                <label for="{{this.label}}" class="weather-collapse">{{this.label}} <i
-                        class="fa fa-angle-down"></i></label>
+                <label class="weather-collapse">{{this.label}} <i class="fa fa-angle-down"></i></label>
+                <input type='checkbox' name='{{this.label}}' id="{{this.label}}" class="effect"
+                    {{checked (isEffectActive this.label)}} />
             </header>
             {{#if (isEffectActive this.label)}}
             <ol class="config collapsible">
@@ -41,7 +40,7 @@
                         <input class="flex2" type='color' name='{{this.label}}_tint'
                             value="{{Config 'tint' this.label}}" />
                         {{else}}
-                        <input class="flex2" type='color' name='{{this.label}}_tint'/>
+                        <input class="flex2" type='color' name='{{this.label}}_tint' />
                         {{/if}}
                     </li>
                 </ol>

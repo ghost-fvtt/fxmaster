@@ -17,6 +17,7 @@ export class FXMasterLayer extends CanvasLayer {
     /* -------------------------------------------- */
 
     updateMask() {
+        this.visible = true;
         // Setup scene mask
         if (this.mask)
             this.removeChild(this.mask);
@@ -39,6 +40,7 @@ export class FXMasterLayer extends CanvasLayer {
             this.effects[effKeys[i]].fx.stop();
             delete this.effects[effKeys[i]];
         }
+        this.visible = false;
         return super.tearDown();
     }
 

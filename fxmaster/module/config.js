@@ -81,7 +81,7 @@ export class EffectsConfig extends FormApplication {
      */
     _onWeatherCollapse(event) {
         let li = $(event.currentTarget).parents(".config.weather"),
-            expanded = li.children("input[type=checkbox]:checked").length != 0;
+            expanded = !li.children(".config.collapsible").hasClass("collapsed");
         this._collapse(li, expanded);
     }
 
@@ -97,21 +97,20 @@ export class EffectsConfig extends FormApplication {
     _collapse(li, collapse, speed = 250) {
         li = $(li);
         let ol = li.children(".config.collapsible"),
-            icon = li.find(".weather.config .collapsible i.fa");
-
+            icon = li.find("header i.fa");
         // Collapse the Playlist
         if (collapse) {
             ol.slideUp(speed, () => {
-                li.addClass("collapsed");
-                icon.removeClass("fa-angle-down").addClass("fa-angle-up");
+                ol.addClass("collapsed");
+                icon.removeClass("fa-angle-up").addClass("fa-angle-down");
             });
         }
 
         // Expand the Playlist
         else {
             ol.slideDown(speed, () => {
-                li.removeClass("collapsed");
-                icon.removeClass("fa-angle-up").addClass("fa-angle-down");
+                ol.removeClass("collapsed");
+                icon.removeClass("fa-angle-down").addClass("fa-angle-up");
             });
         }
     }

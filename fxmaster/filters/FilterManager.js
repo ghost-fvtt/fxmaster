@@ -84,7 +84,7 @@ class FilterManager {
         const keys = Object.keys(this.filters);
         let count = 0;
         for (let i = 0; i < keys.length; ++i) {
-            if (this.filterInfos[keys[i]].type == filter) {
+            if (this.filterInfos[keys[i]] && this.filterInfos[keys[i]].type == filter) {
                 count++;
                 if (activate === true) {
                     this.filterInfos[keys[i]].options = opts;
