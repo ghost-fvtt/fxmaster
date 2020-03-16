@@ -192,7 +192,7 @@ export class ColorizeConfig extends FormApplication {
    */
   _updateObject(_, formData) {
     let rgb = hexToRGB(colorStringToHex(formData.tint));
-    filterManager.switch("color", formData.apply_tint, {
+    filterManager.switch("core_color", "color", formData.apply_tint, {
       red: rgb[0],
       green: rgb[1],
       blue: rgb[2]

@@ -77,38 +77,35 @@ class FilterManager {
     }
   }
 
-  addFilter(filter, options) {
-    this.filterInfos[randomID()] = {
+  addFilter(name, filter, options) {
+    if (!name) {
+      name = randomID();
+    }
+    this.filterInfos[name] = {
       type: filter,
       options: options
     };
     this.dump();
   }
 
-  switch(filter, activate, opts) {
-    const keys = Object.keys(this.filters);
-    let count = 0;
-    for (let i = 0; i < keys.length; ++i) {
-      if (
-        this.filterInfos[keys[i]] &&
-        this.filterInfos[keys[i]].type == filter
-      ) {
-        count++;
-        if (activate === true) {
-          this.filterInfos[keys[i]].options = opts;
-          this.dump();
-          count++;
-          continue;
-        }
-        this.filters[keys[i]].stop().then((_, res) => {
-          delete this.filters[keys[i]];
-        });
-        delete this.filterInfos[keys[i]];
+  removeFilter(name) {
+    this.filters[name].stop().then((_, res) => {
+      delete this.filters[name];
+    });
+    delete this.filterInfos[name];
+    this.dump();
+  }
+
+  switch(name, filter, activate, opts) {
+    if (this.filterInfos[name]) {
+      if (activate == true) {
+        this.filterInfos[name].options = opts;
         this.dump();
+        return;
       }
-    }
-    if (count == 0 && (activate === true || activate === null)) {
-      this.addFilter(filter, opts);
+      this.removeFilter(name);
+    } else if (activate == true || activate == null) {
+      this.addFilter(name, filter, opts);
     }
   }
 }

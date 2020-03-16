@@ -33,7 +33,7 @@ Hooks.on("getSceneControlButtons", controls => {
           title: "CONTROLS.Underwater",
           icon: "fas fa-water",
           onClick: () => {
-            filterManager.switch("dizzy", null, {});
+            filterManager.switch("core_dizzy", "dizzy", null, {});
           },
           button: true
         }
