@@ -1,91 +1,107 @@
-import {
-    BubblesWeatherEffect
-} from "../effects/BubblesWeatherEffect.js";
-import {
-    CloudsWeatherEffect
-} from "../effects/CloudsWeatherEffect.js";
-import {
-    EmbersWeatherEffect
-} from "../effects/EmbersWeatherEffect.js";
-import {
-    CrowsWeatherEffect
-} from "../effects/CrowsWeatherEffect.js";
-import {
-    BatsWeatherEffect
-} from "../effects/BatsWeatherEffect.js";
-import {
-    FogWeatherEffect
-} from "../effects/FogWeatherEffect.js";
-import {
-    RaintopWeatherEffect
-} from "../effects/RaintopWeatherEffect.js";
-import {
-    FXColorFilter
-} from "../filters/FXColorFilter.js";
-import {
-    FXDizzyFilter
-} from "../filters/FXDizzyFilter.js";
-import {
-    FXMasterLayer
-} from "../effects/FXMasterLayer.js";
-import {
-    filterManager
-} from "../filters/FilterManager.js";
+import { BubblesWeatherEffect } from "../effects/BubblesWeatherEffect.js";
+import { CloudsWeatherEffect } from "../effects/CloudsWeatherEffect.js";
+import { EmbersWeatherEffect } from "../effects/EmbersWeatherEffect.js";
+import { CrowsWeatherEffect } from "../effects/CrowsWeatherEffect.js";
+import { BatsWeatherEffect } from "../effects/BatsWeatherEffect.js";
+import { FogWeatherEffect } from "../effects/FogWeatherEffect.js";
+import { RaintopWeatherEffect } from "../effects/RaintopWeatherEffect.js";
+import { FXColorFilter } from "../filters/FXColorFilter.js";
+import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
+import { FXMasterLayer } from "../effects/FXMasterLayer.js";
+import { filterManager } from "../filters/FilterManager.js";
 
-Hooks.once("init", function () {
-    // Adding custom weather effects
-    mergeObject(CONFIG.weatherEffects, {
-        bubbles: BubblesWeatherEffect,
-        clouds: CloudsWeatherEffect,
-        embers: EmbersWeatherEffect,
-        crows: CrowsWeatherEffect,
-        bats: BatsWeatherEffect,
-        fog: FogWeatherEffect,
-        raintop: RaintopWeatherEffect
-    });
+Hooks.once("init", function() {
+  // Adding custom weather effects
+  mergeObject(CONFIG.weatherEffects, {
+    bubbles: BubblesWeatherEffect,
+    clouds: CloudsWeatherEffect,
+    embers: EmbersWeatherEffect,
+    crows: CrowsWeatherEffect,
+    bats: BatsWeatherEffect,
+    fog: FogWeatherEffect,
+    raintop: RaintopWeatherEffect
+  });
 
-    // Adding filters
-    if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-    mergeObject(CONFIG.fxmaster, {
-        filters: {
-            dizzy: FXDizzyFilter,
-            color: FXColorFilter
-        }
-    });
-});
-
-Hooks.once('canvasInit', (canvas) => {
-    // Migration
-    let version = canvas.scene.getFlag('fxmaster', 'version');
-    if (version !== '0.5.1') {
-        ui.notifications.info("FXMaster, due to recent breaking changes, filters will be cleared");
-        game.scenes.entities.forEach(scene => {
-            scene.setFlag('fxmaster', 'filters', null);
-        });
+  // Adding filters
+  if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
+  mergeObject(CONFIG.fxmaster, {
+    filters: {
+      underwater: FXUnderwaterFilter,
+      color: FXColorFilter
     }
+  });
+});
 
-    // Update version
+Hooks.once("canvasInit", canvas => {
+  // Migration
+  let version = canvas.scene.getFlag("fxmaster", "version");
+  if (version !== "0.5.1") {
+    ui.notifications.info(
+      "FXMaster, due to recent breaking changes, filters will be cleared"
+    );
     game.scenes.entities.forEach(scene => {
-        scene.setFlag('fxmaster', 'version', '0.5.1');
+      scene.setFlag("fxmaster", "filters", null);
     });
+  }
 
-    canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
+  // Update version
+  game.scenes.entities.forEach(scene => {
+    scene.setFlag("fxmaster", "version", "0.5.1");
+  });
+
+  canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
-Hooks.on('canvasInit', canvas => {
-    filterManager.clear();
+Hooks.on("canvasInit", canvas => {
+  filterManager.clear();
 });
 
-Hooks.on('canvasReady', (_) => {
-    filterManager.activate();
-    canvas.fxmaster.updateMask();
-    canvas.fxmaster.drawWeather();
+Hooks.on("canvasReady", _ => {
+  filterManager.activate();
+  canvas.fxmaster.updateMask();
+  canvas.fxmaster.drawWeather();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
-    if (!hasProperty(data, 'flags.fxmaster.filters')) {
-        canvas.fxmaster.updateMask();
-        canvas.fxmaster.drawWeather();
-    }
-    filterManager.update();
+  if (!hasProperty(data, "flags.fxmaster.filters")) {
+    canvas.fxmaster.updateMask();
+    canvas.fxmaster.drawWeather();
+  }
+  filterManager.update();
+});
+
+// Hooks API
+Hooks.on("switchFilter", params => {
+  //params.name
+  // params.type
+  // params.options
+  filterManager.switch(params.name, params.type, null, params.options);
+});
+
+Hooks.on("switchWeather", params => {
+  // params.name
+  // params.type
+  // params.options
+
+  let newEffect = {};
+  newEffect[params.name] = {
+    type: params.type,
+    options: params.options
+  };
+
+  let flags = canvas.scene.getFlag("fxmaster", "effects");
+
+  if (!flags) flags = {};
+  let effects = {};
+
+  if (hasProperty(flags, params.name)) {
+    effects = flags;
+    delete effects[params.name];
+  } else {
+    effects = mergeObject(flags, newEffect);
+  }
+
+  canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
+    canvas.scene.setFlag("fxmaster", "effects", effects);
+  });
 });
