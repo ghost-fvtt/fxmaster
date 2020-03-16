@@ -25,7 +25,7 @@ Handlebars.registerHelper("Config", function(key, name) {
     for (let i = 0; i < objKeys.length; ++i) {
       let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
       if (weather.label === name) {
-        return flags.effects[objKeys[i]].config[key];
+        return flags.effects[objKeys[i]].options[key];
       }
     }
   }
@@ -128,7 +128,7 @@ export class EffectsConfig extends FormApplication {
       if (formData[label]) {
         effects[randomID()] = {
           type: key,
-          config: {
+          options: {
             density: formData[label + "_density"],
             speed: formData[label + "_speed"],
             scale: formData[label + "_scale"],

@@ -79,38 +79,46 @@ export class FXMasterLayer extends CanvasLayer {
 
   configureEffect(id) {
     const flags = canvas.scene.data.flags.fxmaster;
+
     // Adjust density
-    let factor = (2 * flags.effects[id].config.density) / 100;
-    this.effects[id].fx.emitters.forEach(el => {
-      el.frequency *= factor;
-      el.maxParticles *= factor;
-    });
+    if (hasProperty(flags, "density")) {
+      let factor = (2 * flags.effects[id].options.density) / 100;
+      this.effects[id].fx.emitters.forEach(el => {
+        el.frequency *= factor;
+        el.maxParticles *= factor;
+      });
+    }
+
     // Adjust scale
-    factor = (2 * flags.effects[id].config.scale) / 100;
-    this.effects[id].fx.emitters.forEach(el => {
-      el.startScale.value *= factor;
-      let node = el.startScale.next;
-      while (node) {
-        node.value *= factor;
-        node = node.next;
-      }
-    });
+    if (hasProperty(flags, "scale")) {
+      factor = (2 * flags.effects[id].options.scale) / 100;
+      this.effects[id].fx.emitters.forEach(el => {
+        el.startScale.value *= factor;
+        let node = el.startScale.next;
+        while (node) {
+          node.value *= factor;
+          node = node.next;
+        }
+      });
+    }
 
     // Adjust speed
-    factor = (2 * flags.effects[id].config.speed) / 100;
-    this.effects[id].fx.emitters.forEach(el => {
-      el.startSpeed.value *= factor;
-      let node = el.startSpeed.next;
-      while (node) {
-        node.value *= factor;
-        node = node.next;
-      }
-    });
+    if (hasProperty(flags, "speed")) {
+      factor = (2 * flags.effects[id].options.speed) / 100;
+      this.effects[id].fx.emitters.forEach(el => {
+        el.startSpeed.value *= factor;
+        let node = el.startSpeed.next;
+        while (node) {
+          node.value *= factor;
+          node = node.next;
+        }
+      });
+    }
 
     // Adjust tint
-    if (flags.effects[id].config.apply_tint) {
+    if (hasProperty(flags, "apply_tint")) {
       this.effects[id].fx.emitters.forEach(el => {
-        let colors = hexToRGB(colorStringToHex(flags.effects[id].config.tint));
+        let colors = hexToRGB(colorStringToHex(flags.effects[id].options.tint));
         el.startColor.value = {
           r: colors[0] * 255,
           g: colors[1] * 255,
@@ -125,10 +133,12 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust direction
-    factor = (360 * (flags.effects[id].config.direction - 50)) / 100;
-    this.effects[id].fx.emitters.forEach(el => {
-      el.minStartRotation += factor;
-      el.maxStartRotation += factor;
-    });
+    if (hasProperty(flags, "direction")) {
+      factor = (360 * (flags.effects[id].options.direction - 50)) / 100;
+      this.effects[id].fx.emitters.forEach(el => {
+        el.minStartRotation += factor;
+        el.maxStartRotation += factor;
+      });
+    }
   }
 }

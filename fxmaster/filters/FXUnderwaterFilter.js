@@ -1,4 +1,4 @@
-export class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
+export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   constructor(options) {
     let dizzyMap = new PIXI.Sprite.from(
       "/modules/fxmaster/filters/assets/clouds.png"
@@ -23,7 +23,7 @@ export class FXDizzyFilter extends PIXI.filters.DisplacementFilter {
   }
 
   static get label() {
-    return "Dizzy";
+    return "Underwater";
   }
 
   play() {

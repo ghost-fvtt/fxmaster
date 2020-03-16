@@ -6,7 +6,7 @@ import { BatsWeatherEffect } from "../effects/BatsWeatherEffect.js";
 import { FogWeatherEffect } from "../effects/FogWeatherEffect.js";
 import { RaintopWeatherEffect } from "../effects/RaintopWeatherEffect.js";
 import { FXColorFilter } from "../filters/FXColorFilter.js";
-import { FXDizzyFilter } from "../filters/FXDizzyFilter.js";
+import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
 
@@ -26,7 +26,7 @@ Hooks.once("init", function() {
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
   mergeObject(CONFIG.fxmaster, {
     filters: {
-      dizzy: FXDizzyFilter,
+      underwater: FXUnderwaterFilter,
       color: FXColorFilter
     }
   });
@@ -68,4 +68,40 @@ Hooks.on("updateScene", (scene, data, options) => {
     canvas.fxmaster.drawWeather();
   }
   filterManager.update();
+});
+
+// Hooks API
+Hooks.on("switchFilter", params => {
+  //params.name
+  // params.type
+  // params.options
+  filterManager.switch(params.name, params.type, null, params.options);
+});
+
+Hooks.on("switchWeather", params => {
+  // params.name
+  // params.type
+  // params.options
+
+  let newEffect = {};
+  newEffect[params.name] = {
+    type: params.type,
+    options: params.options
+  };
+
+  let flags = canvas.scene.getFlag("fxmaster", "effects");
+
+  if (!flags) flags = {};
+  let effects = {};
+
+  if (hasProperty(flags, params.name)) {
+    effects = flags;
+    delete effects[params.name];
+  } else {
+    effects = mergeObject(flags, newEffect);
+  }
+
+  canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
+    canvas.scene.setFlag("fxmaster", "effects", effects);
+  });
 });
