@@ -5,14 +5,13 @@ class FilterManager {
   }
 
   activate() {
-    const flags = canvas.scene.data.flags.fxmaster;
-    if (flags && flags.filters) {
-      this.filterInfos = flags.filters;
-    }
+    this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
+    if (!this.filterInfos) this.filterInfos = {};
 
     // create new effects
     const keys = Object.keys(this.filterInfos);
     for (let i = 0; i < keys.length; ++i) {
+      if (!CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type]) continue;
       this.filters[keys[i]] = new CONFIG.fxmaster.filters[
         this.filterInfos[keys[i]].type
       ](this.filterInfos[keys[i]].options);
@@ -26,10 +25,8 @@ class FilterManager {
   }
 
   update() {
-    const flags = canvas.scene.data.flags.fxmaster;
-    if (flags && flags.filters) {
-      this.filterInfos = flags.filters;
-    }
+    this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
+    if (!this.filterInfos) this.filterInfos = {};
 
     // Clear unused effects
     const effkeys = Object.keys(this.filters);
@@ -44,16 +41,21 @@ class FilterManager {
       });
     }
 
-    // create new effects
-    const keys = Object.keys(this.filterInfos);
-    for (let i = 0; i < keys.length; ++i) {
-      if (this.filters[keys[i]]) {
-        continue;
+    if (this.filterInfos) {
+      // create new effects
+      const keys = Object.keys(this.filterInfos);
+      for (let i = 0; i < keys.length; ++i) {
+        if (
+          this.filters[keys[i]] ||
+          !CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type]
+        ) {
+          continue;
+        }
+        this.filters[keys[i]] = new CONFIG.fxmaster.filters[
+          this.filterInfos[keys[i]].type
+        ](this.filterInfos[keys[i]].options);
+        this.filters[keys[i]].play();
       }
-      this.filters[keys[i]] = new CONFIG.fxmaster.filters[
-        this.filterInfos[keys[i]].type
-      ](this.filterInfos[keys[i]].options);
-      this.filters[keys[i]].play();
     }
 
     canvas.background.filters = Object.values(this.filters);
@@ -62,8 +64,9 @@ class FilterManager {
   }
 
   dump() {
+    let newFilters = duplicate(this.filterInfos);
     canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
-      canvas.scene.setFlag("fxmaster", "filters", this.filterInfos);
+      canvas.scene.setFlag("fxmaster", "filters", newFilters);
     });
   }
 
@@ -71,7 +74,7 @@ class FilterManager {
     const keys = Object.keys(this.filters);
     for (let i = 0; i < keys.length; ++i) {
       this.filters[keys[i]].skipFading = true;
-      this.filters[keys[i]].stop().then((_, res) => {
+      this.filters[keys[i]].stop().then(_ => {
         delete this.filters[keys[i]];
       });
     }
@@ -81,6 +84,7 @@ class FilterManager {
     if (!name) {
       name = randomID();
     }
+    if (!this.filterInfos) this.filterInfos = {};
     this.filterInfos[name] = {
       type: filter,
       options: options
@@ -89,6 +93,7 @@ class FilterManager {
   }
 
   removeFilter(name) {
+    if (!this.filters[name]) return;
     this.filters[name].stop().then((_, res) => {
       delete this.filters[name];
     });
@@ -96,8 +101,20 @@ class FilterManager {
     this.dump();
   }
 
+  removeAll() {
+    if (!this.filters || !this.filterInfos) return;
+    let keys = Object.keys(this.filters);
+    for (let i = 0; i < keys.length; ++i) {
+      this.filters[keys[i]].stop().then((_, res) => {
+        delete this.filters[keys[i]];
+      });
+      delete this.filterInfos[keys[i]];
+    }
+    this.dump();
+  }
+
   switch(name, filter, activate, opts) {
-    if (this.filterInfos[name]) {
+    if (this.filterInfos && hasProperty(this.filterInfos, name)) {
       if (activate == true) {
         this.filterInfos[name].options = opts;
         this.dump();

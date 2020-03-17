@@ -7,10 +7,10 @@ export class RaintopWeatherEffect extends SpecialEffect {
 
   static get effectOptions() {
     const options = super.effectOptions;
-    options.density.min = 0.2;
-    options.density.value = 0.3;
-    options.density.max = 0.4;
-    options.density.step = 0.02;
+    options.density.min = 0.3;
+    options.density.value = 0.6;
+    options.density.max = 0.8;
+    options.density.step = 0.05;
     return options;
   }
 
@@ -31,8 +31,8 @@ export class RaintopWeatherEffect extends SpecialEffect {
       {
         spawnType: "ring",
         lifetime: {
-          min: 0.8,
-          max: 1
+          min: 0.3,
+          max: 0.7
         },
         speed: {
           start: d.width / 3,
@@ -45,7 +45,7 @@ export class RaintopWeatherEffect extends SpecialEffect {
           r: d.width / 2,
           minR: d.width / 4
         },
-        maxParticles: p,
+        maxParticles: 2 * p,
         frequency: 0.02
       },
       { inplace: false }

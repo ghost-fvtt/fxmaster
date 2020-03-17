@@ -33,22 +33,6 @@ Hooks.once("init", function() {
 });
 
 Hooks.once("canvasInit", canvas => {
-  // Migration
-  let version = canvas.scene.getFlag("fxmaster", "version");
-  if (version !== "0.5.1") {
-    ui.notifications.info(
-      "FXMaster, due to recent breaking changes, filters will be cleared"
-    );
-    game.scenes.entities.forEach(scene => {
-      scene.setFlag("fxmaster", "filters", null);
-    });
-  }
-
-  // Update version
-  game.scenes.entities.forEach(scene => {
-    scene.setFlag("fxmaster", "version", "0.5.1");
-  });
-
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
@@ -101,7 +85,5 @@ Hooks.on("switchWeather", params => {
     effects = mergeObject(flags, newEffect);
   }
 
-  canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
-    canvas.scene.setFlag("fxmaster", "effects", effects);
-  });
+  canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
 });

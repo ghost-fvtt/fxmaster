@@ -5,11 +5,11 @@ Handlebars.registerHelper("eq", function(a, b) {
 });
 
 Handlebars.registerHelper("isEffectActive", function(name) {
-  let flags = canvas.scene.data.flags.fxmaster;
-  if (flags && flags.effects) {
-    let objKeys = Object.keys(flags.effects);
+  let flags = canvas.scene.getFlag("fxmaster", "effects");
+  if (flags) {
+    let objKeys = Object.keys(flags);
     for (let i = 0; i < objKeys.length; ++i) {
-      let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
+      let weather = CONFIG.weatherEffects[flags[objKeys[i]].type];
       if (weather.label === name) {
         return true;
       }
@@ -24,7 +24,7 @@ Handlebars.registerHelper("Config", function(key, name) {
     let objKeys = Object.keys(flags.effects);
     for (let i = 0; i < objKeys.length; ++i) {
       let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
-      if (weather.label === name) {
+      if (weather.label === name && flags.effects[objKeys[i]].options) {
         return flags.effects[objKeys[i]].options[key];
       }
     }
@@ -139,7 +139,7 @@ export class EffectsConfig extends FormApplication {
         };
       }
     });
-    canvas.scene.setFlag("fxmaster", "effects", null).then(_ => {
+    canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
       canvas.scene.setFlag("fxmaster", "effects", effects);
     });
   }
@@ -192,11 +192,15 @@ export class ColorizeConfig extends FormApplication {
    */
   _updateObject(_, formData) {
     let rgb = hexToRGB(colorStringToHex(formData.tint));
-    filterManager.switch("core_color", "color", formData.apply_tint, {
-      red: rgb[0],
-      green: rgb[1],
-      blue: rgb[2]
-    });
+    if (formData.apply_tint) {
+      filterManager.switch("core_color", "color", formData.apply_tint, {
+        red: rgb[0],
+        green: rgb[1],
+        blue: rgb[2]
+      });
+    } else {
+      filterManager.removeFilter("core_color");
+    }
   }
 }
 
