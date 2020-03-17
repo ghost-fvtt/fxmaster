@@ -8,9 +8,12 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     this.transition = null;
 
     this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+    this.dizzyMap.anchor.set(0.5);
     this.dizzyMap.x = canvas.scene.data.width / 2;
     this.dizzyMap.y = canvas.scene.data.height / 2;
-    this.dizzyMap.anchor.set(0.5);
+    this.dizzyMap.scale.x = 4;
+    this.dizzyMap.scale.y = 4;
+    
     canvas.background.addChild(this.dizzyMap);
     this.enabled = false;
     let anim = {

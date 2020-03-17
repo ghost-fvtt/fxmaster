@@ -36,6 +36,23 @@ Hooks.on("getSceneControlButtons", controls => {
             filterManager.switch("core_underwater", "underwater", null, {});
           },
           button: true
+        },
+        {
+          name: "clearfx",
+          title: "CONTROLS.ClearFX",
+          icon: "fas fa-trash",
+          onClick: () => {
+            Dialog.confirm({
+              title: game.i18n.localize("FXMASTER.Delete"),
+              content: game.i18n.localize("FXMASTER.DeleteConfirm"),
+              yes: () => {
+                filterManager.removeAll();
+                canvas.scene.unsetFlag("fxmaster", "effects");
+              },
+              defaultYes: true
+            });
+          },
+          button: true
         }
       ]
     });

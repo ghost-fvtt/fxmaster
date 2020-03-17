@@ -7,9 +7,12 @@
     "CONTROLS.Underwater": "Filtre sous-marin",
     "CONTROLS.SpecialFX": "Effets spéciaux",
     "CONTROLS.Colorize": "Effets de coloration",
+    "CONTROLS.ClearFX": "Effacer les Effets et Filtres",
     "FXMASTER.Tint": "Teinte",
     "FXMASTER.Scale": "Échelle",
     "FXMASTER.Speed": "Vitesse",
     "FXMASTER.Direction": "Direction",
-    "FXMASTER.SaveChanges": "Sauvegarder les Modifications"
+    "FXMASTER.SaveChanges": "Sauvegarder les Modifications",
+    "FXMASTER.Delete": "Supprimer les Effets",
+    "FXMASTER.DeleteConfirm": "<p><strong>Êtes vous sûr?</strong> Tous les Effets seront supprimés.</p>"
 }
