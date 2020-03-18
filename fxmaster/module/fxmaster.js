@@ -10,6 +10,9 @@ import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
 
+import { ExplosionEffect } from "../effects/ExplosionEffect.js";
+import { FaeryEffect } from "../effects/FaeryEffect.js";
+
 Hooks.once("init", function() {
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
@@ -22,12 +25,16 @@ Hooks.once("init", function() {
     raintop: RaintopWeatherEffect
   });
 
-  // Adding filters
+  // Adding filters and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
   mergeObject(CONFIG.fxmaster, {
     filters: {
       underwater: FXUnderwaterFilter,
       color: FXColorFilter
+    },
+    effects: {
+      explosion: ExplosionEffect,
+      faery: FaeryEffect
     }
   });
 });

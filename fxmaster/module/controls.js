@@ -38,6 +38,16 @@ Hooks.on("getSceneControlButtons", controls => {
           button: true
         },
         {
+          name: "explosion",
+          title: "CONTROLS.explosion",
+          icon: "fas fa-fire"
+        },
+        {
+          name: "faery",
+          title: "CONTROLS.faery",
+          icon: "fas fa-leaf"
+        },
+        {
           name: "clearfx",
           title: "CONTROLS.ClearFX",
           icon: "fas fa-trash",

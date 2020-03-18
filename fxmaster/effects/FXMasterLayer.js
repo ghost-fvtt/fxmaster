@@ -4,6 +4,38 @@ export class FXMasterLayer extends CanvasLayer {
     this.effects = {};
     this.weather = null;
     this._controlled = {};
+    this.specials = [];
+
+    // Listen to the socket
+    game.socket.on("module.fxmaster", data => {
+      // if (data.sceneId == canvas.scene._id) this.throwEffect(data);
+      this.throwEffect(data);
+    });
+  }
+
+  throwEffect(data) {
+    let parent = new PIXI.Container();
+    this.addChild(parent);
+    let effect = new CONFIG.fxmaster.effects[data.type](parent);
+    effect.xOrigin = data.position.x;
+    effect.yOrigin = data.position.y;
+    effect.play();
+    this.specials.push(effect);
+  }
+
+  /** @override */
+  _onMouseDown(event) {
+    if (!CONFIG.fxmaster.effects[game.activeTool]) return;
+    let data = {
+      type: game.activeTool,
+      position: {
+        x: event.data.destination.x,
+        y: event.data.destination.y
+      }
+    };
+    event.stopPropagation();
+    game.socket.emit("module.fxmaster", data);
+    canvas.fxmaster.throwEffect(data);
   }
 
   /* -------------------------------------------- */
@@ -39,6 +71,9 @@ export class FXMasterLayer extends CanvasLayer {
   /** @override */
   tearDown() {
     this.weather = null;
+    for (let i = 0; i < this.specials.length; ++i) {
+      this.specials[i].stop();
+    }
     const effKeys = Object.keys(this.effects);
     for (let i = 0; i < effKeys.length; ++i) {
       this.effects[effKeys[i]].fx.stop();
@@ -57,7 +92,7 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Updating scene weather
-    const flags = canvas.scene.getFlag('fxmaster', 'effects');
+    const flags = canvas.scene.getFlag("fxmaster", "effects");
     if (flags) {
       const keys = Object.keys(flags);
       for (let i = 0; i < keys.length; ++i) {
@@ -68,9 +103,7 @@ export class FXMasterLayer extends CanvasLayer {
         }
         this.effects[keys[i]] = {
           type: flags[keys[i]].type,
-          fx: new CONFIG.weatherEffects[flags[keys[i]].type](
-            this.weather
-          )
+          fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather)
         };
         this.configureEffect(keys[i]);
         this.effects[keys[i]].fx.play();
@@ -79,7 +112,7 @@ export class FXMasterLayer extends CanvasLayer {
   }
 
   configureEffect(id) {
-    const flags = canvas.scene.getFlag('fxmaster', 'effects');
+    const flags = canvas.scene.getFlag("fxmaster", "effects");
     if (!flags || !flags[id]) return;
 
     // Adjust density

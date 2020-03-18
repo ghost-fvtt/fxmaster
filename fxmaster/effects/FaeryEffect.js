@@ -1,4 +1,4 @@
-export class ExplosionEffect extends SpecialEffect {
+export class FaeryEffect extends SpecialEffect {
   constructor(parent) {
     super(parent);
 
@@ -60,55 +60,75 @@ export class ExplosionEffect extends SpecialEffect {
           r: 40,
           minR: 39
         },
-        maxParticles: p,
-        frequency: this.constructor.CONFIG.lifetime.min / p
+        maxParticles: 500,
+        frequency: 0.01
       },
       {
         inplace: false
       }
     );
-    const art = ["/modules/fxmaster/effects/assets/smoke.png"];
+    const art = [
+      "/ui/particles/leaf1.png",
+      "/ui/particles/leaf2.png",
+      "/ui/particles/leaf3.png",
+      "/ui/particles/leaf4.png",
+      "/ui/particles/leaf5.png",
+      "/ui/particles/leaf6.png"
+    ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
+    emitter.particleConstructor = PIXI.particles.PathParticle;
     return emitter;
   }
 }
 
-ExplosionEffect.CONFIG = mergeObject(
+FaeryEffect.CONFIG = mergeObject(
   SpecialEffect.DEFAULT_CONFIG,
   {
     alpha: {
       list: [
         { value: 0, time: 0 },
-        { value: 0.15, time: 0.1 },
-        { value: 0.15, time: 0.95 },
+        { value: 0.9, time: 0.02 },
+        { value: 0.9, time: 0.95 },
         { value: 0, time: 1 }
       ]
     },
     scale: {
-      start: 4,
-      end: 8,
-      minimumScaleMultiplier: 0.5
+      start: 0.3,
+      end: 0.3,
+      minimumScaleMultiplier: 1
     },
     speed: {
-      start: 200,
-      end: 100,
-      minimumSpeedMultiplier: 0.9
+      start: 100,
+      end: 65,
+      minimumSpeedMultiplier: 0.5
+    },
+    acceleration: {
+      x: 0,
+      y: 0
     },
     startRotation: {
       min: 0,
-      max: 0
+      max: 360
     },
     rotation: 0,
     rotationSpeed: {
-      min: 0,
-      max: 0
+      min: 40,
+      max: 40
     },
     lifetime: {
-      min: 0.1,
+      min: 2,
       max: 10
     },
+    pos: {
+      x: 0,
+      y: 0
+    },
+    extraData: {
+      path: "cos(x/50)*100"
+    },
+    addAtBack: false,
     blendMode: "normal",
-    emitterLifetime: 0.3
+    emitterLifetime: 0.8
   },
   {
     inplace: false
