@@ -83,7 +83,7 @@ export class FXMasterLayer extends CanvasLayer {
     if (!flags || !flags[id]) return;
 
     // Adjust density
-    if (hasProperty(flags[id], "density")) {
+    if (hasProperty(flags[id], "options.density")) {
       let factor = (2 * flags[id].options.density) / 100;
       this.effects[id].fx.emitters.forEach(el => {
         el.frequency *= factor;
@@ -92,8 +92,8 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust scale
-    if (hasProperty(flags[id], "scale")) {
-      factor = (2 * flags[id].options.scale) / 100;
+    if (hasProperty(flags[id], "options.scale")) {
+      let factor = (2 * flags[id].options.scale) / 100;
       this.effects[id].fx.emitters.forEach(el => {
         el.startScale.value *= factor;
         let node = el.startScale.next;
@@ -105,8 +105,8 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust speed
-    if (hasProperty(flags[id], "speed")) {
-      factor = (2 * flags[id].options.speed) / 100;
+    if (hasProperty(flags[id], "options.speed")) {
+      let factor = (2 * flags[id].options.speed) / 100;
       this.effects[id].fx.emitters.forEach(el => {
         el.startSpeed.value *= factor;
         let node = el.startSpeed.next;
@@ -118,7 +118,7 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust tint
-    if (hasProperty(flags[id], "apply_tint")) {
+    if (hasProperty(flags[id], "options.apply_tint") && flags[id].options.apply_tint == true) {
       this.effects[id].fx.emitters.forEach(el => {
         let colors = hexToRGB(colorStringToHex(flags[id].options.tint));
         el.startColor.value = {
@@ -135,8 +135,8 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust direction
-    if (hasProperty(flags[id], "direction")) {
-      factor = (360 * (flags[id].options.direction - 50)) / 100;
+    if (hasProperty(flags[id], "options.direction")) {
+      let factor = (360 * (flags[id].options.direction - 50)) / 100;
       this.effects[id].fx.emitters.forEach(el => {
         el.minStartRotation += factor;
         el.maxStartRotation += factor;
