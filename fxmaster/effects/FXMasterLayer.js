@@ -135,7 +135,7 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust direction
-    if (hasProperty(flags[id], "direction")) {
+    if (hasProperty(flags[id], "options.direction")) {
       let factor = (360 * (flags[id].options.direction - 50)) / 100;
       this.effects[id].fx.emitters.forEach(el => {
         el.minStartRotation += factor;
