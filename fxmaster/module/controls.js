@@ -40,8 +40,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
         },
         {
           name: "specials",
-          title: "CONTROLS.Specials",
-          icon: "fas fa-fire",
+          title: "CONTROLS.SpecialFX",
+          icon: "fas fa-hat-wizard",
           onClick: () => {
             new SpecialsConfig().render(true);
           },
