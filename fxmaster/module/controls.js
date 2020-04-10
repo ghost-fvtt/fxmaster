@@ -3,7 +3,7 @@ import { EffectsConfig } from "./config.js";
 import { SpecialsConfig } from "./specials.js";
 import { ColorizeConfig } from "./config.js";
 
-Hooks.on("getSceneControlButtons", controls => {
+Hooks.on("getSceneControlButtons", (controls) => {
   if (game.user.isGM) {
     controls.push({
       name: "effects",
@@ -18,7 +18,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             new EffectsConfig().render(true);
           },
-          button: true
+          button: true,
         },
         {
           name: "colorize",
@@ -27,7 +27,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             new ColorizeConfig().render(true);
           },
-          button: true
+          button: true,
         },
         {
           name: "underwater",
@@ -36,7 +36,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             filterManager.switch("core_underwater", "underwater", null, {});
           },
-          button: true
+          button: true,
         },
         {
           name: "specials",
@@ -45,27 +45,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             new SpecialsConfig().render(true);
           },
-          button: true
-        },
-        {
-          name: "explosion",
-          title: "CONTROLS.explosion",
-          icon: "fas fa-fire-extinguisher"
-        },
-        {
-          name: "nature",
-          title: "CONTROLS.nature",
-          icon: "fas fa-leaf"
-        },
-        {
-          name: "lightning",
-          title: "CONTROLS.lightning",
-          icon: "fas fa-bolt"
-        },
-        {
-          name: "fireball",
-          title: "CONTROLS.fire",
-          icon: "fas fa-fire"
+          button: true,
         },
         {
           name: "clearfx",
@@ -79,12 +59,12 @@ Hooks.on("getSceneControlButtons", controls => {
                 filterManager.removeAll();
                 canvas.scene.unsetFlag("fxmaster", "effects");
               },
-              defaultYes: true
+              defaultYes: true,
             });
           },
-          button: true
-        }
-      ]
+          button: true,
+        },
+      ],
     });
   }
 });

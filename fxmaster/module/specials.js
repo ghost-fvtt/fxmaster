@@ -1,7 +1,7 @@
 export class SpecialsConfig extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["sidebar-popout"],
+      classes: ["fxmaster", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
       submitOnClose: false,

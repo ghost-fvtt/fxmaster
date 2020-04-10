@@ -25,9 +25,13 @@ export class FXMasterLayer extends CanvasLayer {
 
   /** @override */
   _onMouseDown(event) {
-    if (!CONFIG.fxmaster.effects[game.activeTool]) return;
+    let windows = Object.values(ui.windows);
+    let effectConfig = windows.find(w => w.id == "specials-config");
+    if (!effectConfig) return;
+    let active = effectConfig.element.find('.active');
+    if (active.length == 0) return;
     let data = {
-      type: game.activeTool,
+      type: active[0].dataset.effectId,
       position: {
         x: event.data.destination.x,
         y: event.data.destination.y

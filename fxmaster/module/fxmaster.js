@@ -104,6 +104,7 @@ Hooks.on("updateWeather", paramArr => {
   for (let i = 0; i < paramArr.length; i++) {
     effects[randomID()] = paramArr[i]; 
   }
-  let flags = canvas.scene.getFlag("fxmaster", "effects");
-  canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
+  canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
+    canvas.scene.setFlag("fxmaster", "effects", effects);
+  });
 })
