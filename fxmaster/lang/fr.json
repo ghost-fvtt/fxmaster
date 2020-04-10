@@ -1,6 +1,7 @@
 {
     "WEATHERMANAGE.Title": "Gestion des Effets Météo",
     "FILTERMANAGE.Title": "Gestion des Filtres",
+    "EFFECTCONTROLS.Title": "Effets Spéciaux",
     "CONTROLS.Effects": "Outils d'Effet",
     "CONTROLS.Weather": "Outils de Météo",
     "CONTROLS.Daylight": "Filtre lumineux",

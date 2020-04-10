@@ -11,7 +11,9 @@ import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
 
 import { ExplosionEffect } from "../effects/ExplosionEffect.js";
-import { FaeryEffect } from "../effects/FaeryEffect.js";
+import { FireballEffect } from "../effects/FireballEffect.js";
+import { LightningEffect } from "../effects/LightningEffect.js";
+import { NatureEffect } from "../effects/NatureEffect.js";
 
 Hooks.once("init", function() {
   // Adding custom weather effects
@@ -34,7 +36,9 @@ Hooks.once("init", function() {
     },
     effects: {
       explosion: ExplosionEffect,
-      faery: FaeryEffect
+      lightning: LightningEffect,
+      fireball: FireballEffect,
+      nature: NatureEffect
     }
   });
 });
@@ -94,3 +98,12 @@ Hooks.on("switchWeather", params => {
 
   canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
 });
+
+Hooks.on("updateWeather", paramArr => {
+  let effects = {};
+  for (let i = 0; i < paramArr.length; i++) {
+    effects[randomID()] = paramArr[i]; 
+  }
+  let flags = canvas.scene.getFlag("fxmaster", "effects");
+  canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
+})

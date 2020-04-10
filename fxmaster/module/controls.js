@@ -1,5 +1,6 @@
 import { filterManager } from "../filters/FilterManager.js";
 import { EffectsConfig } from "./config.js";
+import { SpecialsConfig } from "./specials.js";
 import { ColorizeConfig } from "./config.js";
 
 Hooks.on("getSceneControlButtons", controls => {
@@ -38,14 +39,33 @@ Hooks.on("getSceneControlButtons", controls => {
           button: true
         },
         {
-          name: "explosion",
-          title: "CONTROLS.explosion",
-          icon: "fas fa-fire"
+          name: "specials",
+          title: "CONTROLS.Specials",
+          icon: "fas fa-fire",
+          onClick: () => {
+            new SpecialsConfig().render(true);
+          },
+          button: true
         },
         {
-          name: "faery",
-          title: "CONTROLS.faery",
+          name: "explosion",
+          title: "CONTROLS.explosion",
+          icon: "fas fa-fire-extinguisher"
+        },
+        {
+          name: "nature",
+          title: "CONTROLS.nature",
           icon: "fas fa-leaf"
+        },
+        {
+          name: "lightning",
+          title: "CONTROLS.lightning",
+          icon: "fas fa-bolt"
+        },
+        {
+          name: "fireball",
+          title: "CONTROLS.fire",
+          icon: "fas fa-fire"
         },
         {
           name: "clearfx",
