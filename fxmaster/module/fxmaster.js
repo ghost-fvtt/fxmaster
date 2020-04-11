@@ -10,6 +10,11 @@ import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
 
+import { ExplosionEffect } from "../effects/ExplosionEffect.js";
+import { FireballEffect } from "../effects/FireballEffect.js";
+import { LightningEffect } from "../effects/LightningEffect.js";
+import { NatureEffect } from "../effects/NatureEffect.js";
+
 Hooks.once("init", function() {
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
@@ -22,12 +27,18 @@ Hooks.once("init", function() {
     raintop: RaintopWeatherEffect
   });
 
-  // Adding filters
+  // Adding filters and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
   mergeObject(CONFIG.fxmaster, {
     filters: {
       underwater: FXUnderwaterFilter,
       color: FXColorFilter
+    },
+    effects: {
+      explosion: ExplosionEffect,
+      lightning: LightningEffect,
+      fireball: FireballEffect,
+      nature: NatureEffect
     }
   });
 });
@@ -87,3 +98,13 @@ Hooks.on("switchWeather", params => {
 
   canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
 });
+
+Hooks.on("updateWeather", paramArr => {
+  let effects = {};
+  for (let i = 0; i < paramArr.length; i++) {
+    effects[randomID()] = paramArr[i]; 
+  }
+  canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
+    canvas.scene.setFlag("fxmaster", "effects", effects);
+  });
+})

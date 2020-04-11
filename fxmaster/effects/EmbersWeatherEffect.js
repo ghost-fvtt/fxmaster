@@ -3,6 +3,10 @@ export class EmbersWeatherEffect extends SpecialEffect {
     return "Embers";
   }
 
+  static get icon() {
+    return "/modules/fxmaster/icons/weather/embers.png";
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.15;

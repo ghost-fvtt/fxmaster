@@ -1,34 +1,38 @@
 .fxmaster .config.weather {
-    padding: 4px;
-    border-bottom: 1px solid #333;
-    list-style: none;
+  padding: 4px;
+  border-bottom: 1px solid #333;
+  list-style: none;
 }
 
 .fxmaster.effects.directory-list {
-    overflow-y: scroll;
-    height: 370px;
+  overflow-y: scroll;
+  height: 370px;
 }
 
 .fxmaster.filters.directory-list {
-    overflow-y: auto;
-    height: 35px;
+  overflow-y: auto;
+  height: 35px;
 }
 
 .fxmaster .config.collapsible {
-    padding: 0;
+  padding: 0;
 }
 
 .fxmaster .config.collapsible.collapsed {
-    display: none;
-    overflow: hidden;
+  display: none;
+  overflow: hidden;
 }
 
 .fxmaster .config label {
-    font-weight: bolder;
-    font-size: 16px;
-    cursor: pointer;
+  font-weight: bolder;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .fxmaster .config label:hover {
-    text-shadow: 0 0 4px #ff6400;
+  text-shadow: 0 0 4px #ff6400;
+}
+
+.fxmaster .directory-item.active {
+    background: #f56b0066;
 }

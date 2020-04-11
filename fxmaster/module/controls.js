@@ -1,8 +1,9 @@
 import { filterManager } from "../filters/FilterManager.js";
 import { EffectsConfig } from "./config.js";
+import { SpecialsConfig } from "./specials.js";
 import { ColorizeConfig } from "./config.js";
 
-Hooks.on("getSceneControlButtons", controls => {
+Hooks.on("getSceneControlButtons", (controls) => {
   if (game.user.isGM) {
     controls.push({
       name: "effects",
@@ -17,7 +18,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             new EffectsConfig().render(true);
           },
-          button: true
+          button: true,
         },
         {
           name: "colorize",
@@ -26,7 +27,7 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             new ColorizeConfig().render(true);
           },
-          button: true
+          button: true,
         },
         {
           name: "underwater",
@@ -35,7 +36,39 @@ Hooks.on("getSceneControlButtons", controls => {
           onClick: () => {
             filterManager.switch("core_underwater", "underwater", null, {});
           },
-          button: true
+          button: true,
+        },
+        {
+          name: "save",
+          title: "CONTROLS.SaveMacro",
+          icon: "fas fa-save",
+          onClick: () => {
+            let flags = canvas.scene.getFlag('fxmaster', 'effects');
+            if (!flags) flags = {};
+            let objs = Object.values(flags);
+            let img = "icons/svg/windmill.svg";
+            let name = "Weather";
+            objs.forEach(effect => {
+              console.log(effect);
+              let icon = CONFIG.weatherEffects[effect.type].icon;
+              if (icon) {
+                img = icon;
+              }
+              name = CONFIG.weatherEffects[effect.type].label;
+            })
+            let effects = `Hooks.call('updateWeather', ${JSON.stringify(objs)});`;
+            Macro.create({type: "script", name: name, command: effects, img: img});
+          },
+          button: true,
+        },
+        {
+          name: "specials",
+          title: "CONTROLS.SpecialFX",
+          icon: "fas fa-hat-wizard",
+          onClick: () => {
+            new SpecialsConfig().render(true);
+          },
+          button: true,
         },
         {
           name: "clearfx",
@@ -49,12 +82,12 @@ Hooks.on("getSceneControlButtons", controls => {
                 filterManager.removeAll();
                 canvas.scene.unsetFlag("fxmaster", "effects");
               },
-              defaultYes: true
+              defaultYes: true,
             });
           },
-          button: true
-        }
-      ]
+          button: true,
+        },
+      ],
     });
   }
 });

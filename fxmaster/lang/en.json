@@ -1,6 +1,7 @@
 {
   "WEATHERMANAGE.Title": "Weather Effects Management",
   "FILTERMANAGE.Title": "Filter Effects Management",
+  "EFFECTCONTROLS.Title": "Special Effects",
   "CONTROLS.Effects": "Effect Controls",
   "CONTROLS.Weather": "Weather Controls",
   "CONTROLS.Daylight": "Daylight Filter",
@@ -13,6 +14,7 @@
   "FXMASTER.Scale": "Scale",
   "FXMASTER.Speed": "Speed",
   "FXMASTER.Direction": "Direction",
+  "FXMASTER.SaveMacro": "Save as a Macro",
   "FXMASTER.SaveChanges": "Save Changes",
   "FXMASTER.Delete": "Delete Effects",
   "FXMASTER.DeleteConfirm": "<p><strong>Are you sure?</strong> Every effect will be deleted.</p>"

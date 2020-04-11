@@ -3,6 +3,10 @@ export class BatsWeatherEffect extends SpecialEffect {
     return "Bats";
   }
 
+  static get icon() {
+    return "/modules/fxmaster/icons/weather/bats.png";
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.01;
