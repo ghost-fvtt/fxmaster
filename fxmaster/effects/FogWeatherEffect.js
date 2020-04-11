@@ -3,6 +3,10 @@ export class FogWeatherEffect extends SpecialEffect {
     return "Fog";
   }
 
+  static get icon() {
+    return "/modules/fxmaster/icons/weather/fog.png";
+  }
+
   /* -------------------------------------------- */
 
   static get effectOptions() {

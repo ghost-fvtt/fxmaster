@@ -3,6 +3,10 @@ export class RaintopWeatherEffect extends SpecialEffect {
     return "Topdown Rain";
   }
 
+  static get icon() {
+    return "/modules/fxmaster/icons/weather/rain.png";
+  }
+
   /* -------------------------------------------- */
 
   static get effectOptions() {
@@ -32,21 +36,21 @@ export class RaintopWeatherEffect extends SpecialEffect {
         spawnType: "ring",
         lifetime: {
           min: 0.3,
-          max: 0.7
+          max: 0.7,
         },
         speed: {
           start: d.width / 3,
           end: d.height / 4,
-          minimumSpeedMultiplier: 0.8
+          minimumSpeedMultiplier: 0.8,
         },
         spawnCircle: {
           x: d.paddingX + d.sceneWidth / 2,
           y: d.paddingY + d.sceneHeight / 2,
           r: d.width / 2,
-          minR: d.width / 4
+          minR: d.width / 4,
         },
         maxParticles: 2 * p,
-        frequency: 0.02
+        frequency: 0.02,
       },
       { inplace: false }
     );
@@ -63,37 +67,37 @@ RaintopWeatherEffect.CONFIG = mergeObject(
       list: [
         { value: 0, time: 0 },
         { value: 0.6, time: 0.1 },
-        { value: 0.23, time: 1 }
+        { value: 0.23, time: 1 },
       ],
-      isStepped: false
+      isStepped: false,
     },
     scale: {
       start: 3,
       end: 0.4,
-      minimumScaleMultiplier: 0.7
+      minimumScaleMultiplier: 0.7,
     },
     color: {
       start: "dddddd",
-      end: "dddddd"
+      end: "dddddd",
     },
     startRotation: {
       min: 180,
-      max: 180
+      max: 180,
     },
     rotation: {
       min: 0,
-      max: 0
+      max: 0,
     },
     rotationSpeed: {
       min: 0,
-      max: 0
+      max: 0,
     },
     acceleration: {
       x: 0,
-      y: 0
+      y: 0,
     },
     blendMode: "normal",
-    emitterLifetime: -1
+    emitterLifetime: -1,
   },
   { inplace: false }
 );

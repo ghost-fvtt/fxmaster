@@ -39,6 +39,29 @@ Hooks.on("getSceneControlButtons", (controls) => {
           button: true,
         },
         {
+          name: "save",
+          title: "CONTROLS.SaveMacro",
+          icon: "fas fa-save",
+          onClick: () => {
+            let flags = canvas.scene.getFlag('fxmaster', 'effects');
+            if (!flags) flags = {};
+            let objs = Object.values(flags);
+            let img = "icons/svg/windmill.svg";
+            let name = "Weather";
+            objs.forEach(effect => {
+              console.log(effect);
+              let icon = CONFIG.weatherEffects[effect.type].icon;
+              if (icon) {
+                img = icon;
+              }
+              name = CONFIG.weatherEffects[effect.type].label;
+            })
+            let effects = `Hooks.call('updateWeather', ${JSON.stringify(objs)});`;
+            Macro.create({type: "script", name: name, command: effects, img: img});
+          },
+          button: true,
+        },
+        {
           name: "specials",
           title: "CONTROLS.SpecialFX",
           icon: "fas fa-hat-wizard",

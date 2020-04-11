@@ -3,6 +3,10 @@ export class CrowsWeatherEffect extends SpecialEffect {
     return "Crows";
   }
 
+  static get icon() {
+    return "/modules/fxmaster/icons/weather/crows.png";
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.001;

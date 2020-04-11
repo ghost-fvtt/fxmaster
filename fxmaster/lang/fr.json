@@ -13,6 +13,7 @@
     "FXMASTER.Scale": "Échelle",
     "FXMASTER.Speed": "Vitesse",
     "FXMASTER.Direction": "Direction",
+    "FXMASTER.SaveMacro": "Sauvegarder en tant que Macro",
     "FXMASTER.SaveChanges": "Sauvegarder les Modifications",
     "FXMASTER.Delete": "Supprimer les Effets",
     "FXMASTER.DeleteConfirm": "<p><strong>Êtes vous sûr?</strong> Tous les Effets seront supprimés.</p>"
