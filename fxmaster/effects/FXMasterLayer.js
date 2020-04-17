@@ -5,7 +5,7 @@ export class FXMasterLayer extends CanvasLayer {
     this.weather = null;
     this._controlled = {};
     this.specials = [];
-
+   
     // Listen to the socket
     game.socket.on("module.fxmaster", data => {
       // if (data.sceneId == canvas.scene._id) this.throwEffect(data);
@@ -16,7 +16,18 @@ export class FXMasterLayer extends CanvasLayer {
   throwEffect(data) {
     let parent = new PIXI.Container();
     this.addChild(parent);
+    if (data.shape) {
+      let shape = data.shape.clone();
+      let mask = new PIXI.Graphics().beginFill(0xffffff).drawShape(shape).endFill();
+      mask.position.set(data.position.x, data.position.y);
+      console.log(shape);
+      this.addChild(mask);
+      parent.mask = mask;
+    }
     let effect = new CONFIG.fxmaster.effects[data.type](parent);
+    if (data.radius) {
+      effect.rescale(data.radius);
+    }
     effect.xOrigin = data.position.x;
     effect.yOrigin = data.position.y;
     effect.play();

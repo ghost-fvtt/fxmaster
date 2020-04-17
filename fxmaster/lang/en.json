@@ -8,6 +8,7 @@
   "CONTROLS.Underwater": "Underwater Filter",
   "CONTROLS.SpecialFX": "Special Effects",
   "CONTROLS.Colorize": "Colorize Effects",
+  "CONTROLS.SaveMacro": "Export weather as Macro",
   "CONTROLS.ClearFX": "Clear Effects and Filters",
   "FXMASTER.Density": "Density",
   "FXMASTER.Tint": "Tint",

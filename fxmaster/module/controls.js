@@ -58,6 +58,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
             })
             let effects = `Hooks.call('updateWeather', ${JSON.stringify(objs)});`;
             Macro.create({type: "script", name: name, command: effects, img: img});
+            ui.notifications.info(`Macro ${name} has been saved in the macro directory`);
           },
           button: true,
         },

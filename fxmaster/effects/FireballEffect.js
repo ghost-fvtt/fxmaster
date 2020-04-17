@@ -4,6 +4,8 @@ export class FireballEffect extends SpecialEffect {
 
     this._x = 0;
     this._y = 0;
+    this._spriteSize = 512;
+    this._effectSize = 350;
   }
 
   static get label() {
@@ -41,6 +43,22 @@ export class FireballEffect extends SpecialEffect {
     this.emitters[0].spawnCircle.y = coords;
   }
 
+  rescale(value) {
+    let factor = value / this._effectSize;
+    this.emitters[0].spawnCircle.r = factor * 10;
+    console.log(factor);
+    let config = FireballEffect.CONFIG.scale.list;
+    this.emitters.forEach((el) => {
+      let i = 0;
+      let node = el.startScale;
+      while (node) {
+        node.value = factor * config[i].value;
+        node = node.next;
+        i++;
+      }
+    });
+  }
+
   /* -------------------------------------------- */
 
   getParticleEmitters() {
@@ -57,26 +75,18 @@ export class FireballEffect extends SpecialEffect {
         spawnCircle: {
           x: 0,
           y: 0,
-          r: 100
+          r: 10,
         },
         maxParticles: 300,
-        frequency: 0.0001
+        frequency: 0.0001,
       },
       {
-        inplace: false
+        inplace: false,
       }
     );
-    let gridSize = canvas.scene.data.grid;
-    if (gridSize) {
-      config.spawnCircle.r = 4 * canvas.scene.data.grid;
-      for (let i = 0; i < config.scale.list.length; ++i) {
-        config.scale.list[i].value *=  gridSize / 128;
-      }
-    }
-    // Adapt scale to grid size
     const art = [
       "/modules/fxmaster/effects/assets/flame_01.png",
-      "/modules/fxmaster/effects/assets/flame_03.png"
+      "/modules/fxmaster/effects/assets/flame_03.png",
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
@@ -92,34 +102,34 @@ FireballEffect.CONFIG = mergeObject(
         { value: 0.7, time: 0.01 },
         { value: 0.6, time: 0.85 },
         { value: 0.3, time: 0.9 },
-        { value: 0, time: 1 }
-      ]
+        { value: 0, time: 1 },
+      ],
     },
     color: {
       start: "ff8103",
-      end: "ff8103"
+      end: "ff8103",
     },
     scale: {
       list: [
         { value: 0, time: 0 },
-        { value: 1.5, time: 0.07 },
-        { value: 2, time: 0.15 },
-        { value: 3, time: 0.95 },
-        { value: 2, time: 1 }
+        { value: 0.5, time: 0.07 },
+        { value: 0.66, time: 0.15 },
+        { value: 1, time: 0.95 },
+        { value: 0.66, time: 1 },
       ],
-      minimumScaleMultiplier: 0.9
+      minimumScaleMultiplier: 0.9,
     },
     speed: {
       start: 0,
-      end: 0
+      end: 0,
     },
     acceleration: {
       x: 0,
-      y: 0
+      y: 0,
     },
     startRotation: {
       min: 0,
-      max: 360
+      max: 360,
     },
     rotation: 0,
     rotationSpeed: {
@@ -128,13 +138,13 @@ FireballEffect.CONFIG = mergeObject(
     },
     lifetime: {
       min: 3,
-      max: 4
+      max: 4,
     },
     addAtBack: false,
     blendMode: "normal",
-    emitterLifetime: 1
+    emitterLifetime: 1,
   },
   {
-    inplace: false
+    inplace: false,
   }
 );

@@ -65,6 +65,20 @@ Hooks.on("updateScene", (scene, data, options) => {
   filterManager.update();
 });
 
+// Template Effects
+Hooks.on("renderMeasuredTemplateConfig", (data, html, object) => {
+});
+
+Hooks.on("updateMeasuredTemplate", (scene, html, update, data) => {
+  // console.log(scene, html, update, data);
+  let template = canvas.templates.placeables.find(t => t.id == update._id);
+  console.log(template);
+  let x = update.x ? update.x : template.x;
+  let y = update.y ? update.y : template.y;
+  canvas.fxmaster.throwEffect({position: {x: x, y: y}, shape: template.shape, radius: Math.max(template.width, template.height), type: "fireball"});
+});
+
+// ------------------------------------------------------------------
 // Hooks API
 Hooks.on("switchFilter", params => {
   //params.name
