@@ -14,8 +14,9 @@ import { ExplosionEffect } from "../effects/ExplosionEffect.js";
 import { FireballEffect } from "../effects/FireballEffect.js";
 import { LightningEffect } from "../effects/LightningEffect.js";
 import { NatureEffect } from "../effects/NatureEffect.js";
+import { SacredFlameEffect } from "../effects/SacredFlameEffect.js";
 
-Hooks.once("init", function() {
+Hooks.once("init", function () {
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
     bubbles: BubblesWeatherEffect,
@@ -24,7 +25,7 @@ Hooks.once("init", function() {
     crows: CrowsWeatherEffect,
     bats: BatsWeatherEffect,
     fog: FogWeatherEffect,
-    raintop: RaintopWeatherEffect
+    raintop: RaintopWeatherEffect,
   });
 
   // Adding filters and effects
@@ -32,26 +33,27 @@ Hooks.once("init", function() {
   mergeObject(CONFIG.fxmaster, {
     filters: {
       underwater: FXUnderwaterFilter,
-      color: FXColorFilter
+      color: FXColorFilter,
     },
     effects: {
       explosion: ExplosionEffect,
       lightning: LightningEffect,
       fireball: FireballEffect,
-      nature: NatureEffect
-    }
+      nature: NatureEffect,
+      sacredflame: SacredFlameEffect,
+    },
   });
 });
 
-Hooks.once("canvasInit", canvas => {
+Hooks.once("canvasInit", (canvas) => {
   canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
 });
 
-Hooks.on("canvasInit", canvas => {
+Hooks.on("canvasInit", (canvas) => {
   filterManager.clear();
 });
 
-Hooks.on("canvasReady", _ => {
+Hooks.on("canvasReady", (_) => {
   filterManager.activate();
   canvas.fxmaster.updateMask();
   canvas.fxmaster.drawWeather();
@@ -80,14 +82,14 @@ Hooks.on("updateMeasuredTemplate", (scene, html, update, data) => {
 
 // ------------------------------------------------------------------
 // Hooks API
-Hooks.on("switchFilter", params => {
+Hooks.on("switchFilter", (params) => {
   //params.name
   // params.type
   // params.options
   filterManager.switch(params.name, params.type, null, params.options);
 });
 
-Hooks.on("switchWeather", params => {
+Hooks.on("switchWeather", (params) => {
   // params.name
   // params.type
   // params.options
@@ -95,7 +97,7 @@ Hooks.on("switchWeather", params => {
   let newEffect = {};
   newEffect[params.name] = {
     type: params.type,
-    options: params.options
+    options: params.options,
   };
 
   let flags = canvas.scene.getFlag("fxmaster", "effects");
@@ -113,12 +115,12 @@ Hooks.on("switchWeather", params => {
   canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
 });
 
-Hooks.on("updateWeather", paramArr => {
+Hooks.on("updateWeather", (paramArr) => {
   let effects = {};
   for (let i = 0; i < paramArr.length; i++) {
-    effects[randomID()] = paramArr[i]; 
+    effects[randomID()] = paramArr[i];
   }
   canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
     canvas.scene.setFlag("fxmaster", "effects", effects);
   });
-})
+});

@@ -35,7 +35,7 @@ Handlebars.registerHelper("Config", function(key, name) {
 export class EffectsConfig extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["form"],
+      classes: ["form", "fxmaster", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
       submitOnClose: false,

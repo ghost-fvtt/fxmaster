@@ -24,7 +24,6 @@
 }
 
 .fxmaster .config label {
-  font-weight: bolder;
   font-size: 16px;
   cursor: pointer;
 }
@@ -35,4 +34,13 @@
 
 .fxmaster .directory-item.active {
     background: #f56b0066;
+}
+
+.fxmaster .form-footer {
+  padding: 5px;
+}
+
+.fxmaster .form-footer button {
+  background-color: rgba(255, 255, 240, 0.8);
+  border: 1px solid #b5b3a4;
 }

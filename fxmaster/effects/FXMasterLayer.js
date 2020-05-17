@@ -30,6 +30,7 @@ export class FXMasterLayer extends CanvasLayer {
     }
     effect.xOrigin = data.position.x;
     effect.yOrigin = data.position.y;
+    effect.radius = 400;
     effect.play();
     this.specials.push(effect);
   }

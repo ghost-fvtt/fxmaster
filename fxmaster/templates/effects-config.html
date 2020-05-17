@@ -13,27 +13,27 @@
                 <ol class="config collapsible collapsed">
                     {{/if}}
                     <li class="flexrow">
-                        <strong>{{localize "FXMASTER.Density"}}</strong>
+                        <span>{{localize "FXMASTER.Density"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_density'
                             value="{{Config 'density' this.label}}" />
                     </li>
                     <li class="flexrow">
-                        <strong>{{localize "FXMASTER.Speed"}}</strong>
+                        <span>{{localize "FXMASTER.Speed"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_speed'
                             value="{{Config 'speed' this.label}}" />
                     </li>
                     <li class="flexrow">
-                        <strong>{{localize "FXMASTER.Direction"}}</strong>
+                        <span>{{localize "FXMASTER.Direction"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_direction'
                             value="{{Config 'direction' this.label}}" />
                     </li>
                     <li class="flexrow">
-                        <strong>{{localize "FXMASTER.Scale"}}</strong>
+                        <span>{{localize "FXMASTER.Scale"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_scale'
                             value="{{Config 'scale' this.label}}" />
                     </li>
                     <li class="flexrow">
-                        <strong>{{localize "FXMASTER.Tint"}}</strong>
+                        <span>{{localize "FXMASTER.Tint"}}</span>
                         <input type='checkbox' name='{{this.label}}_apply_tint'
                             {{checked (Config 'apply_tint' this.label)}} />
                         {{#if (Config 'tint' this.label)}}
