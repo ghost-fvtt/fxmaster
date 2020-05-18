@@ -40,7 +40,6 @@ Hooks.on("getSceneControlButtons", (controls) => {
             let img = "icons/svg/windmill.svg";
             let name = "Weather";
             objs.forEach(effect => {
-              console.log(effect);
               let icon = CONFIG.weatherEffects[effect.type].icon;
               if (icon) {
                 img = icon;
