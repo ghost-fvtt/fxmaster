@@ -1,15 +1,23 @@
-export class FXMasterLayer extends CanvasLayer {
+export class FXMasterLayer extends PlaceablesLayer {
   constructor() {
     super();
     this.effects = {};
     this.weather = null;
     this._controlled = {};
     this.specials = [];
-   
+
     // Listen to the socket
-    game.socket.on("module.fxmaster", data => {
+    game.socket.on("module.fxmaster", (data) => {
       // if (data.sceneId == canvas.scene._id) this.throwEffect(data);
       this.throwEffect(data);
+    });
+  }
+
+  static get layerOptions() {
+    return mergeObject(super.layerOptions, {
+      canDragCreate: false,
+      objectClass: Note,
+      sheetClass: NoteConfig
     });
   }
 
@@ -18,9 +26,11 @@ export class FXMasterLayer extends CanvasLayer {
     this.addChild(parent);
     if (data.shape) {
       let shape = data.shape.clone();
-      let mask = new PIXI.Graphics().beginFill(0xffffff).drawShape(shape).endFill();
+      let mask = new PIXI.Graphics()
+        .beginFill(0xffffff)
+        .drawShape(shape)
+        .endFill();
       mask.position.set(data.position.x, data.position.y);
-      console.log(shape);
       this.addChild(mask);
       parent.mask = mask;
     }
@@ -36,18 +46,18 @@ export class FXMasterLayer extends CanvasLayer {
   }
 
   /** @override */
-  _onMouseDown(event) {
-    let windows = Object.values(ui.windows);
-    let effectConfig = windows.find(w => w.id == "specials-config");
+  _onClickLeft(event) {
+    const windows = Object.values(ui.windows);
+    const effectConfig = windows.find((w) => w.id == "specials-config");
     if (!effectConfig) return;
-    let active = effectConfig.element.find('.active');
+    const active = effectConfig.element.find(".active");
     if (active.length == 0) return;
     let data = {
       type: active[0].dataset.effectId,
       position: {
-        x: event.data.destination.x,
-        y: event.data.destination.y
-      }
+        x: event.data.origin.x,
+        y: event.data.origin.y,
+      },
     };
     event.stopPropagation();
     game.socket.emit("module.fxmaster", data);
@@ -57,6 +67,14 @@ export class FXMasterLayer extends CanvasLayer {
   /* -------------------------------------------- */
   /*  Methods
     /* -------------------------------------------- */
+
+  activate() {
+    super.activate();
+  }
+
+  deactivate() {
+    super.deactivate();
+  }
 
   async draw() {
     super.draw();
@@ -119,7 +137,7 @@ export class FXMasterLayer extends CanvasLayer {
         }
         this.effects[keys[i]] = {
           type: flags[keys[i]].type,
-          fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather)
+          fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
         };
         this.configureEffect(keys[i]);
         this.effects[keys[i]].fx.play();
@@ -134,7 +152,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust density
     if (hasProperty(flags[id], "options.density")) {
       let factor = (2 * flags[id].options.density) / 100;
-      this.effects[id].fx.emitters.forEach(el => {
+      this.effects[id].fx.emitters.forEach((el) => {
         el.frequency *= factor;
         el.maxParticles *= factor;
       });
@@ -143,7 +161,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust scale
     if (hasProperty(flags[id], "options.scale")) {
       let factor = (2 * flags[id].options.scale) / 100;
-      this.effects[id].fx.emitters.forEach(el => {
+      this.effects[id].fx.emitters.forEach((el) => {
         el.startScale.value *= factor;
         let node = el.startScale.next;
         while (node) {
@@ -156,7 +174,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust speed
     if (hasProperty(flags[id], "options.speed")) {
       let factor = (2 * flags[id].options.speed) / 100;
-      this.effects[id].fx.emitters.forEach(el => {
+      this.effects[id].fx.emitters.forEach((el) => {
         el.startSpeed.value *= factor;
         let node = el.startSpeed.next;
         while (node) {
@@ -167,13 +185,16 @@ export class FXMasterLayer extends CanvasLayer {
     }
 
     // Adjust tint
-    if (hasProperty(flags[id], "options.apply_tint") && flags[id].options.apply_tint == true) {
-      this.effects[id].fx.emitters.forEach(el => {
+    if (
+      hasProperty(flags[id], "options.apply_tint") &&
+      flags[id].options.apply_tint == true
+    ) {
+      this.effects[id].fx.emitters.forEach((el) => {
         let colors = hexToRGB(colorStringToHex(flags[id].options.tint));
         el.startColor.value = {
           r: colors[0] * 255,
           g: colors[1] * 255,
-          b: colors[2] * 255
+          b: colors[2] * 255,
         };
         let node = el.startColor.next;
         while (node) {
@@ -186,7 +207,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust direction
     if (hasProperty(flags[id], "options.direction")) {
       let factor = (360 * (flags[id].options.direction - 50)) / 100;
-      this.effects[id].fx.emitters.forEach(el => {
+      this.effects[id].fx.emitters.forEach((el) => {
         el.minStartRotation += factor;
         el.maxStartRotation += factor;
       });

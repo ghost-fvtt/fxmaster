@@ -12,29 +12,20 @@ Hooks.on("getSceneControlButtons", (controls) => {
       layer: "FXMasterLayer",
       tools: [
         {
+          name: "specials",
+          title: "CONTROLS.SpecialFX",
+          icon: "fas fa-hat-wizard",
+          onClick: () => {
+            new SpecialsConfig().render(true);
+          },
+          button: true
+        },
+        {
           name: "weather",
           title: "CONTROLS.Weather",
           icon: "fas fa-cloud-rain",
           onClick: () => {
             new EffectsConfig().render(true);
-          },
-          button: true,
-        },
-        {
-          name: "colorize",
-          title: "CONTROLS.Colorize",
-          icon: "fas fa-palette",
-          onClick: () => {
-            new ColorizeConfig().render(true);
-          },
-          button: true,
-        },
-        {
-          name: "underwater",
-          title: "CONTROLS.Underwater",
-          icon: "fas fa-water",
-          onClick: () => {
-            filterManager.switch("core_underwater", "underwater", null, {});
           },
           button: true,
         },
@@ -63,13 +54,49 @@ Hooks.on("getSceneControlButtons", (controls) => {
           button: true,
         },
         {
-          name: "specials",
-          title: "CONTROLS.SpecialFX",
-          icon: "fas fa-hat-wizard",
+          name: "colorize",
+          title: "CONTROLS.Colorize",
+          icon: "fas fa-palette",
           onClick: () => {
-            new SpecialsConfig().render(true);
+            new ColorizeConfig().render(true);
           },
           button: true,
+        },
+        {
+          name: "underwater",
+          title: "CONTROLS.Underwater",
+          icon: "fas fa-water",
+          onClick: () => {
+            filterManager.switch("core_underwater", "underwater", null, {});
+          },
+          toggle: true,
+        },
+        {
+          name: "predator",
+          title: "CONTROLS.Predator",
+          icon: "fas fa-wave-square",
+          onClick: () => {
+            filterManager.switch("core_predator", "predator", null, {});
+          },
+          toggle: true,
+        },
+        {
+          name: "oldfilm",
+          title: "CONTROLS.OldFilm",
+          icon: "fas fa-film",
+          onClick: () => {
+            filterManager.switch("core_oldfilm", "oldfilm", null, {});
+          },
+          toggle: true,
+        },
+        {
+          name: "bloom",
+          title: "CONTROLS.Bloom",
+          icon: "fas fa-ghost",
+          onClick: () => {
+            filterManager.switch("core_bloom", "bloom", null, {});
+          },
+          toggle: true,
         },
         {
           name: "clearfx",

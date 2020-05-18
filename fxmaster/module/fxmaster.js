@@ -5,8 +5,12 @@ import { CrowsWeatherEffect } from "../effects/CrowsWeatherEffect.js";
 import { BatsWeatherEffect } from "../effects/BatsWeatherEffect.js";
 import { FogWeatherEffect } from "../effects/FogWeatherEffect.js";
 import { RaintopWeatherEffect } from "../effects/RaintopWeatherEffect.js";
+import { StarsWeatherEffect } from "../effects/StarsWeatherEffect.js";
 import { FXColorFilter } from "../filters/FXColorFilter.js";
 import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
+import { FXPredatorFilter } from "../filters/FXPredatorFilter.js";
+import { FXOldFilmFilter } from "../filters/FXOldFilmFilter.js";
+import { FXBloomFilter } from "../filters/FXBloomFilter.js";
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
 
@@ -22,6 +26,7 @@ Hooks.once("init", function () {
     bubbles: BubblesWeatherEffect,
     clouds: CloudsWeatherEffect,
     embers: EmbersWeatherEffect,
+    stars: StarsWeatherEffect,
     crows: CrowsWeatherEffect,
     bats: BatsWeatherEffect,
     fog: FogWeatherEffect,
@@ -33,7 +38,10 @@ Hooks.once("init", function () {
   mergeObject(CONFIG.fxmaster, {
     filters: {
       underwater: FXUnderwaterFilter,
+      predator: FXPredatorFilter,
       color: FXColorFilter,
+      bloom: FXBloomFilter,
+      oldfilm: FXOldFilmFilter
     },
     effects: {
       explosion: ExplosionEffect,
@@ -65,19 +73,6 @@ Hooks.on("updateScene", (scene, data, options) => {
     canvas.fxmaster.drawWeather();
   }
   filterManager.update();
-});
-
-// Template Effects
-Hooks.on("renderMeasuredTemplateConfig", (data, html, object) => {
-});
-
-Hooks.on("updateMeasuredTemplate", (scene, html, update, data) => {
-  // console.log(scene, html, update, data);
-  let template = canvas.templates.placeables.find(t => t.id == update._id);
-  console.log(template);
-  let x = update.x ? update.x : template.x;
-  let y = update.y ? update.y : template.y;
-  canvas.fxmaster.throwEffect({position: {x: x, y: y}, shape: template.shape, radius: Math.max(template.width, template.height), type: "fireball"});
 });
 
 // ------------------------------------------------------------------

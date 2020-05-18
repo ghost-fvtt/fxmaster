@@ -16,17 +16,15 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     
     canvas.background.addChild(this.dizzyMap);
     this.enabled = false;
-    let anim = {
-      ease: Linear.easeNone,
-      repeat: -1,
-      x: 256
-    };
-    this.transition = TweenMax.to(this.maskSprite, 40, anim);
     this.play();
   }
 
   static get label() {
     return "Underwater";
+  }
+
+  step() {
+    this.maskSprite.x += 0.3;
   }
 
   play() {
@@ -45,7 +43,6 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   // So we can destroy object afterwards
   stop() {
     return new Promise((resolve, reject) => {
-      this.transition.kill();
       this.enabled = false;
       resolve();
     });

@@ -22,6 +22,7 @@ class FilterManager {
     canvas.background.filters = Object.values(this.filters);
     canvas.tiles.filters = Object.values(this.filters);
     canvas.tokens.filters = Object.values(this.filters);
+    canvas.app.ticker.add(this._animate, this);
   }
 
   update() {
@@ -123,6 +124,13 @@ class FilterManager {
       this.removeFilter(name);
     } else if (activate == true || activate == null) {
       this.addFilter(name, filter, opts);
+    }
+  }
+
+  _animate() {
+    const keys = Object.keys(this.filters);
+    for (let i = 0; i < keys.length; i++) {
+      this.filters[keys[i]].step();
     }
   }
 }
