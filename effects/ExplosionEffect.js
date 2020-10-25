@@ -77,7 +77,7 @@ export class ExplosionEffect extends SpecialEffect {
       config.scale.start *= gridSize / 64;
       config.scale.end *= gridSize / 64;
     }
-    const art = ["/modules/fxmaster/effects/assets/smoke.png"];
+    const art = ["./modules/fxmaster/effects/assets/smoke.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }

@@ -88,8 +88,8 @@ export class FireballEffect extends SpecialEffect {
 
     // Adapt scale to grid size
     const art = [
-      "/modules/fxmaster/effects/assets/flame_01.png",
-      "/modules/fxmaster/effects/assets/flame_03.png",
+      "./modules/fxmaster/effects/assets/flame_01.png",
+      "./modules/fxmaster/effects/assets/flame_03.png",
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;

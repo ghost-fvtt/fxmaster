@@ -44,7 +44,7 @@ export class BubblesWeatherEffect extends SpecialEffect {
       },
       { inplace: false }
     );
-    const art = ["/modules/fxmaster/effects/assets/bubbles.png"];
+    const art = ["./modules/fxmaster/effects/assets/bubbles.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }

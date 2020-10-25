@@ -1,3 +1,8 @@
+import { 
+  TweenMax,
+  Linear
+} from "../../../scripts/greensock/esm/all.js";
+
 export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options) {
     super();

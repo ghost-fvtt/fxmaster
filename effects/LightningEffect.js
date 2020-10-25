@@ -6,7 +6,7 @@ export class LightningEffect extends SpecialEffect {
     this._y = 0;
 
     // this.texture = PIXI.Texture.from(
-    //   "/modules/fxmaster/effects/assets/light_03.png"
+    //   "./modules/fxmaster/effects/assets/light_03.png"
     // );
     // this.sphereContainer = new PIXI.Container();
   }
@@ -83,10 +83,10 @@ export class LightningEffect extends SpecialEffect {
       }
     );
     const art = [
-      "/modules/fxmaster/effects/assets/spark_03.png",
-      "/modules/fxmaster/effects/assets/spark_04.png",
-      "/modules/fxmaster/effects/assets/spark_05.png",
-      "/modules/fxmaster/effects/assets/spark_06.png"
+      "./modules/fxmaster/effects/assets/spark_03.png",
+      "./modules/fxmaster/effects/assets/spark_04.png",
+      "./modules/fxmaster/effects/assets/spark_05.png",
+      "./modules/fxmaster/effects/assets/spark_06.png"
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.particleConstructor = PIXI.particles.PathParticle;

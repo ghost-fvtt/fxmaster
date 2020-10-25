@@ -4,7 +4,7 @@ export class BatsWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/bats.png";
+    return "./modules/fxmaster/icons/weather/bats.png";
   }
 
   static get effectOptions() {
@@ -45,35 +45,35 @@ export class BatsWeatherEffect extends SpecialEffect {
       framerate: "30",
       textures: [
         {
-          texture: "/modules/fxmaster/effects/assets/bat0.png",
+          texture: "./modules/fxmaster/effects/assets/bat0.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat1.png",
+          texture: "./modules/fxmaster/effects/assets/bat1.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat2.png",
+          texture: "./modules/fxmaster/effects/assets/bat2.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat3.png",
+          texture: "./modules/fxmaster/effects/assets/bat3.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat4.png",
+          texture: "./modules/fxmaster/effects/assets/bat4.png",
           count: 2
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat3.png",
+          texture: "./modules/fxmaster/effects/assets/bat3.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat2.png",
+          texture: "./modules/fxmaster/effects/assets/bat2.png",
           count: 1
         },
         {
-          texture: "/modules/fxmaster/effects/assets/bat1.png",
+          texture: "./modules/fxmaster/effects/assets/bat1.png",
           count: 1
         }
       ],

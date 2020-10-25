@@ -1,3 +1,8 @@
+import { 
+  TweenMax,
+  Linear
+} from "../../../scripts/greensock/esm/all.js";
+
 export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
   constructor(options) {
     super();

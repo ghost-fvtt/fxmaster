@@ -21,5 +21,6 @@
   "FXMASTER.SaveMacro": "Save as a Macro",
   "FXMASTER.SaveChanges": "Save Changes",
   "FXMASTER.Delete": "Delete Effects",
-  "FXMASTER.DeleteConfirm": "<p><strong>Are you sure?</strong> Every effect will be deleted.</p>"
+  "FXMASTER.DeleteConfirm": "<p><strong>Are you sure?</strong> Every effect will be deleted.</p>",
+  "FXMASTER.Enable": "Enable Effects"
 }

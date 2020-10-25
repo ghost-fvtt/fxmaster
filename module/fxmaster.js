@@ -1,3 +1,6 @@
+import { registerSettings } from "./settings.js";
+import { registerHooks } from "./hooks.js";
+
 import { BubblesWeatherEffect } from "../effects/BubblesWeatherEffect.js";
 import { CloudsWeatherEffect } from "../effects/CloudsWeatherEffect.js";
 import { EmbersWeatherEffect } from "../effects/EmbersWeatherEffect.js";
@@ -21,6 +24,10 @@ import { NatureEffect } from "../effects/NatureEffect.js";
 import { SacredFlameEffect } from "../effects/SacredFlameEffect.js";
 
 Hooks.once("init", function () {
+  // Register custom system settings
+  registerSettings();
+  registerHooks();
+
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
     bubbles: BubblesWeatherEffect,
@@ -58,64 +65,28 @@ Hooks.once("canvasInit", (canvas) => {
 });
 
 Hooks.on("canvasInit", (canvas) => {
+  if (!game.settings.get("fxmaster", "enable")) {
+    return
+  }
   filterManager.clear();
 });
 
 Hooks.on("canvasReady", (_) => {
+  if (!game.settings.get("fxmaster", "enable")) {
+    return
+  }
   filterManager.activate();
   canvas.fxmaster.updateMask();
   canvas.fxmaster.drawWeather();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
+  if (!game.settings.get("fxmaster", "enable")) {
+    return
+  }
   if (!hasProperty(data, "flags.fxmaster.filters")) {
     canvas.fxmaster.updateMask();
     canvas.fxmaster.drawWeather();
   }
   filterManager.update();
-});
-
-// ------------------------------------------------------------------
-// Hooks API
-Hooks.on("switchFilter", (params) => {
-  //params.name
-  // params.type
-  // params.options
-  filterManager.switch(params.name, params.type, null, params.options);
-});
-
-Hooks.on("switchWeather", (params) => {
-  // params.name
-  // params.type
-  // params.options
-
-  let newEffect = {};
-  newEffect[params.name] = {
-    type: params.type,
-    options: params.options,
-  };
-
-  let flags = canvas.scene.getFlag("fxmaster", "effects");
-
-  if (!flags) flags = {};
-  let effects = {};
-
-  if (hasProperty(flags, params.name)) {
-    effects = flags;
-    delete effects[params.name];
-  } else {
-    effects = mergeObject(flags, newEffect);
-  }
-
-  canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
-});
-
-Hooks.on("updateWeather", (paramArr) => {
-  let effects = {};
-  for (let i = 0; i < paramArr.length; i++) {
-    effects[randomID()] = paramArr[i];
-  }
-  canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
-    canvas.scene.setFlag("fxmaster", "effects", effects);
-  });
 });

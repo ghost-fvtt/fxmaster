@@ -74,8 +74,8 @@ export class SacredFlameEffect extends SpecialEffect {
       config.scale.end *= gridSize / 128;
     }
     const art = [
-      "/modules/fxmaster/effects/assets/Fire.png",
-      "/modules/fxmaster/effects/assets/particle.png",
+      "./modules/fxmaster/effects/assets/Fire.png",
+      "./modules/fxmaster/effects/assets/particle.png",
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;

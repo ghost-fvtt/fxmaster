@@ -9,9 +9,9 @@ This module is made to have an easy configuration.
 
 ## Installation Instructions
 
-To install the FXMaster module for Foundry Virtual Tabletop, simply paste the following URL into the Install System
+To install the FXMaster module for Foundry Virtual Tabletop, find FXMaster in the module browser, or paste the following URL into the Install System
 dialog on the Setup menu of the application.
-https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/fxmaster/module.json
+https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/module.json
 If you wish to manually install the module, you must clone or extract it into the Data/modules/fxmaster folder. You
 may do this by cloning the repository.
 

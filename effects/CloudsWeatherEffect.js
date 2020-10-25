@@ -44,10 +44,10 @@ export class CloudsWeatherEffect extends SpecialEffect {
     );
     // Animation
     const art = [
-      "/modules/fxmaster/effects/assets/cloud1.png",
-      "/modules/fxmaster/effects/assets/cloud2.png",
-      "/modules/fxmaster/effects/assets/cloud3.png",
-      "/modules/fxmaster/effects/assets/cloud4.png"
+      "./modules/fxmaster/effects/assets/cloud1.png",
+      "./modules/fxmaster/effects/assets/cloud2.png",
+      "./modules/fxmaster/effects/assets/cloud3.png",
+      "./modules/fxmaster/effects/assets/cloud4.png"
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
