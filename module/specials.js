@@ -34,7 +34,6 @@ export class SpecialsConfig extends FormApplication {
 
   /** @override */
   activateListeners(html) {
-    super.activateListeners(html);
     html.find('.special-effects h4').click(event => {
         let list = event.currentTarget.closest('.directory-list');
         let items = $(list).find('.directory-item');

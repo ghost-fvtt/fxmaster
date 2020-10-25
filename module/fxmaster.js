@@ -8,6 +8,8 @@ import { CrowsWeatherEffect } from "../effects/CrowsWeatherEffect.js";
 import { BatsWeatherEffect } from "../effects/BatsWeatherEffect.js";
 import { FogWeatherEffect } from "../effects/FogWeatherEffect.js";
 import { RaintopWeatherEffect } from "../effects/RaintopWeatherEffect.js";
+import { RainSimpleWeatherEffect } from "../effects/RainSimpleWeatherEffect.js";
+import { SnowstormWeatherEffect } from "../effects/SnowstormWeatherEffect.js";
 import { StarsWeatherEffect } from "../effects/StarsWeatherEffect.js";
 import { FXColorFilter } from "../filters/FXColorFilter.js";
 import { FXUnderwaterFilter } from "../filters/FXUnderwaterFilter.js";
@@ -30,9 +32,11 @@ Hooks.once("init", function () {
 
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, {
+    snowstorm: SnowstormWeatherEffect,
     bubbles: BubblesWeatherEffect,
     clouds: CloudsWeatherEffect,
     embers: EmbersWeatherEffect,
+    rainsimple: RainSimpleWeatherEffect,
     stars: StarsWeatherEffect,
     crows: CrowsWeatherEffect,
     bats: BatsWeatherEffect,
