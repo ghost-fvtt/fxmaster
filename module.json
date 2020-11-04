@@ -4,9 +4,7 @@
   "description": "<p>Adds various weather and filter effects</p>",
   "version": "0.8.3",
   "author": "U~man",
-  "scripts": [
-    "libs/filters/pixi-filters.js"
-  ],
+  "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": [
     "greensock/esm/all.js",
     "effects/BatsWeatherEffect.js",
@@ -34,9 +32,7 @@
     "filters/FXPredatorFilter.js",
     "filters/FilterManager.js"
   ],
-  "styles": [
-    "css/weatherconfig.css"
-  ],
+  "styles": ["css/weatherconfig.css"],
   "packs": [],
   "languages": [
     {
@@ -63,6 +59,11 @@
       "lang": "es",
       "name": "Español",
       "path": "lang/es.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
     }
   ],
   "socket": true,
