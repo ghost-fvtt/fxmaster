@@ -55,18 +55,18 @@ SnowstormWeatherEffect.RAIN_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 		"end": 0.6
 	},
 	"scale": {
-		"start": 0.08,
+		"start": 0.06,
 		"end": 0.02,
 		"minimumScaleMultiplier": 0.8
 	},
 	"speed": {
 		"start": 600,
 		"end": 480,
-		"minimumSpeedMultiplier": 0.7
+		"minimumSpeedMultiplier": 0.2
 	},
 	"startRotation": {
-		"min": 75,
-		"max": 75
+		"min": 70,
+		"max": 80
 	},
 	"rotation": 155,
 	"rotationSpeed": {
@@ -76,5 +76,5 @@ SnowstormWeatherEffect.RAIN_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 	"lifetime": {
 		"min": 1.5,
 		"max": 3.5
-	}
+	},
 }, { inplace: false });
