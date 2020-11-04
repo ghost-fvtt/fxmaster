@@ -8,7 +8,7 @@ export const registerHooks = function () {
         filterManager.switch(params.name, params.type, null, params.options);
     });
 
-    Hooks.on("switchWeather", (params) => {
+    Hooks.on("switchWeather", async (params) => {
         // params.name
         // params.type
         // params.options
@@ -19,8 +19,7 @@ export const registerHooks = function () {
             options: params.options,
         };
 
-        let flags = canvas.scene.getFlag("fxmaster", "effects");
-
+        let flags = await canvas.scene.getFlag("fxmaster", "effects");
         if (!flags) flags = {};
         let effects = {};
 
@@ -28,14 +27,14 @@ export const registerHooks = function () {
             effects = flags;
             delete effects[params.name];
         } else {
+            console.log(effects)
             effects = mergeObject(flags, newEffect);
+            console.log(effects)
         }
-        console.log(effects, flags);
-        if (effects == {}) {
-            console.log("WONT WORK");
-            canvas.scene.unsetFlag("fxmaster", "effects");
+        if (Object.entries(effects).length == 0) {
+            await canvas.scene.unsetFlag("fxmaster", "effects");
         } else {
-            canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
+            await canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
         }
     });
 
