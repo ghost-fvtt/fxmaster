@@ -21,5 +21,6 @@
     "FXMASTER.SaveMacro": "매크로로 저장",
     "FXMASTER.SaveChanges": "변경점 저장",
     "FXMASTER.Delete": "효과 제거",
-    "FXMASTER.DeleteConfirm": "<p><strong>실행합니까?</strong> 모든 효과가 삭제됩니다.</p>"
+    "FXMASTER.DeleteConfirm": "<p><strong>실행합니까?</strong> 모든 효과가 삭제됩니다.</p>",
+    "FXMASTER.Enable": "효과 활성화"
 }  
