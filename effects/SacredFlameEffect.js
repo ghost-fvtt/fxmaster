@@ -11,7 +11,7 @@ export class SacredFlameEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/sacredflame.png";
+    return "modules/fxmaster/icons/sacredflame.png";
   }
 
   /* -------------------------------------------- */

@@ -4,7 +4,7 @@ export class StarsWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/stars.png";
+    return "modules/fxmaster/icons/weather/stars.png";
   }
 
   static get effectOptions() {

@@ -4,7 +4,7 @@ export class EmbersWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/embers.png";
+    return "modules/fxmaster/icons/weather/embers.png";
   }
 
   static get effectOptions() {

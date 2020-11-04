@@ -4,7 +4,7 @@ export class BatsWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "./modules/fxmaster/icons/weather/bats.png";
+    return "modules/fxmaster/icons/weather/bats.png";
   }
 
   static get effectOptions() {

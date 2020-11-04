@@ -11,7 +11,7 @@ export class NatureEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/nature.png";
+    return "modules/fxmaster/icons/nature.png";
   }
 
   /* -------------------------------------------- */

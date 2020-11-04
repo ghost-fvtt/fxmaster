@@ -4,7 +4,7 @@ export class BubblesWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/bubbles.png";
+    return "modules/fxmaster/icons/weather/bubbles.png";
   }
 
   /* -------------------------------------------- */

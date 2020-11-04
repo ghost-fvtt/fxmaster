@@ -60,6 +60,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       },
     };
     event.stopPropagation();
+    console.log(data)
     game.socket.emit("module.fxmaster", data);
     canvas.fxmaster.throwEffect(data);
   }

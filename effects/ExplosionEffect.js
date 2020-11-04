@@ -11,7 +11,7 @@ export class ExplosionEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/bomb.png";
+    return "modules/fxmaster/icons/bomb.png";
   }
 
   /* -------------------------------------------- */

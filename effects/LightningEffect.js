@@ -16,7 +16,7 @@ export class LightningEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/lightning.png";
+    return "modules/fxmaster/icons/lightning.png";
   }
 
   /* -------------------------------------------- */

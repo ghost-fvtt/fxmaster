@@ -4,7 +4,7 @@ export class CrowsWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/crows.png";
+    return "modules/fxmaster/icons/weather/crows.png";
   }
 
   static get effectOptions() {

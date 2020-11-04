@@ -8,7 +8,7 @@ export class FireballEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/fireball.png";
+    return "modules/fxmaster/icons/fireball.png";
   }
 
   /* -------------------------------------------- */

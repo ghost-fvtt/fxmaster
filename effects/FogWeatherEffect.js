@@ -4,7 +4,7 @@ export class FogWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "/modules/fxmaster/icons/weather/fog.png";
+    return "modules/fxmaster/icons/weather/fog.png";
   }
 
   /* -------------------------------------------- */
