@@ -11,7 +11,7 @@ export const registerSettings = function () {
 
     game.settings.register("fxmaster", "specialEffects", {
         name: "specialEffects",
-        default: {},
+        default: [],
         scope: "world",
         type: Array,
         config: false
