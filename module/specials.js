@@ -1,4 +1,5 @@
-import {FXMASTER} from "./config.js"
+import { FXMASTER } from "./config.js"
+import {SpecialCreate} from "./specials-create.js"
 
 export class SpecialsConfig extends FormApplication {
   static get defaultOptions() {
@@ -26,7 +27,7 @@ export class SpecialsConfig extends FormApplication {
   getData() {
     // Return data to the template
     return {
-      effects: FXMASTER.specialEffects,
+      effects: game.settings.get("fxmaster", "specialEffects")[0],
     };
   }
 
@@ -37,13 +38,31 @@ export class SpecialsConfig extends FormApplication {
   /** @override */
   activateListeners(html) {
     html.find('.special-effects h4').click(event => {
-        let list = event.currentTarget.closest('.directory-list');
-        let items = $(list).find('.directory-item');
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.remove('active');
-        }
-        event.currentTarget.parentElement.classList.add('active');
+      let list = event.currentTarget.closest('.directory-list');
+      let items = $(list).find('.directory-item');
+      for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('active');
+      }
+      event.currentTarget.parentElement.classList.add('active');
     });
+
+    // Dialog
+    html.find(".add-effect").click(async (event) => {
+      new SpecialCreate().render(true);
+    })
+
+    html.find(".preview video").hover(ev => {
+      ev.currentTarget.play();
+    })
+
+    html.find(".del-effect").click((ev) => {
+      const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
+      let settings = game.settings.get("fxmaster", "specialEffects");
+      settings[0].splice(effectId, 1);
+      game.settings.set("fxmaster", "specialEffects", settings[0]).then(() => {
+        this.render(true);
+      });
+    })
   }
 
   /**
@@ -52,5 +71,5 @@ export class SpecialsConfig extends FormApplication {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  _updateObject(_, formData) {}
+  _updateObject(_, formData) { }
 }

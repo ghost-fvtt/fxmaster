@@ -31,6 +31,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       var vidSprite = new PIXI.Sprite(texture);
       vidSprite.anchor.set(0.5, 0.5);
       vidSprite.position.set(data.position.x, data.position.y);
+      vidSprite.scale.set(data.scale, data.scale);
       this.addChild(vidSprite);
       const source = getProperty(texture, "baseTexture.resource.source");
       source.onended = function () {
@@ -48,7 +49,8 @@ export class FXMasterLayer extends PlaceablesLayer {
     if (active.length == 0) return;
 
     const id = active[0].dataset.effectId;
-    let data = mergeObject(FXMASTER.specialEffects[id], {
+    const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
+    let data = mergeObject(effectData[id], {
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,

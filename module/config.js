@@ -34,12 +34,5 @@ export const FXMASTER = {
         color: FXColorFilter,
         bloom: FXBloomFilter,
         oldfilm: FXOldFilmFilter
-    },
-    specialEffects: [
-        {
-            label: "Fireball",
-            file: "modules/animated-spell-effects/spell-effects/air/shockwave_01_transcentre.webm",
-            scale: 1.0
-        }
-    ]
+    }
 }

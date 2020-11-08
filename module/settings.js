@@ -8,4 +8,12 @@ export const registerSettings = function () {
         config: true,
         onChange: _ => window.location.reload()
     });
+
+    game.settings.register("fxmaster", "specialEffects", {
+        name: "specialEffects",
+        default: {},
+        scope: "world",
+        type: Array,
+        config: false
+    });
 }

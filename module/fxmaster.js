@@ -20,6 +20,7 @@ Hooks.once("init", function () {
   registerSettings();
   registerHooks();
   registerLayer();
+  // game.settings.set('fxmaster', 'specialEffects', []);
 
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
