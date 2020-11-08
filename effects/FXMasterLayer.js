@@ -17,7 +17,8 @@ export class FXMasterLayer extends PlaceablesLayer {
     return mergeObject(super.layerOptions, {
       objectClass: Note,
       sheetClass: NoteConfig,
-      canDragCreate: false
+      canDragCreate: false,
+      zIndex: 180
     });
   }
 

@@ -16,6 +16,10 @@
   text-indent: 5px;
 }
 
+.fxmaster .special-effects .controls {
+  padding: 0 3px;
+}
+
 .fxmaster .preview {
   height: 48px;
   flex: 0 0 48px;
