@@ -3,7 +3,9 @@
         {{#each effects}}
         <li class="directory-item config weather">
             <header class="flexrow">
-                <label class="weather-collapse">{{this.label}} <i class="fa fa-angle-down"></i></label>
+                {{#if this.icon}}<img class="weather-icon" width="24" height="24" src="{{this.icon}}">{{/if}}
+                <label class="weather-collapse">{{this.label}} <i class="fa
+                        fa-angle-down"></i></label>
                 <input type='checkbox' name='{{this.label}}' id="{{this.label}}" class="effect"
                     {{checked (isEffectActive this.label)}} />
             </header>
@@ -16,21 +18,25 @@
                         <span>{{localize "FXMASTER.Density"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_density'
                             value="{{Config 'density' this.label}}" />
+                        <span class="range-value">50</span>
                     </li>
                     <li class="flexrow">
                         <span>{{localize "FXMASTER.Speed"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_speed'
                             value="{{Config 'speed' this.label}}" />
+                        <span class="range-value">50</span>
                     </li>
                     <li class="flexrow">
                         <span>{{localize "FXMASTER.Direction"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_direction'
                             value="{{Config 'direction' this.label}}" />
+                        <span class="range-value">50</span>
                     </li>
                     <li class="flexrow">
                         <span>{{localize "FXMASTER.Scale"}}</span>
                         <input class="flex2" type='range' name='{{this.label}}_scale'
                             value="{{Config 'scale' this.label}}" />
+                        <span class="range-value">50</span>
                     </li>
                     <li class="flexrow">
                         <span>{{localize "FXMASTER.Tint"}}</span>

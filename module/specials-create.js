@@ -8,7 +8,7 @@ export class SpecialCreate extends FormApplication {
       popOut: true,
       editable: game.user.isGM,
       width: 300,
-      height: 172,
+      height: 205,
       template: "modules/fxmaster/templates/special-create.html",
       id: "add-effect",
       title: game.i18n.localize("FXMASTER.AddEffect")
@@ -47,7 +47,8 @@ export class SpecialCreate extends FormApplication {
     fxs.push({
       label: formData["label"],
       file: formData["file"],
-      scale: parseFloat(formData["scale"])
+      scale: parseFloat(formData["scale"]),
+      angle: formData["angle"] * Math.PI / 180.0
     });
     game.settings.set("fxmaster", "specialEffects", fxs);
   }

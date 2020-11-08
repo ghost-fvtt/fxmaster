@@ -4,6 +4,15 @@
   list-style: none;
 }
 
+.fxmaster .config.weather .weather-icon {
+  border: none;
+  flex: 0 0 18px;
+}
+
+.fxmaster .config.weather .weather-collapse {
+  text-indent: 5px;
+}
+
 .fxmaster .directory-header {
   box-shadow: 0 0 5px black;
   line-height: 12px;

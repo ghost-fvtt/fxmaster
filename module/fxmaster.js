@@ -20,7 +20,11 @@ Hooks.once("init", function () {
   registerSettings();
   registerHooks();
   registerLayer();
-  // game.settings.set('fxmaster', 'specialEffects', []);
+
+  // Set missing icons
+  CONFIG.weatherEffects.rain.icon = "modules/fxmaster/icons/weather/rain.png";
+  CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/icons/weather/leaves.png";
+  CONFIG.weatherEffects.snow.icon = "modules/fxmaster/icons/weather/snow.png";
 
   // Adding custom weather effects
   mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);

@@ -9,7 +9,7 @@ export class FXMasterLayer extends PlaceablesLayer {
 
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
-      this.throwEffect(data);
+      this.playVideo(data);
     });
   }
 
@@ -22,7 +22,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     });
   }
 
-  throwEffect(data) {
+  playVideo(data) {
     const loader = PIXI.Loader.shared;
     const textureId = randomID()
     loader.add(textureId, data.file)
@@ -33,6 +33,8 @@ export class FXMasterLayer extends PlaceablesLayer {
       vidSprite.anchor.set(0.5, 0.5);
       vidSprite.position.set(data.position.x, data.position.y);
       vidSprite.scale.set(data.scale, data.scale);
+      console.log(data);
+      vidSprite.rotation = normalizeRadians(data.rotation - data.angle);
       this.addChild(vidSprite);
       const source = getProperty(texture, "baseTexture.resource.source");
       source.onended = function () {
@@ -41,8 +43,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     })
   }
 
-  /** @override */
-  _onClickLeft(event) {
+  _drawSpecial(event) {
     const windows = Object.values(ui.windows);
     const effectConfig = windows.find((w) => w.id == "specials-config");
     if (!effectConfig) return;
@@ -56,11 +57,39 @@ export class FXMasterLayer extends PlaceablesLayer {
         x: event.data.origin.x,
         y: event.data.origin.y,
       },
+      rotation: event.data.rotation
     });
 
     event.stopPropagation();
     game.socket.emit("module.fxmaster", data);
-    canvas.fxmaster.throwEffect(data);
+    canvas.fxmaster.playVideo(data);
+  }
+
+  /** @override */
+  _onDragLeftDrop(event) {
+    const u = {
+      x: event.data.destination.x - event.data.origin.x,
+      y: event.data.destination.y - event.data.origin.y
+    }
+    const cos = u.x / Math.sqrt(u.x * u.x + u.y * u.y);
+    event.data.rotation = Math.acos(cos);
+    this._drawSpecial(event);
+  }
+
+  /** @override */
+  _onDragLeftStart(event) {
+    this._dragging = true;
+  }
+
+  _onClickLeft(event) {
+    this._dragging = false;
+    setTimeout(() => {
+      if (!this._dragging) {
+        event.data.rotation = 0;
+        this._drawSpecial(event)
+      }
+      this._dragging = false;
+    }, 400) 
   }
 
   /* -------------------------------------------- */
