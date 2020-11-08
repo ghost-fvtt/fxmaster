@@ -1,3 +1,5 @@
+import {FXMASTER} from "./config.js"
+
 export class SpecialsConfig extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -24,7 +26,7 @@ export class SpecialsConfig extends FormApplication {
   getData() {
     // Return data to the template
     return {
-      effects: CONFIG.fxmaster.effects,
+      effects: FXMASTER.specialEffects,
     };
   }
 

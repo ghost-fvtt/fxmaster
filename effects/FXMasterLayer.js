@@ -1,48 +1,42 @@
+import { FXMASTER } from "../module/config.js"
+
 export class FXMasterLayer extends PlaceablesLayer {
   constructor() {
     super();
     this.effects = {};
     this.weather = null;
-    this._controlled = {};
     this.specials = [];
 
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
-      // if (data.sceneId == canvas.scene._id) this.throwEffect(data);
       this.throwEffect(data);
     });
   }
 
   static get layerOptions() {
     return mergeObject(super.layerOptions, {
-      canDragCreate: false,
       objectClass: Note,
-      sheetClass: NoteConfig
+      sheetClass: NoteConfig,
+      canDragCreate: false
     });
   }
 
   throwEffect(data) {
-    let parent = new PIXI.Container();
-    this.addChild(parent);
-    if (data.shape) {
-      let shape = data.shape.clone();
-      let mask = new PIXI.Graphics()
-        .beginFill(0xffffff)
-        .drawShape(shape)
-        .endFill();
-      mask.position.set(data.position.x, data.position.y);
-      this.addChild(mask);
-      parent.mask = mask;
-    }
-    let effect = new CONFIG.fxmaster.effects[data.type](parent);
-    if (data.radius) {
-      effect.rescale(data.radius);
-    }
-    effect.xOrigin = data.position.x;
-    effect.yOrigin = data.position.y;
-    effect.radius = 400;
-    effect.play();
-    this.specials.push(effect);
+    const loader = PIXI.Loader.shared;
+    const textureId = randomID()
+    loader.add(textureId, data.file)
+
+    loader.load((_, resources) => {
+      const texture = PIXI.Texture.from(resources[textureId].data);
+      var vidSprite = new PIXI.Sprite(texture);
+      vidSprite.anchor.set(0.5, 0.5);
+      vidSprite.position.set(data.position.x, data.position.y);
+      this.addChild(vidSprite);
+      const source = getProperty(texture, "baseTexture.resource.source");
+      source.onended = function () {
+        vidSprite.destroy();
+      }
+    })
   }
 
   /** @override */
@@ -52,15 +46,16 @@ export class FXMasterLayer extends PlaceablesLayer {
     if (!effectConfig) return;
     const active = effectConfig.element.find(".active");
     if (active.length == 0) return;
-    let data = {
-      type: active[0].dataset.effectId,
+
+    const id = active[0].dataset.effectId;
+    let data = mergeObject(FXMASTER.specialEffects[id], {
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,
       },
-    };
+    });
+
     event.stopPropagation();
-    console.log(data)
     game.socket.emit("module.fxmaster", data);
     canvas.fxmaster.throwEffect(data);
   }
@@ -70,11 +65,17 @@ export class FXMasterLayer extends PlaceablesLayer {
     /* -------------------------------------------- */
 
   activate() {
-    super.activate();
+    // Skipping Placeable Layers activate method
+    // super.activate();
+    CanvasLayer.prototype.activate.apply(this)
+    return this
   }
 
   deactivate() {
-    super.deactivate();
+    // Skipping Placeable Layers deactivate method
+    // super.deactivate();
+    CanvasLayer.prototype.deactivate.apply(this)
+    return this
   }
 
   async draw() {
