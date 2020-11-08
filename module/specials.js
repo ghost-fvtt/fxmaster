@@ -63,6 +63,10 @@ export class SpecialsConfig extends FormApplication {
         this.render(true);
       });
     })
+
+    html.find(".sync-effects").click(ev => {
+      this.render(true);
+    })
   }
 
   /**

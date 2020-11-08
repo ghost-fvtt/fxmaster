@@ -6,16 +6,21 @@
 
 .fxmaster .directory-header {
   box-shadow: 0 0 5px black;
-  text-align: right;
   line-height: 12px;
   font-size: 12px;
   margin: 0;
   padding: 2px 0;
 }
 
+.fxmaster .special-effects h4 {
+  text-indent: 5px;
+}
+
 .fxmaster .preview {
-  height: 36px;
-  flex: 0 0 36px;
+  height: 48px;
+  flex: 0 0 48px;
+  background: black;
+  border: 1px solid grey;
 }
 
 .fxmaster.effects.directory-list {
