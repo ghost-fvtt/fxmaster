@@ -48,7 +48,7 @@ export class SpecialCreate extends FormApplication {
       label: formData["label"],
       file: formData["file"],
       scale: parseFloat(formData["scale"]),
-      angle: formData["angle"] * Math.PI / 180.0
+      angle: toRadians(parseFloat(formData["angle"]))
     });
     game.settings.set("fxmaster", "specialEffects", fxs);
   }

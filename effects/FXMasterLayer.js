@@ -33,7 +33,6 @@ export class FXMasterLayer extends PlaceablesLayer {
       vidSprite.anchor.set(0.5, 0.5);
       vidSprite.position.set(data.position.x, data.position.y);
       vidSprite.scale.set(data.scale, data.scale);
-      console.log(data);
       vidSprite.rotation = normalizeRadians(data.rotation - data.angle);
       this.addChild(vidSprite);
       const source = getProperty(texture, "baseTexture.resource.source");
@@ -71,8 +70,8 @@ export class FXMasterLayer extends PlaceablesLayer {
       x: event.data.destination.x - event.data.origin.x,
       y: event.data.destination.y - event.data.origin.y
     }
-    const cos = u.x / Math.sqrt(u.x * u.x + u.y * u.y);
-    event.data.rotation = Math.acos(cos);
+    const cos = u.x / Math.hypot(u.x, u.y);
+    event.data.rotation = u.y > 0 ? Math.acos(cos) : -Math.acos(cos);
     this._drawSpecial(event);
   }
 
