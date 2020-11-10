@@ -1,3 +1,5 @@
+import { filterManager } from "../filters/FilterManager.js";
+
 export class ColorizeConfig extends FormApplication {
     static get defaultOptions() {
       return mergeObject(super.defaultOptions, {
