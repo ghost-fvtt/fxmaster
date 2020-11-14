@@ -4,6 +4,7 @@ FXMaster is a Foundry VTT module that adds various special effects
 
 - Global effects called weather effects like clouds, fog, but also crows and bats
 - Filters including color overlays and underwater
+- Clickable special effects, using video effects provided by external sources
 
 This module is made to have an easy configuration.
 
@@ -14,6 +15,12 @@ dialog on the Setup menu of the application.
 https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/module.json
 If you wish to manually install the module, you must clone or extract it into the Data/modules/fxmaster folder. You
 may do this by cloning the repository.
+
+## Quick tips
+
+FXMaster controls are accessible through the magic wand control on the left of the map.
+The Magic hat represents special effects. There are a couple built-ins I borrowed from modules from Jules and Ben's or Jinker. You should install their module to enjoy plenty more. You can add your own as soon as you have a video file. When you add one you should resync the dialog, or close and reopen it.
+To cast your Special Effects you can simply click on the canvas. You can orient it if you click, drag your cursor to the direction you want to cast it and drop.
 
 ## API for developpers
 
@@ -81,8 +88,34 @@ Options
 - direction
 - tint (must set apply_tint to true)
 
+### Special Effects
+
+```javascript
+const data = {
+  file: "myfile.webm",
+  position: {
+    x: 1200,
+    y: 1200
+  },
+  anchor: {
+   x: 0,
+   y: 1
+  },
+  angle: 3.14,
+  scale: 0.5
+}
+canvas.fxmaster.playVideo(data);
+game.socket.emit('fxmaster', data);
+```
+
 ## Community Contribution
 
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge
 requests for code changes. Approval for such requests involves code and (if necessary) design review by U~man. Please
 reach out on the Foundry Community Discord with any questions.
+
+## Licensing
+FXMaster Foundry VTT Module is shared under BSD 3-Clause License .
+
+Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art Foundry VTT Module](https://github.com/jinkergm/JAA), they are shared as free for use.
+Jules and Ben's Witch Bolt is borrowed from [JB2A_DnD5E Foundry VTT Module](https://github.com/Jules-Bens-Aa/JB2A_DnD5e), it is shared under [Creative Commons v4](https://creativecommons.org/licenses/by-nc-sa/4.0/)

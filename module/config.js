@@ -39,6 +39,16 @@ export const FXMASTER = {
         fxmaster: {
             label: "FXMaster",
             effects: [{
+                label: "Smoke Bomb",
+                file: "modules/fxmaster/specials/fxmaster/smokeBomb.webm",
+                scale: 1,
+                angle: 0,
+                anchor: {
+                    x: 0.5,
+                    y: 0.5
+                },
+                author: ""
+            },{
                 label: "Red Fire Cone",
                 file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
                 scale: 1,
