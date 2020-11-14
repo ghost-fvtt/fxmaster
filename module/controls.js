@@ -1,6 +1,6 @@
 import { filterManager } from "../filters/FilterManager.js";
 import { WeatherConfig } from "./weather-config.js";
-import { SpecialsConfig } from "./specials.js";
+import { SpecialsConfig } from "./specials-config.js";
 import { ColorizeConfig } from "./colorize-config.js";
 
 Hooks.on("getSceneControlButtons", (controls) => {

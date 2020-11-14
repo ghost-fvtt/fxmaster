@@ -1,28 +1,42 @@
 <section class="fxmaster sidebar-tab sidebar-directory flexcol">
-    <header class="directory-header flexrow">
-      <div>
-        <a class="sync-effects"><i class="fas fa-sync"></i></a>
-      </div>
-      <div>
-        <a class="add-effect">{{localize "FXMASTER.AddEffect"}} <i class="fas fa-plus"></i></a>
-      </div>
-    </header>
-    <ol class="directory-list">
-    {{#each effects as |effect id|}}
-    <li class="directory-item entity flexrow special-effects" data-effect-id="{{id}}">
-      <div class="preview">
-        <video width="46" height="46" muted>
-          <source src="{{effect.file}}">
-        </video>
-      </div>
-      <h4>
-        <a>
-          {{effect.label}}
-        </a>
-      </h4>
-      <div class="controls">
-        <a class="del-effect"><i class="fas fa-trash"></i></a>
-      </div>
+  <header class="directory-header flexrow">
+    <div>
+      <a class="sync-effects"><i class="fas fa-sync"></i></a>
+    </div>
+    <div>
+      <a class="add-effect">{{localize "FXMASTER.AddEffect"}} <i class="fas fa-plus"></i></a>
+    </div>
+  </header>
+  <ol class="directory-list">
+    {{#each folders as |folder id|}}
+    <li class="directory-item folder flexcol collapsed" data-folder-id="{{id}}">
+      <header class="folder-header flexrow">
+        <h3><i class="fas fa-folder-open fa-fw"></i> {{folder.label}}</h3>
+      </header>
+      <ol class="subdirectory">
+        {{#each folder.effects as |effect effectId|}}
+        <li class="directory-item entity flexrow special-effects" data-effect-id="{{effectId}}">
+          <div class="preview">
+            <video width="46" height="46" muted>
+              <source src="{{effect.file}}">
+            </video>
+          </div>
+          <div class="description">
+            <a>
+              <h4>
+                {{effect.label}}
+              </h4>
+              <div class="author"><span>{{effect.author}}</span></div>
+            </a>
+          </div>
+          {{#if folder.editable}}
+          <div class="controls">
+            <a class="del-effect"><i class="fas fa-trash"></i></a>
+          </div>
+          {{/if}}
+        </li>
+        {{/each}}
+      </ol>
     </li>
     {{/each}}
   </ol>

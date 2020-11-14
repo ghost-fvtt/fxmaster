@@ -34,5 +34,42 @@ export const FXMASTER = {
         color: FXColorFilter,
         bloom: FXBloomFilter,
         oldfilm: FXOldFilmFilter
+    },
+    specials: {
+        fxmaster: {
+            label: "FXMaster",
+            effects: [{
+                label: "Red Fire Cone",
+                file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
+                scale: 1,
+                angle: 0,
+                anchor: {
+                    x: 0,
+                    y: 0.5
+                },
+                author: "from Jinker"
+            }, {
+                label: "Acid Line",
+                file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+                scale: 1,
+                angle: 0,
+                anchor: {
+                    x: 0,
+                    y: 0.5
+                },
+                author: "from Jinker"
+            }, {
+                label: "Witch Bolt",
+                file: "modules/fxmaster/specials/jb2a/Witch_Bolt_Blue_600x200.webm",
+                scale: 1,
+                angle: 0,
+                anchor: {
+                    x: 0,
+                    y: 0.5
+                },
+                author: "from JB2A"
+            },
+        ]
+        }
     }
 }

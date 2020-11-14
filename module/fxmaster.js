@@ -34,10 +34,6 @@ Hooks.once("init", function () {
   mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters });
 });
 
-Hooks.once("canvasInit", (canvas) => {
-  // canvas.fxmaster = canvas.stage.addChildAt(new FXMasterLayer(canvas), 8);
-});
-
 Hooks.on("canvasInit", (canvas) => {
   if (!game.settings.get("fxmaster", "enable")) {
     return

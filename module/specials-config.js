@@ -1,5 +1,5 @@
 import { FXMASTER } from "./config.js"
-import {SpecialCreate} from "./specials-create.js"
+import { SpecialCreate } from "./specials-create.js"
 
 export class SpecialsConfig extends FormApplication {
   static get defaultOptions() {
@@ -26,8 +26,14 @@ export class SpecialsConfig extends FormApplication {
    */
   getData() {
     // Return data to the template
+    const custom = {
+      label: "Custom",
+      editable: true,
+      effects: game.settings.get('fxmaster', 'specialEffects')[0]
+    }
+    FXMASTER.specials.custom = custom
     return {
-      effects: game.settings.get("fxmaster", "specialEffects")[0],
+      folders: FXMASTER.specials,
     };
   }
 
@@ -37,7 +43,7 @@ export class SpecialsConfig extends FormApplication {
 
   /** @override */
   activateListeners(html) {
-    html.find('.special-effects h4').click(event => {
+    html.find('.special-effects .description').click(event => {
       let list = event.currentTarget.closest('.directory-list');
       let items = $(list).find('.directory-item');
       for (let i = 0; i < items.length; i++) {
@@ -67,6 +73,24 @@ export class SpecialsConfig extends FormApplication {
     html.find(".sync-effects").click(ev => {
       this.render(true);
     })
+
+    const directory = html.find(".directory-list");
+    directory.on("click", ".folder-header", this._toggleFolder.bind(this));
+
+  }
+
+  _toggleFolder(event) {
+    let folder = $(event.currentTarget.parentElement);
+    let collapsed = folder.hasClass("collapsed");
+
+    // Expand
+    if ( collapsed ) folder.removeClass("collapsed");
+
+    // Collapse
+    else {
+      folder.addClass("collapsed");
+      const subs = folder.find('.folder').addClass("collapsed");
+    }
   }
 
   /**

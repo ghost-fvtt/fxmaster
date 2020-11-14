@@ -6,6 +6,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     this.effects = {};
     this.weather = null;
     this.specials = [];
+    this.loader = new PIXI.Loader();
 
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
@@ -23,23 +24,34 @@ export class FXMasterLayer extends PlaceablesLayer {
   }
 
   playVideo(data) {
-    const loader = PIXI.Loader.shared;
-    const textureId = randomID()
-    loader.add(textureId, data.file)
-
-    loader.load((_, resources) => {
-      const texture = PIXI.Texture.from(resources[textureId].data);
-      var vidSprite = new PIXI.Sprite(texture);
-      vidSprite.anchor.set(0.5, 0.5);
-      vidSprite.position.set(data.position.x, data.position.y);
-      vidSprite.scale.set(data.scale, data.scale);
-      vidSprite.rotation = normalizeRadians(data.rotation - data.angle);
-      this.addChild(vidSprite);
-      const source = getProperty(texture, "baseTexture.resource.source");
-      source.onended = function () {
-        vidSprite.destroy();
+    var video = document.createElement("video");
+    video.preload = "auto";
+    var vidSprite;
+    video.oncanplay = () => {
+      const texture = PIXI.Texture.from(video);
+      vidSprite = new PIXI.Sprite(texture);
+      if (data.anchor) {
+        vidSprite.anchor.set(data.anchor.x, data.anchor.y);
+      } else {
+        vidSprite.anchor.set(0.5);
       }
-    })
+      vidSprite.rotation = normalizeRadians(data.rotation - data.angle);
+      vidSprite.scale.set(data.scale, data.scale);
+      vidSprite.position.set(data.position.x, data.position.y);
+      this.addChild(vidSprite);
+    };
+    video.onended = () => {
+      this.removeChild(vidSprite);
+    }
+    video.src = data.file;
+  }
+
+  getSpecialData(folder, id) {
+    if (folder == "custom") {
+      const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
+      return effectData[id];
+    }
+    return FXMASTER.specials[folder].effects[id]
   }
 
   _drawSpecial(event) {
@@ -50,15 +62,15 @@ export class FXMasterLayer extends PlaceablesLayer {
     if (active.length == 0) return;
 
     const id = active[0].dataset.effectId;
-    const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
-    let data = mergeObject(effectData[id], {
+    const folder = active[0].closest(".folder").dataset.folderId;
+    const effect = this.getSpecialData(folder, id);
+    let data = mergeObject(effect, {
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,
       },
       rotation: event.data.rotation
     });
-
     event.stopPropagation();
     game.socket.emit("module.fxmaster", data);
     canvas.fxmaster.playVideo(data);
@@ -88,7 +100,7 @@ export class FXMasterLayer extends PlaceablesLayer {
         this._drawSpecial(event)
       }
       this._dragging = false;
-    }, 400) 
+    }, 400)
   }
 
   /* -------------------------------------------- */
