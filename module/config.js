@@ -47,7 +47,7 @@ export const FXMASTER = {
                     x: 0.5,
                     y: 0.5
                 },
-                author: ""
+                author: "U~man"
             },{
                 label: "Red Fire Cone",
                 file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
@@ -57,7 +57,7 @@ export const FXMASTER = {
                     x: 0,
                     y: 0.5
                 },
-                author: "from Jinker"
+                author: "Jinker"
             }, {
                 label: "Acid Line",
                 file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
@@ -67,17 +67,17 @@ export const FXMASTER = {
                     x: 0,
                     y: 0.5
                 },
-                author: "from Jinker"
+                author: "Jinker"
             }, {
                 label: "Witch Bolt",
                 file: "modules/fxmaster/specials/jb2a/Witch_Bolt_Blue_600x200.webm",
-                scale: 1,
+                scale: 0.7,
                 angle: 0,
                 anchor: {
                     x: 0,
                     y: 0.5
                 },
-                author: "from JB2A"
+                author: "JB2A"
             },
         ]
         }

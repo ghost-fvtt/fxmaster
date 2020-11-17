@@ -17,13 +17,35 @@ export class SpecialCreate extends FormApplication {
 
   /* -------------------------------------------- */
 
+  setDefault(object) {
+    this.default = object;
+  }
+
   /**
    * Obtain module metadata and merge it with game settings which track current module visibility
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
+
+    const values = mergeObject({
+      angle: 0,
+      position: {
+        x: 0,
+        y: 0
+      },
+      anchor: {
+        x: 0.5,
+        y: 0.5
+      },
+      author: "",
+      preset: false,
+      scale: 1.0
+    }, this.default);
+
     // Return data to the template
-    return {};
+    return {
+      default: values
+    };
   }
 
   /* -------------------------------------------- */
@@ -44,18 +66,26 @@ export class SpecialCreate extends FormApplication {
    */
   _updateObject(_, formData) {
     let fxs = game.settings.get("fxmaster", "specialEffects")[0];
-    fxs.push({
-      label: formData["label"],
-      file: formData["file"],
-      scale: parseFloat(formData["scale"]),
-      angle: toRadians(parseFloat(formData["angle"])),
-      anchor: {
-        x: formData["anchorX"],
-        y: formData["anchorY"],
-      },
-      preset: false,
-      author: ""
-    });
+
+    const newData = {
+        label: formData["label"],
+        file: formData["file"],
+        scale: parseFloat(formData["scale"]),
+        angle: parseFloat(formData["angle"]),
+        anchor: {
+          x: formData["anchorX"],
+          y: formData["anchorY"],
+        },
+        preset: false,
+        author: ""
+    }
+
+    const fx = fxs.filter((f) => f.label == newData.label);
+    if (fx.length > 0) {
+      fx[0] = mergeObject(fx[0], newData)
+    } else {
+      fxs.push(newData)
+    }
     game.settings.set("fxmaster", "specialEffects", fxs);
   }
 }

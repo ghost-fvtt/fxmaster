@@ -35,7 +35,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       } else {
         vidSprite.anchor.set(0.5);
       }
-      vidSprite.rotation = normalizeRadians(data.rotation - data.angle);
+      vidSprite.rotation = normalizeRadians(data.rotation - toRadians(data.angle));
       vidSprite.scale.set(data.scale, data.scale);
       vidSprite.position.set(data.position.x, data.position.y);
       this.addChild(vidSprite);

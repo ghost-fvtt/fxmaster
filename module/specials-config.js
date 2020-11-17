@@ -70,6 +70,14 @@ export class SpecialsConfig extends FormApplication {
       });
     })
 
+    html.find(".edit-effect").click((ev) => {
+      const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
+      let settings = game.settings.get("fxmaster", "specialEffects");
+      const d = new SpecialCreate();
+      d.setDefault(settings[0][effectId]);
+      d.render(true);
+    })
+
     html.find(".sync-effects").click(ev => {
       this.render(true);
     })
