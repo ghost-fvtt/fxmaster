@@ -26,6 +26,7 @@ export class FXMasterLayer extends PlaceablesLayer {
   playVideo(data) {
     var video = document.createElement("video");
     video.preload = "auto";
+    video.crossOrigin = "anonymous";
     var vidSprite;
     video.oncanplay = () => {
       const texture = PIXI.Texture.from(video);
