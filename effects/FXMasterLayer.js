@@ -183,7 +183,7 @@ export class FXMasterLayer extends PlaceablesLayer {
           type: flags[keys[i]].type,
           fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
         };
-        // this.configureEffect(keys[i]);
+        this.configureEffect(keys[i]);
         this.effects[keys[i]].fx.play();
       }
     }
