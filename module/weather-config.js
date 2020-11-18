@@ -25,6 +25,9 @@ Handlebars.registerHelper("Config", function(key, name) {
       }
     }
   }
+  if (key === "apply_tint") {
+    return false
+  }
   return 50;
 });
 
