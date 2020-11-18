@@ -25,7 +25,7 @@ Handlebars.registerHelper("Config", function(key, name) {
       }
     }
   }
-  return null;
+  return 50;
 });
 
 export class WeatherConfig extends FormApplication {
