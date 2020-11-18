@@ -54,9 +54,9 @@ Hooks.on("updateScene", (scene, data, options) => {
   if (!game.settings.get("fxmaster", "enable")) {
     return
   }
-  if (!hasProperty(data, "flags.fxmaster.filters")) {
-    canvas.fxmaster.updateMask();
+  if (hasProperty(data, "flags.fxmaster")) {
+    filterManager.update();
     canvas.fxmaster.drawWeather();
   }
-  filterManager.update();
+  canvas.fxmaster.updateMask();
 });

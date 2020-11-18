@@ -163,28 +163,26 @@ export class FXMasterLayer extends PlaceablesLayer {
   }
 
   drawWeather() {
-    if (!this.weather) this.weather = this.addChild(new PIXI.Container());
+    if (this.weather) {
+      this.removeChild(this.weather);
+    }
+    this.weather = this.addChild(new PIXI.Container());
     const effKeys = Object.keys(this.effects);
     for (let i = 0; i < effKeys.length; ++i) {
       this.effects[effKeys[i]].fx.stop();
-      delete this.effects[effKeys[i]];
     }
+    this.effects = {};
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects");
     if (flags) {
       const keys = Object.keys(flags);
       for (let i = 0; i < keys.length; ++i) {
-        // Effect already exists
-        if (hasProperty(this.effects, keys[i])) {
-          this.effects[keys[i]].fx.play();
-          continue;
-        }
         this.effects[keys[i]] = {
           type: flags[keys[i]].type,
           fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
         };
-        this.configureEffect(keys[i]);
+        // this.configureEffect(keys[i]);
         this.effects[keys[i]].fx.play();
       }
     }

@@ -49,6 +49,16 @@ export const FXMASTER = {
                 },
                 author: "U~man"
             },{
+                label: "Fireball",
+                file: "modules/fxmaster/specials/fxmaster/fireball.webm",
+                scale: 1,
+                angle: 0,
+                anchor: {
+                    x: 0.5,
+                    y: 0.5
+                },
+                author: "U~man"
+            },{
                 label: "Red Fire Cone",
                 file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
                 scale: 1,
