@@ -15,3 +15,10 @@ All notable changes to this project will be documented in this file.
 - Fixed weather effect configuration
 - Fixed crossOrigin 
 ### Removed
+
+## [0.9.8] - 2020-11-19
+### Added
+- Added default values for special effects parameters
+### Changed
+- Fixed scale not set on special effect edition
+### Removed

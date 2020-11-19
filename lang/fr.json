@@ -23,5 +23,9 @@
     "FXMASTER.SaveChanges": "Sauvegarder les Modifications",
     "FXMASTER.Delete": "Supprimer les Effets",
     "FXMASTER.DeleteConfirm": "<p><strong>Êtes vous sûr?</strong> Tous les Effets seront supprimés.</p>",
-    "FXMASTER.Enable": "Activer les Effets"
+    "FXMASTER.Enable": "Activer les Effets",
+    "FXMASTER.Angle": "Angle",
+    "FXMASTER.Anchor": "Ancre",
+    "FXMASTER.File": "Fichier",
+    "FXMASTER.Name": "Nom"
 }

@@ -24,6 +24,14 @@ export class FXMasterLayer extends PlaceablesLayer {
   }
 
   playVideo(data) {
+    // Set default values
+    data = mergeObject({
+      anchor: { x: 0.5, y: 0.5 },
+      rotation: 0,
+      scale: 1.0,
+      position: { x: 0, y: 0 }
+    }, data);
+
     var video = document.createElement("video");
     video.preload = "auto";
     video.crossOrigin = "anonymous";
@@ -31,11 +39,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     video.oncanplay = () => {
       const texture = PIXI.Texture.from(video);
       vidSprite = new PIXI.Sprite(texture);
-      if (data.anchor) {
-        vidSprite.anchor.set(data.anchor.x, data.anchor.y);
-      } else {
-        vidSprite.anchor.set(0.5);
-      }
+      vidSprite.anchor.set(data.anchor.x, data.anchor.y);
       vidSprite.rotation = normalizeRadians(data.rotation - toRadians(data.angle));
       vidSprite.scale.set(data.scale, data.scale);
       vidSprite.position.set(data.position.x, data.position.y);
