@@ -1,3 +1,5 @@
+import { filterManager } from "../filters/FilterManager.js";
+
 export const registerHooks = function () {
     // ------------------------------------------------------------------
     // Hooks API

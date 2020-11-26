@@ -54,7 +54,7 @@ Options for color:
 - Switching a named weather effect on and off
 
 ```javascript
-Hooks.call('switchWeather', {name:'myweatherID', type: 'rain', {density: 100}});
+Hooks.call('switchWeather', {name:'myweatherID', type: 'rain', options: {density: 100}});
 ```
 
 - Set the active weather effects
