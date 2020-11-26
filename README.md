@@ -80,8 +80,8 @@ Weather types:
 - raintop
 
 Options are numbers between 0 and 100, 50 being the default value. It's a bit abstract I know, it may change later.
-Options
 
+Options
 - speed
 - scale
 - density
@@ -89,6 +89,16 @@ Options
 - tint (must set apply_tint to true)
 
 ### Special Effects
+
+Special effects are controls and helpers to play temporary video files over the canvas. They are defined by several parameters
+- **file**: the video file path
+- **anchor** (x, y): the starting point of the effect. Those are values between 0 and 1.0, and are fractions of the width or height of the video file.
+- **position** (x, y): the position at which the anchor of the effect will be placed.
+- **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case. 
+- **speed**: the speed at which the effect will move toward
+- **scale** (x, y): self explanatory
+
+#### Play a video file on the canvas
 
 ```javascript
 const data = {
@@ -101,12 +111,41 @@ const data = {
    x: 0,
    y: 1
   },
-  angle: 3.14,
+  angle: 90,
+  speed: 0,
   scale: 0.5
 }
 canvas.fxmaster.playVideo(data);
 game.socket.emit('fxmaster', data);
 ```
+
+#### Play a video file between two tokens
+You can use the `canvas.fxmaster.drawSpecialToward` method
+
+```javascript
+function castSpell(effect) {
+    const tokens = canvas.tokens.controlled;
+    if (tokens.length == 0) {
+        ui.notifications.error("Please select a token");
+        return;
+    }
+    game.user.targets.forEach((i, t) => {
+        canvas.fxmaster.drawSpecialToward(effect, tokens[0], t);
+    })
+}
+
+castSpell({
+    file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+    anchor: {
+        x: -.08,
+        y: 0.5
+    },
+    speed: 0,
+    angle: 0,
+    scale: 1
+});
+```
+
 
 ## Community Contribution
 
@@ -119,3 +158,4 @@ FXMaster Foundry VTT Module is shared under BSD 3-Clause License .
 
 Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art Foundry VTT Module](https://github.com/jinkergm/JAA), they are shared as free for use.
 Jules and Ben's Witch Bolt is borrowed from [JB2A_DnD5E Foundry VTT Module](https://github.com/Jules-Bens-Aa/JB2A_DnD5e), it is shared under [Creative Commons v4](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+Seagull sprites used in the Birds weather effect are from [whtdragon](https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/)

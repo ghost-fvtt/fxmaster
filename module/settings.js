@@ -16,4 +16,12 @@ export const registerSettings = function () {
         type: Array,
         config: false
     });
+
+    game.settings.register("fxmaster", "migration", {
+        name: "migration",
+        default: [],
+        scope: "world",
+        type: Number,
+        config: false
+    });
 }

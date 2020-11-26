@@ -13,10 +13,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label>{{localize "FXMASTER.Scale"}}</label>
+        <label>{{localize "FXMASTER.Scale"}} (x, y)</label>
         <div class="form-fields">
-            <input type='range' data-dtype="Number" value="{{default.scale}}" name='scale' min="0" step="0.1" max="5" />
-            <span class="range-value">{{default.scale}}</span>
+            <input type='text' data-dtype="Number" value="{{default.scale.x}}" name='scaleX' />
+            <input type='text' data-dtype="Number" value="{{default.scale.y}}" name='scaleY' />
         </div>
     </div>
     <div class="form-group">
@@ -32,6 +32,12 @@
         <div class="form-fields">
             <input type='text' data-dtype="Number" value="{{default.anchor.x}}" name='anchorX' />
             <input type='text' data-dtype="Number" value="{{default.anchor.y}}" name='anchorY' />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "FXMASTER.Speed"}}</label>
+        <div class="form-fields">
+            <input type='number' data-dtype="Number" value="{{default.speed}}" name='speed' step="0.01"/>
         </div>
     </div>
     <footer class="form-footer">

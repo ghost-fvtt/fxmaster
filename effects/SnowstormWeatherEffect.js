@@ -12,7 +12,7 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 	static get effectOptions() {
 		const options = super.effectOptions;
 		options.density.min = 0.5;
-		options.density.value = 0.8;
+		options.density.value = 0.6;
 		options.density.max = 0.9;
 		options.density.step = 0.1;
 		return options;
@@ -31,50 +31,54 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
 		const config = mergeObject(this.constructor.RAIN_CONFIG, {
 			spawnRect: {
-				x: -0.05 * d.width,
-				y: -0.10 * d.height,
-				w: d.width,
-				h: 0.8 * d.height
+			  x: d.paddingX,
+			  y: d.paddingY,
+			  w: d.sceneWidth,
+			  h: d.sceneHeight
 			},
 			maxParticles: p,
 			frequency: 1 / p
 		}, { inplace: false });
 		const art = [
-		  "./modules/fxmaster/effects/assets/smoke_03.png",
-		  "./modules/fxmaster/effects/assets/smoke_06.png",
-		  "./modules/fxmaster/effects/assets/smoke_08.png"
+		  "./modules/fxmaster/effects/assets/snow_01.png",
+		  "./modules/fxmaster/effects/assets/snow_02.png"
 		];
-		return new PIXI.particles.Emitter(parent, art, config);
+		var emitter = new PIXI.particles.Emitter(parent, art, config);
+		emitter.particleConstructor = PIXI.particles.PathParticle;
+		return emitter;
 	}
 }
 
 // Configure the Snow particle
 SnowstormWeatherEffect.RAIN_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
-	"alpha": {
-		"start": 0.95,
-		"end": 0.6
+	alpha: {
+		start: 1.0,
+		end: 1.0
 	},
-	"scale": {
-		"start": 0.06,
-		"end": 0.02,
-		"minimumScaleMultiplier": 0.8
+	scale: {
+		start: 0.2,
+		end: 0.08,
+		minimumScaleMultiplier: 0.8
 	},
-	"speed": {
-		"start": 600,
-		"end": 480,
-		"minimumSpeedMultiplier": 0.2
+	speed: {
+		start: 400,
+		end: 350,
+		minimumSpeedMultiplier: 0.2
 	},
-	"startRotation": {
-		"min": 70,
-		"max": 80
+	startRotation: {
+		min: 86,
+		max: 94
 	},
-	"rotation": 155,
-	"rotationSpeed": {
-		"min": -10.0,
-		"max": 10.0
+	rotation: 0,
+	rotationSpeed: {
+		min: -60.0,
+		max: 60.0
 	},
-	"lifetime": {
-		"min": 1.5,
-		"max": 3.5
+	lifetime: {
+		min: 2.5,
+		max: 6
 	},
+    extraData: {
+      path: "sin(x/150)*25"
+    }
 }, { inplace: false });

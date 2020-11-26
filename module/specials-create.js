@@ -1,3 +1,5 @@
+import { SpecialsConfig } from "./specials-config.js"
+
 export class SpecialCreate extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -8,7 +10,7 @@ export class SpecialCreate extends FormApplication {
       popOut: true,
       editable: game.user.isGM,
       width: 300,
-      height: 230,
+      height: 260,
       template: "modules/fxmaster/templates/special-create.html",
       id: "add-effect",
       title: game.i18n.localize("FXMASTER.AddEffect")
@@ -37,9 +39,13 @@ export class SpecialCreate extends FormApplication {
         x: 0.5,
         y: 0.5
       },
+      scale: {
+        x: 1.0,
+        y: 1.0
+      },
+      speed: 0,
       author: "",
       preset: false,
-      scale: 1.0
     }, this.default);
 
     // Return data to the template
@@ -68,16 +74,20 @@ export class SpecialCreate extends FormApplication {
     let fxs = game.settings.get("fxmaster", "specialEffects")[0];
 
     const newData = {
-        label: formData["label"],
-        file: formData["file"],
-        scale: parseFloat(formData["scale"]),
-        angle: parseFloat(formData["angle"]),
-        anchor: {
-          x: formData["anchorX"],
-          y: formData["anchorY"],
-        },
-        preset: false,
-        author: ""
+      label: formData["label"],
+      file: formData["file"],
+      scale: {
+        x: parseFloat(formData["scaleX"]),
+        y: parseFloat(formData["scaleY"]),
+      },
+      angle: parseFloat(formData["angle"]),
+      anchor: {
+        x: formData["anchorX"],
+        y: formData["anchorY"],
+      },
+      speed: parseFloat(formData["speed"]),
+      preset: false,
+      author: ""
     }
 
     const fx = fxs.filter((f) => f.label == newData.label);
@@ -86,6 +96,12 @@ export class SpecialCreate extends FormApplication {
     } else {
       fxs.push(newData)
     }
-    game.settings.set("fxmaster", "specialEffects", fxs);
+    game.settings.set("fxmaster", "specialEffects", fxs).then(() => {
+      Object.values(ui.windows).forEach((w) => {
+        if (w instanceof SpecialsConfig) {
+          w.render(true);
+        }
+      })
+    });
   }
 }

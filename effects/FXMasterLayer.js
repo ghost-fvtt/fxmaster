@@ -28,27 +28,57 @@ export class FXMasterLayer extends PlaceablesLayer {
     data = mergeObject({
       anchor: { x: 0.5, y: 0.5 },
       rotation: 0,
-      scale: 1.0,
+      scale: {
+        x: 1.0,
+        y: 1.0
+      },
       position: { x: 0, y: 0 }
     }, data);
 
+    // Create video
     var video = document.createElement("video");
     video.preload = "auto";
     video.crossOrigin = "anonymous";
+    video.src = data.file;
+
+    // Create PIXI sprite
     var vidSprite;
     video.oncanplay = () => {
       const texture = PIXI.Texture.from(video);
       vidSprite = new PIXI.Sprite(texture);
+      this.addChild(vidSprite);
+
+      // Set values
       vidSprite.anchor.set(data.anchor.x, data.anchor.y);
       vidSprite.rotation = normalizeRadians(data.rotation - toRadians(data.angle));
-      vidSprite.scale.set(data.scale, data.scale);
+      vidSprite.scale.set(data.scale.x, data.scale.y);
       vidSprite.position.set(data.position.x, data.position.y);
-      this.addChild(vidSprite);
+      
+      if (!data.speed || data.speed === 0) {
+        return;
+      }
+      // Compute final position
+      const delta = video.duration * data.speed;
+      const deltaX = delta * Math.cos(data.rotation)
+      const deltaY = delta * Math.sin(data.rotation)
+
+      // Move the sprite
+      const attributes = [{
+        parent: vidSprite, attribute: 'x', to: data.position.x + deltaX
+      }, {
+        parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
+      }
+      ];
+      CanvasAnimation.animateLinear(attributes, {
+        name: `fxmaster.video.${randomID()}.move`,
+        context: this,
+        duration: video.duration * 1000.0
+      })
     };
+
     video.onended = () => {
       this.removeChild(vidSprite);
     }
-    video.src = data.file;
   }
 
   getSpecialData(folder, id) {
@@ -57,6 +87,32 @@ export class FXMasterLayer extends PlaceablesLayer {
       return effectData[id];
     }
     return FXMASTER.specials[folder].effects[id]
+  }
+
+  drawSpecialToward(effect, tok1, tok2) {
+    const origin = {
+      x: tok1.position.x + tok1.w / 2,
+      y: tok1.position.y + tok1.h / 2
+    }
+    const effectData = mergeObject(effect, {
+      position: {
+        x: origin.x,
+        y: origin.y
+      }
+    });
+    const target = {
+        x: tok2.position.x + tok2.w / 2,
+        y: tok2.position.y + tok2.h / 2
+    }
+    // Compute angle
+    const deltaX = target.x - origin.x
+    const deltaY = target.y - origin.y
+    effectData.rotation = Math.atan2(deltaY, deltaX)
+
+    // Throw effect locally
+    canvas.fxmaster.playVideo(effectData);
+    // And to other clients
+    game.socket.emit('fxmaster', effectData);
   }
 
   _drawSpecial(event) {

@@ -27,9 +27,7 @@ export const registerHooks = function () {
             effects = flags;
             delete effects[params.name];
         } else {
-            console.log(effects)
             effects = mergeObject(flags, newEffect);
-            console.log(effects)
         }
         if (Object.entries(effects).length == 0) {
             await canvas.scene.unsetFlag("fxmaster", "effects");

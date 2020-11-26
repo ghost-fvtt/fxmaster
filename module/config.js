@@ -7,6 +7,7 @@ import { FogWeatherEffect } from "../effects/FogWeatherEffect.js";
 import { RaintopWeatherEffect } from "../effects/RaintopWeatherEffect.js";
 import { RainSimpleWeatherEffect } from "../effects/RainSimpleWeatherEffect.js";
 import { SnowstormWeatherEffect } from "../effects/SnowstormWeatherEffect.js";
+import { BirdsWeatherEffect } from "../effects/BirdsWeatherEffect.js";
 import { StarsWeatherEffect } from "../effects/StarsWeatherEffect.js";
 
 import { FXColorFilter } from "../filters/FXColorFilter.js";
@@ -27,6 +28,7 @@ export const FXMASTER = {
         bats: BatsWeatherEffect,
         fog: FogWeatherEffect,
         raintop: RaintopWeatherEffect,
+        birds: BirdsWeatherEffect,
     },
     filters: {
         underwater: FXUnderwaterFilter,
@@ -41,17 +43,24 @@ export const FXMASTER = {
             effects: [{
                 label: "Smoke Bomb",
                 file: "modules/fxmaster/specials/fxmaster/smokeBomb.webm",
-                scale: 1,
+                scale: {
+                    x: 1.0,
+                    y: 1.0
+                },
                 angle: 0,
                 anchor: {
                     x: 0.5,
                     y: 0.5
                 },
+                speed: 0,
                 author: "U~man"
             },{
                 label: "Fireball",
                 file: "modules/fxmaster/specials/fxmaster/fireball.webm",
-                scale: 1,
+                scale: {
+                    x: 1.0,
+                    y: 1.0
+                },
                 angle: 0,
                 anchor: {
                     x: 0.5,
@@ -61,7 +70,10 @@ export const FXMASTER = {
             },{
                 label: "Red Fire Cone",
                 file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
-                scale: 1,
+                scale: {
+                    x: 1.0,
+                    y: 1.0
+                },
                 angle: 0,
                 anchor: {
                     x: 0,
@@ -71,7 +83,10 @@ export const FXMASTER = {
             }, {
                 label: "Acid Line",
                 file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
-                scale: 1,
+                scale: {
+                    x: 1.0,
+                    y: 1.0
+                },
                 angle: 0,
                 anchor: {
                     x: 0,
@@ -81,7 +96,10 @@ export const FXMASTER = {
             }, {
                 label: "Witch Bolt",
                 file: "modules/fxmaster/specials/jb2a/Witch_Bolt_Blue_600x200.webm",
-                scale: 0.7,
+                scale: {
+                    x: 0.7,
+                    y: 0.7
+                },
                 angle: 0,
                 anchor: {
                     x: 0,

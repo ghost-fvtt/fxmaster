@@ -27,6 +27,7 @@
 
 .fxmaster .special-effects .description {
   padding: 4px;
+  overflow: hidden;
 }
 
 .fxmaster .special-effects .description h4 {

@@ -22,3 +22,12 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Fixed scale not set on special effect edition
 ### Removed
+
+## [0.9.9] - 2020-11-26
+### Added
+- Added Birds weather effect
+- Added speed parameter for moving special effects
+### Changed
+- Removed a couple of console logs
+- Improved the snowstorm effect
+### Removed
