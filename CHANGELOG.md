@@ -31,3 +31,15 @@ All notable changes to this project will be documented in this file.
 - Removed a couple of console logs
 - Improved the snowstorm effect
 ### Removed
+
+## [1.0.0] - 2020-11-29
+### Added
+- Blood splatter special effect
+- Added tooltip on specials labels
+- Specials playback rate can be specified in macros only
+### Changed
+- Specials list is now taken from the CONFIG.fxmaster.specials array so modules can add to it
+- Specials now deletes if the video encounters an error
+- Fixed socket name for specials
+- Specials config dialog is resizable
+### Removed

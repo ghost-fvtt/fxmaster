@@ -31,8 +31,10 @@
 }
 
 .fxmaster .special-effects .description h4 {
-  line-height: 28px;
+  line-height: 16px;
   text-indent: 5px;
+  font-size: 14px;
+  height: 32px;
 }
 
 .fxmaster .special-effects .description .author {

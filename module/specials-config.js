@@ -1,4 +1,3 @@
-import { FXMASTER } from "./config.js"
 import { SpecialCreate } from "./specials-create.js"
 
 export class SpecialsConfig extends FormApplication {
@@ -12,6 +11,7 @@ export class SpecialsConfig extends FormApplication {
       editable: game.user.isGM,
       width: 120,
       height: 200,
+      resizable: true,
       template: "modules/fxmaster/templates/specials-config.html",
       id: "specials-config",
       title: game.i18n.localize("EFFECTCONTROLS.Title"),
@@ -31,9 +31,9 @@ export class SpecialsConfig extends FormApplication {
       editable: true,
       effects: game.settings.get('fxmaster', 'specialEffects')[0]
     }
-    FXMASTER.specials.custom = custom
+    CONFIG.fxmaster.specials.custom = custom
     return {
-      folders: FXMASTER.specials,
+      folders: CONFIG.fxmaster.specials,
     };
   }
 

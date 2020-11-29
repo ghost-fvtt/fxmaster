@@ -1,5 +1,5 @@
-import { FXMASTER } from "../module/config.js"
-
+import {FXCanvasAnimation} from "../module/canvasanimation.js"
+  
 export class FXMasterLayer extends PlaceablesLayer {
   constructor() {
     super();
@@ -32,7 +32,8 @@ export class FXMasterLayer extends PlaceablesLayer {
         x: 1.0,
         y: 1.0
       },
-      position: { x: 0, y: 0 }
+      position: { x: 0, y: 0 },
+      playbackRate: 1.0
     }, data);
 
     // Create video
@@ -40,7 +41,8 @@ export class FXMasterLayer extends PlaceablesLayer {
     video.preload = "auto";
     video.crossOrigin = "anonymous";
     video.src = data.file;
-
+    video.playbackRate = data.playbackRate;
+    
     // Create PIXI sprite
     var vidSprite;
     video.oncanplay = () => {
@@ -69,15 +71,19 @@ export class FXMasterLayer extends PlaceablesLayer {
         parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
       }
       ];
-      CanvasAnimation.animateLinear(attributes, {
+      FXCanvasAnimation.animateLinear(attributes, {
         name: `fxmaster.video.${randomID()}.move`,
         context: this,
         duration: video.duration * 1000.0
       })
     };
-
+    video.onerror = () => {
+      this.removeChild(vidSprite);
+      vidSprite.destroy();
+    }
     video.onended = () => {
       this.removeChild(vidSprite);
+      vidSprite.destroy();
     }
   }
 
@@ -86,7 +92,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
       return effectData[id];
     }
-    return FXMASTER.specials[folder].effects[id]
+    return CONFIG.fxmaster.specials[folder].effects[id]
   }
 
   drawSpecialToward(effect, tok1, tok2) {
@@ -112,7 +118,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     // Throw effect locally
     canvas.fxmaster.playVideo(effectData);
     // And to other clients
-    game.socket.emit('fxmaster', effectData);
+    game.socket.emit('module.fxmaster', effectData);
   }
 
   _drawSpecial(event) {
