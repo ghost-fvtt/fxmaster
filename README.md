@@ -54,7 +54,11 @@ Options for color:
 - Switching a named weather effect on and off
 
 ```javascript
-Hooks.call('switchWeather', {name:'myweatherID', type: 'rain', options: {density: 100}});
+Hooks.call("switchWeather", {
+  name: "myweatherID",
+  type: "rain",
+  options: { density: 100 },
+});
 ```
 
 - Set the active weather effects
@@ -82,6 +86,7 @@ Weather types:
 Options are numbers between 0 and 100, 50 being the default value. It's a bit abstract I know, it may change later.
 
 Options
+
 - speed
 - scale
 - density
@@ -91,10 +96,11 @@ Options
 ### Special Effects
 
 Special effects are controls and helpers to play temporary video files over the canvas. They are defined by several parameters
+
 - **file**: the video file path
 - **anchor** (x, y): the starting point of the effect. Those are values between 0 and 1.0, and are fractions of the width or height of the video file.
 - **position** (x, y): the position at which the anchor of the effect will be placed.
-- **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case. 
+- **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case.
 - **speed**: the speed at which the effect will move toward
 - **scale** (x, y): self explanatory
 
@@ -105,36 +111,62 @@ const data = {
   file: "myfile.webm",
   position: {
     x: 1200,
-    y: 1200
+    y: 1200,
   },
   anchor: {
-   x: 0,
-   y: 1
+    x: 0,
+    y: 1,
   },
   angle: 90,
   speed: 0,
-  scale: 0.5
-}
+  scale: {
+    x: 0.7,
+    y: 0.7,
+  },
+};
 canvas.fxmaster.playVideo(data);
-game.socket.emit('fxmaster', data);
+game.socket.emit("fxmaster", data);
 ```
 
 #### Play a video file between two tokens
+
 You can use the `canvas.fxmaster.drawSpecialToward` method
 
 ```javascript
 function castSpell(effect) {
-    const tokens = canvas.tokens.controlled;
-    if (tokens.length == 0) {
-        ui.notifications.error("Please select a token");
-        return;
-    }
-    game.user.targets.forEach((i, t) => {
-        canvas.fxmaster.drawSpecialToward(effect, tokens[0], t);
-    })
+  const tokens = canvas.tokens.controlled;
+  if (tokens.length == 0) {
+    ui.notifications.error("Please select a token");
+    return;
+  }
+  game.user.targets.forEach((i, t) => {
+    canvas.fxmaster.drawSpecialToward(effect, tokens[0], t);
+  });
 }
 
 castSpell({
+  file:
+    "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+  anchor: {
+    x: -0.08,
+    y: 0.5,
+  },
+  speed: 0,
+  angle: 0,
+  scale: {
+    x: 1,
+    y: 1,
+  },
+});
+```
+
+#### Animation easing
+
+You can customize the `canvas.fxmaster.drawSpecialToward` to ease the animation toward the target.
+Here is an example data, easing options are given in the ease.js file.
+
+```javascript
+{
     file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
     anchor: {
         x: -.08,
@@ -142,10 +174,17 @@ castSpell({
     },
     speed: 0,
     angle: 0,
-    scale: 1
-});
+  scale: {
+    x: 1,
+    y: 1
+  }
+  animationDelay: {
+    start: 0.5,
+    end: 0.2
+  },
+  ease: "InCirc"
+}
 ```
-
 
 ## Community Contribution
 
@@ -154,6 +193,7 @@ requests for code changes. Approval for such requests involves code and (if nece
 reach out on the Foundry Community Discord with any questions.
 
 ## Licensing
+
 FXMaster Foundry VTT Module is shared under BSD 3-Clause License .
 
 Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art Foundry VTT Module](https://github.com/jinkergm/JAA), they are shared as free for use.

@@ -3,7 +3,7 @@ import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js"
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
-import {migrate} from './migration.js'
+import { migrate } from './migration.js'
 
 function registerLayer() {
   const layers = mergeObject(Canvas.layers, {
@@ -21,7 +21,7 @@ Hooks.once("init", function () {
   registerSettings();
   registerHooks();
   registerLayer();
-  
+
   // Set missing icons
   CONFIG.weatherEffects.rain.icon = "modules/fxmaster/icons/weather/rain.png";
   CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/icons/weather/leaves.png";
@@ -32,7 +32,7 @@ Hooks.once("init", function () {
 
   // Adding filters and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters });
+  mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials });
 });
 
 Hooks.once("setup", () => {

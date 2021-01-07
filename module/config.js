@@ -68,6 +68,19 @@ export const FXMASTER = {
                 },
                 author: "U~man"
             },{
+                label: "Blood Splatter",
+                file: "modules/fxmaster/specials/fxmaster/blood.webm",
+                scale: {
+                    x: 0.7,
+                    y: 0.7
+                },
+                angle: 0,
+                anchor: {
+                    x: 0.5,
+                    y: 0.5
+                },
+                author: "U~man"
+            },{
                 label: "Red Fire Cone",
                 file: "modules/fxmaster/specials/jinker/dragonBornGold-RedFire15Cone.webm",
                 scale: {

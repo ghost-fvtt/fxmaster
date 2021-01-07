@@ -1,4 +1,5 @@
-import { FXMASTER } from "../module/config.js"
+import { FXCanvasAnimation } from "../module/canvasanimation.js"
+import { easeFunctions } from "../module/ease.js";
 
 export class FXMasterLayer extends PlaceablesLayer {
   constructor() {
@@ -28,11 +29,10 @@ export class FXMasterLayer extends PlaceablesLayer {
     data = mergeObject({
       anchor: { x: 0.5, y: 0.5 },
       rotation: 0,
-      scale: {
-        x: 1.0,
-        y: 1.0
-      },
-      position: { x: 0, y: 0 }
+      scale: { x: 1.0, y: 1.0 },
+      position: { x: 0, y: 0 },
+      playbackRate: 1.0,
+      ease: "Linear"
     }, data);
 
     // Create video
@@ -40,6 +40,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     video.preload = "auto";
     video.crossOrigin = "anonymous";
     video.src = data.file;
+    video.playbackRate = data.playbackRate;
 
     // Create PIXI sprite
     var vidSprite;
@@ -53,9 +54,12 @@ export class FXMasterLayer extends PlaceablesLayer {
       vidSprite.rotation = normalizeRadians(data.rotation - toRadians(data.angle));
       vidSprite.scale.set(data.scale.x, data.scale.y);
       vidSprite.position.set(data.position.x, data.position.y);
-      
-      if (!data.speed || data.speed === 0) {
+
+      if ((!data.speed || data.speed === 0) && !data.distance) {
         return;
+      }
+      if (data.distance) {
+        data.speed = data.distance / video.duration;
       }
       // Compute final position
       const delta = video.duration * data.speed;
@@ -69,15 +73,30 @@ export class FXMasterLayer extends PlaceablesLayer {
         parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
       }
       ];
-      CanvasAnimation.animateLinear(attributes, {
-        name: `fxmaster.video.${randomID()}.move`,
-        context: this,
-        duration: video.duration * 1000.0
-      })
+      let animationDuration = video.duration * 1000;
+      animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+      const animate = function () {
+        FXCanvasAnimation.animateSmooth(attributes, {
+          name: `fxmaster.video.${randomID()}.move`,
+          context: this,
+          duration: animationDuration,
+          ease: easeFunctions[data.ease]
+        })
+      }
+      if (hasProperty(data, "animationDelay.start")) {
+        setTimeout(animate, data.animationDelay.start * 1000.0);
+      } else {
+        animate();
+      }
     };
 
+    video.onerror = () => {
+      this.removeChild(vidSprite);
+      vidSprite.destroy();
+    }
     video.onended = () => {
       this.removeChild(vidSprite);
+      vidSprite.destroy();
     }
   }
 
@@ -86,7 +105,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
       return effectData[id];
     }
-    return FXMASTER.specials[folder].effects[id]
+    return CONFIG.fxmaster.specials[folder].effects[id]
   }
 
   drawSpecialToward(effect, tok1, tok2) {
@@ -101,18 +120,20 @@ export class FXMasterLayer extends PlaceablesLayer {
       }
     });
     const target = {
-        x: tok2.position.x + tok2.w / 2,
-        y: tok2.position.y + tok2.h / 2
+      x: tok2.position.x + tok2.w / 2,
+      y: tok2.position.y + tok2.h / 2
     }
     // Compute angle
     const deltaX = target.x - origin.x
     const deltaY = target.y - origin.y
     effectData.rotation = Math.atan2(deltaY, deltaX)
 
+    effectData.distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY) - (1 - effectData.anchor.x) * tok2.width;
+
     // Throw effect locally
     canvas.fxmaster.playVideo(effectData);
     // And to other clients
-    game.socket.emit('fxmaster', effectData);
+    game.socket.emit('module.fxmaster', effectData);
   }
 
   _drawSpecial(event) {
