@@ -186,6 +186,43 @@ Here is an example data, easing options are given in the ease.js file.
 }
 ```
 
+## Adding your specials effects to FXMaster
+First you need to configure each one of your special effects
+
+```javascript
+export const Effects = {
+  label: "MYMODULE",
+  effects: [
+    {
+      label: "Smoke Bomb",
+      file: "modules/fxmaster/specials/fxmaster/smokeBomb.webm",
+      scale: {
+        x: 1.0,
+        y: 1.0,
+      },
+      angle: 0,
+      anchor: {
+        x: 0.5,
+        y: 0.5,
+      },
+      speed: 0,
+      author: "U~man",
+    },
+  ],
+};
+```
+Then you can add them to the Specials create dialog by merging it to the CONFIG.fxmaster.specials object.
+
+```javascript
+import { Effects } from "./effects.js";
+
+Hooks.once("init", function () {
+  // Adding specials
+  if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
+  mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
+});
+```
+
 ## Community Contribution
 
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge
