@@ -189,6 +189,7 @@ Here is an example data, easing options are given in the ease.js file.
 ```
 
 ## Adding your special effects to FXMaster
+Here is a demo module you can use as a template [Specials module Template](https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template).
 
 In a first file, you will configure each one of your special effects
 ```javascript
