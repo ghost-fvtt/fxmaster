@@ -1,4 +1,5 @@
 import { SpecialsConfig } from "./specials-config.js"
+import { easeFunctions } from "./ease.js"
 
 export class SpecialCreate extends FormApplication {
   static get defaultOptions() {
@@ -10,7 +11,7 @@ export class SpecialCreate extends FormApplication {
       popOut: true,
       editable: game.user.isGM,
       width: 300,
-      height: 260,
+      height: 320,
       template: "modules/fxmaster/templates/special-create.html",
       id: "add-effect",
       title: game.i18n.localize("FXMASTER.AddEffect")
@@ -28,7 +29,7 @@ export class SpecialCreate extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-
+    const eases = easeFunctions;
     const values = mergeObject({
       angle: 0,
       position: {
@@ -44,13 +45,20 @@ export class SpecialCreate extends FormApplication {
         y: 1.0
       },
       speed: 0,
+      animationDelay: {
+        start: 0,
+        end: 0
+      },
+      ease: "Linear",
       author: "",
       preset: false,
     }, this.default);
 
+    console.log(eases)
     // Return data to the template
     return {
-      default: values
+      default: values,
+      ease: Object.keys(eases)
     };
   }
 
@@ -86,10 +94,15 @@ export class SpecialCreate extends FormApplication {
         y: formData["anchorY"],
       },
       speed: parseFloat(formData["speed"]),
+      animationDelay: {
+        start: parseFloat(formData["animationDelayStart"]),
+        end: parseFloat(formData["animationDelayEnd"])
+      },
+      ease: formData["ease"],
       preset: false,
       author: ""
     }
-
+    console.log(newData);
     const fx = fxs.filter((f) => f.label == newData.label);
     if (fx.length > 0) {
       fx[0] = mergeObject(fx[0], newData)
