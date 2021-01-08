@@ -103,6 +103,8 @@ Special effects are controls and helpers to play temporary video files over the 
 - **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case.
 - **speed**: the speed at which the effect will move toward
 - **scale** (x, y): self explanatory
+- **animationDelay** (start, end): Delays before or after the effect will move if speed > 0
+- **ease**: Easing function used to have a more natural move animation
 
 #### Play a video file on the canvas
 
@@ -186,9 +188,9 @@ Here is an example data, easing options are given in the ease.js file.
 }
 ```
 
-## Adding your specials effects to FXMaster
-First you need to configure each one of your special effects
+## Adding your special effects to FXMaster
 
+In a first file, you will configure each one of your special effects
 ```javascript
 export const Effects = {
   label: "MYMODULE",
@@ -211,7 +213,7 @@ export const Effects = {
   ],
 };
 ```
-Then you can add them to the Specials create dialog by merging it to the CONFIG.fxmaster.specials object.
+Then in a second file you can add the previously created effects by merging them with the CONFIG.fxmaster.specials object as follow.
 
 ```javascript
 import { Effects } from "./effects.js";
@@ -222,6 +224,7 @@ Hooks.once("init", function () {
   mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
 });
 ```
+Effects should now appear in the Specials selection dialog
 
 ## Community Contribution
 
