@@ -19,8 +19,10 @@
   "FXMASTER.AddEffect": "Añadir un Efecto",
   "FXMASTER.Density": "Densidad",
   "FXMASTER.Tint": "Tono",
-  "FXMASTER.Scale": "Escala",
+  "FXMASTER.Scale": "Escalado",
+  "FXMASTER.ScaleHint": "Escalado de Vídeo",
   "FXMASTER.Speed": "Velocidad",
+  "FXMASTER.SpeedHint": "Velocidad de movimiento del vídeo",
   "FXMASTER.Direction": "Dirección",
   "FXMASTER.SaveMacro": "Guardar como Macro",
   "FXMASTER.SaveChanges": "Guardar Cambios",
@@ -28,7 +30,13 @@
   "FXMASTER.DeleteConfirm": "<p><strong>¿Estás seguro?</strong> Se borrarán todos los Efectos.</p>",
   "FXMASTER.Enable": "Habilitar Efectos",
   "FXMASTER.Angle": "Ángulo",
+  "FXMASTER.AngleHint": "Ángulo inicial del efecto comparado al eje izquierda a derecha",
   "FXMASTER.Anchor": "Anclaje",
+  "FXMASTER.AnchorHint": "Coordenadas locales del origen entre 0.0 y 1.0",
   "FXMASTER.File": "Fichero",
-  "FXMASTER.Name": "Nombre"
+  "FXMASTER.Name": "Nombre",
+  "FXMASTER.AnimationDelay": "Retraso",
+  "FXMASTER.AnimationDelayHint": "Retraso de la animación de velocidad",
+  "FXMASTER.Ease": "Ease",
+  "FXMASTER.EaseHint": "Función de redución de la animación de velocidad"
 }
