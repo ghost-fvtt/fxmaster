@@ -103,6 +103,8 @@ Special effects are controls and helpers to play temporary video files over the 
 - **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case.
 - **speed**: the speed at which the effect will move toward
 - **scale** (x, y): self explanatory
+- **animationDelay** (start, end): Delays before or after the effect will move if speed > 0
+- **ease**: Easing function used to have a more natural move animation
 
 #### Play a video file on the canvas
 
@@ -185,6 +187,45 @@ Here is an example data, easing options are given in the ease.js file.
   ease: "InCirc"
 }
 ```
+
+## Adding your special effects to FXMaster
+Here is a demo module you can use as a template [Specials module Template](https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template).
+
+In a first file, you will configure each one of your special effects
+```javascript
+export const Effects = {
+  label: "MYMODULE",
+  effects: [
+    {
+      label: "Smoke Bomb",
+      file: "modules/fxmaster/specials/fxmaster/smokeBomb.webm",
+      scale: {
+        x: 1.0,
+        y: 1.0,
+      },
+      angle: 0,
+      anchor: {
+        x: 0.5,
+        y: 0.5,
+      },
+      speed: 0,
+      author: "U~man",
+    },
+  ],
+};
+```
+Then in a second file you can add the previously created effects by merging them with the CONFIG.fxmaster.specials object as follow.
+
+```javascript
+import { Effects } from "./effects.js";
+
+Hooks.once("init", function () {
+  // Adding specials
+  if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
+  mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
+});
+```
+Effects should now appear in the Specials selection dialog
 
 ## Community Contribution
 

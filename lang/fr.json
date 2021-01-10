@@ -27,5 +27,7 @@
     "FXMASTER.Angle": "Angle",
     "FXMASTER.Anchor": "Ancre",
     "FXMASTER.File": "Fichier",
-    "FXMASTER.Name": "Nom"
+    "FXMASTER.Name": "Nom",
+    "FXMASTER.AnimationDelay": "Délai",
+    "FXMASTER.Ease": "Ease"
 }

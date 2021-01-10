@@ -44,11 +44,18 @@ All notable changes to this project will be documented in this file.
 - Specials config dialog is resizable
 ### Removed
 
-## [1.0.0] - 2021-01-06
+## [1.0.1] - 2021-01-06
 ### Added
 - Animation easing
 ### Changed
 - Fixed readme examples
 - Show special effects to players
 - Special effects can be added with a module
+### Removed
+
+## [1.0.2] - 2021-01-08
+### Added
+- Animation settings in the specials creation dialog
+### Changed
+- Fixed speed not taken into account without the animationDelay set up
 ### Removed

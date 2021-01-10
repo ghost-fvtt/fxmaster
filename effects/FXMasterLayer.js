@@ -74,7 +74,9 @@ export class FXMasterLayer extends PlaceablesLayer {
       }
       ];
       let animationDuration = video.duration * 1000;
-      animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+      if (hasProperty(data, "animationDelay")) {
+        animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+      }
       const animate = function () {
         FXCanvasAnimation.animateSmooth(attributes, {
           name: `fxmaster.video.${randomID()}.move`,
