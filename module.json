@@ -76,6 +76,6 @@
   "url": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster",
   "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/module.json",
   "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/archive/master/foundryvtt-fxmaster-master.zip",
-  "compatibleCoreVersion": "0.7.7",
-  "minimumCoreVersion": "0.7.9"
+  "compatibleCoreVersion": "0.7.9",
+  "minimumCoreVersion": "0.7.7"
 }
