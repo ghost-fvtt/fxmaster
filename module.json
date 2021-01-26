@@ -2,7 +2,7 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "U~man",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": [
@@ -55,6 +55,11 @@
       "lang": "cn",
       "name": "Chinese",
       "path": "lang/cn.json"
+    },
+    {
+      "lang": "ca",
+      "name": "Catalan",
+      "path": "lang/ca.json"
     },
     {
       "lang": "ko",

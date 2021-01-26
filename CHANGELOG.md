@@ -59,3 +59,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Fixed speed not taken into account without the animationDelay set up
 ### Removed
+
+## [1.0.3] - 2021-01-26
+### Added
+### Changed
+- Accepted merge requests for translations
+### Removed
