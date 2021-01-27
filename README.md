@@ -1,3 +1,6 @@
+ [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+<a href='https://ko-fi.com/u_man' target='_blank'><img height='18' style='border:0px;height:20px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 # FX Master
 
 FXMaster is a Foundry VTT module that adds various special effects
@@ -7,6 +10,7 @@ FXMaster is a Foundry VTT module that adds various special effects
 - Clickable special effects, using video effects provided by external sources
 
 This module is made to have an easy configuration.
+
 
 ## Installation Instructions
 
