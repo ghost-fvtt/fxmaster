@@ -1,0 +1,21 @@
+{
+  "WEATHERMANAGE.Title": "天氣效果管理",
+  "FILTERMANAGE.Title": "濾鏡效果管理",
+  "EFFECTCONTROLS.Title": "特殊效果",
+  "CONTROLS.Effects": "效果管理器",
+  "CONTROLS.Weather": "天氣管理器",
+  "CONTROLS.Daylight": "日光濾鏡",
+  "CONTROLS.Underwater": "水下濾鏡",
+  "CONTROLS.SpecialFX": "特殊效果",
+  "CONTROLS.Colorize": "著色效果",
+  "CONTROLS.ClearFX": "清除效果和濾鏡",
+  "FXMASTER.Density": "密度",
+  "FXMASTER.Tint": "著色",
+  "FXMASTER.Scale": "呎吋",
+  "FXMASTER.Speed": "速度",
+  "FXMASTER.Direction": "方位",
+  "FXMASTER.SaveMacro": "保存為Macro",
+  "FXMASTER.SaveChanges": "保存更改",
+  "FXMASTER.Delete": "刪除效果",
+  "FXMASTER.DeleteConfirm": "<p><strong>確定嗎？</strong>所有特效都會被清除。</p>"
+}
