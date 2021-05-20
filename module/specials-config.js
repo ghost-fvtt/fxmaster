@@ -29,7 +29,7 @@ export class SpecialsConfig extends Application {
     const custom = {
       label: "Custom",
       editable: true,
-      effects: game.settings.get('fxmaster', 'specialEffects')[0]
+      effects: game.settings.get('fxmaster', 'specialEffects')
     }
     CONFIG.fxmaster.specials.custom = custom
     return {
@@ -64,8 +64,8 @@ export class SpecialsConfig extends Application {
     html.find(".del-effect").click((ev) => {
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
       let settings = game.settings.get("fxmaster", "specialEffects");
-      settings[0].splice(effectId, 1);
-      game.settings.set("fxmaster", "specialEffects", settings[0]).then(() => {
+      settings.splice(effectId, 1);
+      game.settings.set("fxmaster", "specialEffects", settings).then(() => {
         this.render(true);
       });
     })

@@ -106,7 +106,7 @@ export class FXMasterLayer extends PlaceablesLayer {
 
   getSpecialData(folder, id) {
     if (folder == "custom") {
-      const effectData = game.settings.get('fxmaster', 'specialEffects')[0]
+      const effectData = game.settings.get('fxmaster', 'specialEffects');
       return effectData[id];
     }
     return CONFIG.fxmaster.specials[folder].effects[id]
