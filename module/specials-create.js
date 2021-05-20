@@ -54,7 +54,6 @@ export class SpecialCreate extends FormApplication {
       preset: false,
     }, this.default);
 
-    console.log(eases)
     // Return data to the template
     return {
       default: values,
@@ -80,7 +79,7 @@ export class SpecialCreate extends FormApplication {
    */
   _updateObject(_, formData) {
     let fxs = game.settings.get("fxmaster", "specialEffects");
-    console.log(fxs);
+
     const newData = {
       label: formData["label"],
       file: formData["file"],

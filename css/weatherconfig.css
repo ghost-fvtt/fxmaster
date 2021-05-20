@@ -99,3 +99,22 @@
   background-color: rgba(255, 255, 240, 0.8);
   border: 1px solid #b5b3a4;
 }
+
+.donation-link {
+  line-height: 16px;
+}
+
+.donation-link img {
+  border: none;
+  height: 18px;
+}
+
+.donation-link span {
+  font-size: 11px;
+}
+
+.kofi-cup {
+  background: url('https://storage.ko-fi.com/cdn/cup-border.png');
+  width: 12px;
+  background-size: 18px 12px;
+}

@@ -2,7 +2,7 @@
 export const migrate = function() {
     const version = game.settings.get("fxmaster", "migration");
     if (version == 0) {
-        const effects = game.settings.get("fxmaster", "specialEffects")[0];
+        const effects = game.settings.get("fxmaster", "specialEffects");
         for (let i = 0; i < effects.length; ++i) {
             if (typeof effects[i].scale != Object) {
                 effects[i].scale = {

@@ -3,7 +3,7 @@ import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js"
 import { FXMasterLayer } from "../effects/FXMasterLayer.js";
 import { filterManager } from "../filters/FilterManager.js";
-import { migrate } from './migration.js'
+import { migrate } from './migration.js';
 
 function registerLayer() {
   const layers = foundry.utils.mergeObject(Canvas.layers, {
@@ -65,3 +65,13 @@ Hooks.on("updateScene", (scene, data, options) => {
   }
   canvas.fxmaster.updateMask();
 });
+
+Hooks.on("renderSidebarTab", async(object, html) => {
+  if (object instanceof Settings) {
+    const details = html.find("#game-details");
+    const fxDetails = document.createElement("li");
+    fxDetails.classList.add("donation-link");
+    fxDetails.innerHTML = "FXMaster <a title='Donate' href='https://ko-fi.com/u_man'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/boards/1546773'>Report issue</a></span>";
+    details.append(fxDetails);
+  }
+})
