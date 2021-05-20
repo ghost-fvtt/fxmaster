@@ -20,7 +20,7 @@ export class RainSimpleWeatherEffect extends SpecialEffect {
   _getRainEmitter(parent) {
   	const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-    const config = mergeObject(this.constructor.RAIN_CONFIG, {
+    const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
       spawnRect: {
         x: -0.05 * d.width,
         y: -0.10 * d.height,
@@ -35,7 +35,7 @@ export class RainSimpleWeatherEffect extends SpecialEffect {
 }
 
 // Configure the Rain particle
-RainSimpleWeatherEffect.RAIN_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+RainSimpleWeatherEffect.RAIN_CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 	"alpha": {
 		"start": 0.7,
 		"end": 0.1

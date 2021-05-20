@@ -6,7 +6,7 @@ import { filterManager } from "../filters/FilterManager.js";
 import { migrate } from './migration.js'
 
 function registerLayer() {
-  const layers = mergeObject(Canvas.layers, {
+  const layers = foundry.utils.mergeObject(Canvas.layers, {
     fxmaster: FXMasterLayer
   });
   Object.defineProperty(Canvas, 'layers', {
@@ -28,11 +28,11 @@ Hooks.once("init", function () {
   CONFIG.weatherEffects.snow.icon = "modules/fxmaster/icons/weather/snow.png";
 
   // Adding custom weather effects
-  mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
+  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
 
   // Adding filters and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials });
 });
 
 Hooks.once("setup", () => {

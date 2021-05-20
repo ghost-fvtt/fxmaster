@@ -3,7 +3,7 @@ import { easeFunctions } from "./ease.js"
 
 export class SpecialCreate extends FormApplication {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["form"],
       closeOnSubmit: true,
       submitOnChange: false,
@@ -30,7 +30,7 @@ export class SpecialCreate extends FormApplication {
    */
   getData() {
     const eases = easeFunctions;
-    const values = mergeObject({
+    const values = foundry.utils.mergeObject({
       angle: 0,
       position: {
         x: 0,
@@ -79,8 +79,8 @@ export class SpecialCreate extends FormApplication {
    * @private
    */
   _updateObject(_, formData) {
-    let fxs = game.settings.get("fxmaster", "specialEffects")[0];
-
+    let fxs = game.settings.get("fxmaster", "specialEffects");
+    console.log(fxs);
     const newData = {
       label: formData["label"],
       file: formData["file"],
@@ -102,10 +102,9 @@ export class SpecialCreate extends FormApplication {
       preset: false,
       author: ""
     }
-    console.log(newData);
     const fx = fxs.filter((f) => f.label == newData.label);
     if (fx.length > 0) {
-      fx[0] = mergeObject(fx[0], newData)
+      fx[0] = foundry.utils.mergeObject(fx[0], newData)
     } else {
       fxs.push(newData)
     }

@@ -29,7 +29,7 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 	_getRainEmitter(parent) {
 		const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-		const config = mergeObject(this.constructor.RAIN_CONFIG, {
+		const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
 			spawnRect: {
 			  x: d.paddingX,
 			  y: d.paddingY,
@@ -50,7 +50,7 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 }
 
 // Configure the Snow particle
-SnowstormWeatherEffect.RAIN_CONFIG = mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+SnowstormWeatherEffect.RAIN_CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 	alpha: {
 		start: 1.0,
 		end: 1.0

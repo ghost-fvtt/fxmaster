@@ -1,8 +1,8 @@
 import { SpecialCreate } from "./specials-create.js"
 
-export class SpecialsConfig extends FormApplication {
+export class SpecialsConfig extends Application {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["fxmaster", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
@@ -100,12 +100,4 @@ export class SpecialsConfig extends FormApplication {
       const subs = folder.find('.folder').addClass("collapsed");
     }
   }
-
-  /**
-   * This method is called upon form submission after form data is validated
-   * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
-   * @private
-   */
-  _updateObject(_, formData) { }
 }

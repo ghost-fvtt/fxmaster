@@ -16,17 +16,19 @@ export class FXMasterLayer extends PlaceablesLayer {
   }
 
   static get layerOptions() {
-    return mergeObject(super.layerOptions, {
-      objectClass: Note,
-      sheetClass: NoteConfig,
+    return foundry.utils.mergeObject(super.layerOptions, {
+      name: "fxmaster",
       canDragCreate: false,
-      zIndex: 180
+      zIndex: 250
     });
   }
 
+  static documentName = "Note";
+
+
   playVideo(data) {
     // Set default values
-    data = mergeObject({
+    data = foundry.utils.mergeObject({
       anchor: { x: 0.5, y: 0.5 },
       rotation: 0,
       scale: { x: 1.0, y: 1.0 },
@@ -51,14 +53,14 @@ export class FXMasterLayer extends PlaceablesLayer {
 
       // Set values
       vidSprite.anchor.set(data.anchor.x, data.anchor.y);
-      vidSprite.rotation = normalizeRadians(data.rotation - toRadians(data.angle));
+      vidSprite.rotation = Math.normalizeRadians(data.rotation - Math.toRadians(data.angle));
       vidSprite.scale.set(data.scale.x, data.scale.y);
       vidSprite.position.set(data.position.x, data.position.y);
 
       if ((!data.speed || data.speed === 0) && !data.distance) {
         return;
       }
-      if (data.distance) {
+      if (data.distance && data.speed == "auto") {
         data.speed = data.distance / video.duration;
       }
       // Compute final position
@@ -115,7 +117,7 @@ export class FXMasterLayer extends PlaceablesLayer {
       x: tok1.position.x + tok1.w / 2,
       y: tok1.position.y + tok1.h / 2
     }
-    const effectData = mergeObject(effect, {
+    const effectData = foundry.utils.mergeObject(effect, {
       position: {
         x: origin.x,
         y: origin.y
@@ -148,7 +150,7 @@ export class FXMasterLayer extends PlaceablesLayer {
     const id = active[0].dataset.effectId;
     const folder = active[0].closest(".folder").dataset.folderId;
     const effect = this.getSpecialData(folder, id);
-    let data = mergeObject(effect, {
+    let data = foundry.utils.mergeObject(effect, {
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,

@@ -131,7 +131,7 @@ const data = {
   },
 };
 canvas.fxmaster.playVideo(data);
-game.socket.emit("fxmaster", data);
+game.socket.emit("module.fxmaster", data);
 ```
 
 #### Play a video file between two tokens
@@ -226,7 +226,7 @@ import { Effects } from "./effects.js";
 Hooks.once("init", function () {
   // Adding specials
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
 });
 ```
 Effects should now appear in the Specials selection dialog

@@ -21,7 +21,7 @@ class FilterManager {
     }
 
     canvas.background.filters = Object.values(this.filters);
-    canvas.tiles.filters = Object.values(this.filters);
+    canvas.foreground.filters = Object.values(this.filters);
     canvas.tokens.filters = Object.values(this.filters);
     if (!this._ticker) {
       canvas.app.ticker.add(this._animate, this);
@@ -64,7 +64,7 @@ class FilterManager {
     }
 
     canvas.background.filters = Object.values(this.filters);
-    canvas.tiles.filters = Object.values(this.filters);
+    canvas.foreground.filters = Object.values(this.filters);
     canvas.tokens.filters = Object.values(this.filters);
   }
 
