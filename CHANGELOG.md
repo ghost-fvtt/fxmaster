@@ -65,3 +65,11 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Accepted merge requests for translations
 ### Removed
+
+## [1.0.4] - 2021-05-21
+### Added
+- Donation link
+### Changed
+- Compatibility with 0.8.4
+- Weather effects now end softly on scene update
+### Removed
