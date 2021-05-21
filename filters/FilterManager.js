@@ -2,6 +2,7 @@ class FilterManager {
   constructor() {
     this.filterInfos = {};
     this.filters = {};
+    this._ticker = false;
   }
 
   activate() {
@@ -20,9 +21,12 @@ class FilterManager {
     }
 
     canvas.background.filters = Object.values(this.filters);
-    canvas.tiles.filters = Object.values(this.filters);
+    canvas.foreground.filters = Object.values(this.filters);
     canvas.tokens.filters = Object.values(this.filters);
-    canvas.app.ticker.add(this._animate, this);
+    if (!this._ticker) {
+      canvas.app.ticker.add(this._animate, this);
+      this._ticker = true;
+    }
   }
 
   update() {
@@ -60,7 +64,7 @@ class FilterManager {
     }
 
     canvas.background.filters = Object.values(this.filters);
-    canvas.tiles.filters = Object.values(this.filters);
+    canvas.foreground.filters = Object.values(this.filters);
     canvas.tokens.filters = Object.values(this.filters);
   }
 

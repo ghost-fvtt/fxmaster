@@ -131,12 +131,22 @@ const data = {
   },
 };
 canvas.fxmaster.playVideo(data);
-game.socket.emit("fxmaster", data);
+game.socket.emit("module.fxmaster", data);
+```
+
+#### Retrieving effect presets
+From module presets
+```js
+const effectData=CONFIG.fxmaster.specials.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
+```
+From custom presets
+```js
+const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label === "Energy Circle");
 ```
 
 #### Play a video file between two tokens
 
-You can use the `canvas.fxmaster.drawSpecialToward` method
+You can use the `canvas.fxmaster.drawSpecialToward` method with an automatic speed to adapt speed so the video ends when the target is reached.
 
 ```javascript
 function castSpell(effect) {
@@ -157,7 +167,7 @@ castSpell({
     x: -0.08,
     y: 0.5,
   },
-  speed: 0,
+  speed: "auto",
   angle: 0,
   scale: {
     x: 1,
@@ -178,7 +188,7 @@ Here is an example data, easing options are given in the ease.js file.
         x: -.08,
         y: 0.5
     },
-    speed: 0,
+    speed: "auto",
     angle: 0,
   scale: {
     x: 1,
@@ -226,7 +236,7 @@ import { Effects } from "./effects.js";
 Hooks.once("init", function () {
   // Adding specials
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
 });
 ```
 Effects should now appear in the Specials selection dialog

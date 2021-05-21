@@ -29,7 +29,7 @@ export const registerHooks = function () {
             effects = flags;
             delete effects[params.name];
         } else {
-            effects = mergeObject(flags, newEffect);
+            effects = foundry.utils.mergeObject(flags, newEffect);
         }
         if (Object.entries(effects).length == 0) {
             await canvas.scene.unsetFlag("fxmaster", "effects");

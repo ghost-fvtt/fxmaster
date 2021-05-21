@@ -1,8 +1,8 @@
 import { SpecialCreate } from "./specials-create.js"
 
-export class SpecialsConfig extends FormApplication {
+export class SpecialsConfig extends Application {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["fxmaster", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
@@ -29,7 +29,7 @@ export class SpecialsConfig extends FormApplication {
     const custom = {
       label: "Custom",
       editable: true,
-      effects: game.settings.get('fxmaster', 'specialEffects')[0]
+      effects: game.settings.get('fxmaster', 'specialEffects')
     }
     CONFIG.fxmaster.specials.custom = custom
     return {
@@ -64,8 +64,8 @@ export class SpecialsConfig extends FormApplication {
     html.find(".del-effect").click((ev) => {
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
       let settings = game.settings.get("fxmaster", "specialEffects");
-      settings[0].splice(effectId, 1);
-      game.settings.set("fxmaster", "specialEffects", settings[0]).then(() => {
+      settings.splice(effectId, 1);
+      game.settings.set("fxmaster", "specialEffects", settings).then(() => {
         this.render(true);
       });
     })
@@ -74,7 +74,7 @@ export class SpecialsConfig extends FormApplication {
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
       let settings = game.settings.get("fxmaster", "specialEffects");
       const d = new SpecialCreate();
-      d.setDefault(settings[0][effectId]);
+      d.setDefault(settings[effectId]);
       d.render(true);
     })
 
@@ -100,12 +100,4 @@ export class SpecialsConfig extends FormApplication {
       const subs = folder.find('.folder').addClass("collapsed");
     }
   }
-
-  /**
-   * This method is called upon form submission after form data is validated
-   * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
-   * @private
-   */
-  _updateObject(_, formData) { }
 }

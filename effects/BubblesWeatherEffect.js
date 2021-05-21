@@ -30,7 +30,7 @@ export class BubblesWeatherEffect extends SpecialEffect {
     const d = canvas.dimensions;
     const p =
       (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-    const config = mergeObject(
+    const config = foundry.utils.mergeObject(
       this.constructor.CONFIG,
       {
         spawnRect: {
@@ -50,7 +50,7 @@ export class BubblesWeatherEffect extends SpecialEffect {
   }
 }
 
-BubblesWeatherEffect.CONFIG = mergeObject(
+BubblesWeatherEffect.CONFIG = foundry.utils.mergeObject(
   SpecialEffect.DEFAULT_CONFIG,
   {
     alpha: {

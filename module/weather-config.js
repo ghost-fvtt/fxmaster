@@ -33,7 +33,7 @@ Handlebars.registerHelper("Config", function(key, name) {
 
 export class WeatherConfig extends FormApplication {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["form", "fxmaster", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
