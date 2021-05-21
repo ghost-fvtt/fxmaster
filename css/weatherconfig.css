@@ -106,15 +106,10 @@
 
 .donation-link img {
   border: none;
-  height: 18px;
+  height: 12px;
+  margin-bottom: -1px;
 }
 
 .donation-link span {
   font-size: 11px;
-}
-
-.kofi-cup {
-  background: url('https://storage.ko-fi.com/cdn/cup-border.png');
-  width: 12px;
-  background-size: 18px 12px;
 }

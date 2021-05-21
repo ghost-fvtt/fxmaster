@@ -74,7 +74,7 @@ export class SpecialsConfig extends Application {
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
       let settings = game.settings.get("fxmaster", "specialEffects");
       const d = new SpecialCreate();
-      d.setDefault(settings[0][effectId]);
+      d.setDefault(settings[effectId]);
       d.render(true);
     })
 
