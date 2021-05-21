@@ -248,16 +248,24 @@ export class FXMasterLayer extends PlaceablesLayer {
     return super.tearDown();
   }
 
-  drawWeather() {
-    if (this.weather) {
-      this.removeChild(this.weather);
+  async drawWeather(options = {}) {
+    if (this.weather === undefined) {
+      this.weather = this.addChild(new PIXI.Container());  
     }
-    this.weather = this.addChild(new PIXI.Container());
     const effKeys = Object.keys(this.effects);
     for (let i = 0; i < effKeys.length; ++i) {
-      this.effects[effKeys[i]].fx.stop();
+      if (options.soft === true) {
+        for (let ef of this.effects[effKeys[i]].fx.emitters) {
+          ef.emitterLifetime = 0.1;
+          ef.playOnceAndDestroy(() => {
+            delete this.effects[effKeys[i]];
+          });
+        }
+      } else {
+        this.effects[effKeys[i]].fx.stop();
+        delete this.effects[effKeys[i]];
+      }
     }
-    this.effects = {};
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects");

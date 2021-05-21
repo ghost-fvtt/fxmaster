@@ -61,7 +61,7 @@ Hooks.on("updateScene", (scene, data, options) => {
   }
   if (hasProperty(data, "flags.fxmaster")) {
     filterManager.update();
-    canvas.fxmaster.drawWeather();
+    canvas.fxmaster.drawWeather({soft: true});
   }
   canvas.fxmaster.updateMask();
 });
