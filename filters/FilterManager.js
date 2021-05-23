@@ -119,7 +119,7 @@ class FilterManager {
   }
 
   switch(name, filter, activate, opts) {
-    if (this.filterInfos && hasProperty(this.filterInfos, name)) {
+    if (this.filterInfos && foundry.utils.hasProperty(this.filterInfos, name)) {
       if (activate == true) {
         this.filterInfos[name].options = opts;
         this.dump();

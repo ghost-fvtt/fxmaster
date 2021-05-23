@@ -35,7 +35,7 @@ Hooks.once("init", function () {
   foundry.utils.mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials });
 });
 
-Hooks.once("setup", () => {
+Hooks.once("ready", () => {
   migrate();
 });
 
@@ -49,7 +49,7 @@ Hooks.on("canvasInit", (canvas) => {
 Hooks.on("canvasReady", (_) => {
   if (!game.settings.get("fxmaster", "enable")) {
     return
-  }
+  } 
   filterManager.activate();
   canvas.fxmaster.updateMask();
   canvas.fxmaster.drawWeather();

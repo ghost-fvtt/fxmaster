@@ -27,81 +27,86 @@ export class FXMasterLayer extends PlaceablesLayer {
 
 
   playVideo(data) {
-    // Set default values
-    data = foundry.utils.mergeObject({
-      anchor: { x: 0.5, y: 0.5 },
-      rotation: 0,
-      scale: { x: 1.0, y: 1.0 },
-      position: { x: 0, y: 0 },
-      playbackRate: 1.0,
-      ease: "Linear"
-    }, data);
+    return new Promise((resolve) => {
 
-    // Create video
-    var video = document.createElement("video");
-    video.preload = "auto";
-    video.crossOrigin = "anonymous";
-    video.src = data.file;
-    video.playbackRate = data.playbackRate;
+      // Set default values
+      data = foundry.utils.mergeObject({
+        anchor: { x: 0.5, y: 0.5 },
+        rotation: 0,
+        scale: { x: 1.0, y: 1.0 },
+        position: { x: 0, y: 0 },
+        playbackRate: 1.0,
+        ease: "Linear"
+      }, data);
 
-    // Create PIXI sprite
-    var vidSprite;
-    video.oncanplay = () => {
-      const texture = PIXI.Texture.from(video);
-      vidSprite = new PIXI.Sprite(texture);
-      this.addChild(vidSprite);
+      // Create video
+      var video = document.createElement("video");
+      video.preload = "auto";
+      video.crossOrigin = "anonymous";
+      video.src = data.file;
+      video.playbackRate = data.playbackRate;
 
-      // Set values
-      vidSprite.anchor.set(data.anchor.x, data.anchor.y);
-      vidSprite.rotation = Math.normalizeRadians(data.rotation - Math.toRadians(data.angle));
-      vidSprite.scale.set(data.scale.x, data.scale.y);
-      vidSprite.position.set(data.position.x, data.position.y);
+      // Create PIXI sprite
+      var vidSprite;
+      video.oncanplay = () => {
+        const texture = PIXI.Texture.from(video);
+        vidSprite = new PIXI.Sprite(texture);
+        this.addChild(vidSprite);
 
-      if ((!data.speed || data.speed === 0) && !data.distance) {
-        return;
-      }
-      if (data.distance && data.speed == "auto") {
-        data.speed = data.distance / video.duration;
-      }
-      // Compute final position
-      const delta = video.duration * data.speed;
-      const deltaX = delta * Math.cos(data.rotation)
-      const deltaY = delta * Math.sin(data.rotation)
+        // Set values
+        vidSprite.anchor.set(data.anchor.x, data.anchor.y);
+        vidSprite.rotation = Math.normalizeRadians(data.rotation - Math.toRadians(data.angle));
+        vidSprite.scale.set(data.scale.x, data.scale.y);
+        vidSprite.position.set(data.position.x, data.position.y);
 
-      // Move the sprite
-      const attributes = [{
-        parent: vidSprite, attribute: 'x', to: data.position.x + deltaX
-      }, {
-        parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
-      }
-      ];
-      let animationDuration = video.duration * 1000;
-      if (hasProperty(data, "animationDelay")) {
-        animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
-      }
-      const animate = function () {
-        FXCanvasAnimation.animateSmooth(attributes, {
-          name: `fxmaster.video.${randomID()}.move`,
-          context: this,
-          duration: animationDuration,
-          ease: easeFunctions[data.ease]
-        })
-      }
-      if (hasProperty(data, "animationDelay.start")) {
-        setTimeout(animate, data.animationDelay.start * 1000.0);
-      } else {
-        animate();
-      }
-    };
+        if ((!data.speed || data.speed === 0) && !data.distance) {
+          return;
+        }
+        if (data.distance && data.speed == "auto") {
+          data.speed = data.distance / video.duration;
+        }
+        // Compute final position
+        const delta = video.duration * data.speed;
+        const deltaX = delta * Math.cos(data.rotation)
+        const deltaY = delta * Math.sin(data.rotation)
 
-    video.onerror = () => {
-      this.removeChild(vidSprite);
-      vidSprite.destroy();
-    }
-    video.onended = () => {
-      this.removeChild(vidSprite);
-      vidSprite.destroy();
-    }
+        // Move the sprite
+        const attributes = [{
+          parent: vidSprite, attribute: 'x', to: data.position.x + deltaX
+        }, {
+          parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
+        }
+        ];
+        let animationDuration = video.duration * 1000;
+        if (hasProperty(data, "animationDelay")) {
+          animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+        }
+        const animate = function () {
+          FXCanvasAnimation.animateSmooth(attributes, {
+            name: `fxmaster.video.${randomID()}.move`,
+            context: this,
+            duration: animationDuration,
+            ease: easeFunctions[data.ease]
+          })
+        }
+        if (hasProperty(data, "animationDelay.start")) {
+          setTimeout(animate, data.animationDelay.start * 1000.0);
+        } else {
+          animate();
+        }
+      };
+
+      video.onerror = () => {
+        this.removeChild(vidSprite);
+        resolve();
+        vidSprite.destroy();
+      }
+      video.onended = () => {
+        this.removeChild(vidSprite);
+        resolve();
+        vidSprite.destroy();
+      }
+    })
   }
 
   getSpecialData(folder, id) {
@@ -134,10 +139,10 @@ export class FXMasterLayer extends PlaceablesLayer {
 
     effectData.distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY) - (1 - effectData.anchor.x) * tok2.width;
 
-    // Throw effect locally
-    canvas.fxmaster.playVideo(effectData);
     // And to other clients
     game.socket.emit('module.fxmaster', effectData);
+    // Throw effect locally
+    return canvas.fxmaster.playVideo(effectData);
   }
 
   _drawSpecial(event) {
@@ -249,8 +254,8 @@ export class FXMasterLayer extends PlaceablesLayer {
   }
 
   async drawWeather(options = {}) {
-    if (this.weather === undefined) {
-      this.weather = this.addChild(new PIXI.Container());  
+    if (!this.weather) {
+      this.weather = this.addChild(new PIXI.Container());
     }
     const effKeys = Object.keys(this.effects);
     for (let i = 0; i < effKeys.length; ++i) {
