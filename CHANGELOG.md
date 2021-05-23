@@ -1,19 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.5] - 2021-05-23
+## [1.0.6] - 2021-05-23
 ### Added
 ### Changed
 - Fixed Weather UI not updating weather
 - PlayVideo and DrawSpecialToward now returns a promise
 ### Removed
 
-## [1.0.4] - 2021-05-21
+## [1.0.5] - 2021-05-21
 ### Added
 - Donation link
 ### Changed
 - Compatibility with 0.8.4
 - Weather effects now end softly on scene update
+### Removed
+
+## [1.0.4] - 2021-05-21
+### Added
+### Changed
+- Added legacy link for v0.7.9 compatibility
 ### Removed
 
 ## [1.0.3] - 2021-01-26
