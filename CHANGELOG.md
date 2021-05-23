@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.4] - 2021-05-21
+## [1.0.5] - 2021-05-23
 ### Added
 ### Changed
 - Fixed Weather UI not updating weather
