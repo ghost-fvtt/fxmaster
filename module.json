@@ -6,7 +6,6 @@
   "author": "U~man",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": [
-    "greensock/esm/all.js",
     "effects/BatsWeatherEffect.js",
     "effects/BubblesWeatherEffect.js",
     "effects/CloudsWeatherEffect.js",

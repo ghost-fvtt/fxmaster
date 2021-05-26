@@ -1,3 +1,5 @@
+import {resetFlags} from "../module/utils.js";
+
 class FilterManager {
   constructor() {
     this.filterInfos = {};
@@ -69,10 +71,7 @@ class FilterManager {
   }
 
   dump() {
-    let newFilters = duplicate(this.filterInfos);
-    canvas.scene.setFlag("fxmaster", "filters", null).then(_ => {
-      canvas.scene.setFlag("fxmaster", "filters", newFilters);
-    });
+    resetFlags(canvas.scene, "filters", this.filterInfos);
   }
 
   clear() {

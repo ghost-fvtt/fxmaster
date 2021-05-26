@@ -1,4 +1,5 @@
 import { filterManager } from "../filters/FilterManager.js";
+import { resetFlags } from "./utils.js";
 
 export const registerHooks = function () {
     // ------------------------------------------------------------------
@@ -34,17 +35,15 @@ export const registerHooks = function () {
         if (Object.entries(effects).length == 0) {
             await canvas.scene.unsetFlag("fxmaster", "effects");
         } else {
-            await canvas.scene.setFlag("fxmaster", "effects", diffObject(flags, effects));
+            resetFlags(canvas.scene, "effects", effects);
         }
     });
 
-    Hooks.on("updateWeather", (paramArr) => {
-        let effects = {};
+    Hooks.on("updateWeather", async (paramArr) => {
+        const effects = {};
         for (let i = 0; i < paramArr.length; i++) {
             effects[randomID()] = paramArr[i];
         }
-        canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
-            canvas.scene.setFlag("fxmaster", "effects", effects);
-        });
+            resetFlags(canvas.scene, "effects", effects);
     });
 }

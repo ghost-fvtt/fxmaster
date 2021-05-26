@@ -1,8 +1,3 @@
-import { 
-  TweenMax,
-  Linear
-} from "../../../scripts/greensock/esm/all.js";
-
 export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
   constructor(options) {
     super();
@@ -11,8 +6,6 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     this.threshold = 1.0;
     this.bloomScale = 0.5;
     this.blur = 10;
-    this._step = 0;
-    this._bloomRange = [0.52, 0.54, 0.54, 0.56, 0.52, 0.51, 0.50, 0.49, 0.5, 0.51];
     this.play();
   }
 
@@ -24,22 +17,22 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     this.enabled = true;
     if (this.skipFading) {
       this.skipFading = false;
-      this.threshold = 0.0;
+      this.threshold = 0.1;
       return;
     }
-    let anim = {
-      ease: Linear.easeNone,
-      repeat: 0,
-      threshold: 0.0,
+    const data = {
+      name: "fxmaster.bloomFilter",
+      duration: 4000,
     };
-    this.transition = TweenMax.to(this, 4, anim);
+    const anim = [{
+      parent: this,
+      attribute: "threshold",
+      to: 0.1,
+    }];
+    this.transition = CanvasAnimation.animateLinear(anim, data);
   }
 
-  step() {
-    this._step++;
-    if (this._step % 5) return;
-    this.blur = 10 + 5 * this._bloomRange[(this._step / 5) % 10];
-  }
+  step() { }
 
   configure(opts) {
     if (!opts) return;
@@ -60,16 +53,21 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         resolve();
         return;
       }
-      let anim = {
-        ease: Linear.easeNone,
-        repeat: 0,
-        threshold: 1.0,
-        onComplete: () => {
-          this.enabled = false;
-          resolve();
-        }
+      CanvasAnimation.terminateAnimation("fxmaster.bloomFilter");
+      const data = {
+        name: "fxmaster.bloomFilter",
+        duration: 4000
       };
-      this.transition = TweenMax.to(this, 4, anim);
+      const anim = [{
+        parent: this,
+        attribute: "threshold",
+        to: 1.0
+      }];
+      this.transition = CanvasAnimation.animateLinear(anim, data);
+      this.transition.finally(() => {
+        this.enabled = false;
+        resolve();
+      });
     });
   }
 }

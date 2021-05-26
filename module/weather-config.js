@@ -1,4 +1,5 @@
 import { filterManager } from "../filters/FilterManager.js";
+import { resetFlags } from "./utils.js";
 
 Handlebars.registerHelper("isEffectActive", function(name) {
   let flags = canvas.scene.getFlag("fxmaster", "effects");
@@ -120,8 +121,8 @@ export class WeatherConfig extends FormApplication {
    * @param formData {Object}   The object of validated form data with which to update the object
    * @private
    */
-  _updateObject(_, formData) {
-    let effects = {};
+  async _updateObject(_, formData) {
+    const effects = {};
     Object.keys(CONFIG.weatherEffects).forEach(key => {
       let label = CONFIG.weatherEffects[key].label;
       if (formData[label]) {
@@ -138,9 +139,8 @@ export class WeatherConfig extends FormApplication {
         };
       }
     });
-    canvas.scene.unsetFlag("fxmaster", "effects").then(() => {
-      canvas.scene.setFlag("fxmaster", "effects", effects);
-    });
+    resetFlags(canvas.scene, "effects", effects);
+
   }
 }
 

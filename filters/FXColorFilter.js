@@ -1,8 +1,3 @@
-import { 
-  TweenMax,
-  Linear
-} from "../../../scripts/greensock/esm/all.js";
-
 export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options) {
     super();
@@ -27,21 +22,32 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       this.green = this.options.green;
       return;
     }
-    let anim = {
-      ease: Linear.easeNone,
-      repeat: 0,
-      blue: this.options.blue,
-      red: this.options.red,
-      green: this.options.green
+    const data = {
+      name: "fxmaster.colorFilter",
+      duration: 4000,
     };
-    this.transition = TweenMax.to(this, 4, anim);
+    const anim = [{
+      parent: this,
+      attribute: "blue",
+      to: this.options.blue,
+    }, {
+      parent: this,
+      attribute: "red",
+      to: this.options.red
+    },
+    {
+      parent: this,
+      attribute: "green",
+      to: this.options.green
+    }];
+    this.transition = CanvasAnimation.animateLinear(anim, data);
   }
 
-  configure(opts) {}
+  configure(opts) { }
 
   // So we can destroy object afterwards
   stop() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (this.skipFading) {
         this.skipFading = false;
         this.enabled = false;
@@ -51,18 +57,30 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         resolve();
         return;
       }
-      let anim = {
-        ease: Linear.easeNone,
-        repeat: 0,
-        blue: 1,
-        red: 1,
-        green: 1,
-        onComplete: () => {
-          this.enabled = false;
-          resolve();
-        }
+      CanvasAnimation.terminateAnimation("fxmaster.colorFilter");
+      const data = {
+        name: "fxmaster.colorFilter",
+        duration: 4000
       };
-      this.transition = TweenMax.to(this, 4, anim);
+      const anim = [{
+        parent: this,
+        attribute: "blue",
+        to: 1
+      }, {
+        parent: this,
+        attribute: "red",
+        to: 1
+      },
+      {
+        parent: this,
+        attribute: "green",
+        to: 1
+      }];
+      this.transition = CanvasAnimation.animateLinear(anim, data);
+      this.transition.finally(() => {
+        this.enabled = false;
+        resolve();
+      })
     });
   }
 }
