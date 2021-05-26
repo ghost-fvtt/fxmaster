@@ -65,20 +65,20 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       const anim = [{
         parent: this,
         attribute: "blue",
-        to: 1
+        to: 1.0
       }, {
         parent: this,
         attribute: "red",
-        to: 1
+        to: 1.0
       },
       {
         parent: this,
         attribute: "green",
-        to: 1
+        to: 1.0
       }];
       this.transition = CanvasAnimation.animateLinear(anim, data);
       this.transition.finally(() => {
-        this.enabled = false;
+      //   this.enabled = false;
         resolve();
       })
     });

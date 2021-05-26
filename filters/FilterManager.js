@@ -97,24 +97,23 @@ class FilterManager {
   }
 
   removeFilter(name) {
-    if (!this.filters[name]) return;
-    this.filters[name].stop().then((_, res) => {
+    if (this.filters[name] === undefined) return;
+    this.filters[name].stop().then(() => {
       delete this.filters[name];
+      const rmFilter = {};
+      rmFilter[`-=${name}`] = null;
+      canvas.scene.setFlag("fxmaster", "filters", rmFilter);
     });
-    delete this.filterInfos[name];
-    this.dump();
   }
 
-  removeAll() {
+  async removeAll() {
     if (!this.filters || !this.filterInfos) return;
     let keys = Object.keys(this.filters);
     for (let i = 0; i < keys.length; ++i) {
-      this.filters[keys[i]].stop().then((_, res) => {
-        delete this.filters[keys[i]];
-      });
+      await this.filters[keys[i]].stop();
       delete this.filterInfos[keys[i]];
     }
-    this.dump();
+    canvas.scene.unsetFlag("fxmaster", "filters");
   }
 
   switch(name, filter, activate, opts) {
