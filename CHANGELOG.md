@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.7] - 2021-05-29
+### Added
+### Changed
+- Various fixes for Foundry 0.8.x
+## Removed
+
 ## [1.0.6] - 2021-05-23
 ### Added
 ### Changed
