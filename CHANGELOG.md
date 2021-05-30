@@ -1,13 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.7] - 2021-05-29
+## [1.0.8] - 2021-05-30
 ### Added
-- FXMaster special effects now have their own permission
+- Special effects now have their own permission
 ### Changed
-- FXMaster Layer now extends CanvasLayer (previously PlaceablesLayer), it may correct a few bugs
+- FXMasterLayer now extends CanvasLayer (previously PlaceablesLayer), it may correct a few bugs
 ## Removed
-
 
 ## [1.0.7] - 2021-05-29
 ### Added
