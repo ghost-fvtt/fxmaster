@@ -10,6 +10,7 @@ export class FXMasterLayer extends CanvasLayer {
     this.loader = new PIXI.Loader();
 
     this.mouseInteractionManager = null;
+
     this._interactiveChildren = false;
     this._dragging = false;
 
@@ -23,12 +24,12 @@ export class FXMasterLayer extends CanvasLayer {
   }
 
   static get layerOptions() {
-    return {
+    return foundry.utils.mergeObject(super.layerOptions, {
       name: "fxmaster",
       zIndex: 250,
-      sortActiveTop: false
-    };
+    });
   }
+
 
 
   playVideo(data) {
@@ -215,17 +216,19 @@ export class FXMasterLayer extends CanvasLayer {
     return this;
   }
 
+
   _addListeners() {
     // Define callback functions for mouse interaction events
     const callbacks = {
       dragLeftStart: this._onDragLeftStart.bind(this),
       clickLeft: this._onClickLeft.bind(this),
-      dragLeftDrop: this._onDragLeftDrop.bind(this)
+      dragLeftDrop: this._onDragLeftDrop.bind(this),
+      dragRightMove: canvas._onDragRightMove.bind(canvas),
     };
 
     // Create and activate the interaction manager
     const permissions = {};
-    const mgr = new MouseInteractionManager(this, this, permissions, callbacks);
+    const mgr = new MouseInteractionManager(this, canvas.stage, permissions, callbacks);
     this.mouseInteractionManager = mgr.activate();
   }
 
