@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.7] - 2021-05-29
 ### Added
+- FXMaster special effects now have their own permission
+### Changed
+- FXMaster Layer now extends CanvasLayer (previously PlaceablesLayer), it may correct a few bugs
+## Removed
+
+
+## [1.0.7] - 2021-05-29
+### Added
 ### Changed
 - Various fixes for Foundry 0.8.x
 ## Removed

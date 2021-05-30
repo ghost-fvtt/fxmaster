@@ -27,6 +27,13 @@ Hooks.once("init", function () {
   CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/icons/weather/leaves.png";
   CONFIG.weatherEffects.snow.icon = "modules/fxmaster/icons/weather/snow.png";
 
+  CONST.USER_PERMISSIONS.EFFECT_CREATE = {
+    label: "FXMASTER.PermissionCreate",
+    hint: "FXMASTER.PermissionCreateHint",
+    defaultRole: 2,
+    disableGM: false
+  };
+
   // Adding custom weather effects
   foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
 

@@ -4,12 +4,13 @@ import { SpecialsConfig } from "./specials-config.js";
 import { ColorizeConfig } from "./colorize-config.js";
 
 Hooks.on("getSceneControlButtons", (controls) => {
+  if (canvas == null) { return };
   controls.push({
     name: "effects",
     title: "CONTROLS.Effects",
     icon: "fas fa-magic",
     layer: "fxmaster",
-    visible: game.user.can("DRAWING_CREATE") || game.user.isGM,
+    visible: game.user.can("EFFECT_CREATE") || game.user.isGM,
     tools: [
       {
         name: "specials",

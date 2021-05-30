@@ -35,5 +35,7 @@
   "FXMASTER.AnimationDelay": "Delay",
   "FXMASTER.AnimationDelayHint": "Delay of the speed animation",
   "FXMASTER.Ease": "Ease",
-  "FXMASTER.EaseHint": "Speed animation easing function"
+  "FXMASTER.EaseHint": "Speed animation easing function",
+  "FXMASTER.PermissionCreate": "Use FXMaster special effects",
+  "FXMASTER.PermissionCreateHint": "Allow usage of FXMaster special effects through the scene controls."
 }

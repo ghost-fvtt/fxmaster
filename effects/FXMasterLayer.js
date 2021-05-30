@@ -1,7 +1,7 @@
 import { FXCanvasAnimation } from "../module/canvasanimation.js"
 import { easeFunctions } from "../module/ease.js";
 
-export class FXMasterLayer extends PlaceablesLayer {
+export class FXMasterLayer extends CanvasLayer {
   constructor() {
     super();
     this.effects = {};
@@ -9,21 +9,26 @@ export class FXMasterLayer extends PlaceablesLayer {
     this.specials = [];
     this.loader = new PIXI.Loader();
 
+    this.mouseInteractionManager = null;
+    this._interactiveChildren = false;
+    this._dragging = false;
+
+    this.options = this.constructor.layerOptions;
+
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
       this.playVideo(data);
     });
+
   }
 
   static get layerOptions() {
-    return foundry.utils.mergeObject(super.layerOptions, {
+    return {
       name: "fxmaster",
-      canDragCreate: false,
-      zIndex: 250
-    });
+      zIndex: 250,
+      sortActiveTop: false
+    };
   }
-
-  static documentName = "Note";
 
 
   playVideo(data) {
@@ -78,7 +83,7 @@ export class FXMasterLayer extends PlaceablesLayer {
         }
         ];
         let animationDuration = video.duration * 1000;
-        if (hasProperty(data, "animationDelay")) {
+        if (foundry.utils.hasProperty(data, "animationDelay")) {
           animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
         }
         const animate = function () {
@@ -89,7 +94,7 @@ export class FXMasterLayer extends PlaceablesLayer {
             ease: easeFunctions[data.ease]
           })
         }
-        if (hasProperty(data, "animationDelay.start")) {
+        if (foundry.utils.hasProperty(data, "animationDelay.start")) {
           setTimeout(animate, data.animationDelay.start * 1000.0);
         } else {
           animate();
@@ -99,12 +104,12 @@ export class FXMasterLayer extends PlaceablesLayer {
       video.onerror = () => {
         this.removeChild(vidSprite);
         resolve();
-        vidSprite.destroy();
+        vidSprite?.destroy();
       }
       video.onended = () => {
         this.removeChild(vidSprite);
         resolve();
-        vidSprite.destroy();
+        vidSprite?.destroy();
       }
     })
   }
@@ -199,21 +204,29 @@ export class FXMasterLayer extends PlaceablesLayer {
     /* -------------------------------------------- */
 
   activate() {
-    // Skipping Placeable Layers activate method
-    // super.activate();
-    CanvasLayer.prototype.activate.apply(this)
-    return this
-  }
-
-  deactivate() {
-    // Skipping Placeable Layers deactivate method
-    // super.deactivate();
-    CanvasLayer.prototype.deactivate.apply(this)
+    super.activate();
+    this.interactive = true;
     return this
   }
 
   async draw() {
-    super.draw();
+    await super.draw();
+    this._addListeners();
+    return this;
+  }
+
+  _addListeners() {
+    // Define callback functions for mouse interaction events
+    const callbacks = {
+      dragLeftStart: this._onDragLeftStart.bind(this),
+      clickLeft: this._onClickLeft.bind(this),
+      dragLeftDrop: this._onDragLeftDrop.bind(this)
+    };
+
+    // Create and activate the interaction manager
+    const permissions = {};
+    const mgr = new MouseInteractionManager(this, this, permissions, callbacks);
+    this.mouseInteractionManager = mgr.activate();
   }
 
   /* -------------------------------------------- */

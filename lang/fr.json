@@ -29,5 +29,7 @@
     "FXMASTER.File": "Fichier",
     "FXMASTER.Name": "Nom",
     "FXMASTER.AnimationDelay": "Délai",
-    "FXMASTER.Ease": "Ease"
+    "FXMASTER.Ease": "Ease",
+    "FXMASTER.PermissionCreate": "Autoriser les effets spéciaux FXMaster",
+    "FXMASTER.PermissionCreateHint": "Autorise l'utilisation des effets spéciaux de FXMaster grâce aux contrôles de scène."
 }
