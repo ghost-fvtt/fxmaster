@@ -65,6 +65,8 @@ export class FXMasterLayer extends CanvasLayer {
         vidSprite.scale.set(data.scale.x, data.scale.y);
         vidSprite.position.set(data.position.x, data.position.y);
 
+        if (data.width) { vidSprite.width = data.width; }
+
         if ((!data.speed || data.speed === 0) && !data.distance) {
           return;
         }
@@ -115,14 +117,6 @@ export class FXMasterLayer extends CanvasLayer {
     })
   }
 
-  getSpecialData(folder, id) {
-    if (folder == "custom") {
-      const effectData = game.settings.get('fxmaster', 'specialEffects');
-      return effectData[id];
-    }
-    return CONFIG.fxmaster.specials[folder].effects[id]
-  }
-
   drawSpecialToward(effect, tok1, tok2) {
     const origin = {
       x: tok1.position.x + tok1.w / 2,
@@ -160,7 +154,7 @@ export class FXMasterLayer extends CanvasLayer {
 
     const id = active[0].dataset.effectId;
     const folder = active[0].closest(".folder").dataset.folderId;
-    const effect = this.getSpecialData(folder, id);
+    const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
     let data = foundry.utils.mergeObject(effect, {
       position: {
         x: event.data.origin.x,

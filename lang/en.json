@@ -31,6 +31,7 @@
   "FXMASTER.Anchor": "Anchor",
   "FXMASTER.AnchorHint": "Local coordinates of the origin between 0.0 and 1.0",
   "FXMASTER.File": "File",
+  "FXMASTER.Folder": "Folder",
   "FXMASTER.Name": "Name",
   "FXMASTER.AnimationDelay": "Delay",
   "FXMASTER.AnimationDelayHint": "Delay of the speed animation",

@@ -25,15 +25,8 @@ export class SpecialsConfig extends Application {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    // Return data to the template
-    const custom = {
-      label: "Custom",
-      editable: true,
-      effects: game.settings.get('fxmaster', 'specialEffects')
-    }
-    CONFIG.fxmaster.specials.custom = custom
     return {
-      folders: CONFIG.fxmaster.specials,
+      folders: CONFIG.fxmaster.userSpecials,
     };
   }
 
@@ -53,7 +46,7 @@ export class SpecialsConfig extends Application {
     });
 
     // Dialog
-    html.find(".add-effect").click(async (event) => {
+    html.find("a[data-action=add-effect]").click(async (event) => {
       new SpecialCreate().render(true);
     })
 
@@ -62,19 +55,25 @@ export class SpecialsConfig extends Application {
     })
 
     html.find(".del-effect").click((ev) => {
+      const folderId = ev.currentTarget.closest(".folder").dataset["folderId"];
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
-      let settings = game.settings.get("fxmaster", "specialEffects");
-      settings.splice(effectId, 1);
+      const data = CONFIG.fxmaster.userSpecials[folderId].effects[effectId];
+      const settings = game.settings.get("fxmaster", "specialEffects");
+      const id = settings.findIndex((v) => { return v.label === data.label && v.folder === data.folder });
+      if (id === -1) {
+        return;
+      }
+      settings.splice(id, 1);
       game.settings.set("fxmaster", "specialEffects", settings).then(() => {
         this.render(true);
       });
     })
 
     html.find(".edit-effect").click((ev) => {
+      const folderId = ev.currentTarget.closest(".folder").dataset["folderId"];
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
-      let settings = game.settings.get("fxmaster", "specialEffects");
       const d = new SpecialCreate();
-      d.setDefault(settings[effectId]);
+      d.setDefault(CONFIG.fxmaster.userSpecials[folderId].effects[effectId]);
       d.render(true);
     })
 
@@ -92,7 +91,7 @@ export class SpecialsConfig extends Application {
     let collapsed = folder.hasClass("collapsed");
 
     // Expand
-    if ( collapsed ) folder.removeClass("collapsed");
+    if (collapsed) folder.removeClass("collapsed");
 
     // Collapse
     else {

@@ -31,6 +31,7 @@ export class SpecialCreate extends FormApplication {
   getData() {
     const eases = easeFunctions;
     const values = foundry.utils.mergeObject({
+      folder: "Custom",
       angle: 0,
       position: {
         x: 0,
@@ -78,9 +79,10 @@ export class SpecialCreate extends FormApplication {
    * @private
    */
   _updateObject(_, formData) {
-    let fxs = game.settings.get("fxmaster", "specialEffects");
+    const fxs = game.settings.get("fxmaster", "specialEffects");
 
     const newData = {
+      folder: formData["folder"],
       label: formData["label"],
       file: formData["file"],
       scale: {

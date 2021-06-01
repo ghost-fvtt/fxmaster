@@ -109,6 +109,7 @@ Special effects are controls and helpers to play temporary video files over the 
 - **scale** (x, y): self explanatory
 - **animationDelay** (start, end): Delays before or after the effect will move if speed > 0
 - **ease**: Easing function used to have a more natural move animation
+- **width**: Sets the width of the sprite, can be used to stretch a beam toward a specific target
 
 #### Play a video file on the canvas
 

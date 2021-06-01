@@ -4,7 +4,8 @@
       <a class="sync-effects"><i class="fas fa-sync"></i></a>
     </div>
     <div>
-      <a class="add-effect">{{localize "FXMASTER.AddEffect"}} <i class="fas fa-plus"></i></a>
+      <a data-action="add-effect">{{localize "FXMASTER.AddEffect"}} <i class="fas
+          fa-plus"></i></a>
     </div>
   </header>
   <ol class="directory-list">
@@ -29,12 +30,14 @@
               <div class="author"><span>{{effect.author}}</span></div>
             </a>
           </div>
-          {{#if folder.editable}}
           <div class="controls">
+            {{#unless (eq effect.preset false)}}
+            <a class="edit-effect"><i class="fas fa-clone"></i></a>
+            {{else}}
             <a class="edit-effect"><i class="fas fa-edit"></i></a>
             <a class="del-effect"><i class="fas fa-trash"></i></a>
+            {{/unless}}
           </div>
-          {{/if}}
         </li>
         {{/each}}
       </ol>
