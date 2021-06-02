@@ -4,7 +4,7 @@ import { easeFunctions } from "../module/ease.js";
 export class FXMasterLayer extends CanvasLayer {
   constructor() {
     super();
-    this.effects = {};
+    this.weatherEffects = {};
     this.weather = null;
     this.specials = [];
     this.loader = new PIXI.Loader();
@@ -250,15 +250,14 @@ export class FXMasterLayer extends CanvasLayer {
 
   /** @override */
   tearDown() {
-    this.weather = null;
     for (let i = 0; i < this.specials.length; ++i) {
       this.specials[i].stop();
     }
-    const effKeys = Object.keys(this.effects);
+    const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
-      this.effects[effKeys[i]].fx.stop();
-      delete this.effects[effKeys[i]];
+      this.weatherEffects[effKeys[i]].fx.stop();
     }
+    this.weather = this.weatherEffects = null;
     this.visible = false;
     return super.tearDown();
   }
@@ -267,18 +266,18 @@ export class FXMasterLayer extends CanvasLayer {
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }
-    const effKeys = Object.keys(this.effects);
+    const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
       if (options.soft === true) {
-        for (let ef of this.effects[effKeys[i]].fx.emitters) {
+        for (let ef of this.weatherEffects[effKeys[i]].fx.emitters) {
           ef.emitterLifetime = 0.1;
           ef.playOnceAndDestroy(() => {
-            delete this.effects[effKeys[i]];
+            delete this.weatherEffects[effKeys[i]];
           });
         }
       } else {
-        this.effects[effKeys[i]].fx.stop();
-        delete this.effects[effKeys[i]];
+        this.weatherEffects[effKeys[i]].fx.stop();
+        delete this.weatherEffects[effKeys[i]];
       }
     }
 
@@ -287,12 +286,12 @@ export class FXMasterLayer extends CanvasLayer {
     if (flags) {
       const keys = Object.keys(flags);
       for (let i = 0; i < keys.length; ++i) {
-        this.effects[keys[i]] = {
+        this.weatherEffects[keys[i]] = {
           type: flags[keys[i]].type,
           fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
         };
         this.configureEffect(keys[i]);
-        this.effects[keys[i]].fx.play();
+        this.weatherEffects[keys[i]].fx.play();
       }
     }
   }
@@ -304,7 +303,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust density
     if (hasProperty(flags[id], "options.density")) {
       let factor = (2 * flags[id].options.density) / 100;
-      this.effects[id].fx.emitters.forEach((el) => {
+      this.weatherEffects[id].fx.emitters.forEach((el) => {
         el.frequency *= factor;
         el.maxParticles *= factor;
       });
@@ -313,7 +312,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust scale
     if (hasProperty(flags[id], "options.scale")) {
       let factor = (2 * flags[id].options.scale) / 100;
-      this.effects[id].fx.emitters.forEach((el) => {
+      this.weatherEffects[id].fx.emitters.forEach((el) => {
         el.startScale.value *= factor;
         let node = el.startScale.next;
         while (node) {
@@ -326,7 +325,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust speed
     if (hasProperty(flags[id], "options.speed")) {
       let factor = (2 * flags[id].options.speed) / 100;
-      this.effects[id].fx.emitters.forEach((el) => {
+      this.weatherEffects[id].fx.emitters.forEach((el) => {
         el.startSpeed.value *= factor;
         let node = el.startSpeed.next;
         while (node) {
@@ -341,7 +340,7 @@ export class FXMasterLayer extends CanvasLayer {
       hasProperty(flags[id], "options.apply_tint") &&
       flags[id].options.apply_tint == true
     ) {
-      this.effects[id].fx.emitters.forEach((el) => {
+      this.weatherEffects[id].fx.emitters.forEach((el) => {
         let colors = hexToRGB(colorStringToHex(flags[id].options.tint));
         el.startColor.value = {
           r: colors[0] * 255,
@@ -359,7 +358,7 @@ export class FXMasterLayer extends CanvasLayer {
     // Adjust direction
     if (hasProperty(flags[id], "options.direction")) {
       let factor = (360 * (flags[id].options.direction - 50)) / 100;
-      this.effects[id].fx.emitters.forEach((el) => {
+      this.weatherEffects[id].fx.emitters.forEach((el) => {
         el.minStartRotation += factor;
         el.maxStartRotation += factor;
       });

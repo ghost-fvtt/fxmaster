@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.9] - 2021-06-02
+### Added
+- Custom special effects can be sorted in folders
+- Preset special effects can be cloned and overriden for editing
+- Special effects are sorted in ascii order in their folder
+### Changed
+- No longer overrides tokens, background and foreground pixi filters to enhance compatibility
+## Removed
+
 ## [1.0.8] - 2021-05-30
 ### Added
 - Special effects now have their own permission

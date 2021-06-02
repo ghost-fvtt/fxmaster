@@ -21,10 +21,14 @@ function parseSpecialEffects() {
   const specials = foundry.utils.deepClone(CONFIG.fxmaster.specials);
   effectData.reduce((acc, cur) => {
     if (!cur.folder) cur.folder = "Custom";
-    if (!acc[cur.folder]) acc[cur.folder] = { label: cur.folder, effects: [] };
-    acc[cur.folder].effects.push(cur);
+    const normalizedFolder = cur.folder.toLowerCase().replace(/ /g,'');
+    if (!acc[normalizedFolder]) acc[normalizedFolder] = { label: cur.folder, effects: [] };
+    acc[normalizedFolder].effects.push(cur);
     return acc;
   }, specials);
+  Object.keys(specials).forEach((k) => {
+    specials[k].effects.sort((a, b) => (''+a.label).localeCompare(b.label));
+  })
   CONFIG.fxmaster.userSpecials = specials;
 }
 

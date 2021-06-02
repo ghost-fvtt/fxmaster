@@ -22,9 +22,12 @@ class FilterManager {
       this.filters[keys[i]].play();
     }
 
-    canvas.background.filters = Object.values(this.filters);
-    canvas.foreground.filters = Object.values(this.filters);
-    canvas.tokens.filters = Object.values(this.filters);
+    if (!canvas.background.filters) canvas.background.filters = [];
+    canvas.background.filters.push(...Object.values(this.filters));
+    if (!canvas.foreground.filters) canvas.foreground.filters = [];
+    canvas.foreground.filters.push(...Object.values(this.filters));
+    if (!canvas.tokens.filters) canvas.tokens.filters = [];
+    canvas.tokens.filters.push(...Object.values(this.filters));
     if (!this._ticker) {
       canvas.app.ticker.add(this._animate, this);
       this._ticker = true;
@@ -44,6 +47,9 @@ class FilterManager {
         continue;
       }
       this.filters[effkeys[i]].stop().then((_, res) => {
+        delete canvas.background.filters[effkeys[i]];
+        delete canvas.foreground.filters[effkeys[i]];
+        delete canvas.tokens.filters[effkeys[i]];
         delete this.filters[effkeys[i]];
       });
     }
@@ -64,10 +70,12 @@ class FilterManager {
         this.filters[keys[i]].play();
       }
     }
-
-    canvas.background.filters = Object.values(this.filters);
-    canvas.foreground.filters = Object.values(this.filters);
-    canvas.tokens.filters = Object.values(this.filters);
+    if (!canvas.background.filters) canvas.background.filters = [];
+    canvas.background.filters.push(...Object.values(this.filters));
+    if (!canvas.foreground.filters) canvas.foreground.filters = [];
+    canvas.foreground.filters.push(...Object.values(this.filters));
+    if (!canvas.tokens.filters) canvas.tokens.filters = [];
+    canvas.tokens.filters.push(...Object.values(this.filters));
   }
 
   dump() {
