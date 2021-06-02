@@ -257,7 +257,8 @@ export class FXMasterLayer extends CanvasLayer {
     for (let i = 0; i < effKeys.length; ++i) {
       this.weatherEffects[effKeys[i]].fx.stop();
     }
-    this.weather = this.weatherEffects = null;
+    this.weather = null;
+    this.weatherEffects = {};
     this.visible = false;
     return super.tearDown();
   }
