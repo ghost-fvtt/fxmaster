@@ -105,3 +105,16 @@ Hooks.on("updateSetting", (data, value) => {
     parseSpecialEffects();
   }
 })
+
+Hooks.on("renderDrawingConfig", (dialog, html, data) => {
+  const fillTab = html.find(".tab[data-tab='fill']");
+  const maskForm = document.createElement("div");
+  maskForm.classList.add("form-group");
+  maskForm.innerHTML = `<label for='masking'>Mask FXMaster effects</label><div class='form-field'><input type='checkbox' name='masking'></div>`
+  fillTab.append(maskForm);
+})
+
+Hooks.on("closeDrawingConfig", (config, html) => {
+  const mask = config.form["masking"].value == "on";
+  config.object.setFlag("fxmaster", "masking", mask);
+})

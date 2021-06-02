@@ -13,6 +13,7 @@ export class FXMasterLayer extends CanvasLayer {
 
     this._interactiveChildren = false;
     this._dragging = false;
+    this.sortableChildren = true;
 
     this.options = this.constructor.layerOptions;
 
@@ -230,22 +231,21 @@ export class FXMasterLayer extends CanvasLayer {
 
   updateMask() {
     this.visible = true;
-    // Setup scene mask
-    if (this.mask) this.removeChild(this.mask);
-    this.mask = new PIXI.Graphics();
-    this.addChild(this.mask);
-    const d = canvas.dimensions;
-    this.mask.beginFill(0xffffff);
-    if (canvas.background.img) {
-      this.mask.drawRect(
-        d.paddingX - d.shiftX,
-        d.paddingY - d.shiftY,
-        d.sceneWidth,
-        d.sceneHeight
-      );
-    } else {
-      this.mask.drawRect(0, 0, d.width, d.height);
-    }
+    // Mask zones masked by drawings
+    // this.mask = new PIXI.Graphics();
+    const rect = new PIXI.Rectangle(600, 600, 300, 300);
+    // this.geometry.drawHole(rect);
+    // this.mask = mask;
+    canvas.drawings.placeables.forEach((drawing) => {
+      if (drawing.data.flags?.fxmaster?.masking == true) {
+        const drawingMask = drawing.shape.clone();
+        console.log()
+        const overlay = new PIXI.Graphics;
+        overlay.zIndex = 100;
+        overlay.beginFill(0x000000ff).drawShape(drawingMask).endFill();
+        this.addChild(overlay);
+      }
+    });
   }
 
   /** @override */
