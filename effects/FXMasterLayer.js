@@ -230,22 +230,39 @@ export class FXMasterLayer extends CanvasLayer {
   /* -------------------------------------------- */
 
   updateMask() {
-    this.visible = true;
+    console.log("UPDATING MASK")
+    // this.visible = true;
+    if (!this.weather) return;
+
     // Mask zones masked by drawings
-    // this.mask = new PIXI.Graphics();
-    const rect = new PIXI.Rectangle(600, 600, 300, 300);
-    // this.geometry.drawHole(rect);
-    // this.mask = mask;
-    canvas.drawings.placeables.forEach((drawing) => {
-      if (drawing.data.flags?.fxmaster?.masking == true) {
-        const drawingMask = drawing.shape.clone();
-        console.log()
-        const overlay = new PIXI.Graphics;
-        overlay.zIndex = 100;
-        overlay.beginFill(0x000000ff).drawShape(drawingMask).endFill();
-        this.addChild(overlay);
-      }
-    });
+    const mask = new PIXI.Graphics();
+    this.weather.addChild(mask);
+
+    if (this.weather.mask) {
+      this.weather.removeChild(this.weather.mask);
+      this.weather.mask = null;
+    }
+
+    // const drawing = canvas.drawings.placeables[0];
+    // const drawingSprite = new PIXI.Sprite(drawing.shape.generateTexture());
+   
+    // this.weather.addChild(drawingSprite)
+    // this.weather.mask = mask.beginFill(0x000000).drawRect(0, 0, 1200, 1200).endFill();
+    console.log(canvas.dimensions.sceneRect);
+    const sceneShape = canvas.dimensions.sceneRect.clone();
+    mask.beginFill(0x000000).drawShape(sceneShape).endFill();
+    // mask.beginHole().drawRect(720, 720, 600, 600).endHole()
+    // this.weather.mask = mask.beginFill(0x000000).drawShape(drawingMask).endFill();
+    this.weather.mask = mask;
+    console.log("UPDATING MASK OK")
+    // canvas.drawings.placeables.forEach((drawing) => {
+      // console.log(drawing);
+      // if (drawing.data.flags?.fxmaster?.masking == true) {
+        // const drawingMask = drawing.shape.clone();
+        // this.weather.mask.beginFill(0x000000).drawShape(drawingMask).endFill();
+      
+      // }
+    // });
   }
 
   /** @override */
@@ -257,7 +274,10 @@ export class FXMasterLayer extends CanvasLayer {
     for (let i = 0; i < effKeys.length; ++i) {
       this.weatherEffects[effKeys[i]].fx.stop();
     }
-    this.weather = null;
+    if (this.weather) {
+      this.removeChild(this.weather);
+      this.weather = null;
+    }
     this.weatherEffects = {};
     this.visible = false;
     return super.tearDown();
@@ -267,6 +287,7 @@ export class FXMasterLayer extends CanvasLayer {
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }
+    console.log("DRAWING");
     const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
       if (options.soft === true) {
@@ -284,6 +305,7 @@ export class FXMasterLayer extends CanvasLayer {
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects");
+    console.log(flags);
     if (flags) {
       const keys = Object.keys(flags);
       for (let i = 0; i < keys.length; ++i) {
@@ -292,6 +314,7 @@ export class FXMasterLayer extends CanvasLayer {
           fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
         };
         this.configureEffect(keys[i]);
+        console.log("playing", this.weatherEffects[keys[i]]);
         this.weatherEffects[keys[i]].fx.play();
       }
     }
