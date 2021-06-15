@@ -76,7 +76,7 @@ Hooks.on("canvasReady", (_) => {
   }
   filterManager.activate();
   canvas.fxmaster.drawWeather();
-  // canvas.fxmaster.updateMask();
+  canvas.fxmaster.updateMask();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
@@ -87,8 +87,12 @@ Hooks.on("updateScene", (scene, data, options) => {
     filterManager.update();
     canvas.fxmaster.drawWeather({ soft: true });
   }
-  // canvas.fxmaster.updateMask();
+  canvas.fxmaster.updateMask();
 });
+
+Hooks.on("updateDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
 
 Hooks.on("renderSidebarTab", async (object, html) => {
   if (object instanceof Settings) {
