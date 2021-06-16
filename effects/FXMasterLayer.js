@@ -242,11 +242,11 @@ export class FXMasterLayer extends CanvasLayer {
       this.weather.mask = null;
     }
 
-    const sceneShape = canvas.dimensions.rect.clone();
+    const sceneShape = canvas.scene.img ? canvas.dimensions.sceneRect.clone() : canvas.dimensions.rect.clone();
     mask.beginFill(0x000000).drawShape(sceneShape).endFill();
 
     canvas.drawings.placeables.forEach((drawing) => {
-      const isMask = drawing.getFlag("fxmaster", "masking");
+      const isMask = drawing.document.getFlag("fxmaster", "masking");
       if (!isMask) return;
       mask.beginHole();
       const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
@@ -293,6 +293,7 @@ export class FXMasterLayer extends CanvasLayer {
   }
 
   async drawWeather(options = {}) {
+    Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }

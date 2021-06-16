@@ -6,13 +6,8 @@ import { filterManager } from "../filters/FilterManager.js";
 import { migrate } from './migration.js';
 
 function registerLayer() {
-  const layers = foundry.utils.mergeObject(Canvas.layers, {
+  CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
     fxmaster: FXMasterLayer
-  });
-  Object.defineProperty(Canvas, 'layers', {
-    get: function () {
-      return layers
-    }
   });
 }
 
@@ -124,8 +119,9 @@ Hooks.on("renderDrawingHUD", (hud, html, data) => {
   if (data?.flags?.fxmaster?.masking) {
     maskToggle.classList.add("active");
   }
+  maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskWeather"));
   maskToggle.dataset.action = "mask";
-  maskToggle.innerHTML = "<i class='fas fa-mask'></i>";
+  maskToggle.innerHTML = "<i class='fas fa-cloud'></i>";
   html.find(".col.left").append(maskToggle);
 
   html.find(".control-icon[data-action='mask']").click(async event => {

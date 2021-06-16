@@ -38,5 +38,6 @@
   "FXMASTER.Ease": "Ease",
   "FXMASTER.EaseHint": "Speed animation easing function",
   "FXMASTER.PermissionCreate": "Use FXMaster special effects",
-  "FXMASTER.PermissionCreateHint": "Allow usage of FXMaster special effects through the scene controls."
+  "FXMASTER.PermissionCreateHint": "Allow usage of FXMaster special effects through the scene controls.",
+  "FXMASTER.MaskWeather": "Mask FXMaster Weather"
 }
