@@ -9,6 +9,17 @@ function registerLayer() {
   CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
     fxmaster: FXMasterLayer
   });
+  // Overriding other modules if needed
+  if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
+    console.error('Possible incomplete layer injection by other module detected!...')
+
+    const layers = Canvas.layers
+    Object.defineProperty(Canvas, 'layers', {
+      get: function () {
+        return foundry.utils.mergeObject(layers, CONFIG.Canvas.layers)
+      }
+    })
+  }
 }
 
 function parseSpecialEffects() {
