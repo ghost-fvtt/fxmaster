@@ -242,11 +242,12 @@ export class FXMasterLayer extends CanvasLayer {
       this.weather.mask = null;
     }
 
-    const sceneShape = canvas.dimensions.sceneRect.clone();
+    const sceneShape = canvas.dimensions.rect.clone();
     mask.beginFill(0x000000).drawShape(sceneShape).endFill();
 
     canvas.drawings.placeables.forEach((drawing) => {
-      
+      const isMask = drawing.getFlag("fxmaster", "masking");
+      if (!isMask) return;
       mask.beginHole();
       const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
       switch (drawing.data.type) {

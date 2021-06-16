@@ -94,6 +94,14 @@ Hooks.on("updateDrawing", () => {
   canvas.fxmaster.updateMask();
 })
 
+Hooks.on("createDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
+
+Hooks.on("deleteDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
+
 Hooks.on("renderSidebarTab", async (object, html) => {
   if (object instanceof Settings) {
     const details = html.find("#game-details");
@@ -110,15 +118,18 @@ Hooks.on("updateSetting", (data, value) => {
   }
 })
 
-Hooks.on("renderDrawingConfig", (dialog, html, data) => {
-  const fillTab = html.find(".tab[data-tab='fill']");
-  const maskForm = document.createElement("div");
-  maskForm.classList.add("form-group");
-  maskForm.innerHTML = `<label for='masking'>Mask FXMaster effects</label><div class='form-field'><input type='checkbox' name='masking'></div>`
-  fillTab.append(maskForm);
-})
+Hooks.on("renderDrawingHUD", (hud, html, data) => {
+  const maskToggle = document.createElement("div");
+  maskToggle.classList.add("control-icon");
+  if (data?.flags?.fxmaster?.masking) {
+    maskToggle.classList.add("active");
+  }
+  maskToggle.dataset.action = "mask";
+  maskToggle.innerHTML = "<i class='fas fa-mask'></i>";
+  html.find(".col.left").append(maskToggle);
 
-Hooks.on("closeDrawingConfig", (config, html) => {
-  const mask = config.form["masking"].value == "on";
-  config.object.setFlag("fxmaster", "masking", mask);
-})
+  html.find(".control-icon[data-action='mask']").click(async event => {
+    await hud.object.document.setFlag("fxmaster", "masking", !data?.flags?.fxmaster?.masking);
+    hud.render(true);
+  })
+});
