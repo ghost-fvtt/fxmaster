@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Weather masking can be toggled on drawings (see drawing HUD icons)
 - Lightning filter
+- drawWeather and updateMask Hooks
 ### Changed
 - FXMaster no longer overrides custom layers from other modules
 

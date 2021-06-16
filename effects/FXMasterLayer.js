@@ -271,6 +271,7 @@ export class FXMasterLayer extends CanvasLayer {
       }
       mask.endHole();
     });
+    Hooks.callAll("updateMask", this, this.weather, mask);
     this.weather.mask = mask;
   }
 
@@ -293,10 +294,11 @@ export class FXMasterLayer extends CanvasLayer {
   }
 
   async drawWeather(options = {}) {
-    Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }
+    Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
+    
     const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
       if (options.soft === true) {
