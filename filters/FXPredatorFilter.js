@@ -12,6 +12,14 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
     return "Predator";
   }
 
+  static get faIcon() {
+    return "fas fa-wave-square";
+  }
+  
+  static get parameters() {
+    return {}
+  }
+
   play() {
     this.enabled = true;
     this.seed = Math.random();
@@ -28,7 +36,6 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
     for (let i = 0; i < keys.length; ++i) {
       this[keys[i]] = opts[keys[i]];
     }
-    this.play();
   }
 
   // So we can destroy object afterwards

@@ -22,6 +22,14 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   static get label() {
     return "Underwater";
   }
+  
+  static get faIcon() {
+    return "fas fa-water";
+  }
+  
+  static get parameters() {
+    return {}
+  }
 
   step() {
     this.maskSprite.x += 0.3;
@@ -37,7 +45,6 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     for (let i = 0; i < keys.length; ++i) {
       this[keys[i]] = opts[keys[i]];
     }
-    this.play();
   }
 
   // So we can destroy object afterwards

@@ -13,6 +13,13 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
     return "Lightning";
   }
 
+  static get faIcon() {
+    return "fas fa-bolt";
+  }
+  
+  static get parameters() {
+    return {}
+  }
   play() {
     this.enabled = true;
   }
@@ -45,7 +52,6 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
     for (let i = 0; i < keys.length; ++i) {
       this[keys[i]] = opts[keys[i]];
     }
-    this.play();
   }
 
   // So we can destroy object afterwards

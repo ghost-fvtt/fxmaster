@@ -13,6 +13,14 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     return "Bloom";
   }
 
+  static get faIcon() {
+    return "fas fa-ghost";
+  }
+
+  static get parameters() {
+    return {}
+  }
+  
   play() {
     this.enabled = true;
     if (this.skipFading) {
@@ -45,7 +53,6 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     for (let i = 0; i < keys.length; ++i) {
       this[keys[i]] = opts[keys[i]];
     }
-    this.play();
   }
 
   // So we can destroy object afterwards

@@ -10,16 +10,40 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
     return "Color";
   }
 
+  static get faIcon() {
+    return "fas fa-palette";
+  }
+
+  static get parameters() {
+    return {
+      color: {
+        label: "FXMASTER.Tint",
+        type: "color",
+        default: "#FFFFFF"
+      },
+      alpha: {
+        label: "FXMASTER.Alpha",
+        type: "range",
+        max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 1.0
+      }
+    }
+  }
+
   step() {
   }
 
   play() {
     this.enabled = true;
+    const colors = foundry.utils.hexToRGB(colorStringToHex(this.options.color));
     if (this.skipFading) {
       this.skipFading = false;
-      this.blue = this.options.blue;
-      this.red = this.options.red;
-      this.green = this.options.green;
+      this.red = colors[0];
+      this.green = colors[1];
+      this.blue = colors[2];
+      this.alpha = this.options.alpha;
       return;
     }
     const data = {
@@ -28,22 +52,33 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
     };
     const anim = [{
       parent: this,
-      attribute: "blue",
-      to: this.options.blue,
-    }, {
-      parent: this,
       attribute: "red",
-      to: this.options.red
+      to: colors[0]
     },
     {
       parent: this,
       attribute: "green",
-      to: this.options.green
+      to: colors[1]
+    },
+    {
+      parent: this,
+      attribute: "blue",
+      to: colors[2]
+    }, {
+      parent: this,
+      attribute: "alpha",
+      to: this.options.alpha,
     }];
     this.transition = CanvasAnimation.animateLinear(anim, data);
   }
 
-  configure(opts) { }
+  configure(opts) {
+    if (!opts) return;
+    const keys = Object.keys(opts);
+    for (let i = 0; i < keys.length; ++i) {
+      this[keys[i]] = opts[keys[i]];
+    }
+  }
 
   // So we can destroy object afterwards
   stop() {
@@ -54,6 +89,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         this.red = 1;
         this.blue = 1;
         this.green = 1;
+        this.alpha = 1.0;
         resolve();
         return;
       }
@@ -75,10 +111,15 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         parent: this,
         attribute: "green",
         to: 1.0
+      },
+      {
+        parent: this,
+        attribute: "alpha",
+        to: 1.0
       }];
       this.transition = CanvasAnimation.animateLinear(anim, data);
       this.transition.finally(() => {
-      //   this.enabled = false;
+        //   this.enabled = false;
         resolve();
       })
     });

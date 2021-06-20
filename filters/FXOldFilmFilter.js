@@ -13,6 +13,14 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
     return "Old Film";
   }
 
+  static get faIcon() {
+    return "fas fa-film";
+  }
+  
+  static get parameters() {
+    return {}
+  }
+
   play() {
     this.enabled = true;
     this.seed = Math.random();
@@ -28,7 +36,6 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
     for (let i = 0; i < keys.length; ++i) {
       this[keys[i]] = opts[keys[i]];
     }
-    this.play();
   }
 
   // So we can destroy object afterwards

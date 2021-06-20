@@ -1,7 +1,7 @@
 import { filterManager } from "../filters/FilterManager.js";
 import { WeatherConfig } from "./weather-config.js";
 import { SpecialsConfig } from "./specials-config.js";
-import { ColorizeConfig } from "./colorize-config.js";
+import { FiltersConfig } from "./filters-config.js";
 
 Hooks.on("getSceneControlButtons", (controls) => {
   if (canvas == null) { return };
@@ -57,63 +57,13 @@ Hooks.on("getSceneControlButtons", (controls) => {
       },
       {
         name: "colorize",
-        title: "CONTROLS.Colorize",
-        icon: "fas fa-palette",
+        title: "CONTROLS.Filters",
+        icon: "fas fa-filter",
         onClick: () => {
-          new ColorizeConfig().render(true);
+          new FiltersConfig().render(true);
         },
         visible: game.user.isGM,
         button: true,
-      },
-      {
-        name: "underwater",
-        title: "CONTROLS.Underwater",
-        icon: "fas fa-water",
-        onClick: () => {
-          filterManager.switch("core_underwater", "underwater", null, {});
-        },
-        visible: game.user.isGM,
-        toggle: true,
-      },
-      {
-        name: "predator",
-        title: "CONTROLS.Predator",
-        icon: "fas fa-wave-square",
-        onClick: () => {
-          filterManager.switch("core_predator", "predator", null, {});
-        },
-        visible: game.user.isGM,
-        toggle: true,
-      },
-      {
-        name: "oldfilm",
-        title: "CONTROLS.OldFilm",
-        icon: "fas fa-film",
-        onClick: () => {
-          filterManager.switch("core_oldfilm", "oldfilm", null, {});
-        },
-        visible: game.user.isGM,
-        toggle: true,
-      },
-      {
-        name: "bloom",
-        title: "CONTROLS.Bloom",
-        icon: "fas fa-ghost",
-        onClick: () => {
-          filterManager.switch("core_bloom", "bloom", null, {});
-        },
-        visible: game.user.isGM,
-        toggle: true,
-      },
-      {
-        name: "lightning",
-        title: "CONTROLS.Lightning",
-        icon: "fas fa-bolt",
-        onClick: () => {
-          filterManager.switch("core_lightning", "lightning", null, {});
-        },
-        visible: game.user.isGM,
-        toggle: true,
       },
       {
         name: "clearfx",
