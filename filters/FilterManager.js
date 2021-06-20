@@ -1,4 +1,4 @@
-import {resetFlags} from "../module/utils.js";
+import { resetFlags } from "../module/utils.js";
 
 class FilterManager {
   constructor() {
@@ -9,18 +9,17 @@ class FilterManager {
 
   activate() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
-    if (!this.filterInfos) this.filterInfos = {};
+    this.filterInfos = this.filterInfos || {};
 
-    // create new effects
-    const keys = Object.keys(this.filterInfos);
-    for (let i = 0; i < keys.length; ++i) {
-      if (!CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type]) continue;
-      this.filters[keys[i]] = new CONFIG.fxmaster.filters[
-        this.filterInfos[keys[i]].type
-      ](this.filterInfos[keys[i]].options);
-      this.filters[keys[i]].skipFading = true;
-      this.filters[keys[i]].play();
-    }
+    // Creating new filters from filterInfos
+    this.filters = Object.keys(this.filterInfos).reduce((filters, key) => {
+      const info = this.filterInfos[key];
+      if (!CONFIG.fxmaster?.filters[info?.type]) return;
+      filters[key] = new CONFIG.fxmaster.filters[info.type](info.options);
+      filters[key].skipFading = true;
+      filters[key].play();
+      return filters;
+    }, this.filters);
 
     if (!canvas.background.filters) canvas.background.filters = [];
     canvas.background.filters.push(...Object.values(this.filters));
@@ -36,38 +35,38 @@ class FilterManager {
 
   update() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
-    if (!this.filterInfos) this.filterInfos = {};
+    this.filterInfos = this.filterInfos || {};
 
     // Clear unused effects
-    const effkeys = Object.keys(this.filters);
-    for (let i = 0; i < effkeys.length; ++i) {
-      if (this.filterInfos[effkeys[i]]) {
-        this.filters[effkeys[i]].options = this.filterInfos[effkeys[i]].options;
-        this.filters[effkeys[i]].play();
+    const filterkeys = Object.keys(this.filters);
+    for (const filterkey of filterkeys) {
+      if (this.filterInfos[filterkey]) {
+        this.filters[filterkey].configure(this.filterInfos[filterkey].options);
+        this.filters[filterkey].play();
         continue;
       }
-      this.filters[effkeys[i]].stop().then((_, res) => {
-        delete canvas.background.filters[effkeys[i]];
-        delete canvas.foreground.filters[effkeys[i]];
-        delete canvas.tokens.filters[effkeys[i]];
-        delete this.filters[effkeys[i]];
+      this.filters[filterkey].stop().then((_, res) => {
+        delete canvas.background.filters[filterkey];
+        delete canvas.foreground.filters[filterkey];
+        delete canvas.tokens.filters[filterkey];
+        delete this.filters[filterkey];
       });
     }
 
     if (this.filterInfos) {
       // create new effects
       const keys = Object.keys(this.filterInfos);
-      for (let i = 0; i < keys.length; ++i) {
+      for (const key of keys) {
         if (
-          this.filters[keys[i]] ||
-          !CONFIG.fxmaster.filters[this.filterInfos[keys[i]].type]
+          this.filters[key] ||
+          !CONFIG.fxmaster.filters[this.filterInfos[key].type]
         ) {
           continue;
         }
-        this.filters[keys[i]] = new CONFIG.fxmaster.filters[
-          this.filterInfos[keys[i]].type
-        ](this.filterInfos[keys[i]].options);
-        this.filters[keys[i]].play();
+        this.filters[key] = new CONFIG.fxmaster.filters[
+          this.filterInfos[key].type
+        ](this.filterInfos[key].options);
+        this.filters[key].play();
       }
     }
     if (!canvas.background.filters) canvas.background.filters = [];
@@ -84,19 +83,17 @@ class FilterManager {
 
   clear() {
     const keys = Object.keys(this.filters);
-    for (let i = 0; i < keys.length; ++i) {
-      this.filters[keys[i]].skipFading = true;
-      this.filters[keys[i]].stop().then(_ => {
-        delete this.filters[keys[i]];
-      });
+    const promises = [];
+    for (const key of keys) {
+      promises.push(this.filters[key].stop());
     }
+    this.filters = {};
+    return Promise.all(promises);
   }
 
   addFilter(name, filter, options) {
-    if (!name) {
-      name = randomID();
-    }
-    if (!this.filterInfos) this.filterInfos = {};
+    name = name || randomID();
+    this.filterInfos = this.filterInfos || {};
     this.filterInfos[name] = {
       type: filter,
       options: options
@@ -116,11 +113,13 @@ class FilterManager {
 
   async removeAll() {
     if (!this.filters || !this.filterInfos) return;
-    let keys = Object.keys(this.filters);
-    for (let i = 0; i < keys.length; ++i) {
-      await this.filters[keys[i]].stop();
-      delete this.filterInfos[keys[i]];
+    const keys = Object.keys(this.filters);
+    const promises = [];
+    for (const key of keys) {
+      promises.push(this.filters[key].stop());
     }
+    await Promise.all(promises);
+    this.filterInfos = {};
     canvas.scene.unsetFlag("fxmaster", "filters");
   }
 
@@ -139,8 +138,8 @@ class FilterManager {
 
   _animate() {
     const keys = Object.keys(this.filters);
-    for (let i = 0; i < keys.length; i++) {
-      this.filters[keys[i]].step();
+    for (const key of keys) {
+      this.filters[key].step();
     }
   }
 }
