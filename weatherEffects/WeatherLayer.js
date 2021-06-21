@@ -1,7 +1,7 @@
 import { FXCanvasAnimation } from "../module/canvasanimation.js"
 import { easeFunctions } from "../module/ease.js";
 
-export class FXMasterLayer extends CanvasLayer {
+export class WeatherLayer extends CanvasLayer {
   constructor() {
     super();
     this.weatherEffects = {};

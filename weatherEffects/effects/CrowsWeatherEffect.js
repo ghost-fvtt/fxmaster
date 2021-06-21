@@ -4,7 +4,7 @@ export class CrowsWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "modules/fxmaster/icons/weather/crows.png";
+    return "modules/fxmaster/weatherEffects/icons/crows.png";
   }
 
   static get effectOptions() {
@@ -45,27 +45,27 @@ export class CrowsWeatherEffect extends SpecialEffect {
       framerate: "15",
       textures: [
         {
-          texture: "./modules/fxmaster/effects/assets/raven1.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven1.png",
           count: 20
         },
         {
-          texture: "./modules/fxmaster/effects/assets/raven2.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven2.png",
           count: 3
         },
         {
-          texture: "./modules/fxmaster/effects/assets/raven3.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven3.png",
           count: 2
         },
         {
-          texture: "./modules/fxmaster/effects/assets/raven4.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven4.png",
           count: 2
         },
         {
-          texture: "./modules/fxmaster/effects/assets/raven3.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven3.png",
           count: 2
         },
         {
-          texture: "./modules/fxmaster/effects/assets/raven2.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/raven2.png",
           count: 3
         }
       ],

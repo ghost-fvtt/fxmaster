@@ -1,13 +1,13 @@
 import { registerSettings } from "./settings.js";
 import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js"
-import { FXMasterLayer } from "../effects/FXMasterLayer.js";
-import { filterManager } from "../filters/FilterManager.js";
+import { WeatherLayer } from "../weatherEffects/WeatherLayer.js";
+import { filterManager } from "../filterEffects/FilterManager.js";
 import { migrate } from './migration.js';
 
 function registerLayer() {
   CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
-    fxmaster: FXMasterLayer
+    fxmaster: WeatherLayer
   });
   // Overriding other modules if needed
   if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
@@ -45,9 +45,9 @@ Hooks.once("init", function () {
   registerLayer();
 
   // Set missing icons
-  CONFIG.weatherEffects.rain.icon = "modules/fxmaster/icons/weather/rain.png";
-  CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/icons/weather/leaves.png";
-  CONFIG.weatherEffects.snow.icon = "modules/fxmaster/icons/weather/snow.png";
+  CONFIG.weatherEffects.rain.icon = "modules/fxmaster/weatherEffects/icons/rain.png";
+  CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/weatherEffects/icons/leaves.png";
+  CONFIG.weatherEffects.snow.icon = "modules/fxmaster/weatherEffects/icons/snow.png";
 
   CONST.USER_PERMISSIONS.EFFECT_CREATE = {
     label: "FXMASTER.PermissionCreate",

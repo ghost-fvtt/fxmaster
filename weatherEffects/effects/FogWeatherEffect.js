@@ -4,7 +4,7 @@ export class FogWeatherEffect extends SpecialEffect {
   }
 
   static get icon() {
-    return "modules/fxmaster/icons/weather/fog.png";
+    return "modules/fxmaster/weatherEffects/icons/fog.png";
   }
 
   /* -------------------------------------------- */
@@ -46,10 +46,10 @@ export class FogWeatherEffect extends SpecialEffect {
     );
     // Animation
     const art = [
-      "./modules/fxmaster/effects/assets/cloud1.png",
-      "./modules/fxmaster/effects/assets/cloud2.png",
-      "./modules/fxmaster/effects/assets/cloud3.png",
-      "./modules/fxmaster/effects/assets/cloud4.png"
+      "./modules/fxmaster/weatherEffects/effects/assets/cloud1.png",
+      "./modules/fxmaster/weatherEffects/effects/assets/cloud2.png",
+      "./modules/fxmaster/weatherEffects/effects/assets/cloud3.png",
+      "./modules/fxmaster/weatherEffects/effects/assets/cloud4.png"
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;

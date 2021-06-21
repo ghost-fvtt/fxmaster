@@ -12,7 +12,7 @@ export class SpecialsConfig extends Application {
       width: 120,
       height: 200,
       resizable: true,
-      template: "modules/fxmaster/templates/specials-config.html",
+      template: "modules/fxmaster/specialEffects/templates/specials-config.html",
       id: "specials-config",
       title: game.i18n.localize("EFFECTCONTROLS.Title"),
     });

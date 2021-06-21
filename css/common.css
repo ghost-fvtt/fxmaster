@@ -1,0 +1,52 @@
+.fxmaster .directory-header {
+    box-shadow: 0 0 5px black;
+    line-height: 12px;
+    font-size: 12px;
+    margin: 0;
+    padding: 2px 0;
+  }
+  
+.fxmaster .config.collapsible {
+    padding: 0;
+  }
+  
+  .fxmaster .config.collapsible.collapsed {
+    display: none;
+    overflow: hidden;
+  }
+  
+  .fxmaster .config label {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .fxmaster .config label:hover {
+    text-shadow: 0 0 4px #ff6400;
+  }
+  
+  .fxmaster .directory-item.active {
+      background: #f56b0066;
+  }
+  
+  .fxmaster .form-footer {
+    padding: 5px;
+  }
+  
+  .fxmaster .form-footer button {
+    background-color: rgba(255, 255, 240, 0.8);
+    border: 1px solid #b5b3a4;
+  }
+  
+  .donation-link {
+    line-height: 16px;
+  }
+  
+  .donation-link img {
+    border: none;
+    height: 12px;
+    margin-bottom: -1px;
+  }
+  
+  .donation-link span {
+    font-size: 11px;
+  }

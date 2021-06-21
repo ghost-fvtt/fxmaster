@@ -1,5 +1,5 @@
-import { FXCanvasAnimation } from "../module/canvasanimation.js"
-import { easeFunctions } from "../module/ease.js";
+import { FXCanvasAnimation } from "../../module/canvasanimation.js"
+import { easeFunctions } from "../../module/ease.js";
 
 export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options) {

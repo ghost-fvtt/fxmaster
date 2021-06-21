@@ -1,4 +1,4 @@
-import { filterManager } from "../filters/FilterManager.js";
+import { filterManager } from "../filterEffects/FilterManager.js";
 import { resetFlags } from "./utils.js";
 
 export const registerHooks = function () {

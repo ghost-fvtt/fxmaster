@@ -4,7 +4,7 @@ export class RainSimpleWeatherEffect extends SpecialEffect {
   }
   
   static get icon() {
-    return "modules/fxmaster/icons/weather/rain.png";
+    return "modules/fxmaster/weatherEffects/icons/rain.png";
   }
 
   /* -------------------------------------------- */

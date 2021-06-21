@@ -1,12 +1,11 @@
-import { filterManager } from "../filters/FilterManager.js";
-import { resetFlags } from "./utils.js";
+import { resetFlags } from "../../module/utils.js";
 
-Handlebars.registerHelper("isFilterActive", function(name) {
-  let flags = canvas.scene.getFlag("fxmaster", "filters");
+Handlebars.registerHelper("isEffectActive", function(name) {
+  let flags = canvas.scene.getFlag("fxmaster", "effects");
   if (flags) {
     let objKeys = Object.keys(flags);
     for (let i = 0; i < objKeys.length; ++i) {
-      let weather = CONFIG.fxmaster.filters[flags[objKeys[i]].type];
+      let weather = CONFIG.weatherEffects[flags[objKeys[i]].type];
       if (weather.label === name) {
         return true;
       }
@@ -16,33 +15,23 @@ Handlebars.registerHelper("isFilterActive", function(name) {
 });
 
 Handlebars.registerHelper("Config", function(key, name) {
-  const flags = canvas.scene.data.flags.fxmaster;
-  if (flags && flags.filters) {
-    const objKeys = Object.keys(flags.filters);
+  let flags = canvas.scene.data.flags.fxmaster;
+  if (flags && flags.effects) {
+    let objKeys = Object.keys(flags.effects);
     for (let i = 0; i < objKeys.length; ++i) {
-      const filter = CONFIG.fxmaster.filters[flags.filters[objKeys[i]].type];
-      if (filter.label === name && flags.filters[objKeys[i]].options) {
-        return flags.filters[objKeys[i]].options[key];
+      let weather = CONFIG.weatherEffects[flags.effects[objKeys[i]].type];
+      if (weather.label === name && flags.effects[objKeys[i]].options) {
+        return flags.effects[objKeys[i]].options[key];
       }
     }
+  }
+  if (key === "apply_tint") {
+    return false
   }
   return 50;
 });
 
-Handlebars.registerHelper("parameter", (effect, param, key) => {
-  switch (param.type) {
-    case "color":
-      return `<input type="color" name="${effect.label}_${key}" value="${param.default}">`;
-    case "range":
-      return `
-        <input type="range" step="${param.step}" min="${param.min}" max="${param.max}" name="${effect.label}_${key}" value="${param.default}">
-        <span class="range-value">${param.default}</span>
-        `;
-  }
-  return "";
-});
-
-export class FiltersConfig extends FormApplication {
+export class WeatherConfig extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["form", "fxmaster", "sidebar-popout"],
@@ -53,9 +42,9 @@ export class FiltersConfig extends FormApplication {
       editable: game.user.isGM,
       width: 300,
       height: 450,
-      template: "modules/fxmaster/templates/filters-config.html",
-      id: "filters-config",
-      title: game.i18n.localize("FILTERMANAGE.Title")
+      template: "modules/fxmaster/weatherEffects/templates/weather-config.html",
+      id: "effects-config",
+      title: game.i18n.localize("WEATHERMANAGE.Title")
     });
   }
 
@@ -68,8 +57,8 @@ export class FiltersConfig extends FormApplication {
   getData() {
     // Return data to the template
     return {
-      filters: CONFIG.fxmaster.filters,
-      currentFilters: canvas.scene.getFlag("fxmaster", "filters")
+      effects: CONFIG.weatherEffects,
+      currentEffects: canvas.scene.getFlag("fxmaster", "effects")
     };
   }
 
@@ -132,23 +121,26 @@ export class FiltersConfig extends FormApplication {
    * @private
    */
   async _updateObject(_, formData) {
-    const filtersDB = CONFIG.fxmaster.filters;
-    const filters = {};
-    Object.keys(filtersDB).forEach(key => {
-      const label = filtersDB[key].label;
+    const effects = {};
+    Object.keys(CONFIG.weatherEffects).forEach(key => {
+      let label = CONFIG.weatherEffects[key].label;
       if (formData[label]) {
-        const filter = {
+        effects[randomID()] = {
           type: key,
-          options: {}
+          options: {
+            density: formData[`${label}_density`],
+            speed: formData[`${label}_speed`],
+            scale: formData[`${label}_scale`],
+            tint: formData[ `${label}_tint`],
+            direction: formData[`${label}_direction`],
+            apply_tint: formData[`${label}_apply_tint`]
+          }
         };
-        Object.keys(filtersDB[key].parameters).forEach((key) => {
-          filter.options[key] = formData[`${label}_${key}`];
-        })
-        filters[randomID()] = filter;
       }
     });
-    resetFlags(canvas.scene, "filters", filters);
+    resetFlags(canvas.scene, "effects", effects);
+
   }
 }
 
-FiltersConfig.CONFIG_SETTING = "filtersConfiguration";
+WeatherConfig.CONFIG_SETTING = "effectsConfiguration";

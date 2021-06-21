@@ -4,7 +4,7 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 	}
 
 	static get icon() {
-		return "modules/fxmaster/icons/weather/snow.png";
+		return "modules/fxmaster/weatherEffects/icons/snow.png";
 	}
 
 	/* -------------------------------------------- */
@@ -40,8 +40,8 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 			frequency: 1 / p
 		}, { inplace: false });
 		const art = [
-		  "./modules/fxmaster/effects/assets/snow_01.png",
-		  "./modules/fxmaster/effects/assets/snow_02.png"
+		  "./modules/fxmaster/weatherEffects/effects/assets/snow_01.png",
+		  "./modules/fxmaster/weatherEffects/effects/assets/snow_02.png"
 		];
 		var emitter = new PIXI.particles.Emitter(parent, art, config);
 		emitter.particleConstructor = PIXI.particles.PathParticle;

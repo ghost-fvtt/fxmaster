@@ -1,32 +1,27 @@
-export class BubblesWeatherEffect extends SpecialEffect {
+export class EmbersWeatherEffect extends SpecialEffect {
   static get label() {
-    return "Bubbles";
+    return "Embers";
   }
 
   static get icon() {
-    return "modules/fxmaster/icons/weather/bubbles.png";
+    return "modules/fxmaster/weatherEffects/icons/embers.png";
   }
-
-  /* -------------------------------------------- */
 
   static get effectOptions() {
     const options = super.effectOptions;
-    options.density.min = 0.03;
-    options.density.value = 0.15;
-    options.density.max = 0.4;
-    options.density.step = 0.01;
+    options.density.min = 0.15;
+    options.density.value = 0.7;
+    options.density.max = 1;
+    options.density.step = 0.05;
     return options;
   }
 
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
-    return [this._getBubbleEmitter(this.parent)];
+    return [this._getEmbersEmitter(this.parent)];
   }
 
-  /* -------------------------------------------- */
-
-  _getBubbleEmitter(parent) {
+  // This is where the magic happens
+  _getEmbersEmitter(parent) {
     const d = canvas.dimensions;
     const p =
       (d.width / d.size) * (d.height / d.size) * this.options.density.value;
@@ -44,36 +39,49 @@ export class BubblesWeatherEffect extends SpecialEffect {
       },
       { inplace: false }
     );
-    const art = ["./modules/fxmaster/effects/assets/bubbles.png"];
+
+    // Assets are selected randomly from the list for each particle
+    const art = ["./modules/fxmaster/weatherEffects/effects/assets/ember.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
+    emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(
+      config.color.list,
+      true
+    );
     return emitter;
   }
 }
 
-BubblesWeatherEffect.CONFIG = foundry.utils.mergeObject(
+EmbersWeatherEffect.CONFIG = foundry.utils.mergeObject(
   SpecialEffect.DEFAULT_CONFIG,
   {
     alpha: {
       list: [
         { value: 0, time: 0 },
-        { value: 0.85, time: 0.05 },
-        { value: 0.85, time: 0.98 },
+        { value: 0.9, time: 0.3 },
+        { value: 0.9, time: 0.95 },
         { value: 0, time: 1 }
       ]
     },
     scale: {
-      start: 0.25,
-      end: 0.5,
-      minimumScaleMultiplier: 0.5
+      start: 0.15,
+      end: 0.01,
+      minimumScaleMultiplier: 0.85
     },
     speed: {
-      start: 20,
-      end: 60,
+      start: 40,
+      end: 25,
       minimumSpeedMultiplier: 0.6
     },
     color: {
-      start: "ffffff",
-      end: "ffffff"
+      list: [
+        { value: "f77300", time: 0 },
+        { value: "f72100", time: 1 }
+      ],
+      isStepped: false
+    },
+    acceleration: {
+      x: 1,
+      y: 1
     },
     startRotation: {
       min: 0,
@@ -85,10 +93,10 @@ BubblesWeatherEffect.CONFIG = foundry.utils.mergeObject(
       max: 200
     },
     lifetime: {
-      min: 8,
-      max: 10
+      min: 5,
+      max: 8
     },
-    blendMode: "normal",
+    blendMode: "screen",
     emitterLifetime: -1
   },
   { inplace: false }

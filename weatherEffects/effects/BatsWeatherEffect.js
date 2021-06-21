@@ -1,27 +1,27 @@
-export class BirdsWeatherEffect extends SpecialEffect {
+export class BatsWeatherEffect extends SpecialEffect {
   static get label() {
-    return "Birds";
+    return "Bats";
   }
 
   static get icon() {
-    return "modules/fxmaster/icons/weather/crows.png";
+    return "modules/fxmaster/weatherEffects/icons/bats.png";
   }
 
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.01;
-    options.density.value = 0.04;
-    options.density.max = 0.08;
+    options.density.value = 0.05;
+    options.density.max = 0.1;
     options.density.step = 0.01;
     return options;
   }
 
   getParticleEmitters() {
-    return [this._getEmitter(this.parent)];
+    return [this._getBatsEmitter(this.parent)];
   }
 
   // This is where the magic happens
-  _getEmitter(parent) {
+  _getBatsEmitter(parent) {
     const d = canvas.dimensions;
     const p =
       (d.width / d.size) * (d.height / d.size) * this.options.density.value;
@@ -42,24 +42,40 @@ export class BirdsWeatherEffect extends SpecialEffect {
 
     // Assets are selected randomly from the list for each particle
     const anim_sheet = {
-      framerate: "10",
+      framerate: "30",
       textures: [
         {
-          texture: "./modules/fxmaster/effects/assets/seagull_1.png",
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat0.png",
+          count: 1
+        },
+        {
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat1.png",
+          count: 1
+        },
+        {
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat2.png",
+          count: 1
+        },
+        {
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat3.png",
+          count: 1
+        },
+        {
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat4.png",
           count: 2
         },
         {
-          texture: "./modules/fxmaster/effects/assets/seagull_2.png",
-          count: 7
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat3.png",
+          count: 1
         },
         {
-          texture: "./modules/fxmaster/effects/assets/seagull_3.png",
-          count: 2
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat2.png",
+          count: 1
         },
         {
-          texture: "./modules/fxmaster/effects/assets/seagull_2.png",
-          count: 2
-        },
+          texture: "./modules/fxmaster/weatherEffects/effects/assets/bat1.png",
+          count: 1
+        }
       ],
       loop: true
     };
@@ -69,7 +85,7 @@ export class BirdsWeatherEffect extends SpecialEffect {
   }
 }
 
-BirdsWeatherEffect.CONFIG = foundry.utils.mergeObject(
+BatsWeatherEffect.CONFIG = foundry.utils.mergeObject(
   SpecialEffect.DEFAULT_CONFIG,
   {
     alpha: {
@@ -83,17 +99,17 @@ BirdsWeatherEffect.CONFIG = foundry.utils.mergeObject(
     },
     scale: {
       list: [
-        { value: 0.3, time: 0 },
-        { value: 0.7, time: 0.1 },
-        { value: 0.7, time: 0.9 },
-        { value: 0.3, time: 1 }
+        { value: 0.02, time: 0 },
+        { value: 0.1, time: 0.05 },
+        { value: 0.1, time: 0.95 },
+        { value: 0.02, time: 1 }
       ],
       isStepped: false
     },
     speed: {
-      start: 90,
-      end: 100,
-      minimumSpeedMultiplier: 0.6
+      start: 200,
+      end: 260,
+      minimumSpeedMultiplier: 0.8
     },
     acceleration: {
       x: 0,
@@ -101,7 +117,7 @@ BirdsWeatherEffect.CONFIG = foundry.utils.mergeObject(
     },
     startRotation: {
       min: 0,
-      max: 365
+      max: 360
     },
     rotation: 180,
     rotationSpeed: {

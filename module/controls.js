@@ -1,7 +1,7 @@
-import { filterManager } from "../filters/FilterManager.js";
-import { WeatherConfig } from "./weather-config.js";
-import { SpecialsConfig } from "./specials-config.js";
-import { FiltersConfig } from "./filters-config.js";
+import { filterManager } from "../filterEffects/FilterManager.js";
+import { WeatherConfig } from "../weatherEffects/applications/weather-config.js";
+import { SpecialsConfig } from "../specialEffects/applications/specials-config.js";
+import { FiltersConfig } from "../filterEffects/applications/filters-config.js";
 
 Hooks.on("getSceneControlButtons", (controls) => {
   if (canvas == null) { return };
