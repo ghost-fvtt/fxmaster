@@ -41,5 +41,6 @@
   "FXMASTER.Ease": "Ease",
   "FXMASTER.EaseHint": "Función de redución de la animación de velocidad",
   "FXMASTER.PermissionCreate": "Usar efectos especiales FXMaster",
-  "FXMASTER.PermissionCreateHint": "Permite usar los efectos especiales FXMaster en los controles de escena"
+  "FXMASTER.PermissionCreateHint": "Permite usar los efectos especiales FXMaster en los controles de escena",
+  "FXMASTER.MaskWeather": "Enmascarar climatología FXMaster"
 }
