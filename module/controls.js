@@ -9,7 +9,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
     name: "effects",
     title: "CONTROLS.Effects",
     icon: "fas fa-magic",
-    layer: "fxmaster",
+    layer: "specials",
     visible: game.user.can("EFFECT_CREATE") || game.user.isGM,
     tools: [
       {

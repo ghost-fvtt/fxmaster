@@ -4,10 +4,12 @@ import { FXMASTER } from "./config.js"
 import { WeatherLayer } from "../weatherEffects/WeatherLayer.js";
 import { filterManager } from "../filterEffects/FilterManager.js";
 import { migrate } from './migration.js';
+import { SpecialsLayer } from "../specialeffects/SpecialsLayer.js";
 
 function registerLayer() {
   CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
-    fxmaster: WeatherLayer
+    weather: WeatherLayer,
+    specials: SpecialsLayer
   });
   // Overriding other modules if needed
   if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
@@ -81,8 +83,8 @@ Hooks.on("canvasReady", (_) => {
     return
   }
   filterManager.activate();
-  canvas.fxmaster.drawWeather();
-  canvas.fxmaster.updateMask();
+  canvas.weather.drawWeather();
+  canvas.weather.updateMask();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
@@ -91,21 +93,21 @@ Hooks.on("updateScene", (scene, data, options) => {
   }
   if (hasProperty(data, "flags.fxmaster")) {
     filterManager.update();
-    canvas.fxmaster.drawWeather({ soft: true });
+    canvas.weather.drawWeather({ soft: true });
   }
-  canvas.fxmaster.updateMask();
+  canvas.weather.updateMask();
 });
 
 Hooks.on("updateDrawing", () => {
-  canvas.fxmaster.updateMask();
+  canvas.weather.updateMask();
 })
 
 Hooks.on("createDrawing", () => {
-  canvas.fxmaster.updateMask();
+  canvas.weather.updateMask();
 })
 
 Hooks.on("deleteDrawing", () => {
-  canvas.fxmaster.updateMask();
+  canvas.weather.updateMask();
 })
 
 Hooks.on("renderSidebarTab", async (object, html) => {
