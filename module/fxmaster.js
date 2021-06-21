@@ -6,14 +6,20 @@ import { filterManager } from "../filters/FilterManager.js";
 import { migrate } from './migration.js';
 
 function registerLayer() {
-  const layers = foundry.utils.mergeObject(Canvas.layers, {
+  CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
     fxmaster: FXMasterLayer
   });
-  Object.defineProperty(Canvas, 'layers', {
-    get: function () {
-      return layers
-    }
-  });
+  // Overriding other modules if needed
+  if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
+    console.error('Possible incomplete layer injection by other module detected!...')
+
+    const layers = Canvas.layers
+    Object.defineProperty(Canvas, 'layers', {
+      get: function () {
+        return foundry.utils.mergeObject(layers, CONFIG.Canvas.layers)
+      }
+    })
+  }
 }
 
 function parseSpecialEffects() {
@@ -75,8 +81,8 @@ Hooks.on("canvasReady", (_) => {
     return
   }
   filterManager.activate();
-  canvas.fxmaster.updateMask();
   canvas.fxmaster.drawWeather();
+  canvas.fxmaster.updateMask();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
@@ -89,6 +95,18 @@ Hooks.on("updateScene", (scene, data, options) => {
   }
   canvas.fxmaster.updateMask();
 });
+
+Hooks.on("updateDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
+
+Hooks.on("createDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
+
+Hooks.on("deleteDrawing", () => {
+  canvas.fxmaster.updateMask();
+})
 
 Hooks.on("renderSidebarTab", async (object, html) => {
   if (object instanceof Settings) {
@@ -105,3 +123,20 @@ Hooks.on("updateSetting", (data, value) => {
     parseSpecialEffects();
   }
 })
+
+Hooks.on("renderDrawingHUD", (hud, html, data) => {
+  const maskToggle = document.createElement("div");
+  maskToggle.classList.add("control-icon");
+  if (data?.flags?.fxmaster?.masking) {
+    maskToggle.classList.add("active");
+  }
+  maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskWeather"));
+  maskToggle.dataset.action = "mask";
+  maskToggle.innerHTML = "<i class='fas fa-cloud'></i>";
+  html.find(".col.left").append(maskToggle);
+
+  html.find(".control-icon[data-action='mask']").click(async event => {
+    await hud.object.document.setFlag("fxmaster", "masking", !data?.flags?.fxmaster?.masking);
+    hud.render(true);
+  })
+});

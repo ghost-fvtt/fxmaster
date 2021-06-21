@@ -106,6 +106,16 @@ Hooks.on("getSceneControlButtons", (controls) => {
         toggle: true,
       },
       {
+        name: "lightning",
+        title: "CONTROLS.Lightning",
+        icon: "fas fa-bolt",
+        onClick: () => {
+          filterManager.switch("core_lightning", "lightning", null, {});
+        },
+        visible: game.user.isGM,
+        toggle: true,
+      },
+      {
         name: "clearfx",
         title: "CONTROLS.ClearFX",
         icon: "fas fa-trash",

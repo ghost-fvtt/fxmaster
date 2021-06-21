@@ -13,6 +13,7 @@ export class FXMasterLayer extends CanvasLayer {
 
     this._interactiveChildren = false;
     this._dragging = false;
+    this.sortableChildren = true;
 
     this.options = this.constructor.layerOptions;
 
@@ -230,22 +231,48 @@ export class FXMasterLayer extends CanvasLayer {
 
   updateMask() {
     this.visible = true;
-    // Setup scene mask
-    if (this.mask) this.removeChild(this.mask);
-    this.mask = new PIXI.Graphics();
-    this.addChild(this.mask);
-    const d = canvas.dimensions;
-    this.mask.beginFill(0xffffff);
-    if (canvas.background.img) {
-      this.mask.drawRect(
-        d.paddingX - d.shiftX,
-        d.paddingY - d.shiftY,
-        d.sceneWidth,
-        d.sceneHeight
-      );
-    } else {
-      this.mask.drawRect(0, 0, d.width, d.height);
+    if (!this.weather) return;
+
+    // Mask zones masked by drawings
+    const mask = new PIXI.Graphics();
+    this.weather.addChild(mask);
+
+    if (this.weather.mask) {
+      this.weather.removeChild(this.weather.mask);
+      this.weather.mask = null;
     }
+
+    const sceneShape = canvas.scene.img ? canvas.dimensions.sceneRect.clone() : canvas.dimensions.rect.clone();
+    mask.beginFill(0x000000).drawShape(sceneShape).endFill();
+
+    canvas.drawings.placeables.forEach((drawing) => {
+      const isMask = drawing.document.getFlag("fxmaster", "masking");
+      if (!isMask) return;
+      mask.beginHole();
+      const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
+      switch (drawing.data.type) {
+        case CONST.DRAWING_TYPES.ELLIPSE:
+          shape.x = drawing.center.x;
+          shape.y = drawing.center.y;
+          mask.drawShape(shape);
+          break;
+        case CONST.DRAWING_TYPES.POLYGON:
+        case CONST.DRAWING_TYPES.FREEHAND:
+          const points = drawing.data.points.reduce((acc, v) => {
+            acc.push(v[0] + drawing.x, v[1] + drawing.y);
+            return acc;
+          }, [])
+          mask.drawPolygon(points);
+          break;
+        default:
+        shape.x = drawing.x;
+        shape.y = drawing.y;
+        mask.drawShape(shape);
+      }
+      mask.endHole();
+    });
+    Hooks.callAll("updateMask", this, this.weather, mask);
+    this.weather.mask = mask;
   }
 
   /** @override */
@@ -257,7 +284,11 @@ export class FXMasterLayer extends CanvasLayer {
     for (let i = 0; i < effKeys.length; ++i) {
       this.weatherEffects[effKeys[i]].fx.stop();
     }
-    this.weather = this.weatherEffects = null;
+    if (this.weather) {
+      this.removeChild(this.weather);
+      this.weather = null;
+    }
+    this.weatherEffects = {};
     this.visible = false;
     return super.tearDown();
   }
@@ -266,6 +297,8 @@ export class FXMasterLayer extends CanvasLayer {
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }
+    Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
+    
     const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
       if (options.soft === true) {
