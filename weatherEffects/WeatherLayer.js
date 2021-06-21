@@ -3,14 +3,6 @@ export class WeatherLayer extends CanvasLayer {
     super();
     this.weatherEffects = {};
     this.weather = null;
-    this.loader = new PIXI.Loader();
-
-    this.mouseInteractionManager = null;
-
-    this._interactiveChildren = false;
-    this._dragging = false;
-    this.sortableChildren = true;
-
     this.options = this.constructor.layerOptions;
   }
 
@@ -19,20 +11,6 @@ export class WeatherLayer extends CanvasLayer {
       name: "weather",
       zIndex: 250,
     });
-  }
-
-  /* -------------------------------------------- */
-  /*  Methods
-    /* -------------------------------------------- */
-
-  activate() {
-    super.activate();
-    return this
-  }
-
-  async draw() {
-    await super.draw();
-    return this;
   }
 
   /* -------------------------------------------- */

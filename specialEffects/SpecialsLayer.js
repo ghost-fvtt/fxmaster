@@ -5,10 +5,8 @@ export class SpecialsLayer extends CanvasLayer {
   constructor() {
     super();
     this.specials = [];
-    this.loader = new PIXI.Loader();
-
+  
     this.mouseInteractionManager = null;
-
     this._interactiveChildren = false;
     this._dragging = false;
     this.sortableChildren = true;
@@ -25,7 +23,7 @@ export class SpecialsLayer extends CanvasLayer {
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
       name: "specials",
-      zIndex: 250,
+      zIndex: 240,
     });
   }
 
