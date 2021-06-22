@@ -2,12 +2,12 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
   constructor(options) {
     super();
     this.enabled = false;
+    this.skipFading = false;
+
     this.vignetting = 0;
-    this.noise = 0.08;
-    this.scratch = 0.1;
-    this.scratchDensity = 0.1;
-    this.sepia = 0.3;
-    this.options = options;
+    this.vignettingAlpha = 0;
+ 
+    this.configure(options);
   }
 
   static get label() {
@@ -17,7 +17,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
   static get faIcon() {
     return "fas fa-film";
   }
-  
+
   static get parameters() {
     return {
       sepia: {
@@ -39,22 +39,39 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      sepia: 0.0,
+      noise: 0.0,
+    }
+  }
+
   play() {
     this.enabled = true;
-    this.sepia = this.options.sepia;
-    this.noise = this.options.noise;
     this.seed = Math.random();
+    this.applyOptions();
   }
 
   step() {
-    this.seed = Math.random();
+    this.seed++;
+  }
+
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+      return def;
+    }, {});
   }
 
   configure(opts) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
+    this.options = { ...this.constructor.default, ...opts };
+  }
+
+  applyOptions() {
+    if (!this.options) return;
+    const keys = Object.keys(this.options);
+    for (const key of keys) {
+      this[key] = this.options[key];
     }
   }
 
@@ -62,6 +79,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
   stop() {
     return new Promise((resolve, reject) => {
       this.enabled = false;
+      this.applyOptions(this.constructor.zeros);
       resolve();
     });
   }

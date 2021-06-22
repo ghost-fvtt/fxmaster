@@ -4,14 +4,14 @@ import { easeFunctions } from "../module/ease.js";
 export class SpecialsLayer extends CanvasLayer {
   constructor() {
     super();
-    this.specials = [];
-  
-    this.mouseInteractionManager = null;
-    this._interactiveChildren = false;
-    this._dragging = false;
-    this.sortableChildren = true;
-
     this.options = this.constructor.layerOptions;
+
+    this._interactiveChildren = false;
+    this._sortableChildren = false;
+    this._controlled = [];
+
+    this.mouseInteractionManager = null;
+    this._dragging = false;
 
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
@@ -23,15 +23,12 @@ export class SpecialsLayer extends CanvasLayer {
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
       name: "specials",
-      zIndex: 240,
+      zIndex: 245,
     });
   }
 
-
-
   playVideo(data) {
     return new Promise((resolve) => {
-
       // Set default values
       data = foundry.utils.mergeObject({
         anchor: { x: 0.5, y: 0.5 },
@@ -202,6 +199,7 @@ export class SpecialsLayer extends CanvasLayer {
   }
 
   _onClickLeft(event) {
+    console.log("CLICKING");
     this._dragging = false;
     setTimeout(() => {
       if (!this._dragging) {
@@ -212,10 +210,6 @@ export class SpecialsLayer extends CanvasLayer {
     }, 400)
   }
 
-  _onDrop(event) {
-    console.log("COUCOU");
-  }
-
   /* -------------------------------------------- */
   /*  Methods
     /* -------------------------------------------- */
@@ -223,23 +217,34 @@ export class SpecialsLayer extends CanvasLayer {
   activate() {
     super.activate();
     this.interactive = true;
+    this.activateListeners();
     return this
   }
 
   async draw() {
     await super.draw();
-    this._addListeners();
     return this;
   }
 
 
-  _addListeners() {
+  activateListeners() {
+
     // Define callback functions for mouse interaction events
     const callbacks = {
-      dragLeftStart: this._onDragLeftStart.bind(this),
+      hoverIn: null,
+      hoverOut: null,
       clickLeft: this._onClickLeft.bind(this),
+      clickLeft2: null,
+      clickRight: null,
+      clickRight2: null,
+      dragLeftStart: this._onDragLeftStart.bind(this),
+      dragLeftMove: null,
       dragLeftDrop: this._onDragLeftDrop.bind(this),
+      dragLeftCancel: null,
+      dragRightStart: null,
       dragRightMove: canvas._onDragRightMove.bind(canvas),
+      dragRightDrop: null,
+      dragRightCancel: null,
     };
 
     // Create and activate the interaction manager
@@ -250,9 +255,6 @@ export class SpecialsLayer extends CanvasLayer {
 
   /** @override */
   tearDown() {
-    for (const special of this.specials) {
-      special.stop();
-    }
     this.visible = false;
     return super.tearDown();
   }

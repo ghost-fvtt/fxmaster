@@ -4,8 +4,8 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
     this.enabled = false;
     this.vignetting = 0;
     this.curvature = 0;
-    this.noise = 0.1;
-    this.options = options;
+
+    this.configure(options);
   }
 
   static get label() {
@@ -37,10 +37,17 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      noise: 0,
+      period: 1000
+    }
+  }
+
   play() {
     this.enabled = true;
     this.seed = Math.random();
-    this.noise = this.options.noise;
+    this.applyOptions();
   }
 
   step() {
@@ -49,11 +56,22 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
     this.time = canvas.app.ticker.lastTime / frequency;
   }
 
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+      return def;
+    }, {});
+  }
+
   configure(opts) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
+    this.options = { ...this.constructor.default, ...opts };
+  }
+
+  applyOptions() {
+    if (!this.options) return;
+    const keys = Object.keys(this.options);
+    for (const key of keys) {
+      this[key] = this.options[key];
     }
   }
 
@@ -61,6 +79,7 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
   stop() {
     return new Promise((resolve, reject) => {
       this.enabled = false;
+      this.applyOptions(this.constructor.zeros);
       resolve();
     });
   }

@@ -4,8 +4,9 @@ import { easeFunctions } from "../../module/ease.js";
 export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options) {
     super();
-    this.options = options;
     this.enabled = false;
+    this.configure(options);
+
     this.next = canvas.app.ticker.lastTime / 10;
   }
 
@@ -46,6 +47,14 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      frequency: 0.0,
+      spark_duration: 0.0,
+      brightness: 1.0
+    }
+  }
+
   play() {
     this.enabled = true;
   }
@@ -72,11 +81,23 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
     }
   }
 
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+      return def;
+    }, {});
+  }
+
   configure(opts) {
+    const merged = { ...this.constructor.default, ...opts };
+    this.options = merged;
+  }
+
+  applyOptions(opts = this.options) {
     if (!opts) return;
     const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
+    for (const key of keys) {
+      this[key] = opts[key];
     }
   }
 

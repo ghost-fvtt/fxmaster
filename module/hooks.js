@@ -4,12 +4,6 @@ import { resetFlags } from "./utils.js";
 export const registerHooks = function () {
     // ------------------------------------------------------------------
     // Hooks API
-    Hooks.on("switchFilter", (params) => {
-        //params.name
-        // params.type
-        // params.options
-        filterManager.switch(params.name, params.type, null, params.options);
-    });
 
     Hooks.on("switchWeather", async (params) => {
         // params.name
@@ -44,6 +38,6 @@ export const registerHooks = function () {
         for (let i = 0; i < paramArr.length; i++) {
             effects[randomID()] = paramArr[i];
         }
-            resetFlags(canvas.scene, "effects", effects);
+        resetFlags(canvas.scene, "effects", effects);
     });
 }

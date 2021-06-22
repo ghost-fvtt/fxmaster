@@ -4,7 +4,11 @@ import { FXMASTER } from "./config.js"
 import { WeatherLayer } from "../weatherEffects/WeatherLayer.js";
 import { filterManager } from "../filterEffects/FilterManager.js";
 import { migrate } from './migration.js';
-import { SpecialsLayer } from "../specialeffects/SpecialsLayer.js";
+import { SpecialsLayer } from "../specialEffects/SpecialsLayer.js";
+
+window.FXMASTER = {
+  filters: filterManager
+};
 
 function registerLayer() {
   CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {

@@ -33,11 +33,7 @@ I added Hooks to add filters and weather effects from other modules
 ### Filters
 
 ```javascript
-Hooks.call("switchFilter", {
-  name: "myfilterID",
-  type: "color",
-  options: { red: 0, green: 1.5, blue: 1.5 },
-});
+FXMASTER.filters.switch("myfilterID", "color", { color: "#ff00ff", gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
 ```
 
 #### Available Filter options:
@@ -131,7 +127,7 @@ const data = {
     y: 0.7,
   },
 };
-canvas.fxmaster.playVideo(data);
+canvas.specials.playVideo(data);
 game.socket.emit("module.fxmaster", data);
 ```
 
@@ -147,7 +143,7 @@ const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label =
 
 #### Play a video file between two tokens
 
-You can use the `canvas.fxmaster.drawSpecialToward` method with an automatic speed to adapt speed so the video ends when the target is reached.
+You can use the `canvas.specials.drawSpecialToward` method with an automatic speed to adapt speed so the video ends when the target is reached.
 
 ```javascript
 function castSpell(effect) {
@@ -157,7 +153,7 @@ function castSpell(effect) {
     return;
   }
   game.user.targets.forEach((i, t) => {
-    canvas.fxmaster.drawSpecialToward(effect, tokens[0], t);
+    canvas.specials.drawSpecialToward(effect, tokens[0], t);
   });
 }
 
@@ -179,7 +175,7 @@ castSpell({
 
 #### Animation easing
 
-You can customize the `canvas.fxmaster.drawSpecialToward` to ease the animation toward the target.
+You can customize the `canvas.specials.drawSpecialToward` to ease the animation toward the target.
 Here is an example data, easing options are given in the ease.js file.
 
 ```javascript
@@ -247,6 +243,11 @@ Effects should now appear in the Specials selection dialog
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge
 requests for code changes. Approval for such requests involves code and (if necessary) design review by U~man. Please
 reach out on the Foundry Community Discord with any questions.
+
+## Thanks
+Many thanks to:
+- `theripper93` for bringing his ideas to handle weather masking elegantly.
+- `Wasp` for providing the sequencer module that will inspire future updates.
 
 ## Licensing
 

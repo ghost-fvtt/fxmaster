@@ -5,7 +5,9 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     );
     super(dizzyMap);
     this.dizzyMap = dizzyMap;
-    this.options = options;
+
+    this.speedConfig = {};
+    this.configure(options);
 
     this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
     this.dizzyMap.anchor.set(0.5);
@@ -13,18 +15,18 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     this.dizzyMap.y = canvas.scene.data.height / 2;
     this.dizzyMap.scale.x = 4;
     this.dizzyMap.scale.y = 4;
-    
+
     this.enabled = false;
   }
 
   static get label() {
     return "Underwater";
   }
-  
+
   static get faIcon() {
     return "fas fa-water";
   }
-  
+
   static get parameters() {
     return {
       speed: {
@@ -43,22 +45,40 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      speed: 0,
+      scale: 1.0
+    }
+  }
+
   step() {
-    this.maskSprite.x += this.options.speed;
+    this.maskSprite.x += this.speedConfig.speed;
   }
 
   play() {
     canvas.background.addChild(this.dizzyMap);
     this.enabled = true;
-    this.dizzyMap.scale.x = this.options.scale;
-    this.dizzyMap.scale.y = this.options.scale;
+    this.dizzyMap.scale.x = this.speedConfig.scale;
+    this.dizzyMap.scale.y = this.speedConfig.scale;
+  }
+
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+      return def;
+    }, {});
   }
 
   configure(opts) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
+    this.speedConfig = {...this.constructor.defaults, ...opts};
+  }
+
+  applyOptions() {
+    if (!this.options) return;
+    const keys = Object.keys(this.options);
+    for (const key of keys) {
+      this[key] = this.options[key];
     }
   }
 

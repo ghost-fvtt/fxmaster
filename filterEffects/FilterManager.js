@@ -21,33 +21,39 @@ class FilterManager {
       return filters;
     }, this.filters);
 
+    this.filters = this.filters || {};
     canvas.background.filters = [...Object.values(this.filters)];
     canvas.foreground.filters = [...Object.values(this.filters)];
     canvas.tokens.filters = [...Object.values(this.filters)];
+    
     if (!this._ticker) {
       canvas.app.ticker.add(this._animate, this);
       this._ticker = true;
     }
   }
 
-  update() {
+  async update() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
     this.filterInfos = this.filterInfos || {};
 
     // Clear unused effects
+    const deletePromises = [];
     for (const key in this.filters) {
       if (this.filterInfos[key]) {
-        this.filters[key].options = this.filterInfos[key].options;
+        this.filters[key].configure(this.filterInfos[key].options);
         this.filters[key].play();
         continue;
       }
-      this.filters[key].stop().then(() => {
+      
+      const promise = this.filters[key].stop().then(() => {
         delete canvas.background.filters[key];
         delete canvas.foreground.filters[key];
         delete canvas.tokens.filters[key];
         delete this.filters[key];
       });
+      deletePromises.push(promise);
     }
+    await Promise.all(deletePromises);
 
     if (this.filterInfos) {
       // Creating new filters
@@ -65,7 +71,7 @@ class FilterManager {
   }
 
   dump() {
-    resetFlags(canvas.scene, "filters", this.filterInfos);
+    return resetFlags(canvas.scene, "filters", this.filterInfos);
   }
 
   clear() {
@@ -85,15 +91,19 @@ class FilterManager {
       type: filter,
       options: options
     };
-    this.dump();
+    return this.dump();
   }
 
   removeFilter(name) {
     if (this.filters[name] === undefined) return;
-    this.filters[name].stop().then(() => {
-      const rmFilter = {};
-      rmFilter[`-=${name}`] = null;
-      canvas.scene.setFlag("fxmaster", "filters", rmFilter);
+    return new Promise((resolve) => {
+      this.filters[name].stop().then(() => {
+        const rmFilter = {};
+        rmFilter[`-=${name}`] = null;
+        canvas.scene.setFlag("fxmaster", "filters", rmFilter).then(() => {
+          resolve();
+        });
+      });
     });
   }
 
@@ -106,20 +116,14 @@ class FilterManager {
     }
     await Promise.all(promises);
     this.filterInfos = {};
-    canvas.scene.unsetFlag("fxmaster", "filters");
+    return canvas.scene.unsetFlag("fxmaster", "filters");
   }
 
-  switch(name, filter, activate, opts) {
-    if (this.filterInfos && foundry.utils.hasProperty(this.filterInfos, name)) {
-      if (activate == true) {
-        this.filterInfos[name].options = opts;
-        this.dump();
-        return;
-      }
-      this.removeFilter(name);
-    } else if (activate == true || activate == null) {
-      this.addFilter(name, filter, opts);
+  switch(name, filter, opts) {
+    if (this.filterInfos[name]) {
+      return this.removeFilter(name);
     }
+    return this.addFilter(name, filter, opts);
   }
 
   _animate() {

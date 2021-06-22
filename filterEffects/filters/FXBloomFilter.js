@@ -3,10 +3,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     super();
     this.enabled = false;
     this.skipFading = false;
-    this.threshold = 0.5;
-    this.bloomScale = 0.0;
-    this.blur = 0.0;
-    this.options = options;
+    this.configure(options);
   }
 
   static get label() {
@@ -27,7 +24,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         step: 1.0,
         default: 1.0
       },
-      bloom: {
+      bloomScale: {
         label: "FXMASTER.Bloom",
         type: "range",
         max: 1.0,
@@ -46,70 +43,74 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      noise: 0.0,
+      bloomScale: 0.0,
+      threshold: 1.0
+    }
+  }
+
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+      return def;
+    }, {});
+  }
+
   play() {
     this.enabled = true;
     if (this.skipFading) {
       this.skipFading = false;
-      this.threshold = this.options.threshold;
-      this.bloomScale = this.options.bloom;
-      this.blur = this.options.blur;
+      this.applyOptions();
       return;
     }
-    const data = {
-      name: "fxmaster.bloomFilter",
-      duration: 3000
-    };
-    const anim = [{
-      parent: this,
-      attribute: "bloomScale",
-      to: this.options.bloom,
-    }, {
-      parent: this,
-      attribute: "threshold",
-      to: this.options.threshold,
-    }, {
-      parent: this,
-      attribute: "blur",
-      to: this.options.blur,
-    }];
-    return CanvasAnimation.animateLinear(anim, data);
+    return this.animateOptions();
   }
 
   step() { }
 
+
   configure(opts) {
+    this.options = { ...this.constructor.default, ...opts };
+  }
+
+  applyOptions(opts = this.options) {
     if (!opts) return;
     const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
+    for (const key of keys) {
+      this[key] = opts[key];
     }
+  }
+
+  animateOptions(values = this.options) {
+    const data = {
+      name: `fxmaster.${this.constructor.name}`,
+      duration: 4000
+    }
+    const anim = Object.keys(values).reduce((arr, key) => {
+      arr.push({
+        parent: this,
+        attribute: key,
+        to: values[key]
+      });
+      return arr;
+    }, [])
+    return CanvasAnimation.animateLinear(anim, data);
   }
 
   // So we can destroy object afterwards
   stop() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       await CanvasAnimation.terminateAnimation("fxmaster.bloomFilter");
       if (this.skipFading) {
         this.skipFading = false;
         this.enabled = false;
-        this.bloomScale = 0.0;
+        this.applyOptions(this.constructor.zeros)
         resolve();
         return;
       }
-      const data = {
-        name: "fxmaster.bloomFilter",
-        duration: 3000
-      };
-      const anim = [{
-        parent: this,
-        attribute: "bloomScale",
-        to: 0.0
-      }, {
-        parent: this,
-        attribute: "blur",
-        to: 0.0
-      }];
-      CanvasAnimation.animateLinear(anim, data).finally(() => {
+      this.animateOptions(this.constructor.zeros).finally(() => {
         this.enabled = false;
         resolve();
       });

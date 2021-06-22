@@ -1,9 +1,9 @@
 export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options) {
     super();
-    this.options = options;
     this.enabled = false;
     this.skipFading = false;
+    this.configure(options);
   }
 
   static get label() {
@@ -56,67 +56,67 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
     }
   }
 
+  static get zeros() {
+    return {
+      red: 1,
+      green: 1,
+      blue: 1,
+      saturation: 1,
+      gamma: 1,
+      brightness: 1,
+      contrast: 1
+    }
+  }
+
+  static get default() {
+    return Object.keys(this.parameters).reduce((def, key) => {
+      def[key] = this.parameters[key].default;
+    }, {});
+  }
+
+  configure(opts) {
+    const colors = foundry.utils.hexToRGB(colorStringToHex(opts.color));
+    opts.red = colors[0];
+    opts.green = colors[1];
+    opts.blue = colors[2];
+    this.options = opts;
+  }
+
+  applyOptions(opts = this.options) {
+    if (!opts) return;
+    const keys = Object.keys(opts);
+    for (const key of keys) {
+      this[key] = opts[key];
+    }
+  }
+
+  animateOptions(values = this.options) {
+    const data = {
+      name: `fxmaster.${this.constructor.name}`,
+      duration: 4000
+    }
+    const anim = Object.keys(values).reduce((arr, key) => {
+      arr.push({
+        parent: this,
+        attribute: key,
+        to: values[key]
+      });
+      return arr;
+    }, [])
+    return CanvasAnimation.animateLinear(anim, data);
+  }
+
   step() {
   }
 
   play() {
     this.enabled = true;
-    const colors = foundry.utils.hexToRGB(colorStringToHex(this.options.color));
     if (this.skipFading) {
       this.skipFading = false;
-      this.red = colors[0];
-      this.green = colors[1];
-      this.blue = colors[2];
-      this.saturation = this.options.saturation;
-      this.gamma = this.options.gamma;
-      this.contrast = this.options.contrast;
-      this.brightness = this.options.brightness;
+      this.applyOptions();
       return;
     }
-    const data = {
-      name: "fxmaster.colorFilter",
-      duration: 4000,
-    };
-    const anim = [{
-      parent: this,
-      attribute: "red",
-      to: colors[0]
-    },
-    {
-      parent: this,
-      attribute: "green",
-      to: colors[1]
-    },
-    {
-      parent: this,
-      attribute: "blue",
-      to: colors[2]
-    }, {
-      parent: this,
-      attribute: "saturation",
-      to: this.options.saturation,
-    }, {
-      parent: this,
-      attribute: "contrast",
-      to: this.options.contrast,
-    }, {
-      parent: this,
-      attribute: "brightness",
-      to: this.options.brightness,
-    }, {
-      parent: this,
-      attribute: "gamma",
-      to: this.options.gamma,
-    }];
-    return CanvasAnimation.animateLinear(anim, data);
-  }
-
-  configure(opts) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (let i = 0; i < keys.length; ++i) {
-      this[keys[i]] = opts[keys[i]];
-    }
+    return this.animateOptions();
   }
 
   // So we can destroy object afterwards
@@ -125,60 +125,14 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       if (this.skipFading) {
         this.skipFading = false;
         this.enabled = false;
-        this.red = 1;
-        this.blue = 1;
-        this.green = 1;
-        this.gamma = 1.0;
-        this.saturation = 1.0;
-        this.brightness = 1.0;
-        this.contrast = 1.0;
+        this.applyOptions(this.constructor.zeros);
         resolve();
         return;
       }
-      CanvasAnimation.terminateAnimation("fxmaster.colorFilter");
-      const data = {
-        name: "fxmaster.colorFilter",
-        duration: 4000
-      };
-      const anim = [{
-        parent: this,
-        attribute: "blue",
-        to: 1.0
-      }, {
-        parent: this,
-        attribute: "red",
-        to: 1.0
-      },
-      {
-        parent: this,
-        attribute: "green",
-        to: 1.0
-      },
-      {
-        parent: this,
-        attribute: "saturation",
-        to: 1.0
-      },
-      {
-        parent: this,
-        attribute: "contrast",
-        to: 1.0
-      },
-      {
-        parent: this,
-        attribute: "brightness",
-        to: 1.0
-      },
-      {
-        parent: this,
-        attribute: "gamma",
-        to: 1.0
-      },
-      ];
-      CanvasAnimation.animateLinear(anim, data).finally(() => {
+      this.animateOptions(this.constructor.zeros).finally(() => {
         this.enabled = false;
         resolve();
-      })
+      });
     });
   }
 }
