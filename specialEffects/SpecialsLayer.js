@@ -67,7 +67,7 @@ export class SpecialsLayer extends CanvasLayer {
         if ((!data.speed || data.speed === 0) && !data.distance) {
           return;
         }
-        if (data.distance && data.speed == "auto") {
+        if (data.distance && (data.speed == "auto" || !data.speed)) {
           data.speed = data.distance / video.duration;
         }
         // Compute final position
@@ -130,14 +130,37 @@ export class SpecialsLayer extends CanvasLayer {
       y: tok2.position.y + tok2.h / 2
     }
     // Compute angle
-    const ray = new Ray(tok1.center, tok2.center);
+    const ray = new Ray(origin, target);
     effectData.distance = ray.distance;
     effectData.rotation = ray.angle;
-
     // Play to other clients
     game.socket.emit('module.fxmaster', effectData);
     // Play effect locally
-    return canvas.fxmaster.playVideo(effectData);
+    return this.playVideo(effectData);
+  }
+
+  drawFacing(effect, tok1, tok2) {
+    const origin = {
+      x: tok1.position.x + tok1.w / 2,
+      y: tok1.position.y + tok1.h / 2
+    }
+    const effectData = foundry.utils.mergeObject(effect, {
+      position: {
+        x: origin.x,
+        y: origin.y
+      }
+    });
+    const target = {
+      x: tok2.position.x + tok2.w / 2,
+      y: tok2.position.y + tok2.h / 2
+    }
+    // Compute angle
+    const ray = new Ray(origin, target);
+    effectData.rotation = ray.angle;
+    // Play to other clients
+    game.socket.emit('module.fxmaster', effectData);
+    // Play effect locally
+    return this.playVideo(effectData);
   }
 
   _drawSpecial(event) {

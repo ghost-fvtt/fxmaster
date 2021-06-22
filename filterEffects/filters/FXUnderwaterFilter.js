@@ -14,7 +14,6 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     this.dizzyMap.scale.x = 4;
     this.dizzyMap.scale.y = 4;
     
-    canvas.background.addChild(this.dizzyMap);
     this.enabled = false;
   }
 
@@ -49,6 +48,7 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   }
 
   play() {
+    canvas.background.addChild(this.dizzyMap);
     this.enabled = true;
     this.dizzyMap.scale.x = this.options.scale;
     this.dizzyMap.scale.y = this.options.scale;
@@ -65,6 +65,7 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   // So we can destroy object afterwards
   stop() {
     return new Promise((resolve, reject) => {
+      canvas.background.removeChild(this.dizzyMap);
       this.enabled = false;
       resolve();
     });

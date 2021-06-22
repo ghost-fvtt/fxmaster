@@ -24,7 +24,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       saturation: {
         label: "FXMASTER.Saturation",
         type: "range",
-        max: 1.0,
+        max: 2.0,
         min: 0.0,
         step: 0.1,
         default: 1.0

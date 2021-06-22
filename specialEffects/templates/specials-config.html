@@ -16,7 +16,7 @@
       </header>
       <ol class="subdirectory">
         {{#each folder.effects as |effect effectId|}}
-        <li class="directory-item entity flexrow special-effects" data-effect-id="{{effectId}}">
+        <li class="directory-item entity flexrow special-effects" data-effect-id="{{effectId}}" draggable="true">
           <div class="preview">
             <video width="46" height="46" muted>
               <source src="{{effect.file}}">
