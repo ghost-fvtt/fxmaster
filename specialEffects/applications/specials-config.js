@@ -134,7 +134,6 @@ export class SpecialsConfig extends Application {
       if (targets.size !== 0) {
         tokens.forEach(t1 => {
           targets.forEach(t2 => {
-            console.log(data, t1, t2);
             canvas.specials.drawFacing(data, t1, t2);
           })
         })

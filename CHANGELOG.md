@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
+## [1.1.1] - 2021-06-XX
+### Added
+- Filters configuration panel
+- Special effects can be dragged to the macro bar
+- Added a drawFacing method
+### Changed
+- BREAKING MACROS: layers have been split between weather and specials, canvas.fxmaster does not exist anymore
+
 ## [1.1.0] - 2021-06-16
 ### Added
 - Weather masking can be toggled on drawings (see drawing HUD icons)
