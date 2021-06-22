@@ -6,26 +6,8 @@
   "author": "U~man",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": [
-    "effects/weatherEffects/effects/BatsWeatherEffect.js",
-    "effects/weatherEffects/effects/BubblesWeatherEffect.js",
-    "effects/weatherEffects/effects/CloudsWeatherEffect.js",
-    "effects/weatherEffects/effects/CrowsWeatherEffect.js",
-    "effects/weatherEffects/effects/EmbersWeatherEffect.js",
-    "effects/weatherEffects/effects/FogWeatherEffect.js",
-    "effects/weatherEffects/effects/RaintopWeatherEffect.js",
-    "effects/weatherEffects/effects/StarsWeatherEffect.js",
-    "effects/weatherEffects/WeatherLayer.js",
-    "module/weatherEffects/applications/weather-config.js",
-    "module/config.js",
     "module/controls.js",
-    "module/specialEffects/specials.js",
-    "module/fxmaster.js",
-    "filterEffects/filters/FXUnderwaterFilter.js",
-    "filterEffects/filters/FXBloomFilter.js",
-    "filterEffects/filters/FXOldFilmFilter.js",
-    "filterEffects/filters/FXColorFilter.js",
-    "filterEffects/filters/FXPredatorFilter.js",
-    "filterEffects/FilterManager.js"
+    "module/fxmaster.js"
   ],
   "styles": [
     "css/common.css",

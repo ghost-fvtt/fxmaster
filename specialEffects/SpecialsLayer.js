@@ -212,6 +212,10 @@ export class SpecialsLayer extends CanvasLayer {
     }, 400)
   }
 
+  _onDrop(event) {
+    console.log("COUCOU");
+  }
+
   /* -------------------------------------------- */
   /*  Methods
     /* -------------------------------------------- */

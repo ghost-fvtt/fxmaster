@@ -101,11 +101,8 @@ export class SpecialsConfig extends Application {
     }
   }
 
-  _onDragStart(event) {
-    const effectId = event.currentTarget.closest(".special-effects").dataset.effectId;
-    const folderId = event.currentTarget.closest(".folder").dataset.folderId;
-    const effectData = CONFIG.fxmaster.userSpecials[folderId].effects[effectId];
-    const command = `
+  _createMacro(effectData) {
+    return `
       const data = {
         file: "${effectData.file}",
         position: {
@@ -150,11 +147,18 @@ export class SpecialsConfig extends Application {
       })
       
     `;
+  }
+
+  _onDragStart(event) {
+    const effectId = event.currentTarget.closest(".special-effects").dataset.effectId;
+    const folderId = event.currentTarget.closest(".folder").dataset.folderId;
+    const effectData = CONFIG.fxmaster.userSpecials[folderId].effects[effectId];
+    const macroCommand = this._createMacro(effectData);
 
     const dragData = {
       type: "Macro",
       data: {
-        command: command,
+        command: macroCommand,
         name: effectData.label,
         type: "script",
         author: game.user.id
