@@ -8,7 +8,7 @@ import { SpecialsLayer } from "../specialeffects/SpecialsLayer.js";
 
 function registerLayer() {
   CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
-    weather: WeatherLayer,
+    fxmaster: WeatherLayer,
     specials: SpecialsLayer
   });
   // Overriding other modules if needed
@@ -83,8 +83,8 @@ Hooks.on("canvasReady", (_) => {
     return
   }
   filterManager.activate();
-  canvas.weather.drawWeather();
-  canvas.weather.updateMask();
+  canvas.fxmaster.drawWeather();
+  canvas.fxmaster.updateMask();
 });
 
 Hooks.on("updateScene", (scene, data, options) => {
@@ -93,21 +93,21 @@ Hooks.on("updateScene", (scene, data, options) => {
   }
   if (hasProperty(data, "flags.fxmaster")) {
     filterManager.update();
-    canvas.weather.drawWeather({ soft: true });
+    canvas.fxmaster.drawWeather({ soft: true });
   }
-  canvas.weather.updateMask();
+  canvas.fxmaster.updateMask();
 });
 
 Hooks.on("updateDrawing", () => {
-  canvas.weather.updateMask();
+  canvas.fxmaster.updateMask();
 })
 
 Hooks.on("createDrawing", () => {
-  canvas.weather.updateMask();
+  canvas.fxmaster.updateMask();
 })
 
 Hooks.on("deleteDrawing", () => {
-  canvas.weather.updateMask();
+  canvas.fxmaster.updateMask();
 })
 
 Hooks.on("renderSidebarTab", async (object, html) => {
