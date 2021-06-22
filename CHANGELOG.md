@@ -1,8 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-
-## [1.1.1] - 2021-06-XX
+## [1.1.1] - 2021-06-22
 ### Added
 - Filters configuration panel
 - Special effects can be dragged to the macro bar
