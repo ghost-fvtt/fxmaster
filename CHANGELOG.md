@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - Special effects can be dragged to the macro bar
 - Added a drawFacing method
 ### Changed
-- BREAKING MACROS: layers have been split between weather and specials, canvas.fxmaster does not exist anymore
+- BREAKING MACROS: layers have been split between weather and specials, playVideo method is now integrated in canvas.specials
 
 ## [1.1.0] - 2021-06-16
 ### Added
