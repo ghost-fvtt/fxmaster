@@ -56,7 +56,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
         button: true,
       },
       {
-        name: "colorize",
+        name: "filters",
         title: "CONTROLS.Filters",
         icon: "fas fa-filter",
         onClick: () => {

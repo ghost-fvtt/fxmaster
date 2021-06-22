@@ -43,14 +43,14 @@ export class SpecialsLayer extends CanvasLayer {
       }, data);
 
       // Create video
-      var video = document.createElement("video");
+      const video = document.createElement("video");
       video.preload = "auto";
       video.crossOrigin = "anonymous";
       video.src = data.file;
       video.playbackRate = data.playbackRate;
 
       // Create PIXI sprite
-      var vidSprite;
+      let vidSprite;
       video.oncanplay = () => {
         const texture = PIXI.Texture.from(video);
         vidSprite = new PIXI.Sprite(texture);
@@ -62,7 +62,7 @@ export class SpecialsLayer extends CanvasLayer {
         vidSprite.scale.set(data.scale.x, data.scale.y);
         vidSprite.position.set(data.position.x, data.position.y);
 
-        if (data.width) { vidSprite.width = data.width; }
+        vidSprite.width = data.width | vidSprite.width;
 
         if ((!data.speed || data.speed === 0) && !data.distance) {
           return;
@@ -130,15 +130,13 @@ export class SpecialsLayer extends CanvasLayer {
       y: tok2.position.y + tok2.h / 2
     }
     // Compute angle
-    const deltaX = target.x - origin.x
-    const deltaY = target.y - origin.y
-    effectData.rotation = Math.atan2(deltaY, deltaX)
+    const ray = new Ray(tok1.center, tok2.center);
+    effectData.distance = ray.distance;
+    effectData.rotation = ray.angle;
 
-    effectData.distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY) - (1 - effectData.anchor.x) * tok2.width;
-
-    // And to other clients
+    // Play to other clients
     game.socket.emit('module.fxmaster', effectData);
-    // Throw effect locally
+    // Play effect locally
     return canvas.fxmaster.playVideo(effectData);
   }
 
@@ -161,7 +159,7 @@ export class SpecialsLayer extends CanvasLayer {
     });
     event.stopPropagation();
     game.socket.emit("module.fxmaster", data);
-    this.playVideo(data);
+    return this.playVideo(data);
   }
 
   /** @override */
@@ -225,8 +223,8 @@ export class SpecialsLayer extends CanvasLayer {
 
   /** @override */
   tearDown() {
-    for (let i = 0; i < this.specials.length; ++i) {
-      this.specials[i].stop();
+    for (const special of this.specials) {
+      special.stop();
     }
     this.visible = false;
     return super.tearDown();

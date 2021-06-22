@@ -30,7 +30,8 @@
   "styles": [
     "css/common.css",
     "css/weather-config.css",
-    "css/specials-config.css"
+    "css/specials-config.css",
+    "css/filters-config.css"
   ],
   "packs": [
     {

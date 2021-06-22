@@ -6,7 +6,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
     this.threshold = 0.5;
     this.bloomScale = 0.0;
     this.blur = 0.0;
-    this.play();
+    this.options = options;
   }
 
   static get label() {
@@ -18,31 +18,61 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
   }
 
   static get parameters() {
-    return {}
+    return {
+      noise: {
+        label: "FXMASTER.Blur",
+        type: "range",
+        max: 10.0,
+        min: 0.0,
+        step: 1.0,
+        default: 1.0
+      },
+      bloom: {
+        label: "FXMASTER.Bloom",
+        type: "range",
+        max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 0.1
+      },
+      threshold: {
+        label: "FXMASTER.Threshold",
+        type: "range",
+        max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 0.5
+      },
+    }
   }
-  
+
   play() {
     this.enabled = true;
     if (this.skipFading) {
       this.skipFading = false;
-      this.bloomScale = 0.1;
-      this.blur = 1.0;
+      this.threshold = this.options.threshold;
+      this.bloomScale = this.options.bloom;
+      this.blur = this.options.blur;
       return;
     }
     const data = {
       name: "fxmaster.bloomFilter",
-      duration: 4000
+      duration: 3000
     };
     const anim = [{
       parent: this,
       attribute: "bloomScale",
-      to: 0.1,
-    },{
+      to: this.options.bloom,
+    }, {
+      parent: this,
+      attribute: "threshold",
+      to: this.options.threshold,
+    }, {
       parent: this,
       attribute: "blur",
-      to: 1.0,
-  }];
-    this.transition = CanvasAnimation.animateLinear(anim, data);
+      to: this.options.blur,
+    }];
+    return CanvasAnimation.animateLinear(anim, data);
   }
 
   step() { }
@@ -57,7 +87,8 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
 
   // So we can destroy object afterwards
   stop() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      await CanvasAnimation.terminateAnimation("fxmaster.bloomFilter");
       if (this.skipFading) {
         this.skipFading = false;
         this.enabled = false;
@@ -65,22 +96,20 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         resolve();
         return;
       }
-      CanvasAnimation.terminateAnimation("fxmaster.bloomFilter");
       const data = {
         name: "fxmaster.bloomFilter",
-        duration: 4000
+        duration: 3000
       };
       const anim = [{
         parent: this,
         attribute: "bloomScale",
         to: 0.0
-      },{
+      }, {
         parent: this,
         attribute: "blur",
         to: 0.0
       }];
-      this.transition = CanvasAnimation.animateLinear(anim, data);
-      this.transition.finally(() => {
+      CanvasAnimation.animateLinear(anim, data).finally(() => {
         this.enabled = false;
         resolve();
       });

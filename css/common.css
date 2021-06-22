@@ -50,3 +50,11 @@
   .donation-link span {
     font-size: 11px;
   }
+
+  .directory-item .config input[type=text] {
+    color: white;
+    border: 1px solid #b5b3a4;
+    text-align: center;
+    padding: 2px;
+    height: 20px;
+  }

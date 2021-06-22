@@ -6,7 +6,8 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
     this.noise = 0.08;
     this.scratch = 0.1;
     this.scratchDensity = 0.1;
-    this.play();
+    this.sepia = 0.3;
+    this.options = options;
   }
 
   static get label() {
@@ -18,11 +19,30 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
   }
   
   static get parameters() {
-    return {}
+    return {
+      sepia: {
+        label: "FXMASTER.Sepia",
+        type: "range",
+        max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 0.3
+      },
+      noise: {
+        label: "FXMASTER.Noise",
+        type: "range",
+        max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 0.1
+      }
+    }
   }
 
   play() {
     this.enabled = true;
+    this.sepia = this.options.sepia;
+    this.noise = this.options.noise;
     this.seed = Math.random();
   }
 

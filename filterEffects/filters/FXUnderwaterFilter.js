@@ -1,11 +1,11 @@
 export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   constructor(options) {
     let dizzyMap = new PIXI.Sprite.from(
-      "/modules/fxmaster/filters/assets/clouds.png"
+      "/modules/fxmaster/filterEffects/assets/clouds.png"
     );
     super(dizzyMap);
     this.dizzyMap = dizzyMap;
-    this.transition = null;
+    this.options = options;
 
     this.dizzyMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
     this.dizzyMap.anchor.set(0.5);
@@ -16,7 +16,6 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
     
     canvas.background.addChild(this.dizzyMap);
     this.enabled = false;
-    this.play();
   }
 
   static get label() {
@@ -28,15 +27,31 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
   }
   
   static get parameters() {
-    return {}
+    return {
+      speed: {
+        label: "FXMASTER.Speed",
+        type: "range",
+        max: 5.0,
+        min: 0.0,
+        step: 0.1,
+        default: 0.3
+      },
+      scale: {
+        label: "FXMASTER.Scale",
+        type: "number",
+        default: 4.0
+      },
+    }
   }
 
   step() {
-    this.maskSprite.x += 0.3;
+    this.maskSprite.x += this.options.speed;
   }
 
   play() {
     this.enabled = true;
+    this.dizzyMap.scale.x = this.options.scale;
+    this.dizzyMap.scale.y = this.options.scale;
   }
 
   configure(opts) {

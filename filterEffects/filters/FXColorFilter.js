@@ -21,10 +21,34 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         type: "color",
         default: "#FFFFFF"
       },
-      alpha: {
-        label: "FXMASTER.Alpha",
+      saturation: {
+        label: "FXMASTER.Saturation",
         type: "range",
         max: 1.0,
+        min: 0.0,
+        step: 0.1,
+        default: 1.0
+      },
+      contrast: {
+        label: "FXMASTER.Contrast",
+        type: "range",
+        max: 2.0,
+        min: 0.0,
+        step: 0.1,
+        default: 1.0
+      },
+      brightness: {
+        label: "FXMASTER.Brightness",
+        type: "range",
+        max: 2.0,
+        min: 0.0,
+        step: 0.1,
+        default: 1.0
+      },
+      gamma: {
+        label: "FXMASTER.Gamma",
+        type: "range",
+        max: 2.0,
         min: 0.0,
         step: 0.1,
         default: 1.0
@@ -43,7 +67,10 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       this.red = colors[0];
       this.green = colors[1];
       this.blue = colors[2];
-      this.alpha = this.options.alpha;
+      this.saturation = this.options.saturation;
+      this.gamma = this.options.gamma;
+      this.contrast = this.options.contrast;
+      this.brightness = this.options.brightness;
       return;
     }
     const data = {
@@ -66,10 +93,22 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       to: colors[2]
     }, {
       parent: this,
-      attribute: "alpha",
-      to: this.options.alpha,
+      attribute: "saturation",
+      to: this.options.saturation,
+    }, {
+      parent: this,
+      attribute: "contrast",
+      to: this.options.contrast,
+    }, {
+      parent: this,
+      attribute: "brightness",
+      to: this.options.brightness,
+    }, {
+      parent: this,
+      attribute: "gamma",
+      to: this.options.gamma,
     }];
-    this.transition = CanvasAnimation.animateLinear(anim, data);
+    return CanvasAnimation.animateLinear(anim, data);
   }
 
   configure(opts) {
@@ -89,7 +128,10 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         this.red = 1;
         this.blue = 1;
         this.green = 1;
-        this.alpha = 1.0;
+        this.gamma = 1.0;
+        this.saturation = 1.0;
+        this.brightness = 1.0;
+        this.contrast = 1.0;
         resolve();
         return;
       }
@@ -114,12 +156,27 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       },
       {
         parent: this,
-        attribute: "alpha",
+        attribute: "saturation",
         to: 1.0
-      }];
-      this.transition = CanvasAnimation.animateLinear(anim, data);
-      this.transition.finally(() => {
-        //   this.enabled = false;
+      },
+      {
+        parent: this,
+        attribute: "contrast",
+        to: 1.0
+      },
+      {
+        parent: this,
+        attribute: "brightness",
+        to: 1.0
+      },
+      {
+        parent: this,
+        attribute: "gamma",
+        to: 1.0
+      },
+      ];
+      CanvasAnimation.animateLinear(anim, data).finally(() => {
+        this.enabled = false;
         resolve();
       })
     });

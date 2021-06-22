@@ -38,6 +38,10 @@ Handlebars.registerHelper("parameter", (effect, param, key) => {
         <input type="range" step="${param.step}" min="${param.min}" max="${param.max}" name="${effect.label}_${key}" value="${param.default}">
         <span class="range-value">${param.default}</span>
         `;
+      case "number":
+        return `
+        <input type="text" data-dtype="Number" name="${effect.label}_${key}" value="${param.default}">
+        `;
   }
   return "";
 });
