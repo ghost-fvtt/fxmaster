@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2021-06-23
+- Version update
+
 ## [1.1.1] - 2021-06-22
 ### Added
 - Filters configuration panel
