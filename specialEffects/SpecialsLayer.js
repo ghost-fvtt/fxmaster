@@ -1,30 +1,32 @@
 import { FXCanvasAnimation } from "../module/canvasanimation.js"
 import { easeFunctions } from "../module/ease.js";
 
-export class SpecialsLayer extends CanvasLayer {
+export class SpecialsLayer extends PlaceablesLayer {
   constructor() {
     super();
-    this.options = this.constructor.layerOptions;
-
-    this._interactiveChildren = false;
-    this._sortableChildren = false;
-    this._controlled = [];
-
-    this.mouseInteractionManager = null;
+    this.videos = [];
     this._dragging = false;
-
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
       this.playVideo(data);
     });
-
   }
+
+  static documentName = "Tile";
 
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
       name: "specials",
-      zIndex: 245,
+      zIndex: 245
     });
+  }
+
+  get hud() {
+    return null;
+  }
+
+  get tiles() {
+    return [];
   }
 
   playVideo(data) {
@@ -45,6 +47,7 @@ export class SpecialsLayer extends CanvasLayer {
       video.crossOrigin = "anonymous";
       video.src = data.file;
       video.playbackRate = data.playbackRate;
+      this.videos.push(video);
 
       // Create PIXI sprite
       let vidSprite;
@@ -105,10 +108,58 @@ export class SpecialsLayer extends CanvasLayer {
       }
       video.onended = () => {
         this.removeChild(vidSprite);
-        resolve();
         vidSprite?.destroy();
+        resolve();
       }
     })
+  }
+
+  static _createMacro(effectData) {
+    return `
+      const data = {
+        file: "${effectData.file}",
+        position: {
+          x: canvas.scene.dimensions.width / 2,
+          y: canvas.scene.dimensions.height / 2
+        },
+        anchor : {
+          x: ${effectData.anchor.x},
+          y: ${effectData.anchor.y}
+        },
+        angle: ${effectData.angle},
+        speed: ${effectData.speed},
+        scale: {
+          x: ${effectData.scale.x},
+          y: ${effectData.scale.y}
+        }
+      };
+      const tokens = canvas.tokens.controlled;
+      // No tokens are selected, play in a random position
+      if (tokens.length === 0) {
+        canvas.specials.playVideo(data);
+        game.socket.emit("module.fxmaster", data);
+        return;
+      }
+      const targets = game.user.targets;
+      if (targets.size !== 0) {
+        tokens.forEach(t1 => {
+          targets.forEach(t2 => {
+            canvas.specials.drawFacing(data, t1, t2);
+          })
+        })
+        return;
+      }
+      // Play effect on each token
+      tokens.forEach(t => {
+        data.position = {
+          x: t.position.x + t.w / 2,
+          y: t.position.y + t.h / 2
+        };
+        canvas.specials.playVideo(data);
+        game.socket.emit("module.fxmaster", data);
+      })
+      
+    `;
   }
 
   drawSpecialToward(effect, tok1, tok2) {
@@ -199,7 +250,6 @@ export class SpecialsLayer extends CanvasLayer {
   }
 
   _onClickLeft(event) {
-    console.log("CLICKING");
     this._dragging = false;
     setTimeout(() => {
       if (!this._dragging) {
@@ -216,9 +266,12 @@ export class SpecialsLayer extends CanvasLayer {
 
   activate() {
     super.activate();
-    this.interactive = true;
-    this.activateListeners();
     return this
+  }
+
+  deactivate() {
+    super.deactivate();
+    this.objects.visible = true;
   }
 
   async draw() {
@@ -226,36 +279,11 @@ export class SpecialsLayer extends CanvasLayer {
     return this;
   }
 
-
-  activateListeners() {
-
-    // Define callback functions for mouse interaction events
-    const callbacks = {
-      hoverIn: null,
-      hoverOut: null,
-      clickLeft: this._onClickLeft.bind(this),
-      clickLeft2: null,
-      clickRight: null,
-      clickRight2: null,
-      dragLeftStart: this._onDragLeftStart.bind(this),
-      dragLeftMove: null,
-      dragLeftDrop: this._onDragLeftDrop.bind(this),
-      dragLeftCancel: null,
-      dragRightStart: null,
-      dragRightMove: canvas._onDragRightMove.bind(canvas),
-      dragRightDrop: null,
-      dragRightCancel: null,
-    };
-
-    // Create and activate the interaction manager
-    const permissions = {};
-    const mgr = new MouseInteractionManager(this, canvas.stage, permissions, callbacks);
-    this.mouseInteractionManager = mgr.activate();
-  }
-
   /** @override */
   tearDown() {
-    this.visible = false;
+    for (const video of this.videos) {
+      game.video.stop(video);
+    }
     return super.tearDown();
   }
 }

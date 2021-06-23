@@ -102,6 +102,52 @@ Hooks.on("updateScene", (scene, data, options) => {
   canvas.fxmaster.updateMask();
 });
 
+Hooks.on("dropCanvasData", async (canvas, data) => {
+  if (!(canvas.activeLayer instanceof SpecialsLayer)) return;
+  if (data.type !== "SpecialEffect") return;
+
+  await new Promise((resolve) => {
+    const vid = document.createElement("video");
+    vid.addEventListener("loadedmetadata", (e) => {
+      data.width = vid.videoWidth * data.scale.x;
+      data.height = vid.videoHeight * data.scale.y;
+      resolve();
+    }, false);
+    vid.src = data.file;
+  });
+
+  const tileData = {
+    alpha: 1,
+    flags: {},
+    height: data.height,
+    hidden: false,
+    img: data.file,
+    locked: false,
+    occlusion: {mode: 1, alpha: 0},
+    overHead: false,
+    rotation: 0,
+    tileSize: 100,
+    video: {loop: true, autoplay: true, volume: 0},
+    width: data.width,
+    x: data.x,
+    y: data.y,
+    z: 100
+  };
+  canvas.scene.createEmbeddedDocuments("Tile", [tileData]);
+});
+
+Hooks.on("hotbarDrop", (hotbar, data, slot) => {
+  if (data.type !== "SpecialEffect") return;
+  const macroCommand = SpecialsLayer._createMacro(data);
+  data.type = "Macro";
+  data.data = {
+    command: macroCommand,
+    name: data.label,
+    type: "script",
+    author: game.user.id
+  }
+});
+
 Hooks.on("updateDrawing", () => {
   canvas.fxmaster.updateMask();
 })

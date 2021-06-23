@@ -62,7 +62,7 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   /** @override */
-  tearDown() {
+  async tearDown() {
     const effKeys = Object.keys(this.weatherEffects);
     for (let i = 0; i < effKeys.length; ++i) {
       this.weatherEffects[effKeys[i]].fx.stop();
