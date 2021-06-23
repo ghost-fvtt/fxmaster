@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Filters configuration panel
 - Special effects can be dragged to the macro bar
 - Added a drawFacing method
+- Special effects can be dropped on the SpecialsLayer to create Tiles
 ### Changed
 - BREAKING MACROS: layers have been split between weather and specials, playVideo method is now integrated in canvas.specials
 
