@@ -2,12 +2,19 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "U~man",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": [
     "module/controls.js",
-    "module/fxmaster.js"
+    "module/fxmaster.js",
+    "filterEffects/FilterManager.js",
+    "filters/FilterManager.js",
+    "filterEffects/filtersDB.js",
+    "specialEffects/specialsDB.js",
+    "specialEffects/SpecialsLayer.js",
+    "weatherEffects/weatherDB.js",
+    "weatherEffects/WeatherLayer.js"
   ],
   "styles": [
     "css/common.css",
@@ -69,7 +76,7 @@
   "socket": true,
   "url": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster",
   "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/module.json",
-  "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/archive/v1.1.2/foundryvtt-fxmaster-v1.1.2.zip",
+  "download": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/archive/v1.1.3/foundryvtt-fxmaster-v1.1.3.zip",
   "compatibleCoreVersion": "0.8.7",
   "minimumCoreVersion": "0.8.5"
 }
