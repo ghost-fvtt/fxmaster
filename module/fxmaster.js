@@ -129,8 +129,8 @@ Hooks.on("dropCanvasData", async (canvas, data) => {
     tileSize: 100,
     video: {loop: true, autoplay: true, volume: 0},
     width: data.width,
-    x: data.x,
-    y: data.y,
+    x: data.x - data.anchor.x * data.width,
+    y: data.y - data.anchor.y * data.height,
     z: 100
   };
   canvas.scene.createEmbeddedDocuments("Tile", [tileData]);
