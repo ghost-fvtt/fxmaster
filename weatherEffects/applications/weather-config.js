@@ -1,10 +1,8 @@
 import { resetFlags } from "../../module/utils.js";
-import { registerHelpers } from "../helpers.js";
 
 export class WeatherConfig extends FormApplication {
   constructor() {
     super();
-    registerHelpers();
   }
 
   static get defaultOptions() {
@@ -31,9 +29,14 @@ export class WeatherConfig extends FormApplication {
    */
   getData() {
     // Return data to the template
+    const currentEffects = canvas.scene.getFlag("fxmaster", "effects");
+    const activeEffects = Object.values(currentEffects).reduce((obj, f) => {
+      obj[f.type] = f.options;
+      return obj;
+    }, {});
     return {
       effects: CONFIG.weatherEffects,
-      currentEffects: canvas.scene.getFlag("fxmaster", "effects")
+      activeEffects: activeEffects
     };
   }
 

@@ -1,15 +1,15 @@
 <form>
     <div class="directory-list effects fxmaster">
-        {{#each filters as |filter|}}
+        {{#each filters as |filter fkey|}}
         <li class="directory-item config weather">
             <header class="flexrow">
                 <div class="weather-icon"><i class="weather-icon {{filter.faIcon}}"></i></div>
                 <label class="weather-collapse">{{filter.label}} <i class="fa
                         fa-angle-down"></i></label>
                 <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked
-                    (isFilterActive filter.label)}} />
+                    (lookup @root.activeFilters fkey)}} />
             </header>
-            {{#if (isFilterActive this.label)}}
+            {{#if (lookup @root.activeFilters fkey)}}
             <ol class="config collapsible">
                 {{else}}
                 <ol class="config collapsible collapsed">
@@ -17,7 +17,7 @@
                     {{#each this.parameters as |param key|}}
                     <li class="flexrow">
                         <span>{{localize param.label}}</span>
-                        {{{parameter filter param key}}}
+                        {{{parameter filter param key (lookup @root.activeFilters fkey)}}}
                     </li>
                     {{/each}}
                 </ol>

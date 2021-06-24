@@ -5,6 +5,7 @@ import { WeatherLayer } from "../weatherEffects/WeatherLayer.js";
 import { filterManager } from "../filterEffects/FilterManager.js";
 import { migrate } from './migration.js';
 import { SpecialsLayer } from "../specialEffects/SpecialsLayer.js";
+import { registerHelpers } from "./helpers.js"
 
 window.FXMASTER = {
   filters: filterManager
@@ -33,13 +34,13 @@ function parseSpecialEffects() {
   const specials = foundry.utils.deepClone(CONFIG.fxmaster.specials);
   effectData.reduce((acc, cur) => {
     if (!cur.folder) cur.folder = "Custom";
-    const normalizedFolder = cur.folder.toLowerCase().replace(/ /g,'');
+    const normalizedFolder = cur.folder.toLowerCase().replace(/ /g, '');
     if (!acc[normalizedFolder]) acc[normalizedFolder] = { label: cur.folder, effects: [] };
     acc[normalizedFolder].effects.push(cur);
     return acc;
   }, specials);
   Object.keys(specials).forEach((k) => {
-    specials[k].effects.sort((a, b) => (''+a.label).localeCompare(b.label));
+    specials[k].effects.sort((a, b) => ('' + a.label).localeCompare(b.label));
   })
   CONFIG.fxmaster.userSpecials = specials;
 }
@@ -49,6 +50,7 @@ Hooks.once("init", function () {
   registerSettings();
   registerHooks();
   registerLayer();
+  registerHelpers();
 
   // Set missing icons
   CONFIG.weatherEffects.rain.icon = "modules/fxmaster/weatherEffects/icons/rain.png";
@@ -123,11 +125,11 @@ Hooks.on("dropCanvasData", async (canvas, data) => {
     hidden: false,
     img: data.file,
     locked: false,
-    occlusion: {mode: 1, alpha: 0},
+    occlusion: { mode: 1, alpha: 0 },
     overHead: false,
     rotation: 0,
     tileSize: 100,
-    video: {loop: true, autoplay: true, volume: 0},
+    video: { loop: true, autoplay: true, volume: 0 },
     width: data.width,
     x: data.x - data.anchor.x * data.width,
     y: data.y - data.anchor.y * data.height,

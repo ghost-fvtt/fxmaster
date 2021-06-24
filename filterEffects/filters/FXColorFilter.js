@@ -71,6 +71,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   static get default() {
     return Object.keys(this.parameters).reduce((def, key) => {
       def[key] = this.parameters[key].default;
+      return def;
     }, {});
   }
 
@@ -79,7 +80,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
     opts.red = colors[0];
     opts.green = colors[1];
     opts.blue = colors[2];
-    this.options = opts;
+    this.options = { ...this.constructor.default, ...opts };
   }
 
   applyOptions(opts = this.options) {
