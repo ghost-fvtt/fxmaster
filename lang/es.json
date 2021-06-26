@@ -34,9 +34,13 @@
   "FXMASTER.Anchor": "Anclaje",
   "FXMASTER.AnchorHint": "Coordenadas locales del origen entre 0.0 y 1.0",
   "FXMASTER.File": "Fichero",
+  "FXMASTER.Folder": "Directorio",
   "FXMASTER.Name": "Nombre",
   "FXMASTER.AnimationDelay": "Retraso",
   "FXMASTER.AnimationDelayHint": "Retraso de la animación de velocidad",
   "FXMASTER.Ease": "Ease",
-  "FXMASTER.EaseHint": "Función de redución de la animación de velocidad"
+  "FXMASTER.EaseHint": "Función de redución de la animación de velocidad",
+  "FXMASTER.PermissionCreate": "Usar efectos especiales FXMaster",
+  "FXMASTER.PermissionCreateHint": "Permite usar los efectos especiales FXMaster en los controles de escena",
+  "FXMASTER.MaskWeather": "Enmascarar climatología FXMaster"
 }
