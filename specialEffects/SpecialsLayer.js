@@ -6,6 +6,8 @@ export class SpecialsLayer extends PlaceablesLayer {
     super();
     this.videos = [];
     this._dragging = false;
+    this.ruler = null;
+    this.windowVisible = false;
     // Listen to the socket
     game.socket.on("module.fxmaster", (data) => {
       this.playVideo(data);
@@ -242,11 +244,28 @@ export class SpecialsLayer extends PlaceablesLayer {
     const cos = u.x / Math.hypot(u.x, u.y);
     event.data.rotation = u.y > 0 ? Math.acos(cos) : -Math.acos(cos);
     this._drawSpecial(event);
+    this.ruler.clear();
   }
 
   /** @override */
   _onDragLeftStart(event) {
+    this.windowVisible = this._isWindowVisible();
+    if (!this.windowVisible) return;
     this._dragging = true;
+  }
+
+  _onDragLeftMove(event) {
+    if (!this.windowVisible) return;
+    const ray = new Ray(event.data.origin, event.data.destination);
+    this.ruler.clear();
+    this.ruler.lineStyle(3, 0xAA0033).drawCircle(ray.A.x, ray.A.y, 2).moveTo(ray.A.x, ray.A.y).lineTo(ray.B.x, ray.B.y).drawCircle(ray.B.x, ray.B.y, 2);
+  }
+
+  _isWindowVisible() {
+    const windows = Object.values(ui.windows);
+    const effectConfig = windows.find((w) => w.id == "specials-config");
+    if (!effectConfig) return false;
+    return true;
   }
 
   _onClickLeft(event) {
@@ -266,6 +285,7 @@ export class SpecialsLayer extends PlaceablesLayer {
 
   activate() {
     super.activate();
+    this.ruler = this.addChild(new PIXI.Graphics());
     return this
   }
 
