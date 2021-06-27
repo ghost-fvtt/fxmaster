@@ -22,7 +22,7 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
 	_getRainEmitter(parent) {
 		const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-		const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
+		const config = foundry.utils.mergeObject(this.constructor.CONFIG, {
 			spawnRect: {
 				x: -0.05 * d.width,
 				y: -0.10 * d.height,
@@ -30,10 +30,25 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
 				h: 0.8 * d.height
 			},
 			maxParticles: p,
-			frequency: 1 / p
+			frequency: this.constructor.CONFIG.lifetime.min / p
 		}, { inplace: false });
 		return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
 	}
+
+  // @override
+  static get default() {
+    const d = canvas.dimensions;
+    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+    return {
+      speed: 3500,
+      scale: 1,
+      direction: 75,
+      density: p,
+	  density: Math.round(100 * p) / 100,
+	  tint: "#FFFFFF",
+	  period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+    }
+  }
 
 	/**
 	 * Configuration for the Bats particle effect

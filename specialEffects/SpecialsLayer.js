@@ -258,7 +258,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     if (!this.windowVisible) return;
     const ray = new Ray(event.data.origin, event.data.destination);
     this.ruler.clear();
-    this.ruler.lineStyle(3, 0xAA0033).drawCircle(ray.A.x, ray.A.y, 2).moveTo(ray.A.x, ray.A.y).lineTo(ray.B.x, ray.B.y).drawCircle(ray.B.x, ray.B.y, 2);
+    this.ruler.lineStyle(3, 0xAA0033, 0.6).drawCircle(ray.A.x, ray.A.y, 2).moveTo(ray.A.x, ray.A.y).lineTo(ray.B.x, ray.B.y).drawCircle(ray.B.x, ray.B.y, 2);
   }
 
   _isWindowVisible() {

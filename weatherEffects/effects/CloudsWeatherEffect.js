@@ -30,8 +30,6 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
 
   _getCloudEmitter(parent) {
     const d = canvas.dimensions;
-    const p =
-      (d.width / d.size) * (d.height / d.size) * this.options.density.value;
     const config = foundry.utils.mergeObject(
       this.constructor.CONFIG,
       {
@@ -55,6 +53,18 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return emitter;
   }
 
+  // @override
+  static get default() {
+    return {
+      speed: 100,
+      scale: 1,
+      direction: 90,
+      density: 100,
+      tint: "#FFFFFF",
+      period: 0.5
+    }
+  }
+  
   /**
    * Configuration for the Bats particle effect
    * @type {Object}

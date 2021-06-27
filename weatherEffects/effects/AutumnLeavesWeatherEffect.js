@@ -13,11 +13,25 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
     return "modules/fxmaster/weatherEffects/icons/leaves.png";
   }
 
+  // @override
+  static get default() {
+    const d = canvas.dimensions;
+    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+    return {
+      speed: 60,
+      scale: 1,
+      direction: 180,
+	  density: Math.round(100 * p) / 100,
+	  tint: "#FFFFFF",
+	  period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+    }
+  }
+
 	/**
 	 * Configuration for the falling leaves particle effect
 	 * @type {Object}
 	 */
-	static LEAF_CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+	static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 		"alpha": {
 			"start": 0.9,
 			"end": 0.5
@@ -69,7 +83,7 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
   _getLeafEmitter(parent) {
   	const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-    const config = foundry.utils.mergeObject(this.constructor.LEAF_CONFIG, {
+    const config = foundry.utils.mergeObject(this.constructor.CONFIG, {
       spawnRect: {
         x: d.paddingX,
         y: d.paddingY,
@@ -77,7 +91,7 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
         h: d.sceneHeight
       },
 			maxParticles: p,
-			frequency: this.constructor.LEAF_CONFIG.lifetime.min / p
+			frequency: this.constructor.CONFIG.lifetime.min / p
     }, {inplace: false});
     const sprites = Array.fromRange(6).map(n => `ui/particles/leaf${n+1}.png`);
     return new PIXI.particles.Emitter(parent, sprites, config);

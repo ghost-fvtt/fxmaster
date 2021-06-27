@@ -21,24 +21,23 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
   // @override
   static get default() {
     const d = canvas.dimensions;
-    console.log()
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
     return {
-      speed: 30,
+      speed: 25,
       scale: 1,
       direction: 0,
-      density: p,
-      tint: "#FFFFFF",
-      frequency: this.CONFIG.lifetime.min / p
+			density: Math.round(1000 * p) / 1000,
+			tint: "#FFFFFF",
+			period: Math.round(1000 * this.CONFIG.lifetime.min / p) / 1000
     }
   }
 
   getParticleEmitters() {
-    return [this._getBatsEmitter(this.parent)];
+    return [this._getSpidersEmitter(this.parent)];
   }
 
   // This is where the magic happens
-  _getBatsEmitter(parent) {
+  _getSpidersEmitter(parent) {
     const d = canvas.dimensions;
     const p =
       (d.width / d.size) * (d.height / d.size) * this.options.density.value;
@@ -59,7 +58,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
 
     // Assets are selected randomly from the list for each particle
     const anim_sheet = {
-      framerate: "14",
+      framerate: "24",
       textures: [],
       loop: true
     };
@@ -99,8 +98,8 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
         minimumScaleMultiplier: 0.2
       },
       speed: {
-        start: 150,
-        end: 65,
+        start: 10,
+        end: 25,
         minimumSpeedMultiplier: 0.8
       },
       acceleration: {

@@ -4,20 +4,35 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
  * A special full-screen weather effect which uses two Emitters to render drops and splashes
  * @type {SpecialEffect}
  */
- export class RainWeatherEffect extends AbstractWeatherEffect {
+export class RainWeatherEffect extends AbstractWeatherEffect {
 	static get label() {
-    return "Rain";
-  }
+		return "Rain";
+	}
 
-  static get icon() {
-    return "modules/fxmaster/weatherEffects/icons/rain.png";
-  }
+	static get icon() {
+		return "modules/fxmaster/weatherEffects/icons/rain.png";
+	}
+
+
+	// @override
+	static get default() {
+		const d = canvas.dimensions;
+		const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+		return {
+			speed: 3500,
+			scale: 1,
+			direction: 75,
+			density: Math.round(100 * p) / 100,
+			tint: "#FFFFFF",
+			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+		}
+	}
 
 	/**
 	 * Configuration for the particle emitter for rain
 	 * @type {Object}
 	 */
-	static RAIN_CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
+	static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
 		"alpha": {
 			"start": 0.7,
 			"end": 0.1
@@ -45,7 +60,7 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 			"min": 0.5,
 			"max": 0.5
 		}
-	}, {inplace: false});
+	}, { inplace: false });
 
 	/**
 	 * Configuration for the particle emitter for splashes
@@ -74,41 +89,41 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 			"min": 0.5,
 			"max": 0.5
 		}
-	}, {inplace: false});
+	}, { inplace: false });
 
-  /* -------------------------------------------- */
+	/* -------------------------------------------- */
 
-  getParticleEmitters() {
+	getParticleEmitters() {
 		return [
-		  this._getRainEmitter(this.parent),
-      this._getSplashEmitter(this.parent)
-    ];
-  }
+			this._getRainEmitter(this.parent),
+			this._getSplashEmitter(this.parent)
+		];
+	}
 
-  /* -------------------------------------------- */
+	/* -------------------------------------------- */
 
-  _getRainEmitter(parent) {
-  	const d = canvas.dimensions;
+	_getRainEmitter(parent) {
+		const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-    const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
-      spawnRect: {
-        x: -0.05 * d.width,
-        y: -0.10 * d.height,
-        w: d.width,
-        h: 0.8 * d.height
-      },
+		const config = foundry.utils.mergeObject(this.constructor.CONFIG, {
+			spawnRect: {
+				x: -0.05 * d.width,
+				y: -0.10 * d.height,
+				w: d.width,
+				h: 0.8 * d.height
+			},
 			maxParticles: p,
 			frequency: 1 / p
-    }, {inplace: false});
-    return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
-  }
+		}, { inplace: false });
+		return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
+	}
 
-  /* -------------------------------------------- */
+	/* -------------------------------------------- */
 
-  _getSplashEmitter(parent) {
-  	const d = canvas.dimensions;
+	_getSplashEmitter(parent) {
+		const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-    const config = foundry.utils.mergeObject(this.constructor.SPLASH_CONFIG, {
+		const config = foundry.utils.mergeObject(this.constructor.SPLASH_CONFIG, {
 			spawnRect: {
 				x: 0,
 				y: 0.25 * d.height,
@@ -117,7 +132,7 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 			},
 			maxParticles: 0.5 * p,
 			frequency: 2 / p
-    }, {inplace: false});
-    return new PIXI.particles.Emitter(parent, ["ui/particles/drop.png"], config);
-  }
+		}, { inplace: false });
+		return new PIXI.particles.Emitter(parent, ["ui/particles/drop.png"], config);
+	}
 }

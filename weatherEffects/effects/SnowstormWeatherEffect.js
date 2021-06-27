@@ -22,16 +22,16 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
 
 	getParticleEmitters() {
 		return [
-			this._getRainEmitter(this.parent)
+			this._getSnowEmitter(this.parent)
 		];
 	}
 
 	/* -------------------------------------------- */
 
-	_getRainEmitter(parent) {
+	_getSnowEmitter(parent) {
 		const d = canvas.dimensions;
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
-		const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
+		const config = foundry.utils.mergeObject(this.constructor.CONFIG, {
 			spawnRect: {
 				x: d.paddingX,
 				y: d.paddingY,
@@ -48,6 +48,21 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
 		var emitter = new PIXI.particles.Emitter(parent, art, config);
 		emitter.particleConstructor = PIXI.particles.PathParticle;
 		return emitter;
+	}
+
+
+	// @override
+	static get default() {
+		const d = canvas.dimensions;
+		const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+		return {
+			speed: 400,
+			scale: 1,
+			direction: 90,
+			density: Math.round(100 * p) / 100,
+			tint: "#FFFFFF",
+			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+		}
 	}
 
 	/**

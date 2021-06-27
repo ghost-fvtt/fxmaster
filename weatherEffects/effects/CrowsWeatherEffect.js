@@ -78,6 +78,20 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
     return emitter;
   }
 
+  // @override
+  static get default() {
+    const d = canvas.dimensions;
+    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+    return {
+      speed: 100,
+      scale: 1,
+      direction: 180,
+			density: Math.round(100 * p) / 100,
+			tint: "#FFFFFF",
+			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+    }
+  }
+
   /**
    * Configuration for the Bats particle effect
    * @type {Object}
@@ -113,7 +127,7 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
       },
       startRotation: {
         min: 0,
-        max: 365
+        max: 360
       },
       rotation: 180,
       rotationSpeed: {

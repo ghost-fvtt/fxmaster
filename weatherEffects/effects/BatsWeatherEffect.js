@@ -21,15 +21,14 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
   // @override
   static get default() {
     const d = canvas.dimensions;
-    console.log()
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
     return {
       speed: 260,
       scale: 1,
-      direction: 0,
-      density: p,
-      tint: "#FFFFFF",
-      frequency: this.CONFIG.lifetime.min / p
+      direction: 180,
+			density: Math.round(100 * p) / 100,
+			tint: "#FFFFFF",
+			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 

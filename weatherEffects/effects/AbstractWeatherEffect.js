@@ -13,7 +13,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
         callback: "setScale",
         default: 1
       },
-      frequency: {
+      period: {
         label: "FXMASTER.Period",
         type: "number",
         callback: "setPeriod",
