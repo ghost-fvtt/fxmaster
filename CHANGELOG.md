@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.5] - 2021-06-27
+- **Breaking:** Reworked weather effects configuration
+- Added spider swarm weather effect
+- Spanish update
+
 ## [1.1.4] - 2021-06-23
 ### Changed
 - Hotfix
