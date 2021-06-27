@@ -1,11 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.5] - 2021-06-27
+- **Breaking:** Reworked weather effects configuration
+- Added spider swarm weather effect
+- Spanish update
+
+## [1.1.4] - 2021-06-23
+### Changed
+- Hotfix
+
+## [1.1.3] - 2021-06-23
+### Changed
+- Hotfix
+
+## [1.1.2] - 2021-06-23
+- Version update
+
 ## [1.1.1] - 2021-06-22
 ### Added
 - Filters configuration panel
 - Special effects can be dragged to the macro bar
 - Added a drawFacing method
+- Special effects can be dropped on the SpecialsLayer to create Tiles
 ### Changed
 - BREAKING MACROS: layers have been split between weather and specials, playVideo method is now integrated in canvas.specials
 

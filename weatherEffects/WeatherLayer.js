@@ -51,9 +51,9 @@ export class WeatherLayer extends CanvasLayer {
           mask.drawPolygon(points);
           break;
         default:
-        shape.x = drawing.x;
-        shape.y = drawing.y;
-        mask.drawShape(shape);
+          shape.x = drawing.x;
+          shape.y = drawing.y;
+          mask.drawShape(shape);
       }
       mask.endHole();
     });
@@ -81,41 +81,43 @@ export class WeatherLayer extends CanvasLayer {
       this.weather = this.addChild(new PIXI.Container());
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
-    
-    const effKeys = Object.keys(this.weatherEffects);
-    for (let i = 0; i < effKeys.length; ++i) {
+
+    for (const key in this.weatherEffects) {
       if (options.soft === true) {
-        for (let ef of this.weatherEffects[effKeys[i]].fx.emitters) {
+        for (const ef of this.weatherEffects[key].fx.emitters) {
           ef.emitterLifetime = 0.1;
           ef.playOnceAndDestroy(() => {
-            delete this.weatherEffects[effKeys[i]];
+            delete this.weatherEffects[key];
           });
         }
       } else {
-        this.weatherEffects[effKeys[i]].fx.stop();
-        delete this.weatherEffects[effKeys[i]];
+        this.weatherEffects[key].fx.stop();
+        delete this.weatherEffects[key];
       }
     }
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects");
-    if (flags) {
-      const keys = Object.keys(flags);
-      for (let i = 0; i < keys.length; ++i) {
-        this.weatherEffects[keys[i]] = {
-          type: flags[keys[i]].type,
-          fx: new CONFIG.weatherEffects[flags[keys[i]].type](this.weather),
-        };
-        this.configureEffect(keys[i]);
-        this.weatherEffects[keys[i]].fx.play();
-      }
+    for (const key in flags) {
+      this.weatherEffects[key] = {
+        type: flags[key].type,
+        fx: new CONFIG.fxmaster.weather[flags[key].type](this.weather),
+      };
+      this.configureEffect(key);
+      this.weatherEffects[key].fx.play();
     }
   }
 
   configureEffect(id) {
-    const flags = canvas.scene.getFlag("fxmaster", "effects");
-    if (!flags || !flags[id]) return;
+    const flags = canvas.scene.getFlag("fxmaster", "effects") || {};
+    if (!flags[id]) return;
+    Object.entries(flags[id].options).forEach(([key, val]) => {
+      const effectClass = CONFIG.fxmaster.weather[flags[id].type];
+      const method = effectClass.parameters[key].callback;
+      this.weatherEffects[id].fx[method](val);
+    });
 
+  /*
     // Adjust density
     if (hasProperty(flags[id], "options.density")) {
       let factor = (2 * flags[id].options.density) / 100;
@@ -179,5 +181,6 @@ export class WeatherLayer extends CanvasLayer {
         el.maxStartRotation += factor;
       });
     }
+  */
   }
 }

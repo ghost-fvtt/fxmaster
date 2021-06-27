@@ -1,29 +1,44 @@
 import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 
-export class BirdsWeatherEffect extends AbstractWeatherEffect {
+export class SpiderWeatherEffect extends AbstractWeatherEffect {
   static get label() {
-    return "Birds";
+    return "Spider";
   }
 
   static get icon() {
-    return "modules/fxmaster/weatherEffects/icons/crows.png";
+    return "modules/fxmaster/weatherEffects/icons/bats.png";
   }
 
   static get effectOptions() {
     const options = super.effectOptions;
-    options.density.min = 0.01;
-    options.density.value = 0.04;
-    options.density.max = 0.08;
-    options.density.step = 0.01;
+    options.density.min = 0.1;
+    options.density.value = 0.3;
+    options.density.max = 0.5;
+    options.density.step = 0.1;
     return options;
   }
 
+  // @override
+  static get default() {
+    const d = canvas.dimensions;
+    console.log()
+    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
+    return {
+      speed: 30,
+      scale: 1,
+      direction: 0,
+      density: p,
+      tint: "#FFFFFF",
+      frequency: this.CONFIG.lifetime.min / p
+    }
+  }
+
   getParticleEmitters() {
-    return [this._getEmitter(this.parent)];
+    return [this._getBatsEmitter(this.parent)];
   }
 
   // This is where the magic happens
-  _getEmitter(parent) {
+  _getBatsEmitter(parent) {
     const d = canvas.dimensions;
     const p =
       (d.width / d.size) * (d.height / d.size) * this.options.density.value;
@@ -44,38 +59,27 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
 
     // Assets are selected randomly from the list for each particle
     const anim_sheet = {
-      framerate: "10",
-      textures: [
-        {
-          texture: "./modules/fxmaster/weatherEffects/effects/assets/seagull_1.png",
-          count: 2
-        },
-        {
-          texture: "./modules/fxmaster/weatherEffects/effects/assets/seagull_2.png",
-          count: 7
-        },
-        {
-          texture: "./modules/fxmaster/weatherEffects/effects/assets/seagull_3.png",
-          count: 2
-        },
-        {
-          texture: "./modules/fxmaster/weatherEffects/effects/assets/seagull_2.png",
-          count: 2
-        },
-      ],
+      framerate: "14",
+      textures: [],
       loop: true
     };
+    for (let i = 0; i < 25; i++) {
+      anim_sheet.textures.push({
+        count: 1,
+        texture: `./modules/fxmaster/weatherEffects/effects/assets/spider.${String(i).padStart(4, '0')}.png`
+      })
+    }
     var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
     emitter.particleConstructor = PIXI.particles.AnimatedParticle;
+
     return emitter;
   }
 
-  
   /**
-   * Configuration for the Birds particle effect
+   * Configuration for the Bats particle effect
    * @type {Object}
    */
-   static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
     {
       alpha: {
         list: [
@@ -83,22 +87,21 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
           { value: 1, time: 0.02 },
           { value: 1, time: 0.98 },
           { value: 0, time: 1 }
-        ],
-        isStepped: false
+        ]
       },
       scale: {
         list: [
-          { value: 0.3, time: 0 },
-          { value: 0.7, time: 0.1 },
-          { value: 0.7, time: 0.9 },
-          { value: 0.3, time: 1 }
+          { value: 0.05, time: 0 },
+          { value: 0.08, time: 0.05 },
+          { value: 0.08, time: 0.95 },
+          { value: 0.05, time: 1 }
         ],
-        isStepped: false
+        minimumScaleMultiplier: 0.2
       },
       speed: {
-        start: 90,
-        end: 100,
-        minimumSpeedMultiplier: 0.6
+        start: 150,
+        end: 65,
+        minimumSpeedMultiplier: 0.8
       },
       acceleration: {
         x: 0,
@@ -106,17 +109,18 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
       },
       startRotation: {
         min: 0,
-        max: 365
+        max: 360
       },
-      rotation: 180,
+      rotation: 0,
       rotationSpeed: {
         min: 0,
         max: 0
       },
       lifetime: {
-        min: 20,
-        max: 40
+        min: 5,
+        max: 10
       },
+      addAtBack: false,
       blendMode: "normal",
       emitterLifetime: -1,
       orderedArt: true

@@ -1,4 +1,6 @@
-export class SnowstormWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class SnowstormWeatherEffect extends AbstractWeatherEffect {
 	static get label() {
 		return "Snowstorm";
 	}
@@ -31,54 +33,58 @@ export class SnowstormWeatherEffect extends SpecialEffect {
 		const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
 		const config = foundry.utils.mergeObject(this.constructor.RAIN_CONFIG, {
 			spawnRect: {
-			  x: d.paddingX,
-			  y: d.paddingY,
-			  w: d.sceneWidth,
-			  h: d.sceneHeight
+				x: d.paddingX,
+				y: d.paddingY,
+				w: d.sceneWidth,
+				h: d.sceneHeight
 			},
 			maxParticles: p,
 			frequency: 1 / p
 		}, { inplace: false });
 		const art = [
-		  "./modules/fxmaster/weatherEffects/effects/assets/snow_01.png",
-		  "./modules/fxmaster/weatherEffects/effects/assets/snow_02.png"
+			"./modules/fxmaster/weatherEffects/effects/assets/snow_01.png",
+			"./modules/fxmaster/weatherEffects/effects/assets/snow_02.png"
 		];
 		var emitter = new PIXI.particles.Emitter(parent, art, config);
 		emitter.particleConstructor = PIXI.particles.PathParticle;
 		return emitter;
 	}
-}
 
-// Configure the Snow particle
-SnowstormWeatherEffect.RAIN_CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG, {
-	alpha: {
-		start: 1.0,
-		end: 1.0
-	},
-	scale: {
-		start: 0.2,
-		end: 0.08,
-		minimumScaleMultiplier: 0.8
-	},
-	speed: {
-		start: 400,
-		end: 350,
-		minimumSpeedMultiplier: 0.2
-	},
-	startRotation: {
-		min: 86,
-		max: 94
-	},
-	rotation: 0,
-	rotationSpeed: {
-		min: -60.0,
-		max: 60.0
-	},
-	lifetime: {
-		min: 2.5,
-		max: 6
-	},
-    extraData: {
-      path: "sin(x/150)*25"
-    }
-}, { inplace: false });
+	/**
+	 * Configuration for the Bats particle effect
+	 * @type {Object}
+	 */
+	static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+		{
+			alpha: {
+				start: 1.0,
+				end: 1.0
+			},
+			scale: {
+				start: 0.2,
+				end: 0.08,
+				minimumScaleMultiplier: 0.8
+			},
+			speed: {
+				start: 400,
+				end: 350,
+				minimumSpeedMultiplier: 0.2
+			},
+			startRotation: {
+				min: 86,
+				max: 94
+			},
+			rotation: 0,
+			rotationSpeed: {
+				min: -60.0,
+				max: 60.0
+			},
+			lifetime: {
+				min: 2.5,
+				max: 6
+			},
+			extraData: {
+				path: "sin(x/150)*25"
+			}
+		}, { inplace: false })
+}

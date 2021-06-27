@@ -1,51 +1,6 @@
 import { filterManager } from "../FilterManager.js";
 import { resetFlags } from "../../module/utils.js";
 
-Handlebars.registerHelper("isFilterActive", function(name) {
-  let flags = canvas.scene.getFlag("fxmaster", "filters");
-  if (flags) {
-    let objKeys = Object.keys(flags);
-    for (let i = 0; i < objKeys.length; ++i) {
-      let weather = CONFIG.fxmaster.filters[flags[objKeys[i]].type];
-      if (weather.label === name) {
-        return true;
-      }
-    }
-  }
-  return false;
-});
-
-Handlebars.registerHelper("Config", function(key, name) {
-  const flags = canvas.scene.data.flags.fxmaster;
-  if (flags && flags.filters) {
-    const objKeys = Object.keys(flags.filters);
-    for (let i = 0; i < objKeys.length; ++i) {
-      const filter = CONFIG.fxmaster.filters[flags.filters[objKeys[i]].type];
-      if (filter.label === name && flags.filters[objKeys[i]].options) {
-        return flags.filters[objKeys[i]].options[key];
-      }
-    }
-  }
-  return 50;
-});
-
-Handlebars.registerHelper("parameter", (effect, param, key) => {
-  switch (param.type) {
-    case "color":
-      return `<input type="color" name="${effect.label}_${key}" value="${param.default}">`;
-    case "range":
-      return `
-        <input type="range" step="${param.step}" min="${param.min}" max="${param.max}" name="${effect.label}_${key}" value="${param.default}">
-        <span class="range-value">${param.default}</span>
-        `;
-      case "number":
-        return `
-        <input type="text" data-dtype="Number" name="${effect.label}_${key}" value="${param.default}">
-        `;
-  }
-  return "";
-});
-
 export class FiltersConfig extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -70,10 +25,15 @@ export class FiltersConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
+    const currentFilters = canvas.scene.getFlag("fxmaster", "filters") || {};
+    const activeFilters = Object.values(currentFilters).reduce((obj, f) => {
+      obj[f.type] = f.options;
+      return obj;
+    }, {});
     // Return data to the template
     return {
       filters: CONFIG.fxmaster.filters,
-      currentFilters: canvas.scene.getFlag("fxmaster", "filters")
+      activeFilters: activeFilters
     };
   }
 

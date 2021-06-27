@@ -1,4 +1,6 @@
-export class FogWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class FogWeatherEffect extends AbstractWeatherEffect {
   static get label() {
     return "Fog";
   }
@@ -54,57 +56,60 @@ export class FogWeatherEffect extends SpecialEffect {
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }
-}
 
-FogWeatherEffect.CONFIG = foundry.utils.mergeObject(
-  SpecialEffect.DEFAULT_CONFIG,
-  {
-    alpha: {
-      list: [
-        { value: 0, time: 0 },
-        { value: 0.1, time: 0.1 },
-        { value: 0.3, time: 0.5 },
-        { value: 0.1, time: 0.9 },
-        { value: 0, time: 1 }
-      ],
-      isStepped: false
+  /**
+   * Configuration for the Bats particle effect
+   * @type {Object}
+   */
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+    {
+      alpha: {
+        list: [
+          { value: 0, time: 0 },
+          { value: 0.1, time: 0.1 },
+          { value: 0.3, time: 0.5 },
+          { value: 0.1, time: 0.9 },
+          { value: 0, time: 1 }
+        ],
+        isStepped: false
+      },
+      scale: {
+        start: 1.5,
+        end: 1.0,
+        minimumScaleMultiplier: 0.5
+      },
+      speed: {
+        start: 15,
+        end: 10,
+        minimumSpeedMultiplier: 0.2
+      },
+      color: {
+        start: "dddddd",
+        end: "dddddd"
+      },
+      startRotation: {
+        min: 0,
+        max: 360
+      },
+      rotation: {
+        min: 0,
+        max: 360
+      },
+      rotationSpeed: {
+        min: 0.15,
+        max: 0.35
+      },
+      acceleration: {
+        x: 0,
+        y: 0
+      },
+      lifetime: {
+        min: 10,
+        max: 25
+      },
+      blendMode: "normal",
+      emitterLifetime: -1
     },
-    scale: {
-      start: 1.5,
-      end: 1.0,
-      minimumScaleMultiplier: 0.5
-    },
-    speed: {
-      start: 15,
-      end: 10,
-      minimumSpeedMultiplier: 0.2
-    },
-    color: {
-      start: "dddddd",
-      end: "dddddd"
-    },
-    startRotation: {
-      min: 0,
-      max: 360
-    },
-    rotation: {
-      min: 0,
-      max: 360
-    },
-    rotationSpeed: {
-      min: 0.15,
-      max: 0.35
-    },
-    acceleration: {
-      x: 0,
-      y: 0
-    },
-    lifetime: {
-      min: 10,
-      max: 25
-    },
-    blendMode: "normal",
-    emitterLifetime: -1
-  },
-  { inplace: false }
-);
+    { inplace: false }
+  )
+}

@@ -1,4 +1,6 @@
-export class CrowsWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class CrowsWeatherEffect extends AbstractWeatherEffect {
   static get label() {
     return "Crows";
   }
@@ -75,54 +77,57 @@ export class CrowsWeatherEffect extends SpecialEffect {
     emitter.particleConstructor = PIXI.particles.AnimatedParticle;
     return emitter;
   }
-}
 
-CrowsWeatherEffect.CONFIG = foundry.utils.mergeObject(
-  SpecialEffect.DEFAULT_CONFIG,
-  {
-    alpha: {
-      list: [
-        { value: 0, time: 0 },
-        { value: 1, time: 0.02 },
-        { value: 1, time: 0.98 },
-        { value: 0, time: 1 }
-      ],
-      isStepped: false
+  /**
+   * Configuration for the Bats particle effect
+   * @type {Object}
+   */
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+    {
+      alpha: {
+        list: [
+          { value: 0, time: 0 },
+          { value: 1, time: 0.02 },
+          { value: 1, time: 0.98 },
+          { value: 0, time: 1 }
+        ],
+        isStepped: false
+      },
+      scale: {
+        list: [
+          { value: 0.03, time: 0 },
+          { value: 0.12, time: 0.1 },
+          { value: 0.12, time: 0.9 },
+          { value: 0.03, time: 1 }
+        ],
+        isStepped: false
+      },
+      speed: {
+        start: 90,
+        end: 100,
+        minimumSpeedMultiplier: 0.6
+      },
+      acceleration: {
+        x: 0,
+        y: 0
+      },
+      startRotation: {
+        min: 0,
+        max: 365
+      },
+      rotation: 180,
+      rotationSpeed: {
+        min: 0,
+        max: 0
+      },
+      lifetime: {
+        min: 20,
+        max: 40
+      },
+      blendMode: "normal",
+      emitterLifetime: -1,
+      orderedArt: true
     },
-    scale: {
-      list: [
-        { value: 0.03, time: 0 },
-        { value: 0.12, time: 0.1 },
-        { value: 0.12, time: 0.9 },
-        { value: 0.03, time: 1 }
-      ],
-      isStepped: false
-    },
-    speed: {
-      start: 90,
-      end: 100,
-      minimumSpeedMultiplier: 0.6
-    },
-    acceleration: {
-      x: 0,
-      y: 0
-    },
-    startRotation: {
-      min: 0,
-      max: 365
-    },
-    rotation: 180,
-    rotationSpeed: {
-      min: 0,
-      max: 0
-    },
-    lifetime: {
-      min: 20,
-      max: 40
-    },
-    blendMode: "normal",
-    emitterLifetime: -1,
-    orderedArt: true
-  },
-  { inplace: false }
-);
+    { inplace: false }
+  )
+}

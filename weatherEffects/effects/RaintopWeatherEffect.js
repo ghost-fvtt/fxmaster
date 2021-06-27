@@ -1,4 +1,6 @@
-export class RaintopWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class RaintopWeatherEffect extends AbstractWeatherEffect {
   static get label() {
     return "Topdown Rain";
   }
@@ -58,46 +60,50 @@ export class RaintopWeatherEffect extends SpecialEffect {
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }
-}
 
-RaintopWeatherEffect.CONFIG = foundry.utils.mergeObject(
-  SpecialEffect.DEFAULT_CONFIG,
-  {
-    alpha: {
-      list: [
-        { value: 0, time: 0 },
-        { value: 0.6, time: 0.1 },
-        { value: 0.23, time: 1 },
-      ],
-      isStepped: false,
+  /**
+   * Configuration for the Bats particle effect
+   * @type {Object}
+   */
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+
+    {
+      alpha: {
+        list: [
+          { value: 0, time: 0 },
+          { value: 0.6, time: 0.1 },
+          { value: 0.23, time: 1 },
+        ],
+        isStepped: false,
+      },
+      scale: {
+        start: 3,
+        end: 0.4,
+        minimumScaleMultiplier: 0.7,
+      },
+      color: {
+        start: "dddddd",
+        end: "dddddd",
+      },
+      startRotation: {
+        min: 180,
+        max: 180,
+      },
+      rotation: {
+        min: 0,
+        max: 0,
+      },
+      rotationSpeed: {
+        min: 0,
+        max: 0,
+      },
+      acceleration: {
+        x: 0,
+        y: 0,
+      },
+      blendMode: "normal",
+      emitterLifetime: -1,
     },
-    scale: {
-      start: 3,
-      end: 0.4,
-      minimumScaleMultiplier: 0.7,
-    },
-    color: {
-      start: "dddddd",
-      end: "dddddd",
-    },
-    startRotation: {
-      min: 180,
-      max: 180,
-    },
-    rotation: {
-      min: 0,
-      max: 0,
-    },
-    rotationSpeed: {
-      min: 0,
-      max: 0,
-    },
-    acceleration: {
-      x: 0,
-      y: 0,
-    },
-    blendMode: "normal",
-    emitterLifetime: -1,
-  },
-  { inplace: false }
-);
+    { inplace: false }
+  )
+}

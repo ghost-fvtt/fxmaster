@@ -1,4 +1,6 @@
-export class EmbersWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class EmbersWeatherEffect extends AbstractWeatherEffect {
   static get label() {
     return "Embers";
   }
@@ -49,55 +51,58 @@ export class EmbersWeatherEffect extends SpecialEffect {
     );
     return emitter;
   }
-}
 
-EmbersWeatherEffect.CONFIG = foundry.utils.mergeObject(
-  SpecialEffect.DEFAULT_CONFIG,
-  {
-    alpha: {
-      list: [
-        { value: 0, time: 0 },
-        { value: 0.9, time: 0.3 },
-        { value: 0.9, time: 0.95 },
-        { value: 0, time: 1 }
-      ]
+  /**
+   * Configuration for the Bats particle effect
+   * @type {Object}
+   */
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+    {
+      alpha: {
+        list: [
+          { value: 0, time: 0 },
+          { value: 0.9, time: 0.3 },
+          { value: 0.9, time: 0.95 },
+          { value: 0, time: 1 }
+        ]
+      },
+      scale: {
+        start: 0.15,
+        end: 0.01,
+        minimumScaleMultiplier: 0.85
+      },
+      speed: {
+        start: 40,
+        end: 25,
+        minimumSpeedMultiplier: 0.6
+      },
+      color: {
+        list: [
+          { value: "f77300", time: 0 },
+          { value: "f72100", time: 1 }
+        ],
+        isStepped: false
+      },
+      acceleration: {
+        x: 1,
+        y: 1
+      },
+      startRotation: {
+        min: 0,
+        max: 365
+      },
+      rotation: 180,
+      rotationSpeed: {
+        min: 100,
+        max: 200
+      },
+      lifetime: {
+        min: 5,
+        max: 8
+      },
+      blendMode: "screen",
+      emitterLifetime: -1
     },
-    scale: {
-      start: 0.15,
-      end: 0.01,
-      minimumScaleMultiplier: 0.85
-    },
-    speed: {
-      start: 40,
-      end: 25,
-      minimumSpeedMultiplier: 0.6
-    },
-    color: {
-      list: [
-        { value: "f77300", time: 0 },
-        { value: "f72100", time: 1 }
-      ],
-      isStepped: false
-    },
-    acceleration: {
-      x: 1,
-      y: 1
-    },
-    startRotation: {
-      min: 0,
-      max: 365
-    },
-    rotation: 180,
-    rotationSpeed: {
-      min: 100,
-      max: 200
-    },
-    lifetime: {
-      min: 5,
-      max: 8
-    },
-    blendMode: "screen",
-    emitterLifetime: -1
-  },
-  { inplace: false }
-);
+    { inplace: false }
+  )
+}
