@@ -14,20 +14,39 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   /* -------------------------------------------- */
-
-  updateMask() {
-    this.visible = true;
-    if (!this.weather) return;
-
-    // Mask zones masked by drawings
+  _createInvertMask() {
     const mask = new PIXI.Graphics();
-    this.weather.addChild(mask);
+    canvas.drawings.placeables.forEach((drawing) => {
+      const isMask = drawing.document.getFlag("fxmaster", "masking");
+      if (!isMask) return;
+      mask.beginFill(0x000000);
+      const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
+      switch (drawing.data.type) {
+        case CONST.DRAWING_TYPES.ELLIPSE:
+          shape.x = drawing.center.x;
+          shape.y = drawing.center.y;
+          mask.drawShape(shape);
+          break;
+        case CONST.DRAWING_TYPES.POLYGON:
+        case CONST.DRAWING_TYPES.FREEHAND:
+          const points = drawing.data.points.reduce((acc, v) => {
+            acc.push(v[0] + drawing.x, v[1] + drawing.y);
+            return acc;
+          }, [])
+          mask.drawPolygon(points);
+          break;
+        default:
+          shape.x = drawing.x;
+          shape.y = drawing.y;
+          mask.drawShape(shape);
+      }
+      mask.endFill();
+    });
+    return mask;
+  }
 
-    if (this.weather.mask) {
-      this.weather.removeChild(this.weather.mask);
-      this.weather.mask = null;
-    }
-
+  _createMask() {
+    const mask = new PIXI.Graphics();
     const sceneShape = canvas.scene.img ? canvas.dimensions.sceneRect.clone() : canvas.dimensions.rect.clone();
     mask.beginFill(0x000000).drawShape(sceneShape).endFill();
 
@@ -57,6 +76,23 @@ export class WeatherLayer extends CanvasLayer {
       }
       mask.endHole();
     });
+    return mask;
+  }
+
+  updateMask() {
+    this.visible = true;
+    if (!this.weather) return;
+
+    if (this.weather.mask) {
+      this.weather.removeChild(this.weather.mask);
+      this.weather.mask = null;
+    }
+    const invert = canvas.scene.getFlag("fxmaster", "invert");
+
+    // Mask zones masked by drawings
+    const mask = invert ? this._createInvertMask() : this._createMask();
+    this.weather.addChild(mask);
+
     Hooks.callAll("updateMask", this, this.weather, mask);
     this.weather.mask = mask;
   }
@@ -87,8 +123,16 @@ export class WeatherLayer extends CanvasLayer {
         for (const ef of this.weatherEffects[key].fx.emitters) {
           ef.emitterLifetime = 0.1;
           ef.playOnceAndDestroy(() => {
-            delete this.weatherEffects[key];
+            if (this.weatherEffects[key]) {
+              delete this.weatherEffects[key];
+            }
           });
+          setTimeout(() => {
+            if (this.weatherEffects[key]) {
+              this.weatherEffects[key].fx.stop();
+              delete this.weatherEffects[key];
+            }
+          }, 20000);
         }
       } else {
         this.weatherEffects[key].fx.stop();
@@ -116,71 +160,5 @@ export class WeatherLayer extends CanvasLayer {
       const method = effectClass.parameters[key].callback;
       this.weatherEffects[id].fx[method](val);
     });
-
-  /*
-    // Adjust density
-    if (hasProperty(flags[id], "options.density")) {
-      let factor = (2 * flags[id].options.density) / 100;
-      this.weatherEffects[id].fx.emitters.forEach((el) => {
-        el.frequency *= factor;
-        el.maxParticles *= factor;
-      });
-    }
-
-    // Adjust scale
-    if (hasProperty(flags[id], "options.scale")) {
-      let factor = (2 * flags[id].options.scale) / 100;
-      this.weatherEffects[id].fx.emitters.forEach((el) => {
-        el.startScale.value *= factor;
-        let node = el.startScale.next;
-        while (node) {
-          node.value *= factor;
-          node = node.next;
-        }
-      });
-    }
-
-    // Adjust speed
-    if (hasProperty(flags[id], "options.speed")) {
-      let factor = (2 * flags[id].options.speed) / 100;
-      this.weatherEffects[id].fx.emitters.forEach((el) => {
-        el.startSpeed.value *= factor;
-        let node = el.startSpeed.next;
-        while (node) {
-          node.value *= factor;
-          node = node.next;
-        }
-      });
-    }
-
-    // Adjust tint
-    if (
-      hasProperty(flags[id], "options.apply_tint") &&
-      flags[id].options.apply_tint == true
-    ) {
-      this.weatherEffects[id].fx.emitters.forEach((el) => {
-        let colors = hexToRGB(colorStringToHex(flags[id].options.tint));
-        el.startColor.value = {
-          r: colors[0] * 255,
-          g: colors[1] * 255,
-          b: colors[2] * 255,
-        };
-        let node = el.startColor.next;
-        while (node) {
-          node.value = el.startColor.value;
-          node = node.next;
-        }
-      });
-    }
-
-    // Adjust direction
-    if (hasProperty(flags[id], "options.direction")) {
-      let factor = (360 * (flags[id].options.direction - 50)) / 100;
-      this.weatherEffects[id].fx.emitters.forEach((el) => {
-        el.minStartRotation += factor;
-        el.maxStartRotation += factor;
-      });
-    }
-  */
   }
 }

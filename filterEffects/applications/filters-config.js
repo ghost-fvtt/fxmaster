@@ -105,8 +105,12 @@ export class FiltersConfig extends FormApplication {
           type: key,
           options: {}
         };
-        Object.keys(filtersDB[key].parameters).forEach((key) => {
-          filter.options[key] = formData[`${label}_${key}`];
+        Object.keys(filtersDB[key].parameters).forEach((k) => {
+          if (filtersDB[key].parameters[k].type === "color") {
+            filter.options[k] = {apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`]};
+            return;
+          }
+          filter.options[k] = formData[`${label}_${k}`];
         })
         filters[`core_${key}`] = filter;
       }

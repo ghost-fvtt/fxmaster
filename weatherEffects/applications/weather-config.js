@@ -109,8 +109,12 @@ export class WeatherConfig extends FormApplication {
           type: key,
           options: {}
         };
-        Object.keys(weathersDB[key].parameters).forEach((key) => {
-          effect.options[key] = formData[`${label}_${key}`];
+        Object.keys(weathersDB[key].parameters).forEach((k) => {
+          if (weathersDB[key].parameters[k].type === "color") {
+            effect.options[k] = {apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`]};
+            return;
+          }
+          effect.options[k] = formData[`${label}_${k}`];
         })
         effects[`core_${key}`] = effect;
       }

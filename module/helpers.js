@@ -6,7 +6,7 @@ export const registerHelpers = function () {
         };
         switch (param.type) {
             case "color":
-                return `<input type="color" name="${effect.label}_${key}" value="${deflt}">`;
+                return `<input type="checkbox" name="${effect.label}_${key}_apply" ${deflt.apply ? "checked" : ""}/><input type="color" name="${effect.label}_${key}" value="${deflt.value}">`;
             case "range":
                 return `
               <input type="range" step="${param.step}" min="${param.min}" max="${param.max}" name="${effect.label}_${key}" value="${deflt}">

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 - **Breaking:** Reworked weather effects configuration
 - Added spider swarm weather effect
 - Spanish update
+- Inverted weather mask
+- set Timeout after stopping effect to force delete if particles are staying too long
 
 ## [1.1.4] - 2021-06-23
 ### Changed

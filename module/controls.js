@@ -56,6 +56,18 @@ Hooks.on("getSceneControlButtons", (controls) => {
         button: true,
       },
       {
+        name: "invertmask",
+        title: "CONTROLS.InvertMask",
+        icon: "fas fa-mask",
+        onClick: () => {
+          const invert = canvas.scene.getFlag("fxmaster", "invert");
+          canvas.scene.setFlag("fxmaster", "invert", !invert);
+        },
+        visible: game.user.isGM,
+        active: canvas.scene?.getFlag("fxmaster", "invert"),
+        toggle: true,
+      },
+      {
         name: "filters",
         title: "CONTROLS.Filters",
         icon: "fas fa-filter",

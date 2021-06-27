@@ -5,6 +5,7 @@
   "CONTROLS.Weather": "Weather Controls",
   "CONTROLS.Filters": "Filter Controls",
   "CONTROLS.Underwater": "Underwater Filter",
+  "CONTROLS.InvertMask": "Invert Weather Mask",
   "CONTROLS.Predator": "Predator Filter",
   "CONTROLS.OldFilm": "Old Film Filter",
   "CONTROLS.Bloom": "Bloom Filter",

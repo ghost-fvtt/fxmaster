@@ -29,7 +29,10 @@ export class AbstractWeatherEffect extends SpecialEffect {
         label: "FXMASTER.Tint",
         type: "color",
         callback: "setTint",
-        default: "#FFFFFF"
+        default: {
+          value: "#FFFFFF",
+          apply: false
+        }
       },
       direction: {
         label: "FXMASTER.Direction",
@@ -107,8 +110,9 @@ export class AbstractWeatherEffect extends SpecialEffect {
     }
   }
 
-  setTint(value) {
-    if (value == "#FFFFFF") return;
+  setTint(tint) {
+    if (!tint.apply) return;
+    const value = tint.value;
     const colors = hexToRGB(colorStringToHex(value));
     for (const emitter of this.emitters) {
       let node = emitter.startColor;

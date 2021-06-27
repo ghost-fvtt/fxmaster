@@ -6,7 +6,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
   }
 
   static get icon() {
-    return "modules/fxmaster/weatherEffects/icons/bats.png";
+    return "modules/fxmaster/weatherEffects/icons/spiders.png";
   }
 
   static get effectOptions() {
@@ -98,9 +98,9 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
         minimumScaleMultiplier: 0.2
       },
       speed: {
-        start: 10,
+        start: 15,
         end: 25,
-        minimumSpeedMultiplier: 0.8
+        minimumSpeedMultiplier: 0.6
       },
       acceleration: {
         x: 0,

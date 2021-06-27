@@ -19,7 +19,10 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       color: {
         label: "FXMASTER.Tint",
         type: "color",
-        default: "#FFFFFF"
+        default: {
+          value: "#FFFFFF",
+          apply: false
+        }
       },
       saturation: {
         label: "FXMASTER.Saturation",
@@ -76,10 +79,14 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   }
 
   configure(opts) {
-    const colors = foundry.utils.hexToRGB(colorStringToHex(opts.color));
-    opts.red = colors[0];
-    opts.green = colors[1];
-    opts.blue = colors[2];
+    if (opts.color_apply) {
+      const colors = foundry.utils.hexToRGB(colorStringToHex(opts.color));
+      opts.red = colors[0];
+      opts.green = colors[1];
+      opts.blue = colors[2];
+    } else {
+      opts.red = opts.green = opts.blue = 1;
+    }
     this.options = { ...this.constructor.default, ...opts };
   }
 

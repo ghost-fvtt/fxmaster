@@ -127,7 +127,10 @@ Hooks.on("dropCanvasData", async (canvas, data) => {
     y: data.y - data.anchor.y * data.height,
     z: 100
   };
-  canvas.scene.createEmbeddedDocuments("Tile", [tileData]);
+  ui.notifications.info(`A new Tile was created for effect ${data.label}`);
+  canvas.scene.createEmbeddedDocuments("Tile", [tileData]).then(() => {
+
+  });
 });
 
 Hooks.on("hotbarDrop", (hotbar, data, slot) => {
