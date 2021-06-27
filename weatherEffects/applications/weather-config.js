@@ -1,4 +1,5 @@
 import { resetFlags } from "../../module/utils.js";
+import { weatherDB } from "../weatherDB.js";
 
 export class WeatherConfig extends FormApplication {
   constructor() {
@@ -29,13 +30,13 @@ export class WeatherConfig extends FormApplication {
    */
   getData() {
     // Return data to the template
-    const currentEffects = canvas.scene.getFlag("fxmaster", "effects");
+    const currentEffects = canvas.scene.getFlag("fxmaster", "effects") || {};
     const activeEffects = Object.values(currentEffects).reduce((obj, f) => {
       obj[f.type] = f.options;
       return obj;
     }, {});
     return {
-      effects: CONFIG.weatherEffects,
+      effects: CONFIG.fxmaster.weather,
       activeEffects: activeEffects
     };
   }
@@ -99,21 +100,19 @@ export class WeatherConfig extends FormApplication {
    * @private
    */
   async _updateObject(_, formData) {
+    const weathersDB = CONFIG.fxmaster.weather;
     const effects = {};
-    Object.keys(CONFIG.weatherEffects).forEach(key => {
-      let label = CONFIG.weatherEffects[key].label;
+    Object.keys(weathersDB).forEach(key => {
+      const label = weathersDB[key].label;
       if (formData[label]) {
-        effects[randomID()] = {
+        const effect = {
           type: key,
-          options: {
-            density: formData[`${label}_density`],
-            speed: formData[`${label}_speed`],
-            scale: formData[`${label}_scale`],
-            tint: formData[`${label}_tint`],
-            direction: formData[`${label}_direction`],
-            apply_tint: formData[`${label}_apply_tint`]
-          }
+          options: {}
         };
+        Object.keys(weathersDB[key].parameters).forEach((key) => {
+          effect.options[key] = formData[`${label}_${key}`];
+        })
+        effects[`core_${key}`] = effect;
       }
     });
     resetFlags(canvas.scene, "effects", effects);

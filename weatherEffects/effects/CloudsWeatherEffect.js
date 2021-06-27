@@ -1,4 +1,6 @@
-export class CloudsWeatherEffect extends SpecialEffect {
+import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
+
+export class CloudsWeatherEffect extends AbstractWeatherEffect {
   static get label() {
     return "Clouds";
   }
@@ -52,54 +54,57 @@ export class CloudsWeatherEffect extends SpecialEffect {
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }
-}
 
-CloudsWeatherEffect.CONFIG = foundry.utils.mergeObject(
-  SpecialEffect.DEFAULT_CONFIG,
-  {
-    alpha: {
-      list: [
-        { value: 0, time: 0 },
-        { value: 0.5, time: 0.05 },
-        { value: 0.5, time: 0.95 },
-        { value: 0, time: 1 }
-      ],
-      isStepped: false
+  /**
+   * Configuration for the Bats particle effect
+   * @type {Object}
+   */
+  static CONFIG = foundry.utils.mergeObject(SpecialEffect.DEFAULT_CONFIG,
+    {
+      alpha: {
+        list: [
+          { value: 0, time: 0 },
+          { value: 0.5, time: 0.05 },
+          { value: 0.5, time: 0.95 },
+          { value: 0, time: 1 }
+        ],
+        isStepped: false
+      },
+      scale: {
+        start: 0.8,
+        end: 0.8,
+        minimumScaleMultiplier: 0.1
+      },
+      speed: {
+        start: 100,
+        end: 100,
+        minimumSpeedMultiplier: 0.3
+      },
+      color: {
+        start: "ffffff",
+        end: "ffffff"
+      },
+      startRotation: {
+        min: 80,
+        max: 100
+      },
+      rotation: {
+        min: 0,
+        max: 360
+      },
+      acceleration: {
+        x: 0,
+        y: 0
+      },
+      lifetime: {
+        min: 20,
+        max: 120
+      },
+      frequency: 0.5,
+      maxParticles: 100,
+      blendMode: "normal",
+      emitterLifetime: -1
     },
-    scale: {
-      start: 0.8,
-      end: 0.8,
-      minimumScaleMultiplier: 0.1
-    },
-    speed: {
-      start: 100,
-      end: 100,
-      minimumSpeedMultiplier: 0.3
-    },
-    color: {
-      start: "ffffff",
-      end: "ffffff"
-    },
-    startRotation: {
-      min: 80,
-      max: 100
-    },
-    rotation: {
-      min: 0,
-      max: 360
-    },
-    acceleration: {
-      x: 0,
-      y: 0
-    },
-    lifetime: {
-      min: 20,
-      max: 120
-    },
-    frequency: 0.5,
-    maxParticles: 100,
-    blendMode: "normal",
-    emitterLifetime: -1
-  },
-  { inplace: false }
-);
+    { inplace: false }
+  )
+}

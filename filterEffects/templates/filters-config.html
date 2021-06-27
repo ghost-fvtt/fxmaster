@@ -14,7 +14,7 @@
                 {{else}}
                 <ol class="config collapsible collapsed">
                     {{/if}}
-                    {{#each this.parameters as |param key|}}
+                    {{#each filter.parameters as |param key|}}
                     <li class="flexrow">
                         <span>{{localize param.label}}</span>
                         {{{parameter filter param key (lookup @root.activeFilters fkey)}}}

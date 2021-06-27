@@ -16,7 +16,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
 
   static get parameters() {
     return {
-      noise: {
+      blur: {
         label: "FXMASTER.Blur",
         type: "range",
         max: 10.0,

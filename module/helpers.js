@@ -1,6 +1,6 @@
 export const registerHelpers = function () {
-    Handlebars.registerHelper("parameter", (effect, param, key, options = {}) => {
-        let deflt = param.default;
+    Handlebars.registerHelper("parameter", (effect, param, key, options = {}) => { 
+        let deflt = effect.default[key];
         if (options[key] !== undefined) {
             deflt = options[key]
         };

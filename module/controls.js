@@ -42,11 +42,11 @@ Hooks.on("getSceneControlButtons", (controls) => {
           let img = "icons/svg/windmill.svg";
           let name = "Weather";
           objs.forEach(effect => {
-            let icon = CONFIG.weatherEffects[effect.type].icon;
+            let icon = CONFIG.fxmaster.weather[effect.type].icon;
             if (icon) {
               img = icon;
             }
-            name = CONFIG.weatherEffects[effect.type].label;
+            name = CONFIG.fxmaster.weather[effect.type].label;
           })
           let effects = `Hooks.call('updateWeather', ${JSON.stringify(objs)});`;
           Macro.create({ type: "script", name: name, command: effects, img: img });

@@ -9,6 +9,10 @@ import { RainSimpleWeatherEffect } from "./effects/RainSimpleWeatherEffect.js";
 import { SnowstormWeatherEffect } from "./effects/SnowstormWeatherEffect.js";
 import { BirdsWeatherEffect } from "./effects/BirdsWeatherEffect.js";
 import { StarsWeatherEffect } from "./effects/StarsWeatherEffect.js";
+import { RainWeatherEffect } from "./effects/RainWeatherEffect.js";
+import { SnowWeatherEffect } from "./effects/SnowWeatherEffect.js";
+import { AutumnLeavesWeatherEffect } from "./effects/AutumnLeavesWeatherEffect.js";
+import { SpiderWeatherEffect } from "./effects/SpiderWeatherEffect.js";
 
 export const weatherDB = {
     snowstorm: SnowstormWeatherEffect,
@@ -19,7 +23,12 @@ export const weatherDB = {
     stars: StarsWeatherEffect,
     crows: CrowsWeatherEffect,
     bats: BatsWeatherEffect,
+    spiders: SpiderWeatherEffect,
     fog: FogWeatherEffect,
     raintop: RaintopWeatherEffect,
+    birds: BirdsWeatherEffect,
+    nature: AutumnLeavesWeatherEffect,
+    rain: RainWeatherEffect,
+    snow: SnowWeatherEffect,
     birds: BirdsWeatherEffect,
 };

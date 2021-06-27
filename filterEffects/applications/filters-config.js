@@ -25,7 +25,7 @@ export class FiltersConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentFilters = canvas.scene.getFlag("fxmaster", "filters");
+    const currentFilters = canvas.scene.getFlag("fxmaster", "filters") || {};
     const activeFilters = Object.values(currentFilters).reduce((obj, f) => {
       obj[f.type] = f.options;
       return obj;

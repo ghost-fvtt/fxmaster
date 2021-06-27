@@ -3,10 +3,12 @@
         {{#each effects as |effect ekey|}}
         <li class="directory-item config weather">
             <header class="flexrow">
-                {{#if effect.icon}}<img class="weather-icon" width="24" height="24" src="{{effect.icon}}">{{/if}}
+                {{#if effect.icon}}<img class="weather-icon" width="24"
+                    height="24" src="{{effect.icon}}">{{/if}}
                 <label class="weather-collapse">{{effect.label}} <i class="fa
                         fa-angle-down"></i></label>
-                <input type='checkbox' name='{{effect.label}}' id="{{effect.label}}" class="effect"
+                <input type='checkbox' name='{{effect.label}}'
+                    id="{{effect.label}}" class="effect"
                     {{checked (lookup @root.activeEffects ekey)}} />
             </header>
             {{#if (lookup @root.activeEffects ekey)}}
@@ -14,46 +16,20 @@
                 {{else}}
                 <ol class="config collapsible collapsed">
                     {{/if}}
+                    {{#each effect.parameters as |param key|}}
                     <li class="flexrow">
-                        <span>{{localize "FXMASTER.Density"}}</span>
-                        <input class="flex2" type='range' name='{{effect.label}}_density'
-                            value="0" />
-                        <span class="range-value">0</span>
+                        <span>{{localize param.label}}</span>
+                        {{{parameter effect param key (lookup
+                        @root.activeEffects ekey)}}}
                     </li>
-                    <li class="flexrow">
-                        <span>{{localize "FXMASTER.Speed"}}</span>
-                        <input class="flex2" type='range' name='{{effect.label}}_speed'
-                            value="0" />
-                        <span class="range-value">0</span>
-                    </li>
-                    <li class="flexrow">
-                        <span>{{localize "FXMASTER.Direction"}}</span>
-                        <input class="flex2" type='range' name='{{effect.label}}_direction'
-                            value="0" />
-                        <span class="range-value">0</span>
-                    </li>
-                    <li class="flexrow">
-                        <span>{{localize "FXMASTER.Scale"}}</span>
-                        <input class="flex2" type='range' name='{{effect.label}}_scale'
-                            value="0" />
-                        <span class="range-value">0</span>
-                    </li>
-                    <li class="flexrow">
-                        <span>{{localize "FXMASTER.Tint"}}</span>
-                        <input type='checkbox' name='{{effect.label}}_apply_tint'
-                            {{checked false}} />
-                        
-                        <input class="flex2" type='color' name='{{effect.label}}_tint'
-                            value="0" />
-                        <input class="flex2" type='color' name='{{effect.label}}_tint' />
-                    </li>
+                    {{/each}}
                 </ol>
-        </li>
-        {{/each}}
-    </div>
-    <footer class="form-footer">
-        <button type="submit" name="submit">
-            <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
-        </button>
-    </footer>
-</form>
+            </li>
+            {{/each}}
+        </div>
+        <footer class="form-footer">
+            <button type="submit" name="submit">
+                <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
+            </button>
+        </footer>
+    </form>

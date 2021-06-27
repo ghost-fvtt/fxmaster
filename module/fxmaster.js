@@ -52,11 +52,6 @@ Hooks.once("init", function () {
   registerLayer();
   registerHelpers();
 
-  // Set missing icons
-  CONFIG.weatherEffects.rain.icon = "modules/fxmaster/weatherEffects/icons/rain.png";
-  CONFIG.weatherEffects.leaves.icon = "modules/fxmaster/weatherEffects/icons/leaves.png";
-  CONFIG.weatherEffects.snow.icon = "modules/fxmaster/weatherEffects/icons/snow.png";
-
   CONST.USER_PERMISSIONS.EFFECT_CREATE = {
     label: "FXMASTER.PermissionCreate",
     hint: "FXMASTER.PermissionCreateHint",
@@ -64,12 +59,9 @@ Hooks.once("init", function () {
     disableGM: false
   };
 
-  // Adding custom weather effects
-  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
-
-  // Adding filters and effects
+  // Adding filters, weathers and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  foundry.utils.mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { filters: FXMASTER.filters, specials: FXMASTER.specials, weather: FXMASTER.weatherEffects });
 });
 
 Hooks.once("ready", () => {
