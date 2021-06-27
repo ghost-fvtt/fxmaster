@@ -1,3 +1,5 @@
+// Copyright © SecretFire 2021
+
 export const fog = `
 precision mediump float;
 

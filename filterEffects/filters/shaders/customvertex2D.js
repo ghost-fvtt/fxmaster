@@ -1,3 +1,5 @@
+// Copyright © SecretFire 2021
+
 // Custom vertex shader with filterLocalCoord()
 
 export const customVertex2D = `

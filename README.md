@@ -28,7 +28,7 @@ To cast your Special Effects you can simply click on the canvas. You can orient 
 
 ## API for developpers
 
-I added Hooks to add filters and weather effects from other modules
+I added helper functions to add filters and weather effects from other modules
 
 ### Filters
 
@@ -36,18 +36,16 @@ I added Hooks to add filters and weather effects from other modules
 FXMASTER.filters.switch("myfilterID", "color", { color: "#ff00ff", gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
 ```
 
-#### Available Filter options:
+#### Available Filter options
+- `bloom`
+- `color`
+- `fog`
+- `lightning`
+- `oldfilm`
+- `predator`
+- `underwater`
 
-Filter types:
-
-- color
-- underwater
-
-Options for color:
-
-- red
-- green
-- blue
+You can get a complete list by typing `CONFIG.fxmaster.filters` in your web console.
 
 ### Weather
 
@@ -83,10 +81,7 @@ Weather types:
 - crows
 - raintop
 
-Options are numbers between 0 and 100, 50 being the default value. It's a bit abstract I know, it may change later.
-
 Options
-
 - speed
 - scale
 - density
@@ -248,6 +243,7 @@ reach out on the Foundry Community Discord with any questions.
 Many thanks to:
 - `theripper93` for bringing his ideas to handle weather masking elegantly.
 - `Wasp` for providing the sequencer module that will inspire future updates.
+- `SecretFire` for exchanging ideas, providing help and shaders for filter effects, donate [here](https://ko-fi.com/secretfire).
 
 ## Licensing
 
