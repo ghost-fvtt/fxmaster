@@ -7,10 +7,10 @@ export class FXFogFilter extends PIXI.Filter {
         this.enabled = false;
         this.skipFading = false;
 
-        this.color = 0xFFFFFF;
+        this.color = new Float32Array([1.0, 0.4, 0.1, 0.55]);
         this.dimensions = new Float32Array([1.0, 1.0]);
         this.time = 0.0;
-        this.density = 0.5;
+        this.density = 0.65;
 
         this.configure(options);
     }
@@ -61,7 +61,7 @@ export class FXFogFilter extends PIXI.Filter {
     }
 
     step() {
-        this.time = canvas.app.ticker.lastTime / 30;
+        this.time = canvas.app.ticker.lastTime;
     }
 
     play() {

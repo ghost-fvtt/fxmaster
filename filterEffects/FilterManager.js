@@ -5,11 +5,18 @@ class FilterManager {
     this.filterInfos = {};
     this.filters = {};
     this._ticker = false;
+    this.apply_to = {
+      background: true,
+      foreground: true,
+      drawings: true,
+      tokens: true
+    }
   }
 
   activate() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
     this.filterInfos = this.filterInfos || {};
+
 
     // Creating new filters from filterInfos
     this.filters = Object.keys(this.filterInfos).reduce((filters, key) => {
@@ -22,10 +29,16 @@ class FilterManager {
     }, this.filters);
 
     this.filters = this.filters || {};
-    canvas.background.filters = [...Object.values(this.filters)];
-    canvas.foreground.filters = [...Object.values(this.filters)];
-    canvas.tokens.filters = [...Object.values(this.filters)];
-    
+
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
+    Object.keys(this.apply_to).forEach((k) => {
+      if (this.apply_to[k]) {
+        canvas[k].filters = [...Object.values(this.filters)];
+      } else {
+        canvas[k].filters = {};
+      }
+    })
+
     if (!this._ticker) {
       canvas.app.ticker.add(this._animate, this);
       this._ticker = true;
@@ -35,6 +48,7 @@ class FilterManager {
   async update() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
     this.filterInfos = this.filterInfos || {};
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
 
     // Clear unused effects
     const deletePromises = [];
@@ -44,11 +58,12 @@ class FilterManager {
         this.filters[key].play();
         continue;
       }
-      
+
       const promise = this.filters[key].stop().then(() => {
-        delete canvas.background.filters[key];
-        delete canvas.foreground.filters[key];
-        delete canvas.tokens.filters[key];
+        if (canvas.background.filters[key]) delete canvas.background.filters[key];
+        if (canvas.foreground.filters[key]) delete canvas.foreground.filters[key];
+        if (canvas.drawings.filters[key]) delete canvas.drawings.filters[key];
+        if (canvas.tokens.filters[key]) delete canvas.tokens.filters[key];
         delete this.filters[key];
       });
       deletePromises.push(promise);
@@ -65,9 +80,16 @@ class FilterManager {
         this.filters[key].play();
       }
     }
-    canvas.background.filters = [...Object.values(this.filters)];
-    canvas.foreground.filters = [...Object.values(this.filters)];
-    canvas.tokens.filters = [...Object.values(this.filters)];
+    this.filters = this.filters || {};
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
+    Object.keys(this.apply_to).forEach((k) => {
+      if (this.apply_to[k]) {
+        canvas[k].filters = [...Object.values(this.filters)];
+      }
+      else {
+        canvas[k].filters = {};
+      }
+    })
   }
 
   dump() {

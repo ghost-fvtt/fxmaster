@@ -79,8 +79,8 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   }
 
   configure(opts) {
-    if (opts.color_apply) {
-      const colors = foundry.utils.hexToRGB(colorStringToHex(opts.color));
+    if (opts.color.apply) {
+      const colors = foundry.utils.hexToRGB(colorStringToHex(opts.color.value));
       opts.red = colors[0];
       opts.green = colors[1];
       opts.blue = colors[2];

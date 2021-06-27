@@ -1,4 +1,22 @@
 <form>
+    <header class="directory-header flexrow">
+        <div class="layer-toggle">
+            <span title="Activate Filters on Background"><i class="fas fa-road"></i></span>
+            <input type="checkbox" name="background" {{checked layers.background}} />
+        </div>
+        <div class="layer-toggle">
+            <span title="Activate Filters on Foreground"><i class="fas fa-home"></i></span>
+            <input type="checkbox" name="foreground"{{checked layers.foreground}}  />
+        </div>
+        <div class="layer-toggle">
+            <span title="Activate Filters on Drawings"><i class="fas fa-pencil-alt"></i></span>
+            <input type="checkbox" name="drawings" {{checked layers.drawings}} />
+        </div>
+        <div class="layer-toggle">
+            <span title="Activate Filters on Tokens"><i class="fas fa-user-alt"></i></span>
+            <input type="checkbox" name="tokens" {{checked layers.tokens}} />
+        </div>
+    </header>
     <div class="directory-list effects fxmaster">
         {{#each filters as |filter fkey|}}
         <li class="directory-item config weather">
@@ -6,8 +24,8 @@
                 <div class="weather-icon"><i class="weather-icon {{filter.faIcon}}"></i></div>
                 <label class="weather-collapse">{{filter.label}} <i class="fa
                         fa-angle-down"></i></label>
-                <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked
-                    (lookup @root.activeFilters fkey)}} />
+                <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked (lookup
+                    @root.activeFilters fkey)}} />
             </header>
             {{#if (lookup @root.activeFilters fkey)}}
             <ol class="config collapsible">

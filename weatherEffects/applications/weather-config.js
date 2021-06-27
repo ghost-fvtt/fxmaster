@@ -15,7 +15,7 @@ export class WeatherConfig extends FormApplication {
       popOut: true,
       editable: game.user.isGM,
       width: 300,
-      height: 450,
+      height: "auto",
       template: "modules/fxmaster/weatherEffects/templates/weather-config.html",
       id: "effects-config",
       title: game.i18n.localize("WEATHERMANAGE.Title")

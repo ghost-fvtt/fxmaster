@@ -11,7 +11,7 @@ export class FiltersConfig extends FormApplication {
       popOut: true,
       editable: game.user.isGM,
       width: 300,
-      height: 450,
+      height: "auto",
       template: "modules/fxmaster/filterEffects/templates/filters-config.html",
       id: "filters-config",
       title: game.i18n.localize("FILTERMANAGE.Title")
@@ -30,10 +30,13 @@ export class FiltersConfig extends FormApplication {
       obj[f.type] = f.options;
       return obj;
     }, {});
+
+    const filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers");
     // Return data to the template
     return {
       filters: CONFIG.fxmaster.filters,
-      activeFilters: activeFilters
+      activeFilters: activeFilters,
+      layers: filteredLayers
     };
   }
 
@@ -107,7 +110,7 @@ export class FiltersConfig extends FormApplication {
         };
         Object.keys(filtersDB[key].parameters).forEach((k) => {
           if (filtersDB[key].parameters[k].type === "color") {
-            filter.options[k] = {apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`]};
+            filter.options[k] = { apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`] };
             return;
           }
           filter.options[k] = formData[`${label}_${k}`];
@@ -115,7 +118,17 @@ export class FiltersConfig extends FormApplication {
         filters[`core_${key}`] = filter;
       }
     });
-    resetFlags(canvas.scene, "filters", filters);
+
+    const apply_to = {
+      background: formData["background"],
+      foreground: formData["foreground"],
+      drawings: formData["drawings"],
+      tokens: formData["tokens"]
+    };
+
+    canvas.scene.setFlag("fxmaster", "filteredLayers", apply_to).then(() => {
+      resetFlags(canvas.scene, "filters", filters);
+    });
   }
 }
 
