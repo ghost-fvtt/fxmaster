@@ -3,7 +3,7 @@ import { SpecialCreate } from "./specials-create.js"
 export class SpecialsConfig extends Application {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["fxmaster", "sidebar-popout"],
+      classes: ["fxmaster", "specials", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
       submitOnClose: false,
@@ -78,9 +78,12 @@ export class SpecialsConfig extends Application {
       d.render(true);
     })
 
-    html.find(".sync-effects").click(ev => {
-      this.render(true);
-    })
+    html.find(".action-toggle").click(ev => {
+      for (const c of ev.currentTarget.parentElement.children) {
+        c.classList.remove("active");
+      }
+      ev.currentTarget.classList.add("active");
+    });
 
     const directory = html.find(".directory-list");
     directory.on("click", ".folder-header", this._toggleFolder.bind(this));

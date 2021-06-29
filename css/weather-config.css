@@ -1,21 +1,3 @@
-.fxmaster .config.weather {
-  padding: 4px;
-  border-bottom: 1px solid #333;
-  list-style: none;
-}
-
-.fxmaster .config.weather .weather-icon {
-  border: none;
-  flex: 0 0 18px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 16px;
-}
-
-.fxmaster .config.weather .weather-collapse {
-  text-indent: 5px;
-}
-
 .fxmaster .directory-header {
   box-shadow: 0 0 5px black;
   line-height: 12px;
@@ -24,7 +6,7 @@
   padding: 2px 0;
 }
 
-.fxmaster .directory-item.special-effects {
+.fxmaster.specials .directory-item.special-effects {
   line-height: inherit;
 }
 
@@ -55,13 +37,6 @@
   text-align: right;
 }
 
-.fxmaster .preview {
-  height: 48px;
-  flex: 0 0 48px;
-  background: black;
-  border: 1px solid grey;
-}
-
 .fxmaster.effects.directory-list {
   overflow-y: scroll;
   height: 370px;
@@ -70,49 +45,4 @@
 .fxmaster.filters.directory-list {
   overflow-y: auto;
   height: 35px;
-}
-
-.fxmaster .config.collapsible {
-  padding: 0;
-}
-
-.fxmaster .config.collapsible.collapsed {
-  display: none;
-  overflow: hidden;
-}
-
-.fxmaster .config label {
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.fxmaster .config label:hover {
-  text-shadow: 0 0 4px #ff6400;
-}
-
-.fxmaster .directory-item.active {
-    background: #f56b0066;
-}
-
-.fxmaster .form-footer {
-  padding: 5px;
-}
-
-.fxmaster .form-footer button {
-  background-color: rgba(255, 255, 240, 0.8);
-  border: 1px solid #b5b3a4;
-}
-
-.donation-link {
-  line-height: 16px;
-}
-
-.donation-link img {
-  border: none;
-  height: 12px;
-  margin-bottom: -1px;
-}
-
-.donation-link span {
-  font-size: 11px;
 }

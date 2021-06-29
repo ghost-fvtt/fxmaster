@@ -1,20 +1,20 @@
-.fxmaster .directory-item.special-effects {
+.fxmaster.specials .directory-item.special-effects {
   line-height: inherit;
 }
 
-.fxmaster .special-effects .description {
+.fxmaster.specials .special-effects .description {
   padding: 4px;
   overflow: hidden;
 }
 
-.fxmaster .special-effects .description h4 {
+.fxmaster.specials .special-effects .description h4 {
   line-height: 16px;
   text-indent: 5px;
   font-size: 14px;
   height: 32px;
 }
 
-.fxmaster .special-effects .description .author {
+.fxmaster.specials .special-effects .description .author {
   line-height: 10px;
   color: grey;
   text-align: right;
@@ -22,26 +22,25 @@
   flex: 0 10px;
 }
 
-.fxmaster .special-effects .controls {
+.fxmaster.specials .special-effects .controls {
   padding: 0 3px;
   line-height: 48px;
   flex: 0 0 40px;
   text-align: right;
 }
 
-.fxmaster .special-effects .preview {
+.fxmaster.specials .special-effects .preview {
   height: 48px;
   flex: 0 0 48px;
   background: black;
   border: 1px solid grey;
 }
 
-.fxmaster.effects.directory-list {
-  overflow-y: scroll;
-  height: 370px;
+.fxmaster.specials .action-toggle.active {
+  color: #f56b00;
+  text-shadow: #ff6400;
 }
 
-.fxmaster.filters.directory-list {
-  overflow-y: auto;
-  height: 35px;
+.fxmaster.specials .action-toggle a:hover {
+  text-shadow: #ff6400;
 }

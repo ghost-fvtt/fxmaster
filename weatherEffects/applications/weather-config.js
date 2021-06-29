@@ -8,7 +8,7 @@ export class WeatherConfig extends FormApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["form", "fxmaster", "sidebar-popout"],
+      classes: ["form", "fxmaster", "weathers", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
       submitOnClose: false,
@@ -49,7 +49,7 @@ export class WeatherConfig extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html
-      .find(".config.weather .weather-collapse")
+      .find(".config.weather .collapse")
       .click(event => this._onWeatherCollapse(event));
   }
 

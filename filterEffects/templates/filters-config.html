@@ -19,10 +19,10 @@
     </header>
     <div class="directory-list effects fxmaster">
         {{#each filters as |filter fkey|}}
-        <li class="directory-item config weather">
+        <li class="directory-item config filter">
             <header class="flexrow">
-                <div class="weather-icon"><i class="weather-icon {{filter.faIcon}}"></i></div>
-                <label class="weather-collapse">{{filter.label}} <i class="fa
+                <div class="icon"><i class="icon {{filter.faIcon}}"></i></div>
+                <label class="collapse">{{filter.label}} <i class="fa
                         fa-angle-down"></i></label>
                 <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked (lookup
                     @root.activeFilters fkey)}} />

@@ -11,3 +11,8 @@
     height: 16px;
     margin: 0 3px;
 }
+
+.fxmaster.filters.directory-list {
+  overflow-y: auto;
+  height: 35px;
+}

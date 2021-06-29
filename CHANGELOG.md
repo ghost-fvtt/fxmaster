@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - Spanish update
 - Inverted weather mask
 - set Timeout after stopping effect to force delete if particles are staying too long
+- Filters can be applied to a subset of layers
+- Added casting modes to Special effects config panel
 
 ## [1.1.4] - 2021-06-23
 ### Changed

@@ -84,18 +84,21 @@ export class AbstractWeatherEffect extends SpecialEffect {
   }
 
   setPeriod(value) {
+    this.options.period = value;
     for (const emitter of this.emitters) {
       emitter.frequency = value;
     }
   }
 
   setDensity(value) {
+    this.options.density = value;
     for (const emitter of this.emitters) {
       emitter.maxParticles = value;
     }
   }
 
   setDirection(value) {
+    this.options.direction = value;
     // Getting rotation span
     for (const emitter of this.emitters) {
       const span = emitter.maxStartRotation - emitter.minStartRotation;
@@ -104,14 +107,9 @@ export class AbstractWeatherEffect extends SpecialEffect {
     }
   }
 
-  setLifetime(value) {
-    // Getting rotation span
-    for (const emitter of this.emitters) {
-    }
-  }
-
   setTint(tint) {
     if (!tint.apply) return;
+    this.options.tint = tint;
     const value = tint.value;
     const colors = hexToRGB(colorStringToHex(value));
     for (const emitter of this.emitters) {

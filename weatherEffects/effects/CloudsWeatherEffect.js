@@ -26,6 +26,34 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return [this._getCloudEmitter(this.parent)];
   }
 
+  // @override
+  setDirection(value) {
+    this.options.direction = value;
+    this.emitters[0].minStartRotation = value;
+    this.emitters[0].maxStartRotation = value;
+    const spawnRect = {
+      ...this.emitters[0].spawnRect
+    };
+
+    // Need to change spawn rect so it spawns before the map
+    const quadran = Math.round((value % 360) / 90);
+    switch (quadran) {
+      case 0:
+        spawnRect.x -= 2 * spawnRect.width / 3;
+        break;
+      case 1:
+        spawnRect.y -= 2 * spawnRect.height / 3;
+        break;
+      case 2:
+        spawnRect.x += 2 * spawnRect.width / 3;
+        break;
+      case 3:
+        spawnRect.y += 2 * spawnRect.height / 3;
+        break;
+
+    }
+    this.emitters[0].spawnRect = spawnRect;
+  }
   /* -------------------------------------------- */
 
   _getCloudEmitter(parent) {
@@ -35,7 +63,7 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
       {
         spawnRect: {
           x: d.paddingX,
-          y: d.paddingY - 1024,
+          y: d.paddingY,
           w: d.sceneWidth,
           h: d.sceneHeight
         }
@@ -64,7 +92,7 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
       period: 0.5
     }
   }
-  
+
   /**
    * Configuration for the Bats particle effect
    * @type {Object}

@@ -31,6 +31,57 @@ export class SpecialsLayer extends PlaceablesLayer {
     return [];
   }
 
+  _configureProjectile(vidSprite, data) {
+    if (data.distance && (!data.speed || data.speed == "auto")) {
+      data.speed = data.distance / data.duration;
+    }
+    // Compute final position
+    const delta = data.duration * data.speed;
+    const deltaX = delta * Math.cos(data.rotation)
+    const deltaY = delta * Math.sin(data.rotation)
+
+    // Move the sprite
+    const attributes = [{
+      parent: vidSprite, attribute: 'x', to: data.position.x + deltaX
+    }, {
+      parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
+    }
+    ];
+    let animationDuration = data.duration * 1000;
+    if (foundry.utils.hasProperty(data, "animationDelay")) {
+      animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+    }
+    const animate = function () {
+      FXCanvasAnimation.animateSmooth(attributes, {
+        name: `fxmaster.video.${randomID()}.move`,
+        context: this,
+        duration: animationDuration,
+        ease: easeFunctions[data.ease]
+      })
+    }
+    if (foundry.utils.hasProperty(data, "animationDelay.start")) {
+      setTimeout(animate, data.animationDelay.start * 1000.0);
+    } else {
+      animate();
+    }
+  }
+
+
+  _configureSprite(vidSprite, data) {
+    // Set values
+    vidSprite.anchor.set(data.anchor.x, data.anchor.y);
+    vidSprite.rotation = Math.normalizeRadians(data.rotation - Math.toRadians(data.angle));
+    vidSprite.scale.set(data.scale.x, data.scale.y);
+    vidSprite.position.set(data.position.x, data.position.y);
+
+    // Extend sprite if a width is forced
+    vidSprite.width = data.width || vidSprite.width;
+
+    if (data.speed || data.distance) {
+      this._configureProjectile(vidSprite, data);
+    }
+  }
+
   playVideo(data) {
     return new Promise((resolve) => {
       // Set default values
@@ -57,52 +108,10 @@ export class SpecialsLayer extends PlaceablesLayer {
         const texture = PIXI.Texture.from(video);
         vidSprite = new PIXI.Sprite(texture);
         this.addChild(vidSprite);
-
-        // Set values
-        vidSprite.anchor.set(data.anchor.x, data.anchor.y);
-        vidSprite.rotation = Math.normalizeRadians(data.rotation - Math.toRadians(data.angle));
-        vidSprite.scale.set(data.scale.x, data.scale.y);
-        vidSprite.position.set(data.position.x, data.position.y);
-
-        vidSprite.width = data.width | vidSprite.width;
-
-        if ((!data.speed || data.speed === 0) && !data.distance) {
-          return;
-        }
-        if (data.distance && (data.speed == "auto" || !data.speed)) {
-          data.speed = data.distance / video.duration;
-        }
-        // Compute final position
-        const delta = video.duration * data.speed;
-        const deltaX = delta * Math.cos(data.rotation)
-        const deltaY = delta * Math.sin(data.rotation)
-
-        // Move the sprite
-        const attributes = [{
-          parent: vidSprite, attribute: 'x', to: data.position.x + deltaX
-        }, {
-          parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
-        }
-        ];
-        let animationDuration = video.duration * 1000;
-        if (foundry.utils.hasProperty(data, "animationDelay")) {
-          animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
-        }
-        const animate = function () {
-          FXCanvasAnimation.animateSmooth(attributes, {
-            name: `fxmaster.video.${randomID()}.move`,
-            context: this,
-            duration: animationDuration,
-            ease: easeFunctions[data.ease]
-          })
-        }
-        if (foundry.utils.hasProperty(data, "animationDelay.start")) {
-          setTimeout(animate, data.animationDelay.start * 1000.0);
-        } else {
-          animate();
-        }
+        data.dimensions = {w: video.videoWidth, h: video.videoHeight};
+        data.duration = video.duration;
+        this._configureSprite(vidSprite, data);
       };
-
       video.onerror = () => {
         this.removeChild(vidSprite);
         resolve();
@@ -214,23 +223,43 @@ export class SpecialsLayer extends PlaceablesLayer {
   }
 
   _drawSpecial(event) {
+    event.stopPropagation();
+
     const windows = Object.values(ui.windows);
     const effectConfig = windows.find((w) => w.id == "specials-config");
     if (!effectConfig) return;
-    const active = effectConfig.element.find(".active");
+    const active = effectConfig.element.find(".special-effects.active");
     if (active.length == 0) return;
 
     const id = active[0].dataset.effectId;
     const folder = active[0].closest(".folder").dataset.folderId;
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
-    let data = foundry.utils.mergeObject(effect, {
+
+    const data = {...effect, ...{
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,
       },
       rotation: event.data.rotation
-    });
-    event.stopPropagation();
+    }};
+
+    // Handling different casting modes
+    const actionToggle = effectConfig.element.find(".action-toggle.active a");
+    const mode = actionToggle[0].dataset.action;
+    const ray = new Ray(event.data.origin, event.data.destination);
+    switch (mode) {
+      case "cast-throw":
+        data.distance = ray.distance;
+        data.speed = "auto";
+        break;
+      case "cast-extend":
+        data.width = ray.distance;
+        data.speed = 0;
+        break;
+      case "cast-static":
+        break;
+    }
+
     game.socket.emit("module.fxmaster", data);
     return this.playVideo(data);
   }

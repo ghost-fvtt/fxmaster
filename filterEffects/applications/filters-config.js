@@ -4,7 +4,7 @@ import { resetFlags } from "../../module/utils.js";
 export class FiltersConfig extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["form", "fxmaster", "sidebar-popout"],
+      classes: ["form", "fxmaster", "filters", "sidebar-popout"],
       closeOnSubmit: true,
       submitOnChange: false,
       submitOnClose: false,
@@ -48,16 +48,16 @@ export class FiltersConfig extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html
-      .find(".config.weather .weather-collapse")
-      .click(event => this._onWeatherCollapse(event));
+      .find(".config.filter .collapse")
+      .click(event => this._onFilterCollapse(event));
   }
 
   /**
    * Handle Weather collapse toggle
    * @private
    */
-  _onWeatherCollapse(event) {
-    let li = $(event.currentTarget).parents(".config.weather"),
+  _onFilterCollapse(event) {
+    let li = $(event.currentTarget).parents(".config.filter"),
       expanded = !li.children(".config.collapsible").hasClass("collapsed");
     this._collapse(li, expanded);
   }
