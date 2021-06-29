@@ -340,6 +340,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     for (const video of this.videos) {
       game.video.stop(video);
     }
+    this.videos = [];
     return super.tearDown();
   }
 }
