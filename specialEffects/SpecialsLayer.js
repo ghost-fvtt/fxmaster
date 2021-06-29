@@ -235,14 +235,20 @@ export class SpecialsLayer extends PlaceablesLayer {
     const folder = active[0].closest(".folder").dataset.folderId;
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
 
-    const data = {...effect, ...{
+    const effectData = foundry.utils.deepClone(effect);
+    const data = {...effectData, ...{
       position: {
         x: event.data.origin.x,
         y: event.data.origin.y,
       },
       rotation: event.data.rotation
     }};
-
+    
+    if (!event.data.destination) {
+      game.socket.emit("module.fxmaster", data);
+      return this.playVideo(data);
+    }
+    
     // Handling different casting modes
     const actionToggle = effectConfig.element.find(".action-toggle.active a");
     const mode = actionToggle[0].dataset.action;
@@ -253,7 +259,7 @@ export class SpecialsLayer extends PlaceablesLayer {
         data.speed = "auto";
         break;
       case "cast-extend":
-        data.width = ray.distance;
+        data.width = ray.distance || data.width;
         data.speed = 0;
         break;
       case "cast-static":
@@ -302,6 +308,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     setTimeout(() => {
       if (!this._dragging) {
         event.data.rotation = 0;
+        event.data.destination = undefined;
         this._drawSpecial(event)
       }
       this._dragging = false;
