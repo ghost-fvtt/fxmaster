@@ -4,11 +4,11 @@
   "CONTROLS.Effects": "Effect Controls",
   "CONTROLS.Weather": "Weather Controls",
   "CONTROLS.Filters": "Filter Controls",
-  "CONTROLS.Underwater": "Underwater Filter",
   "CONTROLS.InvertMask": "Invert Weather Mask",
+  "CONTROLS.Underwater": "Underwater Filter",
   "CONTROLS.Predator": "Predator Filter",
-  "CONTROLS.OldFilm": "Old Film Filter",
   "CONTROLS.Bloom": "Bloom Filter",
+  "CONTROLS.OldFilm": "Old Film Filter",
   "CONTROLS.SpecialFX": "Special Effects",
   "CONTROLS.Colorize": "Colorize Effects",
   "CONTROLS.SaveMacro": "Export weather as Macro",
@@ -51,5 +51,8 @@
   "FXMASTER.EaseHint": "Speed animation easing function",
   "FXMASTER.PermissionCreate": "Use FXMaster special effects",
   "FXMASTER.PermissionCreateHint": "Allow usage of FXMaster special effects through the scene controls.",
-  "FXMASTER.MaskWeather": "Mask FXMaster Weather"
+  "FXMASTER.MaskWeather": "Mask FXMaster Weather",
+  "FXMASTER.CastStatic": "Face target",
+  "FXMASTER.CastThrow": "Throw to target",
+  "FXMASTER.CastExtend": "Extend to target"
 }
