@@ -36,7 +36,7 @@ export class FiltersConfig extends FormApplication {
     return {
       filters: CONFIG.fxmaster.filters,
       activeFilters: activeFilters,
-      layers: filteredLayers
+      layers: filteredLayers || {background: true, foreground: true, tokens: true, drawings: true}
     };
   }
 
