@@ -1,14 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.1.5] - 2021-06-27
+## [1.2.0] - 2021-07-03
 - **Breaking:** Reworked weather effects configuration
 - Added spider swarm weather effect
 - Spanish update
-- Inverted weather mask
+- Inverted weather mask toggle
 - set Timeout after stopping effect to force delete if particles are staying too long
 - Filters can be applied to a subset of layers
 - Added casting modes to Special effects config panel
+- Added canvas.fxmaster.playVideo migration warning
 
 ## [1.1.4] - 2021-06-23
 ### Changed
