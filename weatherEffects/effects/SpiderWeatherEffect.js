@@ -9,6 +9,12 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/spiders.png";
   }
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.1;
@@ -26,9 +32,9 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
       speed: 25,
       scale: 1,
       direction: 0,
-			density: Math.round(1000 * p) / 1000,
-			tint: "#FFFFFF",
-			period: Math.round(1000 * this.CONFIG.lifetime.min / p) / 1000
+      density: Math.round(1000 * p) / 1000,
+      tint: "#FFFFFF",
+      period: Math.round(1000 * this.CONFIG.lifetime.min / p) / 1000
     }
   }
 

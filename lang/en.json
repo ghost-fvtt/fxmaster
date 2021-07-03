@@ -54,5 +54,7 @@
   "FXMASTER.MaskWeather": "Mask FXMaster Weather",
   "FXMASTER.CastStatic": "Face target",
   "FXMASTER.CastThrow": "Throw to target",
-  "FXMASTER.CastExtend": "Extend to target"
+  "FXMASTER.CastExtend": "Extend to target",
+  "FXMASTER.CastExpand": "Expand to target",
+  "FXMASTER.CastRotate": "Rotate"
 }

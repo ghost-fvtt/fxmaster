@@ -9,6 +9,12 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/stars.png";
   }
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.01;
@@ -70,9 +76,9 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
       speed: 5,
       scale: 1,
       direction: 180,
-			density: Math.round(100 * p) / 100,
-			tint: "#bee8ee",
-			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      density: Math.round(100 * p) / 100,
+      tint: "#bee8ee",
+      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 

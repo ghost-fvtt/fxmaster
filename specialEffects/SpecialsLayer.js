@@ -47,6 +47,7 @@ export class SpecialsLayer extends PlaceablesLayer {
       parent: vidSprite, attribute: 'y', to: data.position.y + deltaY
     }
     ];
+
     let animationDuration = data.duration * 1000;
     if (foundry.utils.hasProperty(data, "animationDelay")) {
       animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
@@ -54,6 +55,29 @@ export class SpecialsLayer extends PlaceablesLayer {
     const animate = function () {
       FXCanvasAnimation.animateSmooth(attributes, {
         name: `fxmaster.video.${randomID()}.move`,
+        context: this,
+        duration: animationDuration,
+        ease: easeFunctions[data.ease]
+      })
+    }
+    if (foundry.utils.hasProperty(data, "animationDelay.start")) {
+      setTimeout(animate, data.animationDelay.start * 1000.0);
+    } else {
+      animate();
+    }
+  }
+
+  _configureRotate(vidSprite, data) {
+    const attributes = [{
+      parent: vidSprite, attribute: 'angle', to: 90 * data.rotationSpeed
+    }];
+    let animationDuration = data.duration * 1000;
+    if (foundry.utils.hasProperty(data, "animationDelay")) {
+      animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
+    }
+    const animate = function () {
+      FXCanvasAnimation.animateSmooth(attributes, {
+        name: `fxmaster.video.${randomID()}.rotate`,
         context: this,
         duration: animationDuration,
         ease: easeFunctions[data.ease]
@@ -75,10 +99,19 @@ export class SpecialsLayer extends PlaceablesLayer {
     vidSprite.position.set(data.position.x, data.position.y);
 
     // Extend sprite if a width is forced
-    vidSprite.width = data.width || vidSprite.width;
+    if (data.width) {
+      if (data.keepAspect) {
+        const aspectRatio = vidSprite.height / vidSprite.width;
+        vidSprite.height = data.width * aspectRatio;
+      }
+      vidSprite.width = data.width;
+    }
 
     if (data.speed || data.distance) {
       this._configureProjectile(vidSprite, data);
+    }
+    if (data.rotationSpeed) {
+      this._configureRotate(vidSprite, data);
     }
   }
 
@@ -108,7 +141,7 @@ export class SpecialsLayer extends PlaceablesLayer {
         const texture = PIXI.Texture.from(video);
         vidSprite = new PIXI.Sprite(texture);
         this.addChild(vidSprite);
-        data.dimensions = {w: video.videoWidth, h: video.videoHeight};
+        data.dimensions = { w: video.videoWidth, h: video.videoHeight };
         data.duration = video.duration;
         this._configureSprite(vidSprite, data);
       };
@@ -236,19 +269,21 @@ export class SpecialsLayer extends PlaceablesLayer {
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
 
     const effectData = foundry.utils.deepClone(effect);
-    const data = {...effectData, ...{
-      position: {
-        x: event.data.origin.x,
-        y: event.data.origin.y,
-      },
-      rotation: event.data.rotation
-    }};
-    
+    const data = {
+      ...effectData, ...{
+        position: {
+          x: event.data.origin.x,
+          y: event.data.origin.y,
+        },
+        rotation: event.data.rotation
+      }
+    };
+
     if (!event.data.destination) {
       game.socket.emit("module.fxmaster", data);
       return this.playVideo(data);
     }
-    
+
     // Handling different casting modes
     const actionToggle = effectConfig.element.find(".action-toggle.active a");
     const mode = actionToggle[0].dataset.action;
@@ -260,6 +295,15 @@ export class SpecialsLayer extends PlaceablesLayer {
         break;
       case "cast-extend":
         data.width = ray.distance || data.width;
+        data.speed = 0;
+        break;
+      case "cast-expand":
+        data.width = ray.distance || data.width;
+        data.keepAspect = true;
+        data.speed = 0;
+        break;
+      case "cast-rotate":
+        data.rotationSpeed = ray.distance / canvas.grid.w;
         data.speed = 0;
         break;
       case "cast-static":
@@ -338,7 +382,7 @@ export class SpecialsLayer extends PlaceablesLayer {
   /** @override */
   tearDown() {
     for (const video of this.videos) {
-      game.video.stop(video);
+      video.remove();
     }
     this.videos = [];
     return super.tearDown();

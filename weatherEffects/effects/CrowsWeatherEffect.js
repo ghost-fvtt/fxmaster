@@ -9,6 +9,12 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/crows.png";
   }
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.001;
@@ -86,9 +92,9 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
       speed: 100,
       scale: 1,
       direction: 180,
-			density: Math.round(100 * p) / 100,
-			tint: "#FFFFFF",
-			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      density: Math.round(100 * p) / 100,
+      tint: "#FFFFFF",
+      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 

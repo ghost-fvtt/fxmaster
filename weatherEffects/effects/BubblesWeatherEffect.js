@@ -9,6 +9,12 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/bubbles.png";
   }
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   /* -------------------------------------------- */
 
   static get effectOptions() {
@@ -59,9 +65,9 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
       speed: 60,
       scale: 1,
       direction: 180,
-			density: Math.round(100 * p) / 100,
-			tint: "#FFFFFF",
-			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      density: Math.round(100 * p) / 100,
+      tint: "#FFFFFF",
+      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 

@@ -9,6 +9,12 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/bats.png";
   }
 
+  static get parameters() {
+  return foundry.utils.mergeObject(super.parameters, {
+    "-=direction": undefined
+  });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.01;

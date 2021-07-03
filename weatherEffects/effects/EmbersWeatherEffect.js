@@ -9,12 +9,18 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/weatherEffects/icons/embers.png";
   }
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.15;
     options.density.value = 0.7;
     options.density.max = 1;
-    options.density.step = 0.05;
+    options.density.step = 0.1;
     return options;
   }
 
@@ -60,9 +66,9 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
       speed: 40,
       scale: 1,
       direction: 180,
-			density: Math.round(100 * p) / 100,
-			tint: "#f77300",
-			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      density: Math.round(100 * p) / 100,
+      tint: "#f77300",
+      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 
@@ -111,8 +117,8 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
         max: 200
       },
       lifetime: {
-        min: 5,
-        max: 8
+        min: 4,
+        max: 6
       },
       blendMode: "screen",
       emitterLifetime: -1

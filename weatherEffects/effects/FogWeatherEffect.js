@@ -11,6 +11,12 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
 
   /* -------------------------------------------- */
 
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=direction": undefined
+    });
+  }
+
   static get effectOptions() {
     const options = super.effectOptions;
     options.density.min = 0.02;
@@ -65,9 +71,9 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
       speed: 15,
       scale: 1,
       direction: 180,
-			density: Math.round(100 * p) / 100,
-			tint: "#FFFFFF",
-			period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      density: Math.round(100 * p) / 100,
+      tint: "#FFFFFF",
+      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
     }
   }
 
