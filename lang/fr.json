@@ -51,5 +51,7 @@
     "FXMASTER.MaskWeather": "Masque la Météo FXMaster",
     "FXMASTER.CastStatic": "En direction de la cible",
     "FXMASTER.CastThrow": "En lançant vers la cible",
-    "FXMASTER.CastExtend": "En étendant vers la cible"
+    "FXMASTER.CastExtend": "En étendant jusqu'à la cible",
+    "FXMASTER.CastExpand": "En grandissant jusqu'à la cible",
+    "FXMASTER.CastRotate": "En tournoyant"
   }
