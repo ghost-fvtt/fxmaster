@@ -70,8 +70,7 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 180,
       density: Math.round(200 * p) / 100,
-      tint: "#FFFFFF",
-      period: 0.02
+      tint: "#FFFFFF"
     }
   }
 

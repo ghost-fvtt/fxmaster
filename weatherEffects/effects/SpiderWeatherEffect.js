@@ -33,8 +33,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 0,
       density: Math.round(1000 * p) / 1000,
-      tint: "#FFFFFF",
-      period: Math.round(1000 * this.CONFIG.lifetime.min / p) / 1000
+      tint: "#FFFFFF"
     }
   }
 
@@ -71,7 +70,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
     for (let i = 0; i < 25; i++) {
       anim_sheet.textures.push({
         count: 1,
-        texture: `./modules/fxmaster/weatherEffects/effects/assets/spider.${String(i).padStart(4, '0')}.png`
+        texture: `./modules/fxmaster/weatherEffects/effects/assets/Spider.${String(i).padStart(4, '0')}.png`
       })
     }
     var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);

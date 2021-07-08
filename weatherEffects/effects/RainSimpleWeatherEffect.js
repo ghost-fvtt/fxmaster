@@ -45,8 +45,7 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
       direction: 75,
       density: p,
 	  density: Math.round(100 * p) / 100,
-	  tint: "#FFFFFF",
-	  period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+	  tint: "#FFFFFF"
     }
   }
 

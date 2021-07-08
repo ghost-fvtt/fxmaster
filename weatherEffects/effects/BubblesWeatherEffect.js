@@ -66,8 +66,7 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 180,
       density: Math.round(100 * p) / 100,
-      tint: "#FFFFFF",
-      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      tint: "#FFFFFF"
     }
   }
 

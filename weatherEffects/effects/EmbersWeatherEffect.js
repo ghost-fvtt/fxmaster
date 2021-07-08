@@ -67,8 +67,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 180,
       density: Math.round(100 * p) / 100,
-      tint: "#f77300",
-      period: Math.round(100 * this.CONFIG.lifetime.min / p) / 100
+      tint: "#f77300"
     }
   }
 

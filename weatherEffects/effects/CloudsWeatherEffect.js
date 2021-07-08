@@ -88,8 +88,7 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 90,
       density: 100,
-      tint: "#FFFFFF",
-      period: 0.5
+      tint: "#FFFFFF"
     }
   }
 

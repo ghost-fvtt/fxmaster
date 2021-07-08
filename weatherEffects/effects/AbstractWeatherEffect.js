@@ -1,23 +1,29 @@
 export class AbstractWeatherEffect extends SpecialEffect {
   static get parameters() {
     return {
+      scale: {
+        label: "FXMASTER.Scale",
+        type: "range",
+        callback: "setScale",
+        default: 1,
+        step: 0.1,
+        min: 0,
+        max: 10
+      },
+      direction: {
+        label: "FXMASTER.Direction",
+        type: "range",
+        step: 10,
+        max: 360,
+        min: 0,
+        callback: "setDirection",
+        default: 0
+      },
       speed: {
         label: "FXMASTER.Speed",
         type: "number",
         callback: "setSpeed",
         default: 10
-      },
-      scale: {
-        label: "FXMASTER.Scale",
-        type: "number",
-        callback: "setScale",
-        default: 1
-      },
-      period: {
-        label: "FXMASTER.Period",
-        type: "number",
-        callback: "setPeriod",
-        default: 1
       },
       density: {
         label: "FXMASTER.Density",
@@ -34,12 +40,6 @@ export class AbstractWeatherEffect extends SpecialEffect {
           apply: false
         }
       },
-      direction: {
-        label: "FXMASTER.Direction",
-        type: "number",
-        callback: "setDirection",
-        default: 0
-      }
     }
   }
 
@@ -83,17 +83,12 @@ export class AbstractWeatherEffect extends SpecialEffect {
     }
   }
 
-  setPeriod(value) {
-    this.options.period = value;
-    for (const emitter of this.emitters) {
-      emitter.frequency = value;
-    }
-  }
-
   setDensity(value) {
     this.options.density = value;
     for (const emitter of this.emitters) {
+      const oldP = emitter.maxParticles;
       emitter.maxParticles = value;
+      emitter.frequency *= value / oldP;
     }
   }
 
