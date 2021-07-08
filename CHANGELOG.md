@@ -1,7 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2021-07-08
+### Changed
+- Reworked sliders to be easier to work with
+- Fixed spider assets names
+
 ## [1.2.0] - 2021-07-03
+# Added
 - **Breaking:** Reworked weather effects configuration
 - Added spider swarm weather effect
 - Spanish update
