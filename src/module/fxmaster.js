@@ -147,17 +147,6 @@ Hooks.on("deleteDrawing", () => {
   canvas.fxmaster.updateMask();
 });
 
-Hooks.on("renderSidebarTab", async (object, html) => {
-  if (object instanceof Settings) {
-    const details = html.find("#game-details");
-    const fxDetails = document.createElement("li");
-    fxDetails.classList.add("donation-link");
-    fxDetails.innerHTML =
-      "FXMaster <a title='Donate' href='https://ko-fi.com/u_man'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/boards/1546773'>Report issue</a></span>";
-    details.append(fxDetails);
-  }
-});
-
 Hooks.on("updateSetting", (data) => {
   if (data.data.key === "fxmaster.specialEffects") {
     parseSpecialEffects();
