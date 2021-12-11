@@ -211,7 +211,7 @@ data. The easing options are given in the `ease.js` file.
 
 ## Adding Your Own Special Effects to FXMaster
 
-Here is a demo module you can use as a template: [Specials module Template](https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template).
+Here is a demo module you can use as a template: [FoundryVTT FXMaster Specials Demo Template].
 
 In one file, you configure each of your special effects:
 
@@ -253,9 +253,9 @@ Hooks.once("init", function () {
 
 The effects should now appear in the Specials selection dialog.
 
-## Community Contribution
+## Contributing
 
-Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge
+Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit pull
 requests for code changes.
 
 ## Acknowledgement
@@ -278,6 +278,7 @@ Many thanks to:
 * The Seagull sprites used in the Birds weather effect are from [whtdragon].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
+[FoundryVTT FXMaster Specials Demo Template]: https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template
 [Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
 [Jinker's Animated Art]: https://github.com/jinkergm/JAA
 [JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
