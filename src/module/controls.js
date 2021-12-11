@@ -16,7 +16,7 @@ function getSceneControlButtons(controls) {
     title: "CONTROLS.Effects",
     icon: "fas fa-magic",
     layer: "specials",
-    visible: game.user.can("EFFECT_CREATE") || game.user.isGM,
+    visible: game.user.role >= game.settings.get("fxmaster", "permission-create"),
     tools: [
       {
         name: "specials",

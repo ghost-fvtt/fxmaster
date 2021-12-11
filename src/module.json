@@ -79,6 +79,6 @@
   "license": "https://github.com/ghost-fvtt/fxmaster/blob/master/LICENSE",
   "readme": "https://github.com/ghost-fvtt/fxmaster#readme",
   "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "9",
   "minimumCoreVersion": "0.8.5"
 }

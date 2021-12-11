@@ -15,21 +15,9 @@ window.FXMASTER = {
 };
 
 function registerLayer() {
-  CONFIG.Canvas.layers = foundry.utils.mergeObject(CONFIG.Canvas.layers, {
-    fxmaster: WeatherLayer,
-    specials: SpecialsLayer,
-  });
-  // Overriding other modules if needed
-  if (!Object.is(Canvas.layers, CONFIG.Canvas.layers)) {
-    console.error("Possible incomplete layer injection by other module detected!...");
-
-    const layers = Canvas.layers;
-    Object.defineProperty(Canvas, "layers", {
-      get: function () {
-        return foundry.utils.mergeObject(layers, CONFIG.Canvas.layers);
-      },
-    });
-  }
+  const isV9OrLater = game.release?.generation ?? 0 >= 9;
+  CONFIG.Canvas.layers.fxmaster = isV9OrLater ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
+  CONFIG.Canvas.layers.specials = isV9OrLater ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
 }
 
 function parseSpecialEffects() {
@@ -54,13 +42,6 @@ Hooks.once("init", function () {
   registerHooks();
   registerLayer();
   registerHelpers();
-
-  CONST.USER_PERMISSIONS.EFFECT_CREATE = {
-    label: "FXMASTER.PermissionCreate",
-    hint: "FXMASTER.PermissionCreateHint",
-    defaultRole: 2,
-    disableGM: false,
-  };
 
   // Adding filters, weathers and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
