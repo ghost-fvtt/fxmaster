@@ -40,11 +40,6 @@
       "path": "lang/fr.json"
     },
     {
-      "lang": "cn",
-      "name": "Chinese",
-      "path": "lang/cn.json"
-    },
-    {
       "lang": "zh-tw",
       "name": "正體中文",
       "path": "lang/zh-tw.json"
