@@ -42,10 +42,10 @@ FXMaster provides helper functions to interact with filters and weather effects 
 ### Filters
 
 ```javascript
-FXMASTER.filters.switch("myfilterID", "color", { color: "#ff00ff", gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
+FXMASTER.filters.switch("myfilterID", "color", { color: {value:"#ff00ff", apply:true}, gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
 ```
 
-#### Available Filter Options
+#### Available Filters Effects
 * `bloom`
 * `color`
 * `fog`
@@ -74,7 +74,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
   ]);
   ```
 
-#### Available Weather Options
+#### Available Weather Effects
 
 Weather types:
 
