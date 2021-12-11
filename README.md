@@ -1,34 +1,43 @@
- [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-<a href='https://ko-fi.com/H2H21WMKA' target='_blank'><img height='20' style='border:0px;height:20px;' src='https://cdn.ko-fi.com/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+# FXMaster
 
-# FX Master
+[![Checks](https://github.com/ghost-fvtt/fxmaster/workflows/Checks/badge.svg)](https://github.com/ghost-fvtt/fxmaster/actions)
+![Supported Foundry Versions](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/ghost-fvtt/fxmaster/master/src/module.json)
+![Latest Release Download Count](https://img.shields.io/github/downloads/ghost-fvtt/fxmaster/latest/module.zip)
+[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffxmaster&colorB=4aa94a)](https://forge-vtt.com/bazaar#fxmaster)
+[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffxmaster%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/fxmaster/)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-ghostfvtt-00B9FE?logo=kofi)](https://ko-fi.com/ghostfvtt)
 
-FXMaster is a Foundry VTT module that adds various special effects
+FXMaster is a module for [Foundry Virtual Tabletop] that adds various special effects:
 
-- Global effects called weather effects like clouds, fog, but also crows and bats
-- Filters including color overlays and underwater
-- Clickable special effects, using video effects provided by external sources
+* Global effects, called weather effects, like clouds, fog, but also crows and bats.
+* Filters, including color overlays and underwater.
+* Clickable special effects, using video effects provided by external sources.
 
-This module is made to have an easy configuration.
-
+This module also provides ways to easily configure these effects.
 
 ## Installation Instructions
 
-To install the FXMaster module for Foundry Virtual Tabletop, find FXMaster in the module browser, or paste the following URL into the Install System
-dialog on the Setup menu of the application.
-https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster/-/raw/master/module.json
-If you wish to manually install the module, you must clone or extract it into the Data/modules/fxmaster folder. You
-may do this by cloning the repository.
+To install FXMaster, find FXMaster in the module browser, or paste the following URL into the Install System dialog in
+the Setup menu of the Foundry Virtual Tabletop:
 
-## Quick tips
+```
+https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
+```
 
-FXMaster controls are accessible through the magic wand control on the left of the map.
-The Magic hat represents special effects. There are a couple built-ins I borrowed from modules from Jules and Ben's or Jinker. You should install their module to enjoy plenty more. You can add your own as soon as you have a video file. When you add one you should resync the dialog, or close and reopen it.
-To cast your Special Effects you can simply click on the canvas. You can orient it if you click, drag your cursor to the direction you want to cast it and drop.
+## Quick Tips
 
-## API for developpers
+* The FXMaster controls are accessible through the magic wand control icon.
+* The Magic hat represents special effects.
+* There are a couple built-ins that are borrowed from modules from Jules and Ben and Jinker. Installing their modules will
+  give you access to many more of their brilliant assets.
+* You can add your own video files as custom special effects. After adding a custom special effect, you should resync
+  the dialog, or close and reopen it.
+* Playing the special effects is done by clicking on the canvas. You can orient them by clicking and dragging the cursor
+  into the direction you want to the effect to face.
 
-I added helper functions to add filters and weather effects from other modules
+## Developer API
+
+FXMaster provides helper functions to interact with filters and weather effects from other packages.
 
 ### Filters
 
@@ -36,73 +45,74 @@ I added helper functions to add filters and weather effects from other modules
 FXMASTER.filters.switch("myfilterID", "color", { color: "#ff00ff", gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
 ```
 
-#### Available Filter options
-- `bloom`
-- `color`
-- `fog`
-- `lightning`
-- `oldfilm`
-- `predator`
-- `underwater`
+#### Available Filter Options
+* `bloom`
+* `color`
+* `fog`
+* `lightning`
+* `oldfilm`
+* `predator`
+* `underwater`
 
 You can get a complete list by typing `CONFIG.fxmaster.filters` in your web console.
 
 ### Weather
 
-- Switching a named weather effect on and off
+* Switching a named weather effect on and off:
+  ```javascript
+  Hooks.call("switchWeather", {
+    name: "myweatherID",
+    type: "rain",
+    options: { density: 100 },
+  });
+  ```
+* Seting the active weather effects:
+  ```javascript
+  Hooks.call("updateWeather", [
+    { type: "rain", options: {} },
+    { type: "bubbles", options: {} },
+  ]);
+  ```
 
-```javascript
-Hooks.call("switchWeather", {
-  name: "myweatherID",
-  type: "rain",
-  options: { density: 100 },
-});
-```
-
-- Set the active weather effects
-
-```javascript
-Hooks.call("updateWeather", [
-  { type: "rain", options: {} },
-  { type: "bubbles", options: {} },
-]);
-```
-
-#### Available Weather options:
+#### Available Weather Options
 
 Weather types:
 
-- rain
-- bats
-- bubbles
-- clouds
-- fog
-- embers
-- crows
-- raintop
+* `rain`
+* `bats`
+* `bubbles`
+* `clouds`
+* `fog`
+* `embers`
+* `crows`
+* `raintop`
 
-Options
-- speed
-- scale
-- density
-- direction
-- tint (must set apply_tint to true)
+Options:
+* `speed`
+* `scale`
+* `density`
+* `direction`
+* `apply_tint`
+* `tint` (only has an effect if `apply_tint` is to true)
 
 ### Special Effects
 
-Special effects are controls and helpers to play temporary video files over the canvas. They are defined by several parameters
+Special effects are controls and helpers to play temporary video files on the canvas. They are defined by several
+parameters:
 
-- **file**: the video file path
-- **anchor** (x, y): the starting point of the effect. Those are values between 0 and 1.0, and are fractions of the width or height of the video file.
-- **position** (x, y): the position at which the anchor of the effect will be placed.
-- **angle** (degrees): the initial direction the effect, by default I assume an effect is going from left to right, you would have to set another value if it's not the case.
-- **speed**: the speed at which the effect will move toward
-- **scale** (x, y): self explanatory
-- **animationDelay** (start, end): Delays before or after the effect will move if speed > 0
-- **ease**: Easing function used to have a more natural move animation
-- **width**: Sets the width of the sprite, can be used to stretch a beam toward a specific target
+* `file`: The video file path
+* `anchor` (x, y): The starting point of the effect. Those are values between `0` and `1.0`, representing fractions of
+  the width and height of the video file.
+* `position` (x, y): The position at which the anchor of the effect is be placed.
+* `angle` (degrees): The initial direction of the effect. The default assumption is that the effect direction from left
+  to right. If that's not the case, you need to set this value accordingly.
+* `speed`: The speed at which the effect plays and moves.
+* `scale` (x, y): The scale of the effect.
+* `animationDelay` (start, end): Delays before and after the effect plays (if `speed > 0`)
+* `ease`: The easing function to use in order for the movement animation to look more natural.
+* `width`: Sets the width of the sprite. For example, this can be used to stretch a beam towards a specific target.
 
-#### Play a video file on the canvas
+#### Playing a Video File on the Canvas
 
 ```javascript
 const data = {
@@ -126,19 +136,24 @@ canvas.specials.playVideo(data);
 game.socket.emit("module.fxmaster", data);
 ```
 
-#### Retrieving effect presets
+#### Retrieving Effect Presets
+
 From module presets
+
 ```js
-const effectData=CONFIG.fxmaster.specials.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
+const effectData = CONFIG.fxmaster.specials.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
 ```
+
 From custom presets
+
 ```js
 const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label === "Energy Circle");
 ```
 
-#### Play a video file between two tokens
+#### Playing a Video File Between Two Tokens
 
-You can use the `canvas.specials.drawSpecialToward` method with an automatic speed to adapt speed so the video ends when the target is reached.
+You can use the `canvas.specials.drawSpecialToward` method with an automatic speed to adapt speed so that the video ends
+when the target is reached.
 
 ```javascript
 function castSpell(effect) {
@@ -168,10 +183,10 @@ castSpell({
 });
 ```
 
-#### Animation easing
+#### Animation Easing
 
-You can customize the `canvas.specials.drawSpecialToward` to ease the animation toward the target.
-Here is an example data, easing options are given in the ease.js file.
+You can customize the `canvas.specials.drawSpecialToward` to ease the animation toward the target. Here is some example
+data. The easing options are given in the `ease.js` file.
 
 ```javascript
 {
@@ -194,12 +209,14 @@ Here is an example data, easing options are given in the ease.js file.
 }
 ```
 
-## Adding your special effects to FXMaster
-Here is a demo module you can use as a template [Specials module Template](https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template).
+## Adding Your Own Special Effects to FXMaster
 
-In a first file, you will configure each one of your special effects
+Here is a demo module you can use as a template: [Specials module Template](https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template).
+
+In one file, you configure each of your special effects:
+
 ```javascript
-export const Effects = {
+export const effects = {
   label: "MYMODULE",
   effects: [
     {
@@ -220,35 +237,49 @@ export const Effects = {
   ],
 };
 ```
-Then in a second file you can add the previously created effects by merging them with the CONFIG.fxmaster.specials object as follow.
+
+Then, in a second file, you add the previously created effects by merging them into the `CONFIG.fxmaster.specials`
+object as follows:
 
 ```javascript
-import { Effects } from "./effects.js";
+import { effects } from "./effects.js";
 
 Hooks.once("init", function () {
   // Adding specials
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  foundry.utils.mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: Effects } });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: effects } });
 });
 ```
-Effects should now appear in the Specials selection dialog
+
+The effects should now appear in the Specials selection dialog.
 
 ## Community Contribution
 
 Code and content contributions are accepted. Please feel free to submit issues to the issue tracker or submit merge
-requests for code changes. Approval for such requests involves code and (if necessary) design review by U~man. Please
-reach out on the Foundry Community Discord with any questions.
+requests for code changes.
 
-## Thanks
+## Acknowledgement
+
 Many thanks to:
-- `theripper93` for bringing his ideas to handle weather masking elegantly.
-- `Wasp` for providing the sequencer module that will inspire future updates.
-- `SecretFire` for exchanging ideas, providing help and shaders for filter effects, donate [here](https://ko-fi.com/secretfire).
+
+* `U~man` for the original work on this module. Really, most of this is his work.
+* `theripper93` for contributing his ideas regarding handling weather masking elegantly.
+* `Wasp` for providing the [Sequencer] module that will inspire future updates.
+* `SecretFire` for exchanging ideas, providing help, and shaders for the filter effects. Donate
+  [here](https://ko-fi.com/secretfire).
 
 ## Licensing
 
-FXMaster Foundry VTT Module is shared under BSD 3-Clause License.
+* FXMaster is licensed under the BSD 3-Clause "New" or "Revised" License, a copy of which can be found at
+  [LICENSE.md](./LICENSE.md).
+* Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art] and are licensed as free
+  for use.
+* Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
+* The Seagull sprites used in the Birds weather effect are from [whtdragon].
 
-Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art Foundry VTT Module](https://github.com/jinkergm/JAA), they are shared as free for use.
-Jules and Ben's Witch Bolt is borrowed from [JB2A_DnD5E Foundry VTT Module](https://github.com/Jules-Bens-Aa/JB2A_DnD5e), it is shared under [Creative Commons v4](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-Seagull sprites used in the Birds weather effect are from [whtdragon](https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/)
+[Foundry Virtual Tabletop]: https://foundryvtt.com/
+[Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
+[Jinker's Animated Art]: https://github.com/jinkergm/JAA
+[JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
+[CC BY-NC-SA-4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
+[whtdragon]: https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/
