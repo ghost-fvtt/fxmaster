@@ -1,0 +1,64 @@
+{
+  "name": "fxmaster",
+  "version": "1.2.1",
+  "description": "Adds various weather and filter effects.",
+  "private": true,
+  "scripts": {
+    "build": "run-s clean:files build:files",
+    "build:files": "rollup -c",
+    "watch": "rollup -c -w",
+    "link-package": "node ./tools/link-package.mjs",
+    "clean": "run-p clean:files clean:link",
+    "clean:files": "rimraf dist",
+    "clean:link": "node ./tools/link-package.mjs --clean",
+    "lint": "eslint --ext .js,.mjs .",
+    "lint:fix": "eslint --ext .js,.mjs --fix .",
+    "format": "prettier --write \"./**/*.(js|mjs|json|css|yml)\"",
+    "release": "standard-version",
+    "postinstall": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghost-fvtt/fxmaster.git"
+  },
+  "contributors": [
+    {
+      "name": "Emmanuel Ruaud",
+      "discord": "U~man"
+    },
+    {
+      "name": "Johannes Loher",
+      "email": "johannes.loher@fg4f.de",
+      "discord": "ghost#2000"
+    }
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/ghost-fvtt/fxmaster/issues"
+  },
+  "homepage": "https://github.com/ghost-fvtt/fxmaster#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@guanghechen/rollup-plugin-copy": "^1.8.5",
+    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.61.1",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-styles": "^3.14.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "standard-version": "^9.3.2",
+    "stringify-package": "^1.0.1"
+  },
+  "lint-staged": {
+    "*.(js|mjs)": "eslint --fix",
+    "*.(json|css|yml)": "prettier --write"
+  }
+}

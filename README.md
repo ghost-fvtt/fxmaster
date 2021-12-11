@@ -154,7 +154,7 @@ function castSpell(effect) {
 
 castSpell({
   file:
-    "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+    "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
   anchor: {
     x: -0.08,
     y: 0.5,
@@ -175,7 +175,7 @@ Here is an example data, easing options are given in the ease.js file.
 
 ```javascript
 {
-    file: "modules/fxmaster/specials/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+    file: "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
     anchor: {
         x: -.08,
         y: 0.5
@@ -204,7 +204,7 @@ export const Effects = {
   effects: [
     {
       label: "Smoke Bomb",
-      file: "modules/fxmaster/specials/fxmaster/smokeBomb.webm",
+      file: "modules/fxmaster/assets/specialEffects/fxmaster/smokeBomb.webm",
       scale: {
         x: 1.0,
         y: 1.0,
@@ -247,7 +247,7 @@ Many thanks to:
 
 ## Licensing
 
-FXMaster Foundry VTT Module is shared under BSD 3-Clause License .
+FXMaster Foundry VTT Module is shared under BSD 3-Clause License.
 
 Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art Foundry VTT Module](https://github.com/jinkergm/JAA), they are shared as free for use.
 Jules and Ben's Witch Bolt is borrowed from [JB2A_DnD5E Foundry VTT Module](https://github.com/Jules-Bens-Aa/JB2A_DnD5e), it is shared under [Creative Commons v4](https://creativecommons.org/licenses/by-nc-sa/4.0/)

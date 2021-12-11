@@ -1,0 +1,18 @@
+.layer-toggle {
+  text-align: center;
+}
+.layer-toggle span {
+  font-size: 12px;
+  vertical-align: text-top;
+}
+.layer-toggle input[type="checkbox"] {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin: 0 3px;
+}
+
+.fxmaster.filters.directory-list {
+  overflow-y: auto;
+  height: 35px;
+}

@@ -1,0 +1,48 @@
+.fxmaster .directory-header {
+  box-shadow: 0 0 5px black;
+  line-height: 12px;
+  font-size: 12px;
+  margin: 0;
+  padding: 2px 0;
+}
+
+.fxmaster.specials .directory-item.special-effects {
+  line-height: inherit;
+}
+
+.fxmaster .special-effects .description {
+  padding: 4px;
+  overflow: hidden;
+}
+
+.fxmaster .special-effects .description h4 {
+  line-height: 16px;
+  text-indent: 5px;
+  font-size: 14px;
+  height: 32px;
+}
+
+.fxmaster .special-effects .description .author {
+  line-height: 10px;
+  color: grey;
+  text-align: right;
+  font-size: 10px;
+  flex: 0 10px;
+}
+
+.fxmaster .special-effects .controls {
+  padding: 0 3px;
+  line-height: 48px;
+  flex: 0 0 40px;
+  text-align: right;
+}
+
+.fxmaster.effects.directory-list {
+  overflow-y: scroll;
+  height: 370px;
+}
+
+.fxmaster.filters.directory-list {
+  overflow-y: auto;
+  height: 35px;
+}

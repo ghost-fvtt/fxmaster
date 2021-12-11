@@ -1,0 +1,84 @@
+{
+  "name": "fxmaster",
+  "title": "FXMaster",
+  "description": "<p>Adds various weather and filter effects</p>",
+  "version": "1.2.1",
+  "author": "U~man, Johannes Loher (ghost#20000)",
+  "authors": [
+    {
+      "name": "Emmanuel Ruaud",
+      "discord": "U~man"
+    },
+    {
+      "name": "Johannes Loher",
+      "email": "johannes.loher@fg4f.de",
+      "discord": "ghost#2000",
+      "ko-fi": "ghostfvtt"
+    }
+  ],
+  "scripts": ["libs/filters/pixi-filters.js"],
+  "esmodules": ["module/fxmaster.js"],
+  "styles": ["css/fxmaster.css"],
+  "packs": [
+    {
+      "name": "fxmaster",
+      "label": "FXMaster",
+      "package": "fxmaster",
+      "path": "packs/macros.db",
+      "entity": "Macro"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "French (FRANCE)",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "cn",
+      "name": "Chinese",
+      "path": "lang/cn.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-tw.json"
+    },
+    {
+      "lang": "ca",
+      "name": "Catalan",
+      "path": "lang/ca.json"
+    },
+    {
+      "lang": "ko",
+      "name": "Korean",
+      "path": "lang/ko.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
+  ],
+  "socket": true,
+  "url": "https://github.com/ghost-fvtt/fxmaster",
+  "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
+  "allowBugReporter": true,
+  "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
+  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v1.2.1/module.zip",
+  "license": "https://github.com/ghost-fvtt/fxmaster/blob/master/LICENSE",
+  "readme": "https://github.com/ghost-fvtt/fxmaster#readme",
+  "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
+  "compatibleCoreVersion": "0.8.8",
+  "minimumCoreVersion": "0.8.5"
+}
