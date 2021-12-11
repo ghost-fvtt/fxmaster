@@ -47,7 +47,7 @@
   "FXMASTER.AnimationDelay": "Délai",
   "FXMASTER.Ease": "Ease",
   "FXMASTER.PermissionCreate": "Autoriser les effets spéciaux FXMaster",
-  "FXMASTER.PermissionCreateHint": "Autorise l'utilisation des effets spéciaux de FXMaster grâce aux contrôles de scène.",
+  "FXMASTER.PermissionCreateHint": "Permettre aux utilisateurs ayant le rôle sélectionné ou supérieur d'utiliser les effets spéciaux de FXMaster par le biais des commandes de scène.",
   "FXMASTER.MaskWeather": "Masque la Météo FXMaster",
   "FXMASTER.CastStatic": "En direction de la cible",
   "FXMASTER.CastThrow": "En lançant vers la cible",
