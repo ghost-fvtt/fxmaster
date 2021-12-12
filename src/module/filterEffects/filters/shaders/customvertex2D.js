@@ -1,5 +1,5 @@
 // Copyright © SecretFire 2021
-// This file is under GPL-3.0 License
+// This file is under BSD-3-Clause License
 
 // Custom vertex shader with filterLocalCoord()
 

@@ -1,5 +1,5 @@
 // Copyright © SecretFire 2021
-// This file is under GPL-3.0 License
+// This file is under BSD-3-Clause License
 
 export const fog = `
 precision mediump float;
@@ -14,13 +14,13 @@ varying vec2 vTextureCoord;
 varying vec2 vFilterCoord;
 
 // generates pseudo-random based on screen position
-float random(vec2 pos) 
+float random(vec2 pos)
 {
 	return fract(sin(dot(pos.xy, vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
 // perlin noise
-float noise(vec2 pos) 
+float noise(vec2 pos)
 {
 	vec2 i = floor(pos);
 	vec2 f = fract(pos);
@@ -33,13 +33,13 @@ float noise(vec2 pos)
 }
 
 // fractional brownian motion
-float fbm(vec2 pos) 
+float fbm(vec2 pos)
 {
 	float v = 0.0;
 	float a = 0.5;
 	vec2 shift = vec2(100.);
 	mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
-	for (int i=0; i<16; i++) 
+	for (int i=0; i<16; i++)
 	{
 		v = (sin(v*1.07)) + ( a * noise(pos) );
 		pos = rot * pos * 1.9 + shift;
@@ -51,7 +51,7 @@ float fbm(vec2 pos)
 mat4 contrastMatrix(float contrast)
 {
 	float t = ( 1.0 - contrast ) * 0.5;
-    
+
     return mat4( contrast, 0, 0, 0,
                  0, contrast, 0, 0,
                  0, 0, contrast, 0,
@@ -61,9 +61,9 @@ mat4 contrastMatrix(float contrast)
 vec4 fog()
 {
 	vec2 p = (vFilterCoord.xy * 8. - vFilterCoord.xy) * dimensions;
-	
+
 	float time2 = time * 0.0025;
-	
+
 	vec2 q = vec2(0.0);
 	q.x = fbm(p);
 	q.y = fbm(p);
@@ -81,7 +81,7 @@ vec4 fog()
 	return (f *f * f + 0.6 * f * f + 0.5 * f) * fogPixel;
 }
 
-void main(void) 
+void main(void)
 {
     vec4 pixel = texture2D(uSampler, vTextureCoord);
 
