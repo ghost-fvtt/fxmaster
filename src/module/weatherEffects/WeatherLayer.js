@@ -167,13 +167,4 @@ export class WeatherLayer extends CanvasLayer {
       this.weatherEffects[id].fx[method](val);
     });
   }
-
-  /*
-   ** Migration
-   ** TODO: Remove next version
-   */
-  playVideo(...args) {
-    console.warn("DEPRECATED: canvas.fxmaster.playVideo will be removed soon. Please use canvas.specials.playVideo");
-    canvas.specials.playVideo(...args);
-  }
 }
