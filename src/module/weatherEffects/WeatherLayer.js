@@ -159,7 +159,7 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   configureEffect(id) {
-    const flags = canvas.scene.getFlag("fxmaster", "effects") || {};
+    const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
     if (!flags[id]) return;
     Object.entries(flags[id].options).forEach(([key, val]) => {
       const effectClass = CONFIG.fxmaster.weather[flags[id].type];

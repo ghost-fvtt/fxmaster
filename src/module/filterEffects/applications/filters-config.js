@@ -25,7 +25,7 @@ export class FiltersConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentFilters = canvas.scene.getFlag("fxmaster", "filters") || {};
+    const currentFilters = canvas.scene.getFlag("fxmaster", "filters") ?? {};
     const activeFilters = Object.values(currentFilters).reduce((obj, f) => {
       obj[f.type] = f.options;
       return obj;
@@ -36,7 +36,7 @@ export class FiltersConfig extends FormApplication {
     return {
       filters: CONFIG.fxmaster.filters,
       activeFilters: activeFilters,
-      layers: filteredLayers || { background: true, foreground: true, tokens: true, drawings: true },
+      layers: filteredLayers ?? { background: true, foreground: true, tokens: true, drawings: true },
     };
   }
 
@@ -92,42 +92,46 @@ export class FiltersConfig extends FormApplication {
 
   /**
    * This method is called upon form submission after form data is validated
-   * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
+   * @param {Event}  event    The initial triggering submission event
+   * @param {object} formData The object of validated form data with which to update the object
    * @private
    */
   async _updateObject(_, formData) {
     const filtersDB = CONFIG.fxmaster.filters;
-    const filters = {};
-    Object.keys(filtersDB).forEach((key) => {
-      const label = filtersDB[key].label;
-      if (formData[label]) {
-        const filter = {
-          type: key,
-          options: {},
-        };
-        Object.keys(filtersDB[key].parameters).forEach((k) => {
-          if (filtersDB[key].parameters[k].type === "color") {
-            filter.options[k] = { apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`] };
-            return;
-          }
-          filter.options[k] = formData[`${label}_${k}`];
-        });
-        filters[`core_${key}`] = filter;
-      }
-    });
 
-    const apply_to = {
+    const filters = Object.fromEntries(
+      Object.entries(filtersDB)
+        .filter(([, filterCls]) => !!formData[filterCls.label])
+        .map(([filterName, filterCls]) => {
+          const label = filterCls.label;
+
+          const options = Object.fromEntries(
+            Object.entries(filterCls.parameters).map(([key, parameter]) => {
+              const optionValue =
+                parameter.type === "color"
+                  ? { apply: formData[`${label}_${key}_apply`], value: formData[`${label}_${key}`] }
+                  : formData[`${label}_${key}`];
+
+              return [key, optionValue];
+            }),
+          );
+
+          const filter = {
+            type: filterName,
+            options,
+          };
+          return [`core_${filterName}`, filter];
+        }),
+    );
+
+    const filteredLayers = {
       background: formData["background"],
       foreground: formData["foreground"],
       drawings: formData["drawings"],
       tokens: formData["tokens"],
     };
 
-    canvas.scene.setFlag("fxmaster", "filteredLayers", apply_to).then(() => {
-      resetFlags(canvas.scene, "filters", filters);
-    });
+    await canvas.scene.setFlag("fxmaster", "filteredLayers", filteredLayers);
+    resetFlags(canvas.scene, "filters", filters);
   }
 }
-
-FiltersConfig.CONFIG_SETTING = "filtersConfiguration";

@@ -11,7 +11,7 @@ export class FXCanvasAnimation extends CanvasAnimation {
       .filter((a) => a.delta !== 0);
 
     // Register the request function and context
-    context = context || canvas.stage;
+    context = context ?? canvas.stage;
 
     // Dispatch the animation request and return as a Promise
     return this._animatePromise(this._animateFrameSmooth(ease), context, name, attributes, duration, ontick);

@@ -29,8 +29,7 @@ export class WeatherConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    // Return data to the template
-    const currentEffects = canvas.scene.getFlag("fxmaster", "effects") || {};
+    const currentEffects = canvas.scene.getFlag("fxmaster", "effects") ?? {};
     const activeEffects = Object.values(currentEffects).reduce((obj, f) => {
       obj[f.type] = f.options;
       return obj;
@@ -99,26 +98,30 @@ export class WeatherConfig extends FormApplication {
    */
   async _updateObject(_, formData) {
     const weathersDB = CONFIG.fxmaster.weather;
-    const effects = {};
-    Object.keys(weathersDB).forEach((key) => {
-      const label = weathersDB[key].label;
-      if (formData[label]) {
-        const effect = {
-          type: key,
-          options: {},
-        };
-        Object.keys(weathersDB[key].parameters).forEach((k) => {
-          if (weathersDB[key].parameters[k].type === "color") {
-            effect.options[k] = { apply: formData[`${label}_${k}_apply`], value: formData[`${label}_${k}`] };
-            return;
-          }
-          effect.options[k] = formData[`${label}_${k}`];
-        });
-        effects[`core_${key}`] = effect;
-      }
-    });
+    const effects = Object.fromEntries(
+      Object.entries(weathersDB)
+        .filter(([, weatherCls]) => !!formData[weatherCls.label])
+        .map(([weatherName, weatherCls]) => {
+          const label = weatherCls.label;
+
+          const options = Object.fromEntries(
+            Object.entries(weatherCls.parameters).map(([key, parameter]) => {
+              const optionValue =
+                parameter.type === "color"
+                  ? { apply: formData[`${label}_${key}_apply`], value: formData[`${label}_${key}`] }
+                  : formData[`${label}_${key}`];
+
+              return [key, optionValue];
+            }),
+          );
+
+          const weather = {
+            type: weatherName,
+            options,
+          };
+          return [`core_${weatherName}`, weather];
+        }),
+    );
     resetFlags(canvas.scene, "effects", effects);
   }
 }
-
-WeatherConfig.CONFIG_SETTING = "effectsConfiguration";

@@ -15,7 +15,7 @@ class FilterManager {
 
   activate() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
-    this.filterInfos = this.filterInfos || {};
+    this.filterInfos = this.filterInfos ?? {};
 
     // Creating new filters from filterInfos
     this.filters = Object.keys(this.filterInfos).reduce((filters, key) => {
@@ -27,9 +27,9 @@ class FilterManager {
       return filters;
     }, this.filters);
 
-    this.filters = this.filters || {};
+    this.filters = this.filters ?? {};
 
-    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {};
     Object.keys(this.apply_to).forEach((k) => {
       if (this.apply_to[k]) {
         canvas[k].filters = [...Object.values(this.filters)];
@@ -46,8 +46,8 @@ class FilterManager {
 
   async update() {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters");
-    this.filterInfos = this.filterInfos || {};
-    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
+    this.filterInfos = this.filterInfos ?? {};
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {};
 
     // Clear unused effects
     const deletePromises = [];
@@ -79,8 +79,8 @@ class FilterManager {
         this.filters[key].play();
       }
     }
-    this.filters = this.filters || {};
-    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") || {};
+    this.filters = this.filters ?? {};
+    this.apply_to = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {};
     Object.keys(this.apply_to).forEach((k) => {
       if (this.apply_to[k]) {
         canvas[k].filters = [...Object.values(this.filters)];
@@ -105,8 +105,8 @@ class FilterManager {
   }
 
   addFilter(name, filter, options) {
-    name = name || randomID();
-    this.filterInfos = this.filterInfos || {};
+    name = name ?? randomID();
+    this.filterInfos = this.filterInfos ?? {};
     this.filterInfos[name] = {
       type: filter,
       options: options,
