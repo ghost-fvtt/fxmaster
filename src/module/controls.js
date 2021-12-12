@@ -54,8 +54,8 @@ function getSceneControlButtons(controls) {
             }
             name = CONFIG.fxmaster.weather[effect.type].label;
           });
-          let effects = `Hooks.call('updateWeather', ${JSON.stringify(objs)});`;
-          Macro.create({ type: "script", name: name, command: effects, img: img });
+          const command = `Hooks.call('fxmaster.updateWeather', ${JSON.stringify(objs)});`;
+          Macro.create({ type: "script", name, command, img });
           ui.notifications.info(`Macro ${name} has been saved in the macro directory`);
         },
         visible: game.user.isGM,

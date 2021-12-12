@@ -60,15 +60,15 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 
 * Switching a named weather effect on and off:
   ```javascript
-  Hooks.call("switchWeather", {
+  Hooks.call("fxmaster.switchWeather", {
     name: "myweatherID",
     type: "rain",
     options: { density: 100 },
   });
   ```
-* Seting the active weather effects:
+* Setting the active weather effects:
   ```javascript
-  Hooks.call("updateWeather", [
+  Hooks.call("fxmaster.updateWeather", [
     { type: "rain", options: {} },
     { type: "bubbles", options: {} },
   ]);

@@ -3,9 +3,12 @@ import { resetFlags } from "./utils.js";
 export const registerHooks = function () {
   // ------------------------------------------------------------------
   // Hooks API
+  Hooks.on("fxmaster.switchWeather", onSwitchWeather);
+  Hooks.on("fxmaster.updateWeather", onUpdateWeather);
 
-  Hooks.on("switchWeather", onSwitchWeather);
-  Hooks.on("updateWeather", onUpdateWeather);
+  // deprecated hooks
+  Hooks.on("switchWeather", onSwitchWeatherDeprecated);
+  Hooks.on("updateWeather", onUpdateWeatherDeprecated);
 };
 
 /**
@@ -13,23 +16,18 @@ export const registerHooks = function () {
  * @param {{name: string, type: string, options: object}} parameters The parameters that define the named weather effect
  */
 async function onSwitchWeather(parameters) {
-  let newEffect = {};
-  newEffect[parameters.name] = {
-    type: parameters.type,
-    options: parameters.options,
-  };
+  const newEffect = { [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  let flags = await canvas.scene.getFlag("fxmaster", "effects");
-  if (!flags) flags = {};
+  let flags = (await canvas.scene.getFlag("fxmaster", "effects")) ?? {};
   let effects = {};
 
-  if (hasProperty(flags, parameters.name)) {
+  if (foundry.utils.hasProperty(flags, parameters.name)) {
     effects = flags;
     delete effects[parameters.name];
   } else {
     effects = foundry.utils.mergeObject(flags, newEffect);
   }
-  if (Object.entries(effects).length == 0) {
+  if (Object.keys(effects).length == 0) {
     await canvas.scene.unsetFlag("fxmaster", "effects");
   } else {
     resetFlags(canvas.scene, "effects", effects);
@@ -43,4 +41,18 @@ async function onSwitchWeather(parameters) {
 async function onUpdateWeather(parametersArray) {
   const effects = Object.fromEntries(parametersArray.map((parameters) => [foundry.utils.randomID(), parameters]));
   resetFlags(canvas.scene, "effects", effects);
+}
+
+async function onSwitchWeatherDeprecated(parameters) {
+  console.warn(
+    "The 'switchWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.switchWeather' hook instead.",
+  );
+  return onSwitchWeather(parameters);
+}
+
+async function onUpdateWeatherDeprecated(parametersArray) {
+  console.warn(
+    "The 'updateWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.updateWeather' hook instead.",
+  );
+  return onUpdateWeather(parametersArray);
 }
