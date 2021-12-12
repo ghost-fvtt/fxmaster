@@ -46,13 +46,13 @@ FXMASTER.filters.switch("myfilterID", "color", { color: {value:"#ff00ff", apply:
 ```
 
 #### Available Filters Effects
-* `bloom`
-* `color`
-* `fog`
+
 * `lightning`
-* `oldfilm`
-* `predator`
 * `underwater`
+* `predator`
+* `color`
+* `bloom`
+* `oldfilm`
 
 You can get a complete list by typing `CONFIG.fxmaster.filters` in your web console.
 
@@ -74,43 +74,52 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
   ]);
   ```
 
-#### Available Weather Effects
+#### Available Weather Effects With Supported Options
 
-Weather types:
+| Type         | `scale` | `direction` | `speed` | `density` | `tint` |
+| ------------ | :-----: | :---------: | :-----: | :-------: | :----: |
+| `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `bubbles`    |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `embers`     |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `stars`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `crows`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `bats`       |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `spiders`    |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `fog`        |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `raintop`    |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `birds`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `nature`     |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `rain`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `snow`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 
-* `rain`
-* `bats`
-* `bubbles`
-* `clouds`
-* `fog`
-* `embers`
-* `crows`
-* `raintop`
+#### Weather Effect Option Types
 
-Options:
-* `speed`
-* `scale`
-* `density`
-* `direction`
-* `apply_tint`
-* `tint` (only has an effect if `apply_tint` is to true)
+| Option      | Type                              |
+| ----------- | --------------------------------- |
+| `scale`     | `number`                          |
+| `direction` | `number`                          |
+| `speed`     | `number`                          |
+| `density`   | `number`                          |
+| `tint`      | `{value: string, apply: boolean}` |
 
 ### Special Effects
 
-Special effects are controls and helpers to play temporary video files on the canvas. They are defined by several
+Special effects are essentially temporary video files that are being played on the canvas. They are defined by several
 parameters:
 
-* `file`: The video file path
-* `anchor` (x, y): The starting point of the effect. Those are values between `0` and `1.0`, representing fractions of
-  the width and height of the video file.
-* `position` (x, y): The position at which the anchor of the effect is be placed.
-* `angle` (degrees): The initial direction of the effect. The default assumption is that the effect direction from left
-  to right. If that's not the case, you need to set this value accordingly.
-* `speed`: The speed at which the effect plays and moves.
-* `scale` (x, y): The scale of the effect.
-* `animationDelay` (start, end): Delays before and after the effect plays (if `speed > 0`)
-* `ease`: The easing function to use in order for the movement animation to look more natural.
-* `width`: Sets the width of the sprite. For example, this can be used to stretch a beam towards a specific target.
+| Parameter        | Type                           | Description                                                                                                                                                                             |
+| ---------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `file`           | `string`                       | The video file path.                                                                                                                                                                    |
+| `anchor`         | `{x: number, y: number}`       | The starting point of the effect. `x` and `y` are values between `0` and `1.0`, representing fractions of the width and height of the video file.                                       |
+| `position`       | `{x: number, y: number}`       | The position at which the anchor of the effect is to be placed.                                                                                                                         |
+| `angle`          | `number`                       | The initial direction of the effect in degrees. The default assumption is that the effect direction from left to right. If that's not the case, you need to set this value accordingly. |
+| `speed`          | `number \| "auto"`             | The speed at which the effect plays and moves.                                                                                                                                          |
+| `scale`          | `{x: number, y: number}`       | The scale of the effect. `x` and `y` are numbers between `0` and `1`, representing by how much the width and height of the effect are scaled.                                           |
+| `animationDelay` | `{start: number, end: number}` | Delays before and after the effect plays (if `speed > 0`).                                                                                                                              |
+| `ease`           | `string`                       | The easing function to use in order for the movement animation to look more natural. You can find the valid values in `easeFunctions` in [ease.js](./src/module/ease.js).               |
+| `width`          | `number`                       | Sets the width of the sprite. For example, this can be used to stretch a beam towards a specific target.                                                                                |
 
 #### Playing a Video File on the Canvas
 
@@ -152,7 +161,7 @@ const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label =
 
 #### Playing a Video File Between Two Tokens
 
-You can use the `canvas.specials.drawSpecialToward` method with an automatic speed to adapt speed so that the video ends
+You can use the `canvas.specials.drawSpecialToward` method with the speed set to `"auto"` to adapt the speed so that the video ends
 when the target is reached.
 
 ```javascript
@@ -190,13 +199,13 @@ data. The easing options are given in the `ease.js` file.
 
 ```javascript
 {
-    file: "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+  file: "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
     anchor: {
-        x: -.08,
-        y: 0.5
+      x: -.08,
+      y: 0.5
     },
-    speed: "auto",
-    angle: 0,
+  speed: "auto",
+  angle: 0,
   scale: {
     x: 1,
     y: 1
