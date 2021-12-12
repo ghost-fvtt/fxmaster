@@ -93,17 +93,3 @@
   background-color: rgba(255, 255, 240, 0.8);
   border: 1px solid #b5b3a4;
 }
-
-.donation-link {
-  line-height: 16px;
-}
-
-.donation-link img {
-  border: none;
-  height: 12px;
-  margin-bottom: -1px;
-}
-
-.donation-link span {
-  font-size: 11px;
-}
