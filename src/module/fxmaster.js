@@ -64,11 +64,11 @@ Hooks.on("canvasInit", () => {
   filterManager.clear();
 });
 
-Hooks.on("canvasReady", () => {
+Hooks.on("canvasReady", async () => {
   if (!game.settings.get("fxmaster", "enable")) {
     return;
   }
-  filterManager.activate();
+  await filterManager.activate();
   canvas.fxmaster.drawWeather();
   canvas.fxmaster.updateMask();
 });
