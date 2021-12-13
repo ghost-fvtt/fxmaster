@@ -54,7 +54,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
     return emitter;
   }
 
-  // @override
+  /** @override */
   static get default() {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;

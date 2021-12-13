@@ -1,0 +1,28 @@
+<form>
+  <div class="directory-list effects fxmaster">
+    {{#each effects as |effect type|}}
+    <li class="directory-item config weather">
+      <header class="flexrow">
+        {{#if effect.icon}}<img class="icon" width="24" height="24" src="{{effect.icon}}">{{/if}}
+        <label class="collapse">{{effect.label}} <i class="fa
+                        fa-angle-down"></i></label>
+        <input type='checkbox' name='{{effect.label}}' id="{{effect.label}}" class="effect" {{checked (lookup
+          @root.activeEffects type)}} />
+      </header>
+      <ol class="config collapsible{{#unless (lookup @root.activeEffects type)}} collapsed{{/unless}}">
+        {{#each effect.parameters as |parameterConfig parameterName|}}
+        <li class="flexrow">
+          <span>{{localize parameterConfig.label}}</span>
+          {{{parameter effect parameterConfig parameterName (lookup @root.activeEffects type)}}}
+        </li>
+        {{/each}}
+      </ol>
+    </li>
+    {{/each}}
+  </div>
+  <footer class="form-footer">
+    <button type="submit" name="submit">
+      <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
+    </button>
+  </footer>
+</form>

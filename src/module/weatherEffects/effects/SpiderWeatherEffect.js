@@ -24,7 +24,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
     return options;
   }
 
-  // @override
+  /** @override */
   static get default() {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
@@ -33,7 +33,10 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 0,
       density: Math.round(1000 * p) / 1000,
-      tint: "#FFFFFF",
+      tint: {
+        value: "#FFFFFF",
+        apply: false,
+      },
     };
   }
 

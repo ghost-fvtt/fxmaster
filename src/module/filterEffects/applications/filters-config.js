@@ -12,7 +12,7 @@ export class FiltersConfig extends FormApplication {
       editable: game.user.isGM,
       width: 300,
       height: "auto",
-      template: "modules/fxmaster/templates/filters-config.html",
+      template: "modules/fxmaster/templates/filters-config.hbs",
       id: "filters-config",
       title: game.i18n.localize("FILTERMANAGE.Title"),
     });
@@ -26,17 +26,21 @@ export class FiltersConfig extends FormApplication {
    */
   getData() {
     const currentFilters = canvas.scene.getFlag("fxmaster", "filters") ?? {};
-    const activeFilters = Object.values(currentFilters).reduce((obj, f) => {
-      obj[f.type] = f.options;
-      return obj;
-    }, {});
+    const activeFilters = Object.fromEntries(
+      Object.values(currentFilters).map((filter) => [filter.type, filter.options]),
+    );
 
-    const filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers");
+    const filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {
+      background: true,
+      foreground: true,
+      tokens: true,
+      drawings: true,
+    };
     // Return data to the template
     return {
       filters: CONFIG.fxmaster.filters,
-      activeFilters: activeFilters,
-      layers: filteredLayers ?? { background: true, foreground: true, tokens: true, drawings: true },
+      activeFilters,
+      filteredLayers,
     };
   }
 

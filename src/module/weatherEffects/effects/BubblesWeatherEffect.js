@@ -56,7 +56,7 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
     return emitter;
   }
 
-  // @override
+  /** @override */
   static get default() {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
@@ -65,7 +65,10 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 180,
       density: Math.round(100 * p) / 100,
-      tint: "#FFFFFF",
+      tint: {
+        value: "#FFFFFF",
+        apply: false,
+      },
     };
   }
 

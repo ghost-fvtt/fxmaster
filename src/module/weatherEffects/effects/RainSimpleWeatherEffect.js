@@ -37,7 +37,7 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
     return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
   }
 
-  // @override
+  /** @override */
   static get default() {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
@@ -46,7 +46,10 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 75,
       density: Math.round(100 * p) / 100,
-      tint: "#FFFFFF",
+      tint: {
+        value: "#FFFFFF",
+        apply: false,
+      },
     };
   }
 

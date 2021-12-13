@@ -16,7 +16,7 @@ export class WeatherConfig extends FormApplication {
       editable: game.user.isGM,
       width: 300,
       height: "auto",
-      template: "modules/fxmaster/templates/weather-config.html",
+      template: "modules/fxmaster/templates/weather-config.hbs",
       id: "effects-config",
       title: game.i18n.localize("WEATHERMANAGE.Title"),
     });
@@ -30,13 +30,14 @@ export class WeatherConfig extends FormApplication {
    */
   getData() {
     const currentEffects = canvas.scene.getFlag("fxmaster", "effects") ?? {};
-    const activeEffects = Object.values(currentEffects).reduce((obj, f) => {
-      obj[f.type] = f.options;
-      return obj;
-    }, {});
+
+    const activeEffects = Object.fromEntries(
+      Object.values(currentEffects).map((effect) => [effect.type, effect.options]),
+    );
+
     return {
       effects: CONFIG.fxmaster.weather,
-      activeEffects: activeEffects,
+      activeEffects,
     };
   }
 

@@ -1,0 +1,46 @@
+<form>
+  <header class="directory-header flexrow">
+    <div class="layer-toggle">
+      <span title="Activate Filters on Background"><i class="fas fa-road"></i></span>
+      <input type="checkbox" name="background" {{checked filteredLayers.background}} />
+    </div>
+    <div class="layer-toggle">
+      <span title="Activate Filters on Foreground"><i class="fas fa-home"></i></span>
+      <input type="checkbox" name="foreground" {{checked filteredLayers.foreground}} />
+    </div>
+    <div class="layer-toggle">
+      <span title="Activate Filters on Drawings"><i class="fas fa-pencil-alt"></i></span>
+      <input type="checkbox" name="drawings" {{checked filteredLayers.drawings}} />
+    </div>
+    <div class="layer-toggle">
+      <span title="Activate Filters on Tokens"><i class="fas fa-user-alt"></i></span>
+      <input type="checkbox" name="tokens" {{checked filteredLayers.tokens}} />
+    </div>
+  </header>
+  <div class="directory-list effects fxmaster">
+    {{#each filters as |filter type|}}
+    <li class="directory-item config filter">
+      <header class="flexrow">
+        <div class="icon"><i class="icon {{filter.faIcon}}"></i></div>
+        <label class="collapse">{{filter.label}} <i class="fa
+                        fa-angle-down"></i></label>
+        <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked (lookup
+          @root.activeFilters type)}} />
+      </header>
+      <ol class="config collapsible{{#unless (lookup @root.activeFilters type)}} collapsed{{/unless}}">
+        {{#each filter.parameters as |parameterConfig parameterName|}}
+        <li class="flexrow">
+          <span>{{localize parameterConfig.label}}</span>
+          {{{parameter filter parameterConfig parameterName (lookup @root.activeFilters type)}}}
+        </li>
+        {{/each}}
+      </ol>
+    </li>
+    {{/each}}
+  </div>
+  <footer class="form-footer">
+    <button type="submit" name="submit">
+      <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
+    </button>
+  </footer>
+</form>

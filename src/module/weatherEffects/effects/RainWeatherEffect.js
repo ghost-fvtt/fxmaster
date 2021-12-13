@@ -13,7 +13,7 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
   }
 
-  // @override
+  /** @override */
   static get default() {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
@@ -22,7 +22,10 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
       scale: 1,
       direction: 75,
       density: Math.round(100 * p) / 100,
-      tint: "#FFFFFF",
+      tint: {
+        value: "#FFFFFF",
+        apply: false,
+      },
     };
   }
 

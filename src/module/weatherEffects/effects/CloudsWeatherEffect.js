@@ -26,7 +26,7 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return [this._getCloudEmitter(this.parent)];
   }
 
-  // @override
+  /** @override */
   setDirection(value) {
     this.options.direction = value;
     this.emitters[0].minStartRotation = value;
@@ -80,14 +80,17 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return emitter;
   }
 
-  // @override
+  /** @override */
   static get default() {
     return {
       speed: 100,
       scale: 1,
       direction: 90,
       density: 100,
-      tint: "#FFFFFF",
+      tint: {
+        value: "#FFFFFF",
+        apply: false,
+      },
     };
   }
 

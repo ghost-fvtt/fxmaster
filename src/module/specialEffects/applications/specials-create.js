@@ -12,7 +12,7 @@ export class SpecialCreate extends FormApplication {
       editable: game.user.isGM,
       width: 320,
       height: "auto",
-      template: "modules/fxmaster/templates/special-create.html",
+      template: "modules/fxmaster/templates/special-create.hbs",
       id: "add-effect",
       title: game.i18n.localize("FXMASTER.AddEffect"),
     });

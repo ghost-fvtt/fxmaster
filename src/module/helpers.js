@@ -1,22 +1,23 @@
 export const registerHelpers = function () {
-  Handlebars.registerHelper("parameter", (effect, param, key, options = {}) => {
-    let deflt = effect.default[key];
-    if (options[key] !== undefined) {
-      deflt = options[key];
-    }
-    switch (param.type) {
+  Handlebars.registerHelper("parameter", (effectCls, parameterConfig, parameterName, options = {}) => {
+    const _default = options[parameterName] ?? effectCls.default[parameterName];
+
+    switch (parameterConfig.type) {
       case "color":
-        return `<input type="checkbox" name="${effect.label}_${key}_apply" ${
-          deflt.apply ? "checked" : ""
-        }/><input type="color" name="${effect.label}_${key}" value="${deflt.value}">`;
+        return `
+              <input type="checkbox" name="${effectCls.label}_${parameterName}_apply" ${
+          _default.apply ? "checked" : ""
+        }/>
+              <input type="color" name="${effectCls.label}_${parameterName}" value="${_default.value}">
+              `;
       case "range":
         return `
-              <input type="range" step="${param.step}" min="${param.min}" max="${param.max}" name="${effect.label}_${key}" value="${deflt}">
-              <span class="range-value">${deflt}</span>
+              <input type="range" step="${parameterConfig.step}" min="${parameterConfig.min}" max="${parameterConfig.max}" name="${effectCls.label}_${parameterName}" value="${_default}">
+              <span class="range-value">${_default}</span>
               `;
       case "number":
         return `
-              <input type="text" data-dtype="Number" name="${effect.label}_${key}" value="${deflt}">
+              <input type="text" data-dtype="Number" name="${effectCls.label}_${parameterName}" value="${_default}">
               `;
     }
     return "";

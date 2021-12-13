@@ -44,10 +44,12 @@ export class AbstractWeatherEffect extends SpecialEffect {
   }
 
   static get default() {
-    return Object.keys(this.parameters).reduce((def, key) => {
-      def[key] = this.parameters[key].default;
-      return def;
-    }, {});
+    return Object.fromEntries(
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
+        parameterName,
+        parameterConfig.default,
+      ]),
+    );
   }
 
   setSpeed(value) {
