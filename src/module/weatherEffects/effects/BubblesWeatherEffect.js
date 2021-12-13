@@ -70,7 +70,7 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Bubbles particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

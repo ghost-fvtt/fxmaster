@@ -77,7 +77,7 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Stars particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

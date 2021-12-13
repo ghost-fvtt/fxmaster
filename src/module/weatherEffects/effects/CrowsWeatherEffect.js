@@ -97,7 +97,7 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Crows particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

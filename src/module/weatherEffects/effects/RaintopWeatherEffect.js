@@ -74,7 +74,7 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Rain Top particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

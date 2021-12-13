@@ -76,7 +76,7 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Fog particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

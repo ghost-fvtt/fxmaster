@@ -66,7 +66,7 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Snowstorm particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

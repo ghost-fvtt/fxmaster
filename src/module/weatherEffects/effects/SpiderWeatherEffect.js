@@ -79,7 +79,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Spider particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

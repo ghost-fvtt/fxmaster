@@ -51,7 +51,7 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Rain Simple particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

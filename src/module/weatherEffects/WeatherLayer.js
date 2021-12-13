@@ -1,10 +1,15 @@
 export class WeatherLayer extends CanvasLayer {
-  constructor() {
-    super();
-    this.weatherEffects = {};
-    this.weather = null;
-    this.options = this.constructor.layerOptions;
-  }
+  /**
+   * The weather overlay container
+   * @type {PIXI.Container | undefined}
+   */
+  weather = undefined;
+
+  /**
+   * The currently active weather effects.
+   * @type {Record<string, {type: string, fx: import('./effects/AbstractWeatherEffect.js').AbstractWeatherEffect}>}
+   */
+  weatherEffects = {};
 
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
@@ -14,7 +19,7 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   /* -------------------------------------------- */
-  _createInvertMask() {
+  _createInvertedMask() {
     const mask = new PIXI.Graphics();
     canvas.drawings.placeables.forEach((drawing) => {
       const isMask = drawing.document.getFlag("fxmaster", "masking");
@@ -96,7 +101,7 @@ export class WeatherLayer extends CanvasLayer {
     const invert = canvas.scene.getFlag("fxmaster", "invert");
 
     // Mask zones masked by drawings
-    const mask = invert ? this._createInvertMask() : this._createMask();
+    const mask = invert ? this._createInvertedMask() : this._createMask();
     this.weather.addChild(mask);
 
     Hooks.callAll("updateMask", this, this.weather, mask);
@@ -105,10 +110,8 @@ export class WeatherLayer extends CanvasLayer {
 
   /** @override */
   async tearDown() {
-    const effKeys = Object.keys(this.weatherEffects);
-    for (let i = 0; i < effKeys.length; ++i) {
-      this.weatherEffects[effKeys[i]].fx.stop();
-    }
+    Object.values(this.weatherEffects).forEach(({ fx }) => fx.stop());
+
     if (this.weather) {
       this.removeChild(this.weather);
       this.weather = null;
@@ -118,33 +121,20 @@ export class WeatherLayer extends CanvasLayer {
     return super.tearDown();
   }
 
-  async drawWeather(options = {}) {
+  async drawWeather({ soft = false } = {}) {
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
 
-    for (const key in this.weatherEffects) {
-      if (options.soft === true) {
-        for (const ef of this.weatherEffects[key].fx.emitters) {
-          ef.emitterLifetime = 0.1;
-          ef.playOnceAndDestroy(() => {
-            if (this.weatherEffects[key]) {
-              delete this.weatherEffects[key];
-            }
-          });
-          setTimeout(() => {
-            if (this.weatherEffects[key]) {
-              this.weatherEffects[key].fx.stop();
-              delete this.weatherEffects[key];
-            }
-          }, 20000);
-        }
+    Object.entries(this.weatherEffects).forEach(async ([key, { fx }]) => {
+      if (soft) {
+        await fx.fadeOut({ timeout: 20000 });
       } else {
-        this.weatherEffects[key].fx.stop();
-        delete this.weatherEffects[key];
+        fx.stop();
       }
-    }
+      delete this.weatherEffects[key];
+    });
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects");

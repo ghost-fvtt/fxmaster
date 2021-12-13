@@ -68,7 +68,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
   }
 
   /**
-   * Configuration for the Bats particle effect
+   * Configuration for the Embers particle effect
    * @type {Object}
    */
   static CONFIG = foundry.utils.mergeObject(

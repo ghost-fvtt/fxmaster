@@ -119,4 +119,36 @@ export class AbstractWeatherEffect extends SpecialEffect {
       }
     }
   }
+
+  /**
+   * Fade this effect out, playing it once and then stopping it.
+   * @param {{timeout?: number}} [options]         Additional options to configure the fade out
+   * @param {number}             [options.timeout] If given, the effect will be stopped after the given number in ms,
+   *                                               regardless of if it has finished playing or not.
+   * @returns {Promise<void>}                      A promise that resolves as soon as this effect has finished fading out
+   */
+  async fadeOut({ timeout } = {}) {
+    const emitterPromises = this.emitters.map(
+      (emitter) =>
+        new Promise((resolve) => {
+          emitter.emitterLifetime = 0.1;
+          emitter.playOnceAndDestroy(() => {
+            resolve();
+          });
+        }),
+    );
+    const promises = [Promise.all(emitterPromises)];
+    if (timeout !== undefined) {
+      promises.push[
+        new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, timeout),
+        )
+      ];
+    }
+
+    await Promise.race(promises);
+    this.stop();
+  }
 }
