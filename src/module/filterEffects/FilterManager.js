@@ -35,7 +35,7 @@ class FilterManager {
    */
   async update({ skipFading = false } = {}) {
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters") ?? {};
-    this.filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {};
+    this.filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? this.filteredLayers;
 
     const filtersToCreate = Object.keys(this.filterInfos).filter((key) => !(key in this.filters));
     const filtersToUpdate = Object.keys(this.filterInfos).filter((key) => key in this.filters);
