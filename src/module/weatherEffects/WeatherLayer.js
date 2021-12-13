@@ -127,24 +127,27 @@ export class WeatherLayer extends CanvasLayer {
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
 
-    Object.entries(this.weatherEffects).forEach(async ([key, { fx }]) => {
+    Object.entries(this.weatherEffects).forEach(async ([id, effect]) => {
       if (soft) {
-        await fx.fadeOut({ timeout: 20000 });
+        await effect.fx.fadeOut({ timeout: 20000 });
       } else {
-        fx.stop();
+        effect.fx.stop();
       }
-      delete this.weatherEffects[key];
+      // The check is needed because a new effect might have been set already.
+      if (this.weatherEffects[id] === effect) {
+        delete this.weatherEffects[id];
+      }
     });
 
     // Updating scene weather
-    const flags = canvas.scene.getFlag("fxmaster", "effects");
-    for (const key in flags) {
-      this.weatherEffects[key] = {
-        type: flags[key].type,
-        fx: new CONFIG.fxmaster.weather[flags[key].type](this.weather),
+    const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
+    for (const id in flags) {
+      this.weatherEffects[id] = {
+        type: flags[id].type,
+        fx: new CONFIG.fxmaster.weather[flags[id].type](this.weather),
       };
-      this.configureEffect(key);
-      this.weatherEffects[key].fx.play();
+      this.configureEffect(id);
+      this.weatherEffects[id].fx.play();
     }
   }
 
