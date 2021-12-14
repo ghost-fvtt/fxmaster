@@ -72,6 +72,7 @@ export class SpecialCreate extends FormApplication {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+    html.find('input[type="range"]').on("input", (event) => this._onChangeRange(event));
   }
 
   /**

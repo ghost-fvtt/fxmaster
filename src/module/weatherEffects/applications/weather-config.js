@@ -49,6 +49,7 @@ export class WeatherConfig extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".config.weather .collapse").click((event) => this._onWeatherCollapse(event));
+    html.find('.config.weather input[type="range"]').on("input", (event) => this._onChangeRange(event));
   }
 
   /**

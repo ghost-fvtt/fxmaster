@@ -52,6 +52,7 @@ export class FiltersConfig extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".config.filter .collapse").click((event) => this._onFilterCollapse(event));
+    html.find('.config.filter input[type="range"]').on("input", (event) => this._onChangeRange(event));
   }
 
   /**
