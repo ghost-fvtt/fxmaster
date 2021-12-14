@@ -11,7 +11,7 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.02, value: 0.08, max: 0.15, step: 0.01 },
+      density: { min: 0.01, value: 0.08, max: 0.15, step: 0.01 },
       "-=direction": undefined,
     });
   }

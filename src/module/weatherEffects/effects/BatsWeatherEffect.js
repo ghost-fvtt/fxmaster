@@ -11,7 +11,7 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.01, value: 0.05, max: 0.1, step: 0.01 },
+      density: { min: 0.005, value: 0.05, max: 0.1, step: 0.005 },
       "-=direction": undefined,
     });
   }

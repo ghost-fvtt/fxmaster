@@ -11,7 +11,7 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.001, value: 0.3, max: 1, step: 0.001 },
+      density: { min: 0.01, value: 0.3, max: 1, step: 0.01 },
       "-=direction": null,
     });
   }

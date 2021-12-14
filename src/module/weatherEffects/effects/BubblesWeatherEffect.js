@@ -11,7 +11,7 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.03, value: 0.15, max: 0.4, step: 0.01 },
+      density: { min: 0.01, value: 0.15, max: 0.5, step: 0.01 },
       "-=direction": undefined,
     });
   }

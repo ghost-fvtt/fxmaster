@@ -16,7 +16,7 @@ export class AutumnLeavesWeatherEffect extends AbstractWeatherEffect {
   /** @override */
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { value: 0.25, max: 1, step: 0.05 },
+      density: { min: 0.05, value: 0.25, max: 1, step: 0.05 },
       "-=direction": null,
     });
   }
