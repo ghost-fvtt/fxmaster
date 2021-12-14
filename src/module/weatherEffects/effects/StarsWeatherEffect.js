@@ -11,17 +11,10 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.05, value: 0.3, max: 1, step: 0.05 },
+      tint: { value: { value: "#bee8ee" } },
       "-=direction": undefined,
     });
-  }
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.01;
-    options.density.value = 0.3;
-    options.density.max = 1;
-    options.density.step = 0.05;
-    return options;
   }
 
   getParticleEmitters() {
@@ -46,6 +39,7 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
 
     // Assets are selected randomly from the list for each particle
     const art = [
@@ -61,19 +55,6 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 5,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: "#bee8ee",
-    };
   }
 
   /**
@@ -107,7 +88,6 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
           { value: "bee8ee", time: 0 },
           { value: "d0e8ec", time: 1 },
         ],
-        isStepped: false,
       },
       acceleration: {
         x: 1,

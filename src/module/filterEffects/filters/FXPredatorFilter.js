@@ -24,7 +24,7 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
         max: 1.0,
         min: 0.0,
         step: 0.1,
-        default: 0.1,
+        value: 0.1,
       },
       period: {
         label: "FXMASTER.Speed",
@@ -32,7 +32,7 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
         max: 0.5,
         min: 0.0,
         step: 0.01,
-        default: 0.02,
+        value: 0.02,
       },
     };
   }
@@ -58,10 +58,7 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
 

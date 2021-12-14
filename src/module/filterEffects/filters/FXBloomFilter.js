@@ -22,7 +22,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         max: 10.0,
         min: 0.0,
         step: 1.0,
-        default: 1.0,
+        value: 1.0,
       },
       bloomScale: {
         label: "FXMASTER.Bloom",
@@ -30,7 +30,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         max: 1.0,
         min: 0.0,
         step: 0.1,
-        default: 0.1,
+        value: 0.1,
       },
       threshold: {
         label: "FXMASTER.Threshold",
@@ -38,7 +38,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
         max: 1.0,
         min: 0.0,
         step: 0.1,
-        default: 0.5,
+        value: 0.5,
       },
     };
   }
@@ -53,10 +53,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
 

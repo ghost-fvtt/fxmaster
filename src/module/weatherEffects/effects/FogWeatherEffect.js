@@ -9,30 +9,16 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/fog.png";
   }
 
-  /* -------------------------------------------- */
-
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.02, value: 0.08, max: 0.15, step: 0.01 },
       "-=direction": undefined,
     });
   }
 
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.02;
-    options.density.value = 0.08;
-    options.density.max = 0.15;
-    options.density.step = 0.01;
-    return options;
-  }
-
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
     return [this._getFogEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getFogEmitter(parent) {
     const d = canvas.dimensions;
@@ -51,6 +37,8 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     // Animation
     const art = [
       "./modules/fxmaster/assets/weatherEffects/effects/cloud1.png",
@@ -60,22 +48,6 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 15,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   /**
@@ -106,8 +78,10 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
         minimumSpeedMultiplier: 0.2,
       },
       color: {
-        start: "dddddd",
-        end: "dddddd",
+        list: [
+          { value: "dddddd", time: 0 },
+          { value: "dddddd", time: 1 },
+        ],
       },
       startRotation: {
         min: 0,

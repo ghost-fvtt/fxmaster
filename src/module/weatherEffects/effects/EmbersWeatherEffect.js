@@ -11,17 +11,10 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.15, value: 0.7, max: 1, step: 0.05 },
+      tint: { value: { value: "#f77300" } },
       "-=direction": undefined,
     });
-  }
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.15;
-    options.density.value = 0.7;
-    options.density.max = 1;
-    options.density.step = 0.1;
-    return options;
   }
 
   getParticleEmitters() {
@@ -46,25 +39,13 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
 
     // Assets are selected randomly from the list for each particle
     const art = ["./modules/fxmaster/assets/weatherEffects/effects/ember.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 40,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: "#f77300",
-    };
   }
 
   /**
@@ -97,7 +78,6 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
           { value: "f77300", time: 0 },
           { value: "f72100", time: 1 },
         ],
-        isStepped: false,
       },
       acceleration: {
         x: 1,

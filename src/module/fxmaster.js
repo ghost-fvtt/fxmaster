@@ -50,8 +50,6 @@ Hooks.once("init", function () {
     specials: FXMASTER.specials,
     weather: FXMASTER.weatherEffects,
   });
-
-  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects, { inplace: true });
 });
 
 Hooks.once("ready", () => {

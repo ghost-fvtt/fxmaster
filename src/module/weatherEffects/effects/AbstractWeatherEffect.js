@@ -4,38 +4,39 @@ export class AbstractWeatherEffect extends SpecialEffect {
       scale: {
         label: "FXMASTER.Scale",
         type: "range",
-        callback: "setScale",
-        default: 1,
+        min: 0.1,
+        value: 1,
+        max: 5,
         step: 0.1,
-        min: 0,
-        max: 10,
       },
       direction: {
         label: "FXMASTER.Direction",
         type: "range",
-        step: 10,
-        max: 360,
         min: 0,
-        callback: "setDirection",
-        default: 0,
+        value: (this.CONFIG.startRotation.min + this.CONFIG.startRotation.min) / 2,
+        max: 360,
+        step: 10,
       },
       speed: {
         label: "FXMASTER.Speed",
-        type: "number",
-        callback: "setSpeed",
-        default: 10,
+        type: "range",
+        min: 0.1,
+        value: 1,
+        max: 5,
+        step: 0.1,
       },
       density: {
         label: "FXMASTER.Density",
-        type: "number",
-        callback: "setDensity",
-        default: 1,
+        type: "range",
+        min: 0.1,
+        value: 0.5,
+        max: 5,
+        step: 0.1,
       },
       tint: {
         label: "FXMASTER.Tint",
         type: "color",
-        callback: "setTint",
-        default: {
+        value: {
           value: "#FFFFFF",
           apply: false,
         },
@@ -45,80 +46,75 @@ export class AbstractWeatherEffect extends SpecialEffect {
 
   static get default() {
     return Object.fromEntries(
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
+    );
+  }
+
+  /** @override */
+  static get effectOptions() {
+    const optionTypeMapping = {
+      color: SpecialEffect.OPTION_TYPES.value,
+      number: SpecialEffect.OPTION_TYPES.VALUE,
+      range: SpecialEffect.OPTION_TYPES.RANGE,
+    };
+    return Object.fromEntries(
       Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
         parameterName,
-        parameterConfig.default,
+        { ...parameterConfig, type: optionTypeMapping[parameterConfig.type] },
       ]),
     );
   }
 
-  setSpeed(value) {
-    for (const emitter of this.emitters) {
-      // Keeping speed ratio between nodes
+  applyOptionsToConfig(config) {
+    this.applyScaleToConfig(config);
+    this.applySpeedToConfig(config);
+    this.applyDirectionToConfig(config);
+    this.applyTintToConfig(config);
+  }
 
-      // Getting max speed
-      let maxSpeed = 0;
-
-      let node = emitter.startSpeed;
-      while (node) {
-        maxSpeed = node.value > maxSpeed ? node.value : maxSpeed;
-        node = node.next;
-      }
-      // Getting ratio to attain value at max speed
-      const maxRatio = value / maxSpeed;
-
-      node = emitter.startSpeed;
-      while (node) {
-        node.value *= maxRatio;
-        node = node.next;
-      }
+  applyScaleToConfig(config) {
+    const scale = config.scale ?? {};
+    if ("start" in scale) {
+      scale.start = scale.start * this.options.scale.value;
+    }
+    if ("end" in scale) {
+      scale.end = scale.end * this.options.scale.value;
+    }
+    if ("list" in scale) {
+      scale.list = scale.list.map((valueStep) => ({ ...valueStep, value: valueStep.value * this.options.scale.value }));
     }
   }
 
-  setScale(value) {
-    for (const emitter of this.emitters) {
-      let node = emitter.startScale;
-      while (node) {
-        node.value *= value;
-        node = node.next;
-      }
+  applySpeedToConfig(config) {
+    const speed = config.speed ?? {};
+    if ("start" in speed) {
+      speed.start = speed.start * this.options.speed.value;
+    }
+    if ("end" in speed) {
+      speed.end = speed.end * this.options.speed.value;
+    }
+    if ("list" in speed) {
+      speed.list = speed.list.map((valueStep) => ({ ...valueStep, value: valueStep.value * this.options.speed.value }));
     }
   }
 
-  setDensity(value) {
-    this.options.density = value;
-    for (const emitter of this.emitters) {
-      const oldP = emitter.maxParticles;
-      emitter.maxParticles = value;
-      emitter.frequency *= value / oldP;
+  applyDirectionToConfig(config) {
+    const direction = this.options.direction?.value;
+    const range = (config.startRotation?.max ?? 0) - (config.startRotation?.min ?? 0);
+    if (direction !== undefined) {
+      config.startRotation = { min: direction - range / 2, max: direction + range / 2 };
     }
   }
 
-  setDirection(value) {
-    this.options.direction = value;
-    // Getting rotation span
-    for (const emitter of this.emitters) {
-      const span = emitter.maxStartRotation - emitter.minStartRotation;
-      emitter.minStartRotation = value - span / 2;
-      emitter.maxStartRotation = value + span / 2;
-    }
-  }
-
-  setTint(tint) {
-    if (!tint.apply) return;
-    this.options.tint = tint;
-    const value = tint.value;
-    const colors = hexToRGB(colorStringToHex(value));
-    for (const emitter of this.emitters) {
-      let node = emitter.startColor;
-      while (node) {
-        node.value = {
-          r: colors[0] * 255,
-          g: colors[1] * 255,
-          b: colors[2] * 255,
-        };
-        node = node.next;
-      }
+  applyTintToConfig(config) {
+    if (this.options.tint?.value.apply) {
+      const value = this.options.tint.value.value;
+      config.color = {
+        list: [
+          { value, time: 0 },
+          { value, time: 1 },
+        ],
+      };
     }
   }
 

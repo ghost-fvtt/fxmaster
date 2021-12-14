@@ -11,33 +11,9 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.1, value: 0.3, max: 0.5, step: 0.1 },
       "-=direction": undefined,
     });
-  }
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.1;
-    options.density.value = 0.3;
-    options.density.max = 0.5;
-    options.density.step = 0.1;
-    return options;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 25,
-      scale: 1,
-      direction: 0,
-      density: Math.round(1000 * p) / 1000,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   getParticleEmitters() {
@@ -62,6 +38,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
 
     // Assets are selected randomly from the list for each particle
     const anim_sheet = {

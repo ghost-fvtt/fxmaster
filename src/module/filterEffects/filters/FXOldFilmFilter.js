@@ -26,7 +26,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
         max: 1.0,
         min: 0.0,
         step: 0.1,
-        default: 0.3,
+        value: 0.3,
       },
       noise: {
         label: "FXMASTER.Noise",
@@ -34,7 +34,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
         max: 1.0,
         min: 0.0,
         step: 0.1,
-        default: 0.1,
+        value: 0.1,
       },
     };
   }
@@ -58,10 +58,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
 

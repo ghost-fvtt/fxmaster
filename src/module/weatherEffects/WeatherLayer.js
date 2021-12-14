@@ -144,22 +144,15 @@ export class WeatherLayer extends CanvasLayer {
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
     for (const id in flags) {
+      const options = Object.fromEntries(
+        Object.entries(flags[id].options).map(([optionName, value]) => [optionName, { value }]),
+      );
+
       this.weatherEffects[id] = {
         type: flags[id].type,
-        fx: new CONFIG.fxmaster.weather[flags[id].type](this.weather),
+        fx: new CONFIG.fxmaster.weather[flags[id].type](this.weather, options),
       };
-      this.configureEffect(id);
       this.weatherEffects[id].fx.play();
     }
-  }
-
-  configureEffect(id) {
-    const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
-    if (!flags[id]) return;
-    Object.entries(flags[id].options).forEach(([key, val]) => {
-      const effectClass = CONFIG.fxmaster.weather[flags[id].type];
-      const method = effectClass.parameters[key].callback;
-      this.weatherEffects[id].fx[method](val);
-    });
   }
 }

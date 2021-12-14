@@ -9,13 +9,9 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
   }
 
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
     return [this._getRainEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getRainEmitter(parent) {
     const d = canvas.dimensions;
@@ -30,27 +26,13 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
           h: 0.8 * d.height,
         },
         maxParticles: p,
-        frequency: this.constructor.CONFIG.lifetime.min / p,
+        frequency: 1 / p,
       },
       { inplace: false },
     );
-    return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
-  }
+    this.applyOptionsToConfig(config);
 
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 3500,
-      scale: 1,
-      direction: 75,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
+    return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
   }
 
   /**

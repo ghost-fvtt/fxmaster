@@ -11,33 +11,9 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.01, value: 0.05, max: 0.1, step: 0.01 },
       "-=direction": undefined,
     });
-  }
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.01;
-    options.density.value = 0.05;
-    options.density.max = 0.1;
-    options.density.step = 0.01;
-    return options;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 260,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   getParticleEmitters() {
@@ -62,6 +38,7 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
 
     // Assets are selected randomly from the list for each particle
     const anim_sheet = {
