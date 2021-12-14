@@ -1,0 +1,106 @@
+name: Bug Report
+description: File a bug report
+labels: ["bug", "to be confirmed"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Your issue may already have been reported! Please search on the [issue tracker](https://github.com/ghost-fvtt/fxmaster/issues) before submitting a new one.
+
+        Thanks for taking the time to fill out this bug report! In order to make it effective, please provide the following information.
+  - type: markdown
+    attributes:
+      value: |
+        ## Issue Description
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What is the behavior that you expected?
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Behavior
+      description: What is the current behavior, i.e., what happenes actually?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: What are the steps to reproduce the problem?
+      placeholder: |
+        1.
+        2.
+        3.
+        4.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Please provide any additional context that might be helpful, e.g. log messages, screenshots, or videos.
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment Details
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which version(s) of FXMaster are you seeing the problem on?
+      placeholder: v1.2.1
+    validations:
+      required: true
+  - type: input
+    id: foundry-version
+    attributes:
+      label: Foundry VTT Version
+      description: Which version(s) and build of Foundry VTT are you seeing the problem on?
+      placeholder: v9.235
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: Which operating system are you using? (Windows, OS X, Linux (which distro))
+      placeholder: Windows
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser / App
+      description: Are you using a Browser or the native Electron application? (Select all that apply)
+      multiple: true
+      options:
+        - Native Electron App
+        - Chrome
+        - Firefox
+        - Microsoft Edge
+        - Safari
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Game System
+      description: Which game system(s) are you seeing the problem on?
+      placeholder: dnd5e, pf2e, …
+    validations:
+      required: true
+  - type: input
+    id: modules
+    attributes:
+      label: Relevant Modules
+      description: Please list any other active modules that you think might be relevant.
+      placeholder: sequencer, levels, weatherblock, …
+    validations:
+      required: false
