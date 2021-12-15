@@ -44,15 +44,34 @@ async function onUpdateWeather(parametersArray) {
 }
 
 async function onSwitchWeatherDeprecated(parameters) {
+  const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
+
+  const v2Parameters = {
+    ...parameters,
+    options: weatherEffectClass.convertOptionsToV2(parameters.options, parameters.type),
+  };
+
   console.warn(
-    "The 'switchWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.switchWeather' hook instead.",
+    "The 'switchWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.switchWeather' hook instead. Be aware that the meaning of some options changed for the new hook. Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. The given parameters should look as follows for the new hook:",
+    v2Parameters,
   );
-  return onSwitchWeather(parameters);
+
+  return onSwitchWeather(v2Parameters);
 }
 
 async function onUpdateWeatherDeprecated(parametersArray) {
+  const v2ParametersArray = parametersArray.map((parameters) => {
+    const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
+    return {
+      ...parameters,
+      options: weatherEffectClass.convertOptionsToV2(parameters.options, parameters.type),
+    };
+  });
+
   console.warn(
-    "The 'updateWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.updateWeather' hook instead.",
+    "The 'updateWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.updateWeather' hook instead. Be aware that the meaning of some options changed for the new hook. Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. The given parameters should look as follows for the new hook:",
+    v2ParametersArray,
   );
-  return onUpdateWeather(parametersArray);
+
+  return onUpdateWeather(v2ParametersArray);
 }

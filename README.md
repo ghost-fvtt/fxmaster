@@ -94,7 +94,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 | `rain`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `snow`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 
-#### Weather Effect Option Types
+#### Weather Effect Options
 
 | Option      | Type                              | Description                                                                                       |
 | ----------- | --------------------------------- | ------------------------------------------------------------------------------------------------- |

@@ -143,4 +143,42 @@ export class AbstractWeatherEffect extends SpecialEffect {
     await Promise.race(promises);
     this.stop();
   }
+
+  static convertOptionsToV2(options) {
+    return Object.fromEntries(
+      Object.entries(options).map(([optionKey, optionValue]) => {
+        switch (optionKey) {
+          case "density": {
+            return [optionKey, this._convertDensityToV2(optionValue, canvas.scene)];
+          }
+          case "speed": {
+            return [optionKey, this._convertSpeedToV2(optionValue)];
+          }
+          default: {
+            return [optionKey, optionValue];
+          }
+        }
+      }),
+    );
+  }
+
+  /** @protected */
+  static _convertSpeedToV2(speed) {
+    const speeds = this.CONFIG.speed?.list?.map((valueStep) => valueStep.value) ?? [];
+    if ("start" in (this.CONFIG.speed ?? {})) {
+      speeds.push(this.CONFIG.speed.start);
+    }
+    if ("end" in (this.CONFIG.speed ?? {})) {
+      speeds.push(this.CONFIG.speed.end);
+    }
+    const maximumSpeed = Math.max(...speeds);
+    return speed / maximumSpeed;
+  }
+
+  /** @protected */
+  static _convertDensityToV2(density, scene) {
+    const d = scene.dimensions;
+    const gridUnits = (d.width / d.size) * (d.height / d.size);
+    return density / gridUnits;
+  }
 }
