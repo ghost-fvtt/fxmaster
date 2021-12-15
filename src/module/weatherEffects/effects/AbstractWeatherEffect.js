@@ -144,12 +144,12 @@ export class AbstractWeatherEffect extends SpecialEffect {
     this.stop();
   }
 
-  static convertOptionsToV2(options) {
+  static convertOptionsToV2(options, scene) {
     return Object.fromEntries(
       Object.entries(options).map(([optionKey, optionValue]) => {
         switch (optionKey) {
           case "density": {
-            return [optionKey, this._convertDensityToV2(optionValue, canvas.scene)];
+            return [optionKey, this._convertDensityToV2(optionValue, scene)];
           }
           case "speed": {
             return [optionKey, this._convertSpeedToV2(optionValue)];

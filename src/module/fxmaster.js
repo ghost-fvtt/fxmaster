@@ -3,7 +3,7 @@ import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js";
 import { WeatherLayer } from "./weatherEffects/WeatherLayer.js";
 import { filterManager } from "./filterEffects/FilterManager.js";
-import { migrate } from "./migration.js";
+import { isOnTargetMigration, migrate } from "./migration.js";
 import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
 import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
@@ -57,7 +57,7 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("canvasInit", () => {
-  if (!game.settings.get("fxmaster", "enable")) {
+  if (!game.settings.get("fxmaster", "enable") || !isOnTargetMigration()) {
     return;
   }
   parseSpecialEffects();
@@ -65,7 +65,7 @@ Hooks.on("canvasInit", () => {
 });
 
 Hooks.on("canvasReady", async () => {
-  if (!game.settings.get("fxmaster", "enable")) {
+  if (!game.settings.get("fxmaster", "enable") || !isOnTargetMigration()) {
     return;
   }
   await filterManager.activate();
@@ -74,7 +74,7 @@ Hooks.on("canvasReady", async () => {
 });
 
 Hooks.on("updateScene", (scene, data) => {
-  if (!game.settings.get("fxmaster", "enable")) {
+  if (!game.settings.get("fxmaster", "enable") || !isOnTargetMigration()) {
     return;
   }
   if (hasProperty(data, "flags.fxmaster")) {

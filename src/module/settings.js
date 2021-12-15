@@ -18,8 +18,17 @@ export const registerSettings = function () {
 
   game.settings.register("fxmaster", "migration", {
     name: "migration",
-    default: [],
+    default: 0,
     scope: "world",
+    type: Number,
+    config: false,
+    onChange: debouncedReload,
+  });
+
+  game.settings.register("fxmaster", "clientMigration", {
+    name: "clientMigration",
+    default: 0,
+    scope: "client",
     type: Number,
     config: false,
   });
@@ -41,6 +50,6 @@ export const registerSettings = function () {
   });
 };
 
-const debouncedReload = foundry.utils.debounce(() => {
+export const debouncedReload = foundry.utils.debounce(() => {
   window.location.reload();
 }, 100);

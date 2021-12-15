@@ -48,7 +48,7 @@ async function onSwitchWeatherDeprecated(parameters) {
 
   const v2Parameters = {
     ...parameters,
-    options: weatherEffectClass.convertOptionsToV2(parameters.options, parameters.type),
+    options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
   };
 
   console.warn(
@@ -64,7 +64,7 @@ async function onUpdateWeatherDeprecated(parametersArray) {
     const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
     return {
       ...parameters,
-      options: weatherEffectClass.convertOptionsToV2(parameters.options, parameters.type),
+      options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
     };
   });
 
