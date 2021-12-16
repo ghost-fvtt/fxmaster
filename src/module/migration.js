@@ -12,12 +12,20 @@ export async function migrate() {
 
 async function migrateWolrd() {
   const migration = game.settings.get("fxmaster", "migration");
-  switch (migration) {
-    case 0:
-    case 1:
-      await migrateWorld1to2();
-  }
   if (migration < targetServerMigration) {
+    ui.notifications.info("FXMASTER.MigrationWorldStart", { localize: true });
+
+    try {
+      switch (migration) {
+        case 0:
+        case 1:
+          await migrateWorld1to2();
+      }
+    } catch (e) {
+      ui.notifications.error("FXMASTER.MigrationWorldError", { localize: true, permanent: true });
+      console.error("Error during world migration for FXMaster.", e);
+    }
+
     await game.settings.set("fxmaster", "migration", 2);
   }
 }
@@ -42,11 +50,19 @@ async function migrateWorld1to2() {
 function migrateClient() {
   const migration = game.settings.get("fxmaster", "clientMigration");
 
-  switch (migration) {
-    case 0:
-      migrateClient0to1();
-  }
   if (migration < targetClientMigration) {
+    ui.notifications.info("FXMASTER.MigrationClientStart", { localize: true });
+
+    try {
+      switch (migration) {
+        case 0:
+          migrateClient0to1();
+      }
+    } catch (e) {
+      ui.notifications.error("FXMASTER.MigrationWorldError", { localize: true, permanent: true });
+      console.error("Error during client migration for FXMaster.", e);
+    }
+
     game.settings.set("fxmaster", "clientMigration", 1);
   }
 }

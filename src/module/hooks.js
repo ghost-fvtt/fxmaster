@@ -1,4 +1,4 @@
-import { resetFlags } from "./utils.js";
+import { formatString, resetFlags } from "./utils.js";
 
 export const registerHooks = function () {
   // ------------------------------------------------------------------
@@ -43,6 +43,12 @@ async function onUpdateWeather(parametersArray) {
   resetFlags(canvas.scene, "effects", effects);
 }
 
+const deprecationFormatString =
+  "The '{0}' hook is deprecated and will be removed in a future version. Please use the " +
+  "'fxmaster.{0}' hook instead. Be aware that the meaning of some options changed for the new hook. " +
+  "Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. " +
+  "To get the same effect for this scene, the given parameters should look as follows for the new hook:";
+
 async function onSwitchWeatherDeprecated(parameters) {
   const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
 
@@ -51,10 +57,7 @@ async function onSwitchWeatherDeprecated(parameters) {
     options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
   };
 
-  console.warn(
-    "The 'switchWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.switchWeather' hook instead. Be aware that the meaning of some options changed for the new hook. Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. The given parameters should look as follows for the new hook:",
-    v2Parameters,
-  );
+  console.warn(formatString(deprecationFormatString, "switchWeather"), v2Parameters);
 
   return onSwitchWeather(v2Parameters);
 }
@@ -68,10 +71,7 @@ async function onUpdateWeatherDeprecated(parametersArray) {
     };
   });
 
-  console.warn(
-    "The 'updateWeather' hook is deprecated and will be removed in a future version. Please use the 'fxmaster.updateWeather' hook instead. Be aware that the meaning of some options changed for the new hook. Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. The given parameters should look as follows for the new hook:",
-    v2ParametersArray,
-  );
+  console.warn(formatString(deprecationFormatString, "updateWeather"), v2ParametersArray);
 
   return onUpdateWeather(v2ParametersArray);
 }

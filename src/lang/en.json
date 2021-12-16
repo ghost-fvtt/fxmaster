@@ -56,5 +56,9 @@
   "FXMASTER.CastThrow": "Throw to target",
   "FXMASTER.CastExtend": "Extend to target",
   "FXMASTER.CastExpand": "Expand to target",
-  "FXMASTER.CastRotate": "Rotate"
+  "FXMASTER.CastRotate": "Rotate",
+  "FXMASTER.MigrationWorldStart": "Performing world migrations for FXMaster.",
+  "FXMASTER.MigrationWorldError": "Error during world migration for FXMaster. For more details, please take a look at the developer console (F12).",
+  "FXMASTER.MigrationClientStart": "Performing client migrations for FXMaster.",
+  "FXMASTER.MigrationClientError": "Error during client migration for FXMaster. For more details, please take a look at the developer console (F12)."
 }

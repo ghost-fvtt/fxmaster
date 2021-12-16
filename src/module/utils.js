@@ -7,3 +7,9 @@ export const resetFlags = function (document, flaglabel, newFlags) {
   });
   return document.setFlag("fxmaster", flaglabel, newFlags);
 };
+
+export function formatString(format, ...args) {
+  return format.replace(/{(\d+)}/g, function (match, number) {
+    return typeof args[number] != "undefined" ? args[number] : match;
+  });
+}
