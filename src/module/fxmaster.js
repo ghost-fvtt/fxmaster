@@ -7,6 +7,7 @@ import { isOnTargetMigration, migrate } from "./migration.js";
 import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
 import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
+import { isV9OrLater } from "./utils.js";
 
 import "../css/common.css";
 
@@ -15,9 +16,8 @@ window.FXMASTER = {
 };
 
 function registerLayer() {
-  const isV9OrLater = game.release?.generation ?? 0 >= 9;
-  CONFIG.Canvas.layers.fxmaster = isV9OrLater ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
-  CONFIG.Canvas.layers.specials = isV9OrLater ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
+  CONFIG.Canvas.layers.fxmaster = isV9OrLater() ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
+  CONFIG.Canvas.layers.specials = isV9OrLater() ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
 }
 
 function parseSpecialEffects() {

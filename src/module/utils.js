@@ -13,3 +13,7 @@ export function formatString(format, ...args) {
     return typeof args[number] != "undefined" ? args[number] : match;
   });
 }
+
+export function isV9OrLater() {
+  return game.release?.generation ?? 0 >= 9;
+}

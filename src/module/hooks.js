@@ -1,3 +1,4 @@
+import { logger } from "./logger.js";
 import { formatString, resetFlags } from "./utils.js";
 
 export const registerHooks = function () {
@@ -57,7 +58,7 @@ async function onSwitchWeatherDeprecated(parameters) {
     options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
   };
 
-  console.warn(formatString(deprecationFormatString, "switchWeather"), v2Parameters);
+  logger.warn(formatString(deprecationFormatString, "switchWeather"), v2Parameters);
 
   return onSwitchWeather(v2Parameters);
 }
@@ -71,7 +72,7 @@ async function onUpdateWeatherDeprecated(parametersArray) {
     };
   });
 
-  console.warn(formatString(deprecationFormatString, "updateWeather"), v2ParametersArray);
+  logger.warn(formatString(deprecationFormatString, "updateWeather"), v2ParametersArray);
 
   return onUpdateWeather(v2ParametersArray);
 }

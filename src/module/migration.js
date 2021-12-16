@@ -1,10 +1,11 @@
-import { resetFlags } from "./utils.js";
+import { isV9OrLater, resetFlags } from "./utils.js";
+import { logger } from "./logger.js";
 
 export const targetServerMigration = 2;
 export const targetClientMigration = 1;
 
 export async function migrate() {
-  migrateClient();
+  await migrateClient();
   if (game.user.isGM) {
     await migrateWolrd();
   }
@@ -13,25 +14,28 @@ export async function migrate() {
 async function migrateWolrd() {
   const migration = game.settings.get("fxmaster", "migration");
   if (migration < targetServerMigration) {
-    ui.notifications.info("FXMASTER.MigrationWorldStart", { localize: true });
+    ui.notifications.info("FXMASTER.MigrationWorldStart", { localize: true, permanent: true });
+    let isError = false;
 
-    try {
-      switch (migration) {
-        case 0:
-        case 1:
-          await migrateWorld1to2();
-      }
-    } catch (e) {
-      ui.notifications.error("FXMASTER.MigrationWorldError", { localize: true, permanent: true });
-      console.error("Error during world migration for FXMaster.", e);
+    switch (migration) {
+      case 0:
+      case 1:
+        isError |= await migrateWorld1to2();
     }
 
+    if (isError) {
+      ui.notifications.error("FXMASTER.MigrationWorldCompletedWithErrors", { localize: true, permanent: true });
+    } else {
+      ui.notifications.info("FXMASTER.MigrationWorldCompletedSuccessfully", { localize: true, permanent: true });
+    }
     await game.settings.set("fxmaster", "migration", 2);
   }
 }
 
 async function migrateWorld1to2() {
-  for (const scene of game.scenes) {
+  let isError = false;
+
+  const migrateScene = async (scene) => {
     const weatherEffects = scene.getFlag("fxmaster", "effects") ?? {};
     if (Object.keys(weatherEffects).length > 0) {
       const newWeatherEffects = Object.fromEntries(
@@ -42,32 +46,74 @@ async function migrateWorld1to2() {
       );
       await resetFlags(scene, "effects", newWeatherEffects);
     }
+  };
+
+  for (const scene of game.scenes) {
+    logger.debug(`Migrating Scene '${scene.name}' (${scene.id}).`);
+    try {
+      await migrateScene(scene);
+    } catch (e) {
+      logger.error(`Migration of Scene '${scene.name}' (${scene.id}) failed.`, e);
+      isError = true;
+    }
   }
 
-  // TODO: Migrate compendium packs
+  const migrateSceneCompendium = async (pack) => {
+    const type = isV9OrLater() ? pack.metadata.type : pack.metadata.entity;
+    if (type !== "Scene") {
+      return;
+    }
+
+    const wasLocked = pack.locked;
+    await pack.configure({ locked: false });
+
+    await pack.migrate();
+    const scenes = await pack.getDocuments();
+
+    for (const scene of scenes) {
+      logger.debug(`Migrating Scene '${scene.name}' (${scene.id}) in compendium ${pack.collection}.`);
+      try {
+        await migrateScene(scene);
+      } catch (e) {
+        logger.error(`Migration of Scene '${scene.name}' (${scene.id}) in compendium ${pack.collection} failed.`, e);
+        isError = true;
+      }
+    }
+
+    await pack.configure({ locked: wasLocked });
+  };
+
+  for (const pack of game.packs) {
+    const type = isV9OrLater() ? pack.metadata.type : pack.metadata.entity;
+    if (pack.metadata.package !== "world" || type !== "Scene") continue;
+    await migrateSceneCompendium(pack);
+  }
+
+  return isError;
 }
 
-function migrateClient() {
+async function migrateClient() {
   const migration = game.settings.get("fxmaster", "clientMigration");
 
   if (migration < targetClientMigration) {
-    ui.notifications.info("FXMASTER.MigrationClientStart", { localize: true });
+    ui.notifications.info("FXMASTER.MigrationClientStart", { permanent: true, localize: true });
+    let isError = false;
 
-    try {
-      switch (migration) {
-        case 0:
-          migrateClient0to1();
-      }
-    } catch (e) {
-      ui.notifications.error("FXMASTER.MigrationWorldError", { localize: true, permanent: true });
-      console.error("Error during client migration for FXMaster.", e);
+    switch (migration) {
+      case 0:
+        isError |= await migrateClient0to1();
     }
 
-    game.settings.set("fxmaster", "clientMigration", 1);
+    if (isError) {
+      ui.notifications.error("FXMASTER.MigrationClientCompletedWithErrors", { localize: true, permanent: true });
+    } else {
+      ui.notifications.info("FXMASTER.MigrationClientCompletedSuccessfully", { localize: true, permanent: true });
+    }
+    await game.settings.set("fxmaster", "clientMigration", 1);
   }
 }
 
-function migrateClient0to1() {
+async function migrateClient0to1() {
   const effects = game.settings.get("fxmaster", "specialEffects");
   for (let i = 0; i < effects.length; ++i) {
     if (typeof effects[i].scale !== "object") {
@@ -77,7 +123,8 @@ function migrateClient0to1() {
       };
     }
   }
-  game.settings.set("fxmaster", "specialEffects", effects);
+  await game.settings.set("fxmaster", "specialEffects", effects);
+  return false;
 }
 
 export function isOnTargetMigration() {
