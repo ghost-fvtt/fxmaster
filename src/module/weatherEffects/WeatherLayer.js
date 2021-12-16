@@ -54,7 +54,9 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   _createMask() {
-    const mask = new PIXI.Graphics();
+    // holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
+    const Graphics = PIXI.LegacyGraphics ?? PIXI.Graphics;
+    const mask = new Graphics();
     const sceneShape = canvas.scene.img ? canvas.dimensions.sceneRect.clone() : canvas.dimensions.rect.clone();
     mask.beginFill(0x000000).drawShape(sceneShape).endFill();
 
