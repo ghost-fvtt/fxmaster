@@ -1,4 +1,4 @@
-const loggingContext = "fxmaster";
+const loggingContext = "FXMaster";
 const loggingSeparator = "|";
 
 /**

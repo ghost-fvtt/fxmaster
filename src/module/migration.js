@@ -24,6 +24,7 @@ async function migrateWolrd() {
     }
 
     if (isError) {
+      await game.settings.set("fxmaster", "disableAll", true);
       ui.notifications.error("FXMASTER.MigrationWorldCompletedWithErrors", { localize: true, permanent: true });
     } else {
       ui.notifications.info("FXMASTER.MigrationWorldCompletedSuccessfully", { localize: true, permanent: true });
@@ -132,4 +133,29 @@ export function isOnTargetMigration() {
     game.settings.get("fxmaster", "migration") === targetServerMigration &&
     game.settings.get("fxmaster", "clientMigration") === targetClientMigration
   );
+}
+
+/**
+ * Schedule a callback to be executed as soon as the world has been migrated to the target migration. If it is on the
+ * latest migration already, the callback is executed immediately. Callbacks are executed in the order in that they have
+ * been registered.
+ * @param {() => (Promise<void> | void)} callback A callback to execute when the world is migrated
+ */
+export function executeWhenWorldIsMigratedToLatest(callback) {
+  if (game.settings.get("fxmaster", "migration") !== targetServerMigration) {
+    worldMigrationCallbacks.push(callback);
+  } else {
+    callback();
+  }
+}
+
+/** @type {Array<() => (Promise<void> | void)>} */
+const worldMigrationCallbacks = [];
+
+export async function onWorldMigrated() {
+  if (game.settings.get("fxmaster", "migration") === targetServerMigration) {
+    for (const callback of worldMigrationCallbacks) {
+      await callback();
+    }
+  }
 }
