@@ -66,39 +66,44 @@ export class AbstractWeatherEffect extends SpecialEffect {
   }
 
   applyOptionsToConfig(config) {
-    this.applyScaleToConfig(config);
-    this.applySpeedToConfig(config);
-    this.applyDirectionToConfig(config);
-    this.applyTintToConfig(config);
+    this._applyScaleToConfig(config);
+    this._applySpeedToConfig(config);
+    this._applyDirectionToConfig(config);
+    this._applyTintToConfig(config);
   }
 
-  applyScaleToConfig(config) {
+  /** @protected */
+  _applyFactorToBasicTweenableOrValueList(basicTweenableOrValueList, factor) {
+    if ("start" in basicTweenableOrValueList) {
+      basicTweenableOrValueList.start = basicTweenableOrValueList.start * factor;
+    }
+    if ("end" in basicTweenableOrValueList) {
+      basicTweenableOrValueList.end = basicTweenableOrValueList.end * factor;
+    }
+    if ("list" in basicTweenableOrValueList) {
+      basicTweenableOrValueList.list = basicTweenableOrValueList.list.map((valueStep) => ({
+        ...valueStep,
+        value: valueStep.value * factor,
+      }));
+    }
+  }
+
+  /** @protected */
+  _applyScaleToConfig(config) {
     const scale = config.scale ?? {};
-    if ("start" in scale) {
-      scale.start = scale.start * this.options.scale.value;
-    }
-    if ("end" in scale) {
-      scale.end = scale.end * this.options.scale.value;
-    }
-    if ("list" in scale) {
-      scale.list = scale.list.map((valueStep) => ({ ...valueStep, value: valueStep.value * this.options.scale.value }));
-    }
+    const factor = (this.options.scale?.value ?? 1) * (canvas.dimensions.size / 100);
+    this._applyFactorToBasicTweenableOrValueList(scale, factor);
   }
 
-  applySpeedToConfig(config) {
+  /** @protected */
+  _applySpeedToConfig(config) {
     const speed = config.speed ?? {};
-    if ("start" in speed) {
-      speed.start = speed.start * this.options.speed.value;
-    }
-    if ("end" in speed) {
-      speed.end = speed.end * this.options.speed.value;
-    }
-    if ("list" in speed) {
-      speed.list = speed.list.map((valueStep) => ({ ...valueStep, value: valueStep.value * this.options.speed.value }));
-    }
+    const factor = (this.options.speed?.value ?? 1) * (canvas.dimensions.size / 100);
+    this._applyFactorToBasicTweenableOrValueList(speed, factor);
   }
 
-  applyDirectionToConfig(config) {
+  /** @protected */
+  _applyDirectionToConfig(config) {
     const direction = this.options.direction?.value;
     const range = (config.startRotation?.max ?? 0) - (config.startRotation?.min ?? 0);
     if (direction !== undefined) {
@@ -106,7 +111,8 @@ export class AbstractWeatherEffect extends SpecialEffect {
     }
   }
 
-  applyTintToConfig(config) {
+  /** @protected */
+  _applyTintToConfig(config) {
     if (this.options.tint?.value.apply) {
       const value = this.options.tint.value.value;
       config.color = {
@@ -148,11 +154,14 @@ export class AbstractWeatherEffect extends SpecialEffect {
     return Object.fromEntries(
       Object.entries(options).map(([optionKey, optionValue]) => {
         switch (optionKey) {
-          case "density": {
-            return [optionKey, this._convertDensityToV2(optionValue, scene)];
+          case "scale": {
+            return [optionKey, this._convertScaleToV2(optionValue, scene)];
           }
           case "speed": {
-            return [optionKey, this._convertSpeedToV2(optionValue)];
+            return [optionKey, this._convertSpeedToV2(optionValue, scene)];
+          }
+          case "density": {
+            return [optionKey, this._convertDensityToV2(optionValue, scene)];
           }
           default: {
             return [optionKey, optionValue];
@@ -163,7 +172,12 @@ export class AbstractWeatherEffect extends SpecialEffect {
   }
 
   /** @protected */
-  static _convertSpeedToV2(speed) {
+  static _convertScaleToV2(scale, scene) {
+    return scale * (100 / scene.dimensions.size);
+  }
+
+  /** @protected */
+  static _convertSpeedToV2(speed, scene) {
     const speeds = this.CONFIG.speed?.list?.map((valueStep) => valueStep.value) ?? [];
     if ("start" in (this.CONFIG.speed ?? {})) {
       speeds.push(this.CONFIG.speed.start);
@@ -172,7 +186,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
       speeds.push(this.CONFIG.speed.end);
     }
     const maximumSpeed = Math.max(...speeds);
-    return speed / maximumSpeed;
+    return (speed / maximumSpeed) * (100 / scene.dimensions.size);
   }
 
   /** @protected */
