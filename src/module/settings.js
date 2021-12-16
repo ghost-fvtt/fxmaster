@@ -20,7 +20,7 @@ export const registerSettings = function () {
 
   game.settings.register("fxmaster", "migration", {
     name: "migration",
-    default: 0,
+    default: -1,
     scope: "world",
     type: Number,
     config: false,
@@ -29,7 +29,7 @@ export const registerSettings = function () {
 
   game.settings.register("fxmaster", "clientMigration", {
     name: "clientMigration",
-    default: 0,
+    default: -1,
     scope: "client",
     type: Number,
     config: false,
