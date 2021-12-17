@@ -19,7 +19,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
       color: {
         label: "FXMASTER.Tint",
         type: "color",
-        default: {
+        value: {
           value: "#FFFFFF",
           apply: false,
         },
@@ -30,7 +30,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         max: 2.0,
         min: 0.0,
         step: 0.1,
-        default: 1.0,
+        value: 1.0,
       },
       contrast: {
         label: "FXMASTER.Contrast",
@@ -38,7 +38,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         max: 2.0,
         min: 0.0,
         step: 0.1,
-        default: 1.0,
+        value: 1.0,
       },
       brightness: {
         label: "FXMASTER.Brightness",
@@ -46,7 +46,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         max: 2.0,
         min: 0.0,
         step: 0.1,
-        default: 1.0,
+        value: 1.0,
       },
       gamma: {
         label: "FXMASTER.Gamma",
@@ -54,7 +54,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
         max: 2.0,
         min: 0.0,
         step: 0.1,
-        default: 1.0,
+        value: 1.0,
       },
     };
   }
@@ -73,10 +73,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
 

@@ -1,3 +1,5 @@
+import { onWorldMigrated } from "./migration.js";
+
 export const registerSettings = function () {
   game.settings.register("fxmaster", "enable", {
     name: "FXMASTER.Enable",
@@ -18,8 +20,17 @@ export const registerSettings = function () {
 
   game.settings.register("fxmaster", "migration", {
     name: "migration",
-    default: [],
+    default: -1,
     scope: "world",
+    type: Number,
+    config: false,
+    onChange: onWorldMigrated,
+  });
+
+  game.settings.register("fxmaster", "clientMigration", {
+    name: "clientMigration",
+    default: -1,
+    scope: "client",
     type: Number,
     config: false,
   });
@@ -39,8 +50,17 @@ export const registerSettings = function () {
     },
     onChange: debouncedReload,
   });
+
+  game.settings.register("fxmaster", "disableAll", {
+    name: "FXMASTER.DisableAll",
+    hint: "FXMASTER.DisableAllHint",
+    default: false,
+    scope: "world",
+    type: Boolean,
+    config: true,
+  });
 };
 
-const debouncedReload = foundry.utils.debounce(() => {
+export const debouncedReload = foundry.utils.debounce(() => {
   window.location.reload();
 }, 100);

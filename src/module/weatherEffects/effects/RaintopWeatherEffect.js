@@ -9,24 +9,16 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
   }
 
-  /* -------------------------------------------- */
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.3;
-    options.density.value = 0.6;
-    options.density.max = 0.8;
-    options.density.step = 0.05;
-    return options;
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.01, value: 0.3, max: 1, step: 0.01 },
+      "-=direction": null,
+    });
   }
-
-  /* -------------------------------------------- */
 
   getParticleEmitters() {
     return [this._getEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getEmitter(parent) {
     const d = canvas.dimensions;
@@ -50,30 +42,16 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
           r: d.width / 2,
           minR: d.width / 4,
         },
-        maxParticles: 2 * p,
-        frequency: 0.02,
+        maxParticles: p,
+        frequency: 1 / p,
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     const art = ["ui/particles/rain.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: d.width / 3,
-      scale: 1,
-      direction: 180,
-      density: Math.round(200 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   /**

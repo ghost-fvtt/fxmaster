@@ -14,19 +14,11 @@ export class AutumnLeavesWeatherEffect extends AbstractWeatherEffect {
   }
 
   /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 60,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.05, value: 0.25, max: 1, step: 0.05 },
+      "-=direction": null,
+    });
   }
 
   /**
@@ -67,24 +59,9 @@ export class AutumnLeavesWeatherEffect extends AbstractWeatherEffect {
     { inplace: false },
   );
 
-  /* -------------------------------------------- */
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.05;
-    options.density.value = 0.25;
-    options.density.max = 1;
-    options.density.step = 0.05;
-    return options;
-  }
-
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
     return [this._getLeafEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getLeafEmitter(parent) {
     const d = canvas.dimensions;
@@ -103,6 +80,8 @@ export class AutumnLeavesWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     const sprites = Array.fromRange(6).map((n) => `ui/particles/leaf${n + 1}.png`);
     return new PIXI.particles.Emitter(parent, sprites, config);
   }

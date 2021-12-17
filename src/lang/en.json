@@ -38,6 +38,8 @@
   "FXMASTER.Delete": "Delete Effects",
   "FXMASTER.DeleteConfirm": "<p><strong>Are you sure?</strong> Every effect will be deleted.</p>",
   "FXMASTER.Enable": "Enable Effects",
+  "FXMASTER.DisableAll": "Disable Effects For Everybody",
+  "FXMASTER.DisableAllHint": "Setting this will disable effects for all users. It overrides the enable flag. It's mostly a safe guard to deactivate effects when migrations fail. You shouldn't need to set this yourself. After changing this setting, a manual reload is required.",
   "FXMASTER.Angle": "Angle",
   "FXMASTER.AngleHint": "Initial angle of the effect compared to the left to right axis",
   "FXMASTER.Anchor": "Anchor",
@@ -56,5 +58,11 @@
   "FXMASTER.CastThrow": "Throw to target",
   "FXMASTER.CastExtend": "Extend to target",
   "FXMASTER.CastExpand": "Expand to target",
-  "FXMASTER.CastRotate": "Rotate"
+  "FXMASTER.CastRotate": "Rotate",
+  "FXMASTER.MigrationWorldStart": "Performing world migrations for FXMaster. Please be patient and do not close your game or shut down your server.",
+  "FXMASTER.MigrationWorldCompletedWithErrors": "World migrations for FXMaster completed with errors. For more details, please take a look at the developer console (F12). Effects have been disabled via the \"Disable Effects For Everybody\" setting to avoid any potential scene crashes. Only reactivate them if you are sure it's safe to do so. You might want to remove all weather and filter effects from any affected scenes first.",
+  "FXMASTER.MigrationWorldCompletedSuccessfully": "World migrations for FXMaster completed successfully.",
+  "FXMASTER.MigrationClientStart": "Performing client migrations for FXMaster. Please be patient and do not close your game.",
+  "FXMASTER.MigrationClientCompletedWithErrors": "Client migrations for FXMaster completed with errors. For more details, please take a look at the developer console (F12).",
+  "FXMASTER.MigrationClientCompletedSuccessfully": "Client migrations for FXMaster completed successfully."
 }

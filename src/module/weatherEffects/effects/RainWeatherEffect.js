@@ -13,22 +13,6 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
   }
 
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 3500,
-      scale: 1,
-      direction: 75,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
-  }
-
   /**
    * Configuration for the particle emitter for rain
    * @type {Object}
@@ -100,13 +84,10 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
     { inplace: false },
   );
 
-  /* -------------------------------------------- */
-
+  /** @override */
   getParticleEmitters() {
     return [this._getRainEmitter(this.parent), this._getSplashEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getRainEmitter(parent) {
     const d = canvas.dimensions;
@@ -125,10 +106,10 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     return new PIXI.particles.Emitter(parent, ["ui/particles/rain.png"], config);
   }
-
-  /* -------------------------------------------- */
 
   _getSplashEmitter(parent) {
     const d = canvas.dimensions;
@@ -147,6 +128,8 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     return new PIXI.particles.Emitter(parent, ["ui/particles/drop.png"], config);
   }
 }

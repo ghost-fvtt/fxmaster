@@ -9,22 +9,16 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/snow.png";
   }
 
-  /* -------------------------------------------- */
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.5;
-    options.density.value = 0.6;
-    options.density.max = 0.9;
-    options.density.step = 0.1;
-    return options;
+  /** @override */
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.05, value: 0.6, max: 1, step: 0.05 },
+    });
   }
 
   getParticleEmitters() {
     return [this._getSnowEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getSnowEmitter(parent) {
     const d = canvas.dimensions;
@@ -43,6 +37,8 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     const art = [
       "./modules/fxmaster/assets/weatherEffects/effects/snow_01.png",
       "./modules/fxmaster/assets/weatherEffects/effects/snow_02.png",
@@ -50,22 +46,6 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.particleConstructor = PIXI.particles.PathParticle;
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 400,
-      scale: 1,
-      direction: 90,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   /**

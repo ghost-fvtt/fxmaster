@@ -3,10 +3,11 @@ import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js";
 import { WeatherLayer } from "./weatherEffects/WeatherLayer.js";
 import { filterManager } from "./filterEffects/FilterManager.js";
-import { migrate } from "./migration.js";
+import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration, migrate } from "./migration.js";
 import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
 import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
+import { isV9OrLater } from "./utils.js";
 
 import "../css/common.css";
 
@@ -15,9 +16,8 @@ window.FXMASTER = {
 };
 
 function registerLayer() {
-  const isV9OrLater = game.release?.generation ?? 0 >= 9;
-  CONFIG.Canvas.layers.fxmaster = isV9OrLater ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
-  CONFIG.Canvas.layers.specials = isV9OrLater ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
+  CONFIG.Canvas.layers.fxmaster = isV9OrLater() ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
+  CONFIG.Canvas.layers.specials = isV9OrLater() ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
 }
 
 function parseSpecialEffects() {
@@ -50,8 +50,6 @@ Hooks.once("init", function () {
     specials: FXMASTER.specials,
     weather: FXMASTER.weatherEffects,
   });
-
-  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects, { inplace: true });
 });
 
 Hooks.once("ready", () => {
@@ -59,7 +57,7 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("canvasInit", () => {
-  if (!game.settings.get("fxmaster", "enable")) {
+  if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
     return;
   }
   parseSpecialEffects();
@@ -67,16 +65,22 @@ Hooks.on("canvasInit", () => {
 });
 
 Hooks.on("canvasReady", async () => {
-  if (!game.settings.get("fxmaster", "enable")) {
-    return;
-  }
-  await filterManager.activate();
-  canvas.fxmaster.drawWeather();
-  canvas.fxmaster.updateMask();
+  executeWhenWorldIsMigratedToLatest(async () => {
+    if (game.settings.get("fxmaster", "disableAll")) {
+      return;
+    }
+    await filterManager.activate();
+    canvas.fxmaster.drawWeather();
+    canvas.fxmaster.updateMask();
+  });
 });
 
 Hooks.on("updateScene", (scene, data) => {
-  if (!game.settings.get("fxmaster", "enable")) {
+  if (
+    !game.settings.get("fxmaster", "enable") ||
+    game.settings.get("fxmaster", "disableAll") ||
+    !isOnTargetMigration()
+  ) {
     return;
   }
   if (hasProperty(data, "flags.fxmaster")) {

@@ -26,7 +26,7 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
         max: 2000,
         min: 100,
         step: 5,
-        default: 500,
+        value: 500,
       },
       spark_duration: {
         label: "FXMASTER.Duration",
@@ -34,7 +34,7 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
         max: 2000,
         min: 100,
         step: 5,
-        default: 300,
+        value: 300,
       },
       brightness: {
         label: "FXMASTER.Brightness",
@@ -42,7 +42,7 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
         max: 4.0,
         min: 0.0,
         step: 0.1,
-        default: 1.3,
+        value: 1.3,
       },
     };
   }
@@ -87,10 +87,7 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
   configure(opts) {

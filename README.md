@@ -80,7 +80,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 | ------------ | :-----: | :---------: | :-----: | :-------: | :----: |
 | `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `bubbles`    |    ✓    |             |    ✓    |     ✓     |   ✓    |
-| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `clouds`     |    ✓    |      ✓      |    ✓    |           |   ✓    |
 | `embers`     |    ✓    |             |    ✓    |     ✓     |   ✓    |
 | `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `stars`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
@@ -90,19 +90,19 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 | `fog`        |    ✓    |             |    ✓    |     ✓     |   ✓    |
 | `raintop`    |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `birds`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
-| `nature`     |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
+| `nature`     |    ✓    |             |    ✓    |     ✓     |   ✓    |
 | `rain`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `snow`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 
-#### Weather Effect Option Types
+#### Weather Effect Options
 
-| Option      | Type                              |
-| ----------- | --------------------------------- |
-| `scale`     | `number`                          |
-| `direction` | `number`                          |
-| `speed`     | `number`                          |
-| `density`   | `number`                          |
-| `tint`      | `{value: string, apply: boolean}` |
+| Option      | Type                              | Description                                                                                       |
+| ----------- | --------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `scale`     | `number`                          | A factor that scales the effect relative to its base size.                                        |
+| `direction` | `number`                          | The direction of the effect in degrees.                                                           |
+| `speed`     | `number`                          | A factor that adjusts the speed of the effect relative to its base speed.                         |
+| `density`   | `number`                          | The density of the effect. For most effects, it represents the number of particles per grid unit. |
+| `tint`      | `{value: string, apply: boolean}` | Tint the effect with this color.                                                                  |
 
 ### Special Effects
 

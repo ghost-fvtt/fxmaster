@@ -9,51 +9,45 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/fog.png";
   }
 
-  /* -------------------------------------------- */
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.2;
-    options.density.value = 0.3;
-    options.density.max = 0.6;
-    options.density.step = 0.05;
-    return options;
+  /** @override */
+  static get parameters() {
+    return foundry.utils.mergeObject(super.parameters, {
+      "-=density": null,
+    });
   }
 
-  /* -------------------------------------------- */
-
+  /** @override */
   getParticleEmitters() {
     return [this._getCloudEmitter(this.parent)];
   }
 
   /** @override */
-  setDirection(value) {
-    this.options.direction = value;
-    this.emitters[0].minStartRotation = value;
-    this.emitters[0].maxStartRotation = value;
-    const spawnRect = {
-      ...this.emitters[0].spawnRect,
-    };
+  applyDirectionToConfig(config) {
+    super.applyDirectionToConfig(config);
 
-    // Need to change spawn rect so it spawns before the map
-    const quadran = Math.round((value % 360) / 90);
-    switch (quadran) {
-      case 0:
-        spawnRect.x -= (2 * spawnRect.width) / 3;
-        break;
-      case 1:
-        spawnRect.y -= (2 * spawnRect.height) / 3;
-        break;
-      case 2:
-        spawnRect.x += (2 * spawnRect.width) / 3;
-        break;
-      case 3:
-        spawnRect.y += (2 * spawnRect.height) / 3;
-        break;
+    const direction = this.options.direction?.value;
+    if (direction !== undefined) {
+      const spawnRect = { ...config.spawnRect };
+
+      // Need to change spawn rect so it spawns before the map
+      const quadran = Math.round((direction % 360) / 90);
+      switch (quadran) {
+        case 0:
+          spawnRect.x -= (2 * spawnRect.w) / 3;
+          break;
+        case 1:
+          spawnRect.y -= (2 * spawnRect.h) / 3;
+          break;
+        case 2:
+          spawnRect.x += (2 * spawnRect.w) / 3;
+          break;
+        case 3:
+          spawnRect.y += (2 * spawnRect.h) / 3;
+          break;
+      }
+      config.spawnRect = spawnRect;
     }
-    this.emitters[0].spawnRect = spawnRect;
   }
-  /* -------------------------------------------- */
 
   _getCloudEmitter(parent) {
     const d = canvas.dimensions;
@@ -69,6 +63,8 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     // Animation
     const art = [
       "./modules/fxmaster/assets/weatherEffects/effects/cloud1.png",
@@ -78,20 +74,6 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     ];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    return {
-      speed: 100,
-      scale: 1,
-      direction: 90,
-      density: 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   /**
@@ -121,8 +103,10 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
         minimumSpeedMultiplier: 0.3,
       },
       color: {
-        start: "ffffff",
-        end: "ffffff",
+        list: [
+          { value: "ffffff", time: 0 },
+          { value: "ffffff", time: 1 },
+        ],
       },
       startRotation: {
         min: 80,

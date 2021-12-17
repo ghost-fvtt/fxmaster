@@ -13,22 +13,6 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/snow.png";
   }
 
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 210,
-      scale: 1,
-      direction: 63,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
-  }
-
   /**
    * Configuration of the particle emitter for snowflakes
    * @type {object}
@@ -67,13 +51,9 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
     { inplace: false },
   );
 
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
     return [this._getSnowEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getSnowEmitter(parent) {
     const d = canvas.dimensions;
@@ -92,6 +72,8 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     return new PIXI.particles.Emitter(parent, ["ui/particles/snow.png"], config);
   }
 }

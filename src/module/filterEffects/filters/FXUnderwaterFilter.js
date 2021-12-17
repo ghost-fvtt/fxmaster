@@ -33,12 +33,12 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
         max: 5.0,
         min: 0.0,
         step: 0.1,
-        default: 0.3,
+        value: 0.3,
       },
       scale: {
         label: "FXMASTER.Scale",
         type: "number",
-        default: 4.0,
+        value: 4.0,
       },
     };
   }
@@ -63,10 +63,7 @@ export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
 
   static get default() {
     return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [
-        parameterName,
-        parameterConfig.default,
-      ]),
+      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
     );
   }
 

@@ -11,28 +11,14 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
+      density: { min: 0.01, value: 0.15, max: 0.5, step: 0.01 },
       "-=direction": undefined,
     });
   }
 
-  /* -------------------------------------------- */
-
-  static get effectOptions() {
-    const options = super.effectOptions;
-    options.density.min = 0.03;
-    options.density.value = 0.15;
-    options.density.max = 0.4;
-    options.density.step = 0.01;
-    return options;
-  }
-
-  /* -------------------------------------------- */
-
   getParticleEmitters() {
     return [this._getBubbleEmitter(this.parent)];
   }
-
-  /* -------------------------------------------- */
 
   _getBubbleEmitter(parent) {
     const d = canvas.dimensions;
@@ -51,25 +37,11 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
       },
       { inplace: false },
     );
+    this.applyOptionsToConfig(config);
+
     const art = ["./modules/fxmaster/assets/weatherEffects/effects/bubbles.png"];
     var emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
-  }
-
-  /** @override */
-  static get default() {
-    const d = canvas.dimensions;
-    const p = (d.width / d.size) * (d.height / d.size) * this.effectOptions.density.value;
-    return {
-      speed: 60,
-      scale: 1,
-      direction: 180,
-      density: Math.round(100 * p) / 100,
-      tint: {
-        value: "#FFFFFF",
-        apply: false,
-      },
-    };
   }
 
   /**
@@ -98,8 +70,10 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
         minimumSpeedMultiplier: 0.6,
       },
       color: {
-        start: "ffffff",
-        end: "ffffff",
+        list: [
+          { value: "ffffff", time: 0 },
+          { value: "ffffff", time: 1 },
+        ],
       },
       startRotation: {
         min: 0,
