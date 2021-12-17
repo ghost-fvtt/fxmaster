@@ -34,6 +34,7 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
   the dialog, or close and reopen it.
 * Playing the special effects is done by clicking on the canvas. You can orient them by clicking and dragging the cursor
   into the direction you want to the effect to face.
+* You can mask your weather effects by creating drawings and then marking them as weather mask (open the HUD of the drawing and click on the cloud icon in the top left). The complete mask can be inverted by clicking the mask control icon in the FXMaster controls.
 
 ## Developer API
 
