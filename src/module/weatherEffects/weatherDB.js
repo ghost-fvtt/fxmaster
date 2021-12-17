@@ -27,7 +27,7 @@ export const weatherDB = {
   fog: FogWeatherEffect,
   raintop: RaintopWeatherEffect,
   birds: BirdsWeatherEffect,
-  nature: AutumnLeavesWeatherEffect,
+  leaves: AutumnLeavesWeatherEffect,
   rain: RainWeatherEffect,
   snow: SnowWeatherEffect,
 };

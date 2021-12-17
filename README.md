@@ -91,7 +91,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 | `fog`        |    ✓    |             |    ✓    |     ✓     |   ✓    |
 | `raintop`    |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `birds`      |    ✓    |             |    ✓    |     ✓     |   ✓    |
-| `nature`     |    ✓    |             |    ✓    |     ✓     |   ✓    |
+| `leaves`     |    ✓    |             |    ✓    |     ✓     |   ✓    |
 | `rain`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 | `snow`       |    ✓    |      ✓      |    ✓    |     ✓     |   ✓    |
 

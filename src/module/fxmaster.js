@@ -8,6 +8,7 @@ import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
 import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
 import { isV9OrLater } from "./utils.js";
+import { logger } from "./logger.js";
 
 import "../css/common.css";
 
@@ -50,6 +51,17 @@ Hooks.once("init", function () {
     specials: FXMASTER.specials,
     weather: FXMASTER.weatherEffects,
   });
+
+  Object.defineProperty(CONFIG.fxmaster.weather, "nature", {
+    get: () => {
+      logger.warn(
+        `'CONFIG.fxmaster.weather.nature' is deprecated and will be removed in a future version. Please use 'CONFIG.fxmaster.weather.leaves' instead.`,
+      );
+      return CONFIG.fxmaster.weather.leaves;
+    },
+  });
+
+  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
 });
 
 Hooks.once("ready", () => {
