@@ -98,6 +98,7 @@ export class WeatherLayer extends CanvasLayer {
 
     if (this.weather.mask) {
       this.weather.removeChild(this.weather.mask);
+      this.weather.mask.destroy();
       this.weather.mask = null;
     }
     const invert = canvas.scene.getFlag("fxmaster", "invert");
@@ -115,7 +116,6 @@ export class WeatherLayer extends CanvasLayer {
     Object.values(this.weatherEffects).forEach(({ fx }) => fx.stop());
 
     if (this.weather) {
-      this.removeChild(this.weather);
       this.weather = null;
     }
     this.weatherEffects = {};
