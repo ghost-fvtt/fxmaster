@@ -1,4 +1,5 @@
 import { resetFlags } from "../utils.js";
+import { logger } from "../logger.js";
 
 class FilterManager {
   constructor() {
@@ -157,6 +158,16 @@ class FilterManager {
     for (const key in this.filters) {
       this.filters[key].step();
     }
+  }
+
+  /**
+   * @deprecated since v2.0.0
+   */
+  get apply_to() {
+    logger.warn(
+      "'FXMASTER.filters.apply_to' is deprecated and will be removed in a future version. Please use 'FXMASTER.filters.filteredLayers' instead.",
+    );
+    return this.filteredLayers;
   }
 }
 
