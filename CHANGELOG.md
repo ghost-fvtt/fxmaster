@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-rc2](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.0-rc1...v2.0.0-rc2) (2021-12-19)
+
+
+### Bug Fixes
+
+* add backwards compatibility for `canvas.fxmaster._createInvertMask` ([d9bba42](https://github.com/ghost-fvtt/fxmaster/commit/d9bba42e4fc5ae367ddf8e20917c31eeb777d0b2))
+* add backwards compatibility for `FXMASTER.filters.apply_to` ([82007b9](https://github.com/ghost-fvtt/fxmaster/commit/82007b95af7434a9113941bc6e82edfdc27f9448))
+* destroy old mask when updating the mask to prevent memory leak ([05fa8a1](https://github.com/ghost-fvtt/fxmaster/commit/05fa8a1e3a0dc1600193d52231ee500f94af9589))
+* round scale, speed, and density during migration to prevent long decimal numbers being shown ([09b5a90](https://github.com/ghost-fvtt/fxmaster/commit/09b5a902bda04617cfd2c25abf921700e20842ed)), closes [#114](https://github.com/ghost-fvtt/fxmaster/issues/114)
+
 ## [2.0.0-rc1](https://github.com/ghost-fvtt/fxmaster/compare/v1.2.1...v2.0.0-rc1) (2021-12-17)
 
 
