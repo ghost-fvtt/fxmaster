@@ -155,4 +155,12 @@ export class WeatherLayer extends CanvasLayer {
       this.weatherEffects[id].fx.play();
     }
   }
+
+  /** @deprecated since v2.0.0 */
+  _createInvertMask() {
+    logger.warn(
+      "'canvas.fxmaster._createInvertMask' is deprecated and will be removed in a future version. Please use 'canvas.fxmaster._createInvertedMask' instead.",
+    );
+    return this._createInvertedMask();
+  }
 }
