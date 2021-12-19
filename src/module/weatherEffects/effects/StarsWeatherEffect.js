@@ -11,7 +11,7 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.05, value: 0.3, max: 1, step: 0.05 },
+      density: { min: 0.05, value: 0.3, max: 1, step: 0.05, decimals: 2 },
       tint: { value: { value: "#bee8ee" } },
       "-=direction": undefined,
     });

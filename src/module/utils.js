@@ -17,3 +17,7 @@ export function formatString(format, ...args) {
 export function isV9OrLater() {
   return game.release?.generation ?? 0 >= 9;
 }
+
+export function roundToDecimals(number, decimals) {
+  return Number(Math.round(number + "e" + decimals) + "e-" + decimals);
+}

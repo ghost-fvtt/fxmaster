@@ -11,7 +11,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.05, value: 0.3, max: 0.7, step: 0.05 },
+      density: { min: 0.05, value: 0.3, max: 0.7, step: 0.05, decimals: 2 },
       "-=direction": undefined,
     });
   }

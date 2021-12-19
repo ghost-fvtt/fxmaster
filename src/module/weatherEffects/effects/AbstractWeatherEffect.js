@@ -1,3 +1,5 @@
+import { roundToDecimals } from "../../utils.js";
+
 export class AbstractWeatherEffect extends SpecialEffect {
   static get parameters() {
     return {
@@ -8,6 +10,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
         value: 1,
         max: 5,
         step: 0.1,
+        decimals: 1,
       },
       direction: {
         label: "FXMASTER.Direction",
@@ -16,6 +19,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
         value: (this.CONFIG.startRotation.min + this.CONFIG.startRotation.min) / 2,
         max: 360,
         step: 10,
+        decimals: 0,
       },
       speed: {
         label: "FXMASTER.Speed",
@@ -24,6 +28,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
         value: 1,
         max: 5,
         step: 0.1,
+        decimals: 1,
       },
       density: {
         label: "FXMASTER.Density",
@@ -32,6 +37,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
         value: 0.5,
         max: 5,
         step: 0.1,
+        decimals: 1,
       },
       tint: {
         label: "FXMASTER.Tint",
@@ -173,7 +179,8 @@ export class AbstractWeatherEffect extends SpecialEffect {
 
   /** @protected */
   static _convertScaleToV2(scale, scene) {
-    return scale * (100 / scene.dimensions.size);
+    const decimals = this.parameters.scale?.decimals ?? 1;
+    return roundToDecimals(scale * (100 / scene.dimensions.size), decimals);
   }
 
   /** @protected */
@@ -186,13 +193,17 @@ export class AbstractWeatherEffect extends SpecialEffect {
       speeds.push(this.CONFIG.speed.end);
     }
     const maximumSpeed = Math.max(...speeds);
-    return (speed / maximumSpeed) * (100 / scene.dimensions.size);
+
+    const decimals = this.parameters.speed?.decimals ?? 1;
+    return roundToDecimals((speed / maximumSpeed) * (100 / scene.dimensions.size), decimals);
   }
 
   /** @protected */
   static _convertDensityToV2(density, scene) {
     const d = scene.dimensions;
     const gridUnits = (d.width / d.size) * (d.height / d.size);
-    return density / gridUnits;
+
+    const decimals = this.parameters.density?.decimals ?? 1;
+    return roundToDecimals(density / gridUnits, decimals);
   }
 }

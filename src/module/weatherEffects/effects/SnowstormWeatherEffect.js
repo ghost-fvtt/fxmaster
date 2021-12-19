@@ -12,7 +12,7 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
   /** @override */
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.05, value: 0.6, max: 1, step: 0.05 },
+      density: { min: 0.05, value: 0.6, max: 1, step: 0.05, decimals: 2 },
     });
   }
 

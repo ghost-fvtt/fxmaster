@@ -11,7 +11,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
 
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      density: { min: 0.05, value: 0.7, max: 1.4, step: 0.05 },
+      density: { min: 0.05, value: 0.7, max: 1.4, step: 0.05, decimals: 2 },
       tint: { value: { value: "#f77300" } },
       "-=direction": undefined,
     });
