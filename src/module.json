@@ -3,14 +3,14 @@
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
   "version": "2.0.0",
-  "author": "U~man, Johannes Loher (ghost#20000)",
+  "author": "U~man, Johannes Loher (ghost#2000)",
   "authors": [
     {
-      "name": "Emmanuel Ruaud",
+      "name": "Emmanuel Ruaud (U~man)",
       "discord": "U~man"
     },
     {
-      "name": "Johannes Loher",
+      "name": "Johannes Loher (ghost)",
       "email": "johannes.loher@fg4f.de",
       "discord": "ghost#2000",
       "ko-fi": "ghostfvtt"
@@ -71,7 +71,7 @@
   "allowBugReporter": true,
   "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
   "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.0.0/module.zip",
-  "license": "https://github.com/ghost-fvtt/fxmaster/blob/master/LICENSE",
+  "license": "https://github.com/ghost-fvtt/fxmaster/blob/master/LICENSE.md",
   "readme": "https://github.com/ghost-fvtt/fxmaster#readme",
   "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
   "compatibleCoreVersion": "9",
