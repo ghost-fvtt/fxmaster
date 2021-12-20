@@ -28,13 +28,29 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
 
 * The FXMaster controls are accessible through the magic wand control icon.
 * The Magic hat represents special effects.
-* There are a couple built-ins that are borrowed from modules from Jules and Ben and Jinker. Installing their modules will
-  give you access to many more of their brilliant assets.
+* There are a couple built-ins that are borrowed from modules from Jules and Ben and Jinker. Installing their modules
+  will give you access to many more of their brilliant assets.
 * You can add your own video files as custom special effects. After adding a custom special effect, you should resync
   the dialog, or close and reopen it.
 * Playing the special effects is done by clicking on the canvas. You can orient them by clicking and dragging the cursor
   into the direction you want to the effect to face.
-* You can mask your weather effects by creating drawings and then marking them as weather mask (open the HUD of the drawing and click on the cloud icon in the top left). The complete mask can be inverted by clicking the mask control icon in the FXMaster controls.
+* You can mask your weather effects by creating drawings and then marking them as weather mask (open the HUD of the
+  drawing and click on the cloud icon in the top left). The complete mask can be inverted by clicking the mask control
+  icon in the FXMaster controls.
+
+
+## ⚠ Warning Regarding Large Scenes
+
+Similar to the foundry core weather effects, the weather effects provided by FXMaster can have a pretty negative impact
+on performance in very large scenes (think 10000 x 10000 and larger). Be careful when enabling weather effects in such
+scenes as it might make them crash. If that happens, launch the world in safe configuration and delete the effects set
+for the scene by running the following as a script macro or in the developer console (F12):
+
+```js
+canvas.scene.unsetFlag("fxmaster", "effects");
+```
+
+You can then safely reactivate your modules.
 
 ## Developer API
 
