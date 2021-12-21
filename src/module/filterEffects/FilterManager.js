@@ -59,11 +59,11 @@ class FilterManager {
     const deletePromises = filtersToDelete.map(async (key) => {
       const filter = this.filters[key];
       await filter.stop();
+
       // delete filters preemptively so that they disappear as soon as they have stopped
-      if (canvas.background.filters[key]) delete canvas.background.filters[key];
-      if (canvas.foreground.filters[key]) delete canvas.foreground.filters[key];
-      if (canvas.drawings.filters[key]) delete canvas.drawings.filters[key];
-      if (canvas.tokens.filters[key]) delete canvas.tokens.filters[key];
+      [canvas.background, canvas.foreground, canvas.drawings, canvas.tokens].forEach((layer) =>
+        FilterManager._removeFilterFromContainer(layer, filter),
+      );
       delete this.filters[key];
     });
     await Promise.all(deletePromises);
@@ -76,10 +76,21 @@ class FilterManager {
    * @returns {void} Nothing
    */
   applyFiltersToLayers() {
+    const filters = Object.values(this.filters);
     Object.entries(this.filteredLayers).forEach(([layerName, filtered]) => {
       const layer = canvas[layerName];
-      layer.filters = filtered ? Object.values(this.filters) : [];
+      const otherFilters = layer.filters?.filter((f) => !filters.includes(f)) ?? [];
+      layer.filters = otherFilters.concat(filtered ? filters : []);
     });
+  }
+
+  /**
+   * Remove a filter from a container.
+   * @param {PIXI.container} container A container
+   * @param {PIXI.Filter} filter A filter
+   */
+  static _removeFilterFromContainer(container, filter) {
+    container.filters = container.filters?.filter((f) => f !== filter) ?? null;
   }
 
   /**
