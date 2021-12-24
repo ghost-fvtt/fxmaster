@@ -82,8 +82,6 @@ Hooks.on("canvasReady", async () => {
       return;
     }
     await filterManager.activate();
-    canvas.fxmaster.drawWeather();
-    canvas.fxmaster.updateMask();
   });
 });
 
@@ -99,7 +97,6 @@ Hooks.on("updateScene", (scene, data) => {
     filterManager.update();
     canvas.fxmaster.drawWeather({ soft: true });
   }
-  canvas.fxmaster.updateMask();
 });
 
 Hooks.on("dropCanvasData", async (canvas, data) => {
