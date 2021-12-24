@@ -1,3 +1,6 @@
+// holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
+const Graphics = PIXI.LegacyGraphics ?? PIXI.Graphics;
+
 export class WeatherLayer extends CanvasLayer {
   /**
    * The weather overlay container
@@ -20,7 +23,7 @@ export class WeatherLayer extends CanvasLayer {
 
   /* -------------------------------------------- */
   _createInvertedMask() {
-    const mask = new PIXI.Graphics();
+    const mask = new Graphics();
     canvas.drawings.placeables.forEach((drawing) => {
       const isMask = drawing.document.getFlag("fxmaster", "masking");
       if (!isMask) return;
@@ -54,11 +57,8 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   _createMask() {
-    // holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
-    const Graphics = PIXI.LegacyGraphics ?? PIXI.Graphics;
     const mask = new Graphics();
-    const sceneShape = canvas.scene.img ? canvas.dimensions.sceneRect.clone() : canvas.dimensions.rect.clone();
-    mask.beginFill(0x000000).drawShape(sceneShape).endFill();
+    mask.beginFill(0x000000).drawShape(canvas.dimensions.rect).endFill();
 
     canvas.drawings.placeables.forEach((drawing) => {
       const isMask = drawing.document.getFlag("fxmaster", "masking");
@@ -93,7 +93,6 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   updateMask() {
-    this.visible = true;
     if (!this.weather) return;
 
     if (this.weather.mask) {
@@ -115,12 +114,18 @@ export class WeatherLayer extends CanvasLayer {
   async tearDown() {
     Object.values(this.weatherEffects).forEach(({ fx }) => fx.stop());
 
-    if (this.weather) {
-      this.weather = null;
-    }
+    this.weather = null;
+    this.mask = null;
     this.weatherEffects = {};
-    this.visible = false;
+
     return super.tearDown();
+  }
+
+  /** @override */
+  async draw() {
+    this.drawWeather();
+    this.updateMask();
+    this._setLayerMask();
   }
 
   async drawWeather({ soft = false } = {}) {
@@ -153,6 +158,18 @@ export class WeatherLayer extends CanvasLayer {
         fx: new CONFIG.fxmaster.weather[flags[id].type](this.weather, options),
       };
       this.weatherEffects[id].fx.play();
+    }
+  }
+
+  /**
+   * Mask this layer to the scene if the scene has a background image.
+   * @protected
+   */
+  _setLayerMask() {
+    if (canvas.scene.img) {
+      const mask = new Graphics();
+      mask.beginFill(0x000000).drawShape(canvas.dimensions.sceneRect).endFill();
+      this.mask = this.addChild(mask);
     }
   }
 
