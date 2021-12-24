@@ -93,9 +93,19 @@ Hooks.on("updateScene", (scene, data) => {
   ) {
     return;
   }
-  if (hasProperty(data, "flags.fxmaster")) {
-    filterManager.update();
+  if (hasProperty(data, "flags.fxmaster.effects") || hasProperty(data, "flags.fxmaster.-=effects")) {
     canvas.fxmaster.drawWeather({ soft: true });
+  }
+  if (hasProperty(data, "flags.fxmaster.invert") || hasProperty(data, "flags.fxmaster.-=invert")) {
+    canvas.fxmaster.updateMask();
+  }
+  if (
+    hasProperty(data, "flags.fxmaster.filters") ||
+    hasProperty(data, "flags.fxmaster.-=filters") ||
+    hasProperty(data, "flags.fxmaster.filteredLayers") ||
+    hasProperty(data, "flags.fxmaster.-=filteredLayers")
+  ) {
+    filterManager.update();
   }
 });
 
