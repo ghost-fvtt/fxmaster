@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.0...v2.0.1) (2021-12-25)
+
+
+### Bug Fixes
+
+* don't redraw weather if the weather mask is inverted ([d6899cc](https://github.com/ghost-fvtt/fxmaster/commit/d6899cc43af90195ba5fe2dea61fc379575a15dc))
+* make drawings mask work when drawing are outside of the scene ([cfe0a81](https://github.com/ghost-fvtt/fxmaster/commit/cfe0a816f0d8608de08056c3857996da60963b2f))
+* make filter addition / removal play nice with non-fxmaster filters ([aa41c67](https://github.com/ghost-fvtt/fxmaster/commit/aa41c67addcd79211d049c9a76b6c4245e08f6e3))
+* make using special effects by clicking (not dragging) the canvas work ([6fbccea](https://github.com/ghost-fvtt/fxmaster/commit/6fbcceaf95b1dcb49afe93f1bf813153a1fc9cee)), closes [#129](https://github.com/ghost-fvtt/fxmaster/issues/129)
+
 ## [2.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.0-rc2...v2.0.0) (2021-12-20)
 
 ## [2.0.0-rc2](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.0-rc1...v2.0.0-rc2) (2021-12-19)
