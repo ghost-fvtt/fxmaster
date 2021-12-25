@@ -267,7 +267,17 @@ export class SpecialsLayer extends PlaceablesLayer {
     return this.playVideo(effectData);
   }
 
-  _drawSpecial(event) {
+  /**
+   * Draw a special effect.
+   * @param {PIXI.InteractionEvent} event         The event that triggered the drawing of the special effect
+   * @param {PIXI.Point}            [savedOrigin] The point that was originally clicked on
+   * @returns {Promise<void>}
+   * @remarks
+   * The savedOrigin parameter is required for regular click events because for some reason, the origin has been removed
+   * from the event's data by the time the event is handled.
+   * TODO: investigate further.
+   */
+  _drawSpecial(event, savedOrigin) {
     event.stopPropagation();
 
     const windows = Object.values(ui.windows);
@@ -281,13 +291,11 @@ export class SpecialsLayer extends PlaceablesLayer {
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
 
     const effectData = foundry.utils.deepClone(effect);
+    const { x, y } = event.data.origin ?? savedOrigin;
     const data = {
       ...effectData,
       ...{
-        position: {
-          x: event.data.origin.x,
-          y: event.data.origin.y,
-        },
+        position: { x, y },
         rotation: event.data.rotation,
       },
     };
@@ -367,11 +375,12 @@ export class SpecialsLayer extends PlaceablesLayer {
 
   _onClickLeft(event) {
     this._dragging = false;
+    const origin = event.data.origin;
     setTimeout(() => {
       if (!this._dragging) {
         event.data.rotation = 0;
         event.data.destination = undefined;
-        this._drawSpecial(event);
+        this._drawSpecial(event, origin);
       }
       this._dragging = false;
     }, 400);
