@@ -153,7 +153,7 @@ export class WeatherLayer extends CanvasLayer {
       this._sceneMaskFilter = this._createSceneMaskFilter();
     }
 
-    this.drawWeather();
+    await this.drawWeather();
     this.updateMask();
   }
 
@@ -169,17 +169,19 @@ export class WeatherLayer extends CanvasLayer {
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
 
-    Object.entries(this.weatherEffects).forEach(async ([id, effect]) => {
-      if (soft) {
-        await effect.fx.fadeOut({ timeout: 20000 });
-      } else {
-        effect.fx.stop();
-      }
-      // The check is needed because a new effect might have been set already.
-      if (this.weatherEffects[id] === effect) {
-        delete this.weatherEffects[id];
-      }
-    });
+    const stopPromise = Promise.all(
+      Object.entries(this.weatherEffects).map(async ([id, effect]) => {
+        if (soft) {
+          await effect.fx.fadeOut({ timeout: 20000 });
+        } else {
+          effect.fx.stop();
+        }
+        // The check is needed because a new effect might have been set already.
+        if (this.weatherEffects[id] === effect) {
+          delete this.weatherEffects[id];
+        }
+      }),
+    );
 
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
@@ -194,6 +196,8 @@ export class WeatherLayer extends CanvasLayer {
       };
       this.weatherEffects[id].fx.play();
     }
+
+    await stopPromise;
   }
 
   /**
