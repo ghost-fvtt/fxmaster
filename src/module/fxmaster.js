@@ -89,7 +89,8 @@ Hooks.on("updateScene", (scene, data) => {
   if (
     !game.settings.get("fxmaster", "enable") ||
     game.settings.get("fxmaster", "disableAll") ||
-    !isOnTargetMigration()
+    !isOnTargetMigration() ||
+    scene !== canvas.scene
   ) {
     return;
   }
@@ -110,7 +111,7 @@ Hooks.on("updateScene", (scene, data) => {
 });
 
 Hooks.on("dropCanvasData", async (canvas, data) => {
-  if (!(canvas.activeLayer instanceof SpecialsLayer)) return;
+  if (!(canvas.activeLayer instanceof SpecialsLayer) || !canvas.scene) return;
   if (data.type !== "SpecialEffect") return;
 
   await new Promise((resolve) => {
@@ -160,15 +161,24 @@ Hooks.on("hotbarDrop", (hotbar, data) => {
   };
 });
 
-Hooks.on("updateDrawing", () => {
+Hooks.on("updateDrawing", (drawing) => {
+  if (drawing.parent !== canvas.scene) {
+    return;
+  }
   canvas.fxmaster.updateMask();
 });
 
-Hooks.on("createDrawing", () => {
+Hooks.on("createDrawing", (drawing) => {
+  if (drawing.parent !== canvas.scene) {
+    return;
+  }
   canvas.fxmaster.updateMask();
 });
 
-Hooks.on("deleteDrawing", () => {
+Hooks.on("deleteDrawing", (drawing) => {
+  if (drawing.parent !== canvas.scene) {
+    return;
+  }
   canvas.fxmaster.updateMask();
 });
 

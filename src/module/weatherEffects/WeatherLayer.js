@@ -40,7 +40,7 @@ export class WeatherLayer extends CanvasLayer {
    * @type {boolean}
    */
   get shouldMaskToScene() {
-    return !!canvas.scene.img;
+    return !!canvas.scene?.img;
   }
 
   _createInvertedMask() {
@@ -114,7 +114,7 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   updateMask() {
-    if (!this.weather) return;
+    if (!this.weather || !canvas.scene) return;
 
     if (this.weather.mask) {
       this.weather.removeChild(this.weather.mask);
@@ -158,6 +158,9 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   async drawWeather({ soft = false } = {}) {
+    if (!canvas.scene) {
+      return;
+    }
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
       if (this._sceneMaskFilter) {

@@ -25,12 +25,12 @@ export class FiltersConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentFilters = canvas.scene.getFlag("fxmaster", "filters") ?? {};
+    const currentFilters = canvas.scene?.getFlag("fxmaster", "filters") ?? {};
     const activeFilters = Object.fromEntries(
       Object.values(currentFilters).map((filter) => [filter.type, filter.options]),
     );
 
-    const filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? {
+    const filteredLayers = canvas.scene?.getFlag("fxmaster", "filteredLayers") ?? {
       background: true,
       foreground: true,
       tokens: true,
@@ -102,6 +102,9 @@ export class FiltersConfig extends FormApplication {
    * @private
    */
   async _updateObject(_, formData) {
+    if (!canvas.scene) {
+      return;
+    }
     const filtersDB = CONFIG.fxmaster.filters;
 
     const filters = Object.fromEntries(
