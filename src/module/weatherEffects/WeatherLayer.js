@@ -136,7 +136,7 @@ export class WeatherLayer extends CanvasLayer {
     Object.values(this.weatherEffects).forEach(({ fx }) => fx.stop());
 
     this.weather = undefined;
-    this.mask = null; // TODO: Figure out why removing this line causes a crash when redrawing the canvase when Perfect Vision is activated.
+    this.mask = null;
     this.weatherEffects = {};
     this._sceneMask?.destroy();
     this._sceneMask = undefined;
