@@ -1,10 +1,12 @@
+import { MultiMaskContainer } from "./multi-mask-container.js";
+
 // holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
 const Graphics = PIXI.LegacyGraphics ?? PIXI.Graphics;
 
 export class WeatherLayer extends CanvasLayer {
   /**
    * The weather overlay container
-   * @type {PIXI.Container | undefined}
+   * @type {MultiMaskContainer | undefined}
    */
   weather = undefined;
 
@@ -15,18 +17,18 @@ export class WeatherLayer extends CanvasLayer {
   weatherEffects = {};
 
   /**
-   * The scene mask.
-   * @type {CachedContainer | undefined}
+   * The scene rectangle mask for the weather effects.
+   * @type {PIXI.Graphics | undefined}
    * @private
    */
   _sceneMask = undefined;
 
   /**
-   * The filter used to apply the scene mask.
-   * @type {InverseOcclusionMaskFilter | undefined}
+   * The mask for weather effects defined by drawings.
+   * @type {PIXI.Graphics | undefined}
    * @private
    */
-  _sceneMaskFilter = undefined;
+  _drawingsMask = undefined;
 
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
@@ -116,19 +118,23 @@ export class WeatherLayer extends CanvasLayer {
   updateMask() {
     if (!this.weather || !canvas.scene) return;
 
-    if (this.weather.mask) {
-      this.weather.removeChild(this.weather.mask);
-      this.weather.mask.destroy();
-      this.weather.mask = null;
+    const otherMasks = (this.weather.multiMask ?? []).filter((mask) => mask !== this._drawingsMask);
+
+    if (this._drawingsMask) {
+      this.weather.removeChild(this._drawingsMask);
+      this._drawingsMask.destroy();
+      this._drawingsMask = undefined;
     }
+
     const invert = canvas.scene.getFlag("fxmaster", "invert");
 
     // Mask zones masked by drawings
     const mask = invert ? this._createInvertedMask() : this._createMask();
     this.weather.addChild(mask);
+    this._drawingsMask = mask;
 
     Hooks.callAll("updateMask", this, this.weather, mask);
-    this.weather.mask = mask;
+    this.weather.multiMask = [...otherMasks, mask];
   }
 
   /** @override */
@@ -138,9 +144,8 @@ export class WeatherLayer extends CanvasLayer {
     this.weather = undefined;
     this.mask = null;
     this.weatherEffects = {};
-    this._sceneMask?.destroy();
     this._sceneMask = undefined;
-    this._sceneMaskFilter = undefined;
+    this._drawingsMask = undefined;
 
     return super.tearDown();
   }
@@ -150,7 +155,6 @@ export class WeatherLayer extends CanvasLayer {
     if (this.shouldMaskToScene) {
       this._sceneMask = this._drawSceneMask();
       this.addChild(this._sceneMask);
-      this._sceneMaskFilter = this._createSceneMaskFilter();
     }
 
     await this.drawWeather();
@@ -162,10 +166,11 @@ export class WeatherLayer extends CanvasLayer {
       return;
     }
     if (!this.weather) {
-      this.weather = this.addChild(new PIXI.Container());
-      if (this._sceneMaskFilter) {
-        this.weather.filters = [this._sceneMaskFilter];
+      const weather = new MultiMaskContainer();
+      if (this._sceneMask) {
+        weather.multiMask = [this._sceneMask];
       }
+      this.weather = this.addChild(weather);
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
 
@@ -202,38 +207,13 @@ export class WeatherLayer extends CanvasLayer {
 
   /**
    * Draw the scene mask.
-   * @returns {CachedContainer}
+   * @returns {PIXI.Graphics}
    * @private
    */
   _drawSceneMask() {
-    const cachedContainer = new CachedContainer();
     const mask = new Graphics();
-    mask.beginFill(0xffffff).drawShape(canvas.dimensions.rect).endFill();
-    mask.beginHole();
-    mask.drawShape(canvas.dimensions.sceneRect);
-    mask.endHole();
-    cachedContainer.addChild(mask);
-    return cachedContainer;
-  }
-
-  /**
-   * Create the filter for applying the scene mask.
-   * @returns {InverseOcclusionMaskFilter | undefined} The filter for applying the scene mask or undefined if it doesn't exist
-   * @private
-   */
-  _createSceneMaskFilter() {
-    if (!this._sceneMask) {
-      return undefined;
-    }
-    const sceneMaskFilter = InverseOcclusionMaskFilter.create(
-      {
-        alphaOcclusion: 0,
-        uMaskSampler: this._sceneMask.renderTexture,
-      },
-      "b",
-    );
-    sceneMaskFilter.enabled = true;
-    return sceneMaskFilter;
+    mask.beginFill(0x000000).drawShape(canvas.dimensions.sceneRect).endFill();
+    return mask;
   }
 
   /**
