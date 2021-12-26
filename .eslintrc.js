@@ -16,6 +16,8 @@ module.exports = {
 
   globals: {
     PIXI: "readonly",
+    CachedContainer: "readonly",
+    InverseOcclusionMaskFilter: "readonly",
   },
 
   rules: {

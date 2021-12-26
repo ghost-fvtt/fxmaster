@@ -14,6 +14,20 @@ export class WeatherLayer extends CanvasLayer {
    */
   weatherEffects = {};
 
+  /**
+   * The scene mask.
+   * @type {CachedContainer | undefined}
+   * @private
+   */
+  _sceneMask = undefined;
+
+  /**
+   * The filter used to apply the scene mask.
+   * @type {InverseOcclusionMaskFilter | undefined}
+   * @private
+   */
+  _sceneMaskFilter = undefined;
+
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
       name: "weather",
@@ -21,7 +35,14 @@ export class WeatherLayer extends CanvasLayer {
     });
   }
 
-  /* -------------------------------------------- */
+  /**
+   * Whether or not the weather effects should be masked to the scene.
+   * @type {boolean}
+   */
+  get shouldMaskToScene() {
+    return !!canvas.scene.img;
+  }
+
   _createInvertedMask() {
     const mask = new Graphics();
     canvas.drawings.placeables.forEach((drawing) => {
@@ -114,23 +135,34 @@ export class WeatherLayer extends CanvasLayer {
   async tearDown() {
     Object.values(this.weatherEffects).forEach(({ fx }) => fx.stop());
 
-    this.weather = null;
-    this.mask = null;
+    this.weather = undefined;
+    this.mask = null; // TODO: Figure out why removing this line causes a crash when redrawing the canvase when Perfect Vision is activated.
     this.weatherEffects = {};
+    this._sceneMask?.destroy();
+    this._sceneMask = undefined;
+    this._sceneMaskFilter = undefined;
 
     return super.tearDown();
   }
 
   /** @override */
   async draw() {
+    if (this.shouldMaskToScene) {
+      this._sceneMask = this._drawSceneMask();
+      this.addChild(this._sceneMask);
+      this._sceneMaskFilter = this._createSceneMaskFilter();
+    }
+
     this.drawWeather();
     this.updateMask();
-    this._setLayerMask();
   }
 
   async drawWeather({ soft = false } = {}) {
     if (!this.weather) {
       this.weather = this.addChild(new PIXI.Container());
+      if (this._sceneMaskFilter) {
+        this.weather.filters = [this._sceneMaskFilter];
+      }
     }
     Hooks.callAll("drawWeather", this, this.weather, this.weatherEffects);
 
@@ -162,15 +194,49 @@ export class WeatherLayer extends CanvasLayer {
   }
 
   /**
-   * Mask this layer to the scene if the scene has a background image.
-   * @protected
+   * Draw the scene mask.
+   * @returns {CachedContainer}
+   * @private
+   */
+  _drawSceneMask() {
+    const cachedContainer = new CachedContainer();
+    const mask = new Graphics();
+    mask.beginFill(0xffffff).drawShape(canvas.dimensions.rect).endFill();
+    mask.beginHole();
+    mask.drawShape(canvas.dimensions.sceneRect);
+    mask.endHole();
+    cachedContainer.addChild(mask);
+    return cachedContainer;
+  }
+
+  /**
+   * Create the filter for applying the scene mask.
+   * @returns {InverseOcclusionMaskFilter | undefined} The filter for applying the scene mask or undefined if it doesn't exist
+   * @private
+   */
+  _createSceneMaskFilter() {
+    if (!this._sceneMask) {
+      return undefined;
+    }
+    const sceneMaskFilter = InverseOcclusionMaskFilter.create(
+      {
+        alphaOcclusion: 0,
+        uMaskSampler: this._sceneMask.renderTexture,
+      },
+      "b",
+    );
+    sceneMaskFilter.enabled = true;
+    return sceneMaskFilter;
+  }
+
+  /**
+   * This used to set the layer mask in v2.0.1 But has been replaced by using a filter instead.
+   * @deprecated since v2.0.2
    */
   _setLayerMask() {
-    if (canvas.scene.img) {
-      const mask = new Graphics();
-      mask.beginFill(0x000000).drawShape(canvas.dimensions.sceneRect).endFill();
-      this.mask = this.addChild(mask);
-    }
+    logger.warn(
+      "'canvas.fxmaster._setLayerMask' doesn't actually do anything anymore and is only kept for compatibility reasons. It will be removed in a futue version. Please don't use it anymore.",
+    );
   }
 
   /** @deprecated since v2.0.0 */
