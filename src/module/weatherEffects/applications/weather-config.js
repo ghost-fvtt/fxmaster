@@ -29,7 +29,7 @@ export class WeatherConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentEffects = canvas.scene.getFlag("fxmaster", "effects") ?? {};
+    const currentEffects = canvas.scene?.getFlag("fxmaster", "effects") ?? {};
 
     const activeEffects = Object.fromEntries(
       Object.values(currentEffects).map((effect) => [effect.type, effect.options]),

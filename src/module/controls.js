@@ -42,8 +42,7 @@ function getSceneControlButtons(controls) {
         title: "CONTROLS.SaveMacro",
         icon: "fas fa-save",
         onClick: () => {
-          let flags = canvas.scene.getFlag("fxmaster", "effects");
-          if (!flags) flags = {};
+          let flags = canvas.scene?.getFlag("fxmaster", "effects") ?? {};
           let objs = Object.values(flags);
           let img = "icons/svg/windmill.svg";
           let name = "Weather";
@@ -66,11 +65,13 @@ function getSceneControlButtons(controls) {
         title: "CONTROLS.InvertMask",
         icon: "fas fa-mask",
         onClick: () => {
-          const invert = canvas.scene.getFlag("fxmaster", "invert");
-          canvas.scene.setFlag("fxmaster", "invert", !invert);
+          if (canvas.scene) {
+            const invert = canvas.scene.getFlag("fxmaster", "invert") ?? false;
+            canvas.scene.setFlag("fxmaster", "invert", !invert);
+          }
         },
         visible: game.user.isGM,
-        active: canvas.scene?.getFlag("fxmaster", "invert"),
+        active: canvas.scene?.getFlag("fxmaster", "invert") ?? false,
         toggle: true,
       },
       {
@@ -92,8 +93,10 @@ function getSceneControlButtons(controls) {
             title: game.i18n.localize("FXMASTER.Delete"),
             content: game.i18n.localize("FXMASTER.DeleteConfirm"),
             yes: () => {
-              filterManager.removeAll();
-              canvas.scene.unsetFlag("fxmaster", "effects");
+              if (canvas.scene) {
+                filterManager.removeAll();
+                canvas.scene.unsetFlag("fxmaster", "effects");
+              }
             },
             defaultYes: true,
           });

@@ -35,6 +35,9 @@ class FilterManager {
    * @returns {Promise<void>}                             A promise that resolves as soon as the filters have been updated
    */
   async update({ skipFading = false } = {}) {
+    if (!canvas.scene) {
+      return;
+    }
     this.filterInfos = canvas.scene.getFlag("fxmaster", "filters") ?? {};
     this.filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? this.filteredLayers;
 
@@ -133,6 +136,9 @@ class FilterManager {
    * @returns {Promise<void>} A promise that resolves when the filter has been removed from the scene's fxmaster flags
    */
   async removeFilter(name) {
+    if (!canvas.scene) {
+      return;
+    }
     const filter = this.filters[name];
     if (filter === undefined) return;
     await filter.stop();
@@ -148,6 +154,9 @@ class FilterManager {
    *                          flags
    */
   async removeAll() {
+    if (!canvas.scene) {
+      return;
+    }
     await canvas.scene.unsetFlag("fxmaster", "filters");
   }
 

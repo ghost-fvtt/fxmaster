@@ -17,6 +17,9 @@ export const registerHooks = function () {
  * @param {{name: string, type: string, options: object}} parameters The parameters that define the named weather effect
  */
 async function onSwitchWeather(parameters) {
+  if (!canvas.scene) {
+    return;
+  }
   const newEffect = { [parameters.name]: { type: parameters.type, options: parameters.options } };
 
   let flags = (await canvas.scene.getFlag("fxmaster", "effects")) ?? {};
