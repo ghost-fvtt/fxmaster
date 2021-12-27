@@ -39,7 +39,7 @@
   "homepage": "https://github.com/ghost-fvtt/fxmaster#readme",
   "devDependencies": {
     "@commitlint/cli": "^16.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@guanghechen/rollup-plugin-copy": "^1.8.5",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "eslint": "^8.5.0",
