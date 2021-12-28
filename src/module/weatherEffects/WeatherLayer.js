@@ -147,6 +147,10 @@ export class WeatherLayer extends CanvasLayer {
 
   /** @override */
   async draw() {
+    if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
+      return;
+    }
+
     if (this.shouldMaskToScene) {
       this._sceneMask = this._drawSceneMask();
       this.addChild(this._sceneMask);

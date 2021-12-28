@@ -78,7 +78,7 @@ Hooks.on("canvasInit", () => {
 
 Hooks.on("canvasReady", async () => {
   executeWhenWorldIsMigratedToLatest(async () => {
-    if (game.settings.get("fxmaster", "disableAll")) {
+    if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
       return;
     }
     await filterManager.activate();
