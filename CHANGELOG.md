@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.2...v2.1.0) (2021-12-28)
+
+
+### Features
+
+* make it possible to wait for effects to be stopped ([c7a1b9b](https://github.com/ghost-fvtt/fxmaster/commit/c7a1b9b93adb72b3678bfa47e77d6f7f72fd9395))
+
+
+### Bug Fixes
+
+* add guards against there not being a canvas.scene ([bc866bf](https://github.com/ghost-fvtt/fxmaster/commit/bc866bf405c8f9cdbedaab2797504d9c3d4ee672))
+* make enable and disableAll settings work properly again ([45040a5](https://github.com/ghost-fvtt/fxmaster/commit/45040a51cd6761752bed6757acabc1e6a659a3d0)), closes [#139](https://github.com/ghost-fvtt/fxmaster/issues/139)
+
 ### [2.0.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.1...v2.0.2) (2021-12-26)
 
 
