@@ -1,7 +1,7 @@
 # FXMaster
 
 [![Checks](https://github.com/ghost-fvtt/fxmaster/workflows/Checks/badge.svg)](https://github.com/ghost-fvtt/fxmaster/actions)
-![Supported Foundry Versions](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/ghost-fvtt/fxmaster/master/src/module.json)
+![Supported Foundry Versions](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json)
 ![Latest Release Download Count](https://img.shields.io/github/downloads/ghost-fvtt/fxmaster/latest/module.zip)
 [![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffxmaster&colorB=4aa94a)](https://forge-vtt.com/bazaar#fxmaster)
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffxmaster%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/fxmaster/)
