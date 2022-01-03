@@ -1,3 +1,5 @@
+import { intersectRectangles } from "../pixi-helpers.js";
+
 // holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
 const Graphics = PIXI.LegacyGraphics ?? PIXI.Graphics;
 
@@ -211,11 +213,13 @@ export class WeatherLayer extends CanvasLayer {
    */
   _drawSceneMask() {
     const cachedContainer = new CachedContainer();
-    const mask = new Graphics();
-    mask.beginFill(0xffffff).drawShape(canvas.dimensions.rect).endFill();
-    mask.beginHole();
-    mask.drawShape(canvas.dimensions.sceneRect);
-    mask.endHole();
+    const mask = new Graphics()
+      .beginFill(0xffffff)
+      .drawShape(canvas.dimensions.rect)
+      .endFill()
+      .beginHole()
+      .drawShape(intersectRectangles(canvas.dimensions.sceneRect, canvas.dimensions.rect))
+      .endHole();
     cachedContainer.addChild(mask);
     return cachedContainer;
   }
