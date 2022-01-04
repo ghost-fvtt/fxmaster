@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.0...v2.1.1) (2022-01-04)
+
+
+### Bug Fixes
+
+* if migrations need to be performed, defer drawing of weather to when they are done ([e43221d](https://github.com/ghost-fvtt/fxmaster/commit/e43221daf3993876ea01665bbec053efad3e1916)), closes [#144](https://github.com/ghost-fvtt/fxmaster/issues/144)
+* make weather scene mask work when sceneRect is not contained in rect ([7a6685f](https://github.com/ghost-fvtt/fxmaster/commit/7a6685f4fae23437832b913514bb3754f5db7160))
+
 ## [2.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.0.2...v2.1.0) (2021-12-28)
 
 
