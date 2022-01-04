@@ -1,3 +1,4 @@
+import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration.js";
 import { intersectRectangles } from "../pixi-helpers.js";
 
 // holes are broken in @pixi/smooth-graphics@0.0.17 (see https://github.com/pixijs/graphics-smooth/pull/7), so we need to use the legacy graphics in V9 and above.
@@ -150,6 +151,11 @@ export class WeatherLayer extends CanvasLayer {
   /** @override */
   async draw() {
     if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
+      return;
+    }
+    if (!isOnTargetMigration()) {
+      // If migrations need to be performed, defer drawing to when they are done.
+      executeWhenWorldIsMigratedToLatest(this.draw.bind(this));
       return;
     }
 
