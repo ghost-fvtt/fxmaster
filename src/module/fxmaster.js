@@ -17,8 +17,8 @@ window.FXMASTER = {
 };
 
 function registerLayer() {
-  CONFIG.Canvas.layers.fxmaster = isV9OrLater() ? { layerClass: WeatherLayer, group: "effects" } : WeatherLayer;
-  CONFIG.Canvas.layers.specials = isV9OrLater() ? { layerClass: SpecialsLayer, group: "effects" } : SpecialsLayer;
+  CONFIG.Canvas.layers.fxmaster = isV9OrLater() ? { layerClass: WeatherLayer, group: "primary" } : WeatherLayer;
+  CONFIG.Canvas.layers.specials = isV9OrLater() ? { layerClass: SpecialsLayer, group: "primary" } : SpecialsLayer;
 }
 
 function parseSpecialEffects() {
