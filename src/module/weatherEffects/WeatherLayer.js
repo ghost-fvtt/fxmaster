@@ -153,12 +153,21 @@ export class WeatherLayer extends CanvasLayer {
     if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
       return;
     }
-    if (!isOnTargetMigration()) {
+    if (isOnTargetMigration()) {
+      await this._draw();
+    } else {
       // If migrations need to be performed, defer drawing to when they are done.
-      executeWhenWorldIsMigratedToLatest(this.draw.bind(this));
-      return;
+      executeWhenWorldIsMigratedToLatest(this._draw.bind(this));
     }
 
+    return this;
+  }
+
+  /**
+   * Actual implementation of drawing the layer.
+   * @private
+   */
+  async _draw() {
     if (this.shouldMaskToScene) {
       this._sceneMask = this._drawSceneMask();
       this.addChild(this._sceneMask);
