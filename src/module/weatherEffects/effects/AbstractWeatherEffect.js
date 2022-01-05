@@ -6,11 +6,11 @@ export class AbstractWeatherEffect extends SpecialEffect {
       scale: {
         label: "FXMASTER.Scale",
         type: "range",
-        min: 0.1,
+        min: 0.01,
         value: 1,
         max: 5,
-        step: 0.1,
-        decimals: 1,
+        step: 0.01,
+        decimals: 2,
       },
       direction: {
         label: "FXMASTER.Direction",
@@ -24,11 +24,11 @@ export class AbstractWeatherEffect extends SpecialEffect {
       speed: {
         label: "FXMASTER.Speed",
         type: "range",
-        min: 0.1,
+        min: 0.01,
         value: 1,
         max: 5,
-        step: 0.1,
-        decimals: 1,
+        step: 0.01,
+        decimals: 2,
       },
       density: {
         label: "FXMASTER.Density",
