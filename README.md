@@ -288,10 +288,10 @@ requests for code changes.
 
 Many thanks to:
 
-* `U~man` for the original work on this module. Really, most of this is his work.
-* `theripper93` for contributing his ideas regarding handling weather masking elegantly.
-* `Wasp` for providing the [Sequencer] module that will inspire future updates.
-* `SecretFire` for exchanging ideas, providing help, and shaders for the filter effects. Donate
+* [U~man] for the original work on this module. Really, most of this is his work.
+* [theripper93] for contributing his ideas regarding handling weather masking elegantly.
+* [Wasp] for providing the [Sequencer] module that will inspire future updates.
+* [SecretFire] for exchanging ideas, providing help, and shaders for the filter effects. Donate
   [here](https://ko-fi.com/secretfire).
 
 ## Licensing
@@ -305,6 +305,10 @@ Many thanks to:
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
 [FoundryVTT FXMaster Specials Demo Template]: https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template
+[U~man]: https://github.com/mesfoliesludiques
+[theripper93]: https://github.com/theripper93
+[Wasp]: https://github.com/fantasycalendar
+[SecretFire]: https://github.com/Feu-Secret
 [Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
 [Jinker's Animated Art]: https://github.com/jinkergm/JAA
 [JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
