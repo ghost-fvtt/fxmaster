@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.1...v2.1.2) (2022-01-05)
+
+
+### Bug Fixes
+
+* avoid recursion problem when deferring drawing the weather layer ([bc00024](https://github.com/ghost-fvtt/fxmaster/commit/bc00024cfafea2369b95af0b42acd8b870173c2d))
+* make lighting correctly affect weather and specials ([#153](https://github.com/ghost-fvtt/fxmaster/issues/153)) ([cfe28cf](https://github.com/ghost-fvtt/fxmaster/commit/cfe28cf3270d006d3e269ff56481fca7fe765cfe)), closes [#149](https://github.com/ghost-fvtt/fxmaster/issues/149)
+
 ### [2.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.0...v2.1.1) (2022-01-04)
 
 
