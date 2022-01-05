@@ -19,6 +19,13 @@ export const registerHelpers = function () {
         return `
               <input type="text" data-dtype="Number" name="${effectCls.label}_${parameterName}" value="${_default}">
               `;
+      case "multi-select":
+        return `<select class="multi-select" multiple name="${effectCls.label}_${parameterName}">${Object.entries(
+          parameterConfig.options,
+        ).map(
+          ([key, name]) =>
+            `<option value="${key}"${_default.includes(key) ? " selected" : ""}>${game.i18n.localize(name)}</option>`,
+        )}</select>`;
     }
     return "";
   });

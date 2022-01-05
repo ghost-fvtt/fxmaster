@@ -1,7 +1,7 @@
 .fxmaster .directory-header {
-  box-shadow: 0 0 5px black;
-  line-height: 12px;
-  font-size: 12px;
+  box-shadow: 0 0 5px var(--color-shadow-dark, black);
+  line-height: var(--line-height-12, 12px);
+  font-size: var(--font-size-12, 12px);
   margin: 0;
   padding: 2px 0;
 }
@@ -16,18 +16,18 @@
 }
 
 .fxmaster .special-effects .description h4 {
-  line-height: 16px;
+  line-height: var(--line-height-16, 16px);
   text-indent: 5px;
-  font-size: 14px;
+  font-size: var(--font-size-14, 14px);
   height: 32px;
 }
 
 .fxmaster .special-effects .description .author {
-  line-height: 10px;
-  color: grey;
+  line-height: calc(var(--line-height-12, 12px) / 12 * 10);
+  color: var(--color-text-light-7, #888);
   text-align: right;
-  font-size: 10px;
-  flex: 0 10px;
+  font-size: calc(var(--font-size-12, 12px) / 12 * 10);
+  flex: 0 calc(var(--line-height-12, 12px) / 12 * 10);
 }
 
 .fxmaster .special-effects .controls {

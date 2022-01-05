@@ -1,14 +1,14 @@
 .fxmaster .directory-header {
-  box-shadow: 0 0 5px black;
-  line-height: 12px;
-  font-size: 12px;
+  box-shadow: 0 0 5px var(--color-shadow-dark, black);
+  line-height: var(--line-height-12, 12px);
+  font-size: var(--font-size-12, 12px);
   margin: 0;
   padding: 2px 0;
 }
 
 .fxmaster .config {
   padding: 4px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--color-border-dark-3, #333);
   list-style: none;
 }
 
@@ -16,8 +16,8 @@
   border: none;
   flex: 0 0 18px;
   text-align: center;
-  line-height: 20px;
-  font-size: 16px;
+  line-height: var(--line-height-20, 20px);
+  font-size: var(--font-size-16, 16px);
 }
 
 .fxmaster .config .collapse {
@@ -34,12 +34,12 @@
 }
 
 .fxmaster .config label {
-  font-size: 16px;
+  font-size: var(--font-size-16, 16px);
   cursor: pointer;
 }
 
 .fxmaster .config label:hover {
-  text-shadow: 0 0 4px #ff6400;
+  text-shadow: 0 0 4px var(--color-shadow-primary, #ff0000);
 }
 
 .fxmaster .directory-item.active {
@@ -52,44 +52,24 @@
 
 .fxmaster .form-footer button {
   background-color: rgba(255, 255, 240, 0.8);
-  border: 1px solid #b5b3a4;
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
 }
 
 .fxmaster .directory-item .config input[type="text"] {
-  color: white;
-  border: 1px solid #b5b3a4;
+  color: var(--color-text-light-0, #fff);
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
   text-align: center;
   padding: 2px;
   height: 20px;
 }
 
-.fxmaster .config.collapsible {
-  padding: 0;
+.fxmaster .directory-item .config select.multi-select {
+  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  color: var(--color-border-light-1, #ddd);
+  background: transparent;
+  border-radius: 0px;
 }
 
-.fxmaster .config.collapsible.collapsed {
-  display: none;
-  overflow: hidden;
-}
-
-.fxmaster .config label {
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.fxmaster .config label:hover {
-  text-shadow: 0 0 4px #ff6400;
-}
-
-.fxmaster .directory-item.active {
-  background: #f56b0066;
-}
-
-.fxmaster .form-footer {
-  padding: 5px;
-}
-
-.fxmaster .form-footer button {
-  background-color: rgba(255, 255, 240, 0.8);
-  border: 1px solid #b5b3a4;
+.fxmaster .directory-item .config select.multi-select:focus {
+  box-shadow: none;
 }

@@ -1,3 +1,4 @@
+import { formatString } from "../../utils.js";
 import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 
 export class BirdsWeatherEffect extends AbstractWeatherEffect {
@@ -13,6 +14,16 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.001, value: 0.006, max: 0.01, step: 0.001, decimals: 3 },
       "-=direction": undefined,
+      animations: {
+        label: "FXMASTER.Animations",
+        type: "multi-select",
+        options: {
+          glide: "FXMASTER.WeatherBirdsAnimationsGlide",
+          flap: "FXMASTER.WeatherBirdsAnimationsFlap",
+          mixed: "FXMASTER.WeatherBirdsAnimationsMixed",
+        },
+        value: ["mixed"],
+      },
     });
   }
 
@@ -40,30 +51,55 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
     );
     this.applyOptionsToConfig(config);
 
-    // Assets are selected randomly from the list for each particle
-    const anim_sheet = {
-      framerate: "10",
-      textures: [
-        {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/seagull_1.png",
-          count: 2,
-        },
-        {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/seagull_2.png",
-          count: 7,
-        },
-        {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/seagull_3.png",
-          count: 2,
-        },
-        {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/seagull_2.png",
-          count: 2,
-        },
+    const animations = {
+      glide: [
+        { textureNumber: 2, count: 30 },
+        ...Array(4)
+          .fill([
+            { textureNumber: 1, count: 3 },
+            { textureNumber: 2, count: 2 },
+            { textureNumber: 3, count: 3 },
+            { textureNumber: 2, count: 2 },
+          ])
+          .deepFlatten(),
+        { textureNumber: 2, count: 68 },
       ],
-      loop: true,
+      flap: [
+        { textureNumber: 1, count: 3 },
+        { textureNumber: 2, count: 2 },
+        { textureNumber: 3, count: 3 },
+        { textureNumber: 2, count: 2 },
+      ],
+      mixed: [
+        { textureNumber: 2, count: 7 },
+        { textureNumber: 1, count: 3 },
+        { textureNumber: 2, count: 2 },
+        { textureNumber: 3, count: 3 },
+        { textureNumber: 2, count: 7 },
+      ],
     };
-    var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
+
+    const getAnim = (animation, textureFormatString) => ({
+      framerate: 20,
+      loop: true,
+      textures: animation.map(({ textureNumber, count }) => ({
+        texture: formatString(textureFormatString, textureNumber),
+        count,
+      })),
+    });
+
+    const textureFormatString = "./modules/fxmaster/assets/weatherEffects/effects/seagull_{0}.png";
+
+    // Assets are selected randomly from the list for each particle
+    const anims = (this.options.animations?.value ?? [])
+      .filter((animation) => Object.keys(animations).includes(animation))
+      .map((animation) => getAnim(animations[animation], textureFormatString));
+
+    if (anims.length === 0) {
+      anims.push(getAnim(animations.mixed, textureFormatString));
+    }
+
+    const emitter = new PIXI.particles.Emitter(parent, anims, config);
     emitter.particleConstructor = PIXI.particles.AnimatedParticle;
     return emitter;
   }

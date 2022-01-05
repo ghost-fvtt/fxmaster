@@ -8,18 +8,18 @@
 }
 
 .fxmaster.specials .special-effects .description h4 {
-  line-height: 16px;
+  line-height: var(--line-height-16, 16px);
   text-indent: 5px;
-  font-size: 14px;
+  font-size: var(--font-size-14, 14px);
   height: 32px;
 }
 
 .fxmaster.specials .special-effects .description .author {
-  line-height: 10px;
-  color: grey;
+  line-height: calc(var(--line-height-12, 12px) / 12 * 10);
+  color: var(--color-text-light-7, #888);
   text-align: right;
-  font-size: 10px;
-  flex: 0 10px;
+  font-size: calc(var(--font-size-12, 12px) / 12 * 10);
+  flex: 0 calc(var(--line-height-12, 12px) / 12 * 10);
 }
 
 .fxmaster.specials .special-effects .controls {
@@ -33,14 +33,9 @@
   height: 48px;
   flex: 0 0 48px;
   background: black;
-  border: 1px solid grey;
+  border: 1px solid var(--color-text-light-7, #888);
 }
 
 .fxmaster.specials .action-toggle.active {
   color: #f56b00;
-  text-shadow: #ff6400;
-}
-
-.fxmaster.specials .action-toggle a:hover {
-  text-shadow: #ff6400;
 }

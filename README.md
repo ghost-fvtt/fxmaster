@@ -93,34 +93,35 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 
 #### Available Weather Effects With Supported Options
 
-| Type         | `scale` | `direction` | `speed` | `lifetime` | `density` | `tint` |
-| ------------ | :-----: | :---------: | :-----: | :--------: | :-------: | :----: |
-| `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |
-| `bubbles`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓      |           |   ✓    |
-| `embers`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |
-| `stars`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `crows`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `bats`       |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `spiders`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `fog`        |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `raintop`    |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |
-| `birds`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `leaves`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |
-| `rain`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |
-| `snow`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |
+| Type         | `scale` | `direction` | `speed` | `lifetime` | `density` | `tint` |        `animations`        |
+| ------------ | :-----: | :---------: | :-----: | :--------: | :-------: | :----: | :------------------------: |
+| `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `bubbles`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓      |           |   ✓    |                            |
+| `embers`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `stars`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `crows`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `bats`       |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `spiders`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `fog`        |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `raintop`    |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `birds`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    | ✓ (`glide`, `flap`, `mixed`) |
+| `leaves`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `rain`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                            |
+| `snow`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                            |
 
 #### Weather Effect Options
 
-| Option      | Type                              | Description                                                                                       |
-| ----------- | --------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `scale`     | `number`                          | A factor that scales the effect relative to its base size.                                        |
-| `direction` | `number`                          | The direction of the effect in degrees.                                                           |
-| `speed`     | `number`                          | A factor that adjusts the speed of the effect relative to its base speed.                         |
-| `lieftime`  | `number`                          | A factor that adjusts the lifetime of the individual particles.                                   |
-| `density`   | `number`                          | The density of the effect. For most effects, it represents the number of particles per grid unit. |
-| `tint`      | `{value: string, apply: boolean}` | Tint the effect with this color.                                                                  |
+| Option       | Type                              | Description                                                                                                                         |
+| ------------ | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `scale`      | `number`                          | A factor that scales the effect relative to its base size.                                                                          |
+| `direction`  | `number`                          | The direction of the effect in degrees.                                                                                             |
+| `speed`      | `number`                          | A factor that adjusts the speed of the effect relative to its base speed.                                                           |
+| `lieftime`   | `number`                          | A factor that adjusts the lifetime of the individual particles.                                                                     |
+| `density`    | `number`                          | The density of the effect. For most effects, it represents the number of particles per grid unit.                                   |
+| `tint`       | `{value: string, apply: boolean}` | Tint the effect with this color.                                                                                                    |
+| `animations` | `string[]`                        | An array of animations from list of animations for the effect to use. If it is empty or not defined, the default animation is used. |
 
 ### Special Effects
 
