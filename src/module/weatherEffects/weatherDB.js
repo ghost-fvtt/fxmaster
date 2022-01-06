@@ -13,6 +13,7 @@ import { RainWeatherEffect } from "./effects/RainWeatherEffect.js";
 import { SnowWeatherEffect } from "./effects/SnowWeatherEffect.js";
 import { AutumnLeavesWeatherEffect } from "./effects/AutumnLeavesWeatherEffect.js";
 import { SpiderWeatherEffect } from "./effects/SpiderWeatherEffect.js";
+import { EaglesWeatherEffect } from "./effects/EaglesWeatherEffect.js";
 
 export const weatherDB = {
   snowstorm: SnowstormWeatherEffect,
@@ -30,4 +31,5 @@ export const weatherDB = {
   leaves: AutumnLeavesWeatherEffect,
   rain: RainWeatherEffect,
   snow: SnowWeatherEffect,
+  eagles: EaglesWeatherEffect,
 };
