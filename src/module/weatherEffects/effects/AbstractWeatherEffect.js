@@ -79,18 +79,24 @@ export class AbstractWeatherEffect extends SpecialEffect {
   }
 
   /** @protected */
-  _applyFactorToBasicTweenableOrValueList(basicTweenableOrValueList, factor) {
-    if ("start" in basicTweenableOrValueList) {
-      basicTweenableOrValueList.start = basicTweenableOrValueList.start * factor;
+  _applyFactorToBasicTweenableOrValueListOrRandNumber(basicTweenableOrValueListOrRandNumber, factor) {
+    if ("start" in basicTweenableOrValueListOrRandNumber) {
+      basicTweenableOrValueListOrRandNumber.start = basicTweenableOrValueListOrRandNumber.start * factor;
     }
-    if ("end" in basicTweenableOrValueList) {
-      basicTweenableOrValueList.end = basicTweenableOrValueList.end * factor;
+    if ("end" in basicTweenableOrValueListOrRandNumber) {
+      basicTweenableOrValueListOrRandNumber.end = basicTweenableOrValueListOrRandNumber.end * factor;
     }
-    if ("list" in basicTweenableOrValueList) {
-      basicTweenableOrValueList.list = basicTweenableOrValueList.list.map((valueStep) => ({
+    if ("list" in basicTweenableOrValueListOrRandNumber) {
+      basicTweenableOrValueListOrRandNumber.list = basicTweenableOrValueListOrRandNumber.list.map((valueStep) => ({
         ...valueStep,
         value: valueStep.value * factor,
       }));
+    }
+    if ("min" in basicTweenableOrValueListOrRandNumber) {
+      basicTweenableOrValueListOrRandNumber.min = basicTweenableOrValueListOrRandNumber.min * factor;
+    }
+    if ("max" in basicTweenableOrValueListOrRandNumber) {
+      basicTweenableOrValueListOrRandNumber.max = basicTweenableOrValueListOrRandNumber.max * factor;
     }
   }
 
@@ -98,14 +104,20 @@ export class AbstractWeatherEffect extends SpecialEffect {
   _applyScaleToConfig(config) {
     const scale = config.scale ?? {};
     const factor = (this.options.scale?.value ?? 1) * (canvas.dimensions.size / 100);
-    this._applyFactorToBasicTweenableOrValueList(scale, factor);
+    this._applyFactorToBasicTweenableOrValueListOrRandNumber(scale, factor);
   }
 
   /** @protected */
   _applySpeedToConfig(config) {
-    const speed = config.speed ?? {};
     const factor = (this.options.speed?.value ?? 1) * (canvas.dimensions.size / 100);
-    this._applyFactorToBasicTweenableOrValueList(speed, factor);
+
+    const speed = config.speed ?? {};
+    this._applyFactorToBasicTweenableOrValueListOrRandNumber(speed, factor);
+
+    const lifeTime = config.lifetime ?? {};
+    this._applyFactorToBasicTweenableOrValueListOrRandNumber(lifeTime, 1 / factor);
+
+    config.frequency /= factor;
   }
 
   /** @protected */
