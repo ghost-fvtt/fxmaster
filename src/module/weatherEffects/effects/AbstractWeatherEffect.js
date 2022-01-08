@@ -30,6 +30,15 @@ export class AbstractWeatherEffect extends SpecialEffect {
         step: 0.1,
         decimals: 1,
       },
+      lifetime: {
+        label: "FXMASTER.Lifetime",
+        type: "range",
+        min: 0.1,
+        value: 1,
+        max: 5,
+        step: 0.1,
+        decimals: 1,
+      },
       density: {
         label: "FXMASTER.Density",
         type: "range",
@@ -75,6 +84,7 @@ export class AbstractWeatherEffect extends SpecialEffect {
     this._applyScaleToConfig(config);
     this._applySpeedToConfig(config);
     this._applyDirectionToConfig(config);
+    this._applyLifetimeToConfig(config);
     this._applyTintToConfig(config);
   }
 
@@ -127,6 +137,14 @@ export class AbstractWeatherEffect extends SpecialEffect {
     if (direction !== undefined) {
       config.startRotation = { min: direction - range / 2, max: direction + range / 2 };
     }
+  }
+
+  /** @protected */
+  _applyLifetimeToConfig(config) {
+    const lifetime = config.lifetime ?? {};
+    const factor = this.options.lifetime?.value ?? 1;
+    this._applyFactorToBasicTweenableOrValueListOrRandNumber(lifetime, factor);
+    config.frequency *= factor;
   }
 
   /** @protected */
