@@ -23,6 +23,7 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
   _getEmitter(parent) {
     const d = canvas.dimensions;
     const p = (d.width / d.size) * (d.height / d.size) * this.options.density.value;
+    const sceneRadius = Math.sqrt(d.sceneWidth * d.sceneWidth + d.sceneHeight * d.sceneHeight) / 2;
     const config = foundry.utils.mergeObject(
       this.constructor.CONFIG,
       {
@@ -37,10 +38,10 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
           minimumSpeedMultiplier: 0.8,
         },
         spawnCircle: {
-          x: d.paddingX + d.sceneWidth / 2,
-          y: d.paddingY + d.sceneHeight / 2,
-          r: d.width / 2,
-          minR: d.width / 4,
+          x: d.sceneRect.x + d.sceneWidth / 2,
+          y: d.sceneRect.y + d.sceneHeight / 2,
+          r: sceneRadius * 1.3,
+          minR: sceneRadius / 2,
         },
         maxParticles: p,
         frequency: 1 / p,
