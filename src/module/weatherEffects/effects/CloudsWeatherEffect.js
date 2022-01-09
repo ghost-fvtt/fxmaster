@@ -55,10 +55,10 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
       this.constructor.CONFIG,
       {
         spawnRect: {
-          x: d.paddingX,
-          y: d.paddingY,
-          w: d.sceneWidth,
-          h: d.sceneHeight,
+          x: d.sceneRect.x,
+          y: d.sceneRect.y,
+          w: d.sceneRect.width,
+          h: d.sceneRect.height,
         },
       },
       { inplace: false },
