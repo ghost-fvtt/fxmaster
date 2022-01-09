@@ -12,7 +12,7 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
   /** @override */
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
-      "-=density": null,
+      density: { min: 0.001, value: 0.03, max: 0.2, step: 0.001, decimals: 3 },
     });
   }
 
@@ -21,44 +21,39 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
     return [this._getCloudEmitter(this.parent)];
   }
 
-  /** @override */
-  applyDirectionToConfig(config) {
-    super.applyDirectionToConfig(config);
-
-    const direction = this.options.direction?.value;
-    if (direction !== undefined) {
-      const spawnRect = { ...config.spawnRect };
-
-      // Need to change spawn rect so it spawns before the map
-      const quadran = Math.round((direction % 360) / 90);
-      switch (quadran) {
-        case 0:
-          spawnRect.x -= (2 * spawnRect.w) / 3;
-          break;
-        case 1:
-          spawnRect.y -= (2 * spawnRect.h) / 3;
-          break;
-        case 2:
-          spawnRect.x += (2 * spawnRect.w) / 3;
-          break;
-        case 3:
-          spawnRect.y += (2 * spawnRect.h) / 3;
-          break;
-      }
-      config.spawnRect = spawnRect;
-    }
-  }
-
   _getCloudEmitter(parent) {
     const d = canvas.dimensions;
+    const p = (d.sceneRect.width / d.size) * (d.sceneRect.height / d.size) * this.options.density.value;
+
+    const offsetFactor = 2 / 3;
+
+    const diagonal = Math.sqrt(d.sceneRect.width * d.sceneRect.width + d.sceneRect.height * d.sceneRect.height);
+    const maximumAverageSpeed = (this.constructor.CONFIG.speed.start + this.constructor.CONFIG.speed.end) / 2;
+    const averageSpeed = (maximumAverageSpeed * (1 + this.constructor.CONFIG.speed.minimumSpeedMultiplier)) / 2;
+    const averageDiagonalTime = diagonal / averageSpeed;
+    const minLifetime = averageDiagonalTime / offsetFactor / 2;
+    const maxLifetime = averageDiagonalTime / offsetFactor;
+
+    const angle = Math.toRadians(this.options.direction.value);
+    const directionVector = {
+      x: Math.cos(angle),
+      y: Math.sin(angle),
+    };
+
     const config = foundry.utils.mergeObject(
       this.constructor.CONFIG,
       {
         spawnRect: {
-          x: d.sceneRect.x,
-          y: d.sceneRect.y,
+          x: d.sceneRect.x - directionVector.x * d.sceneRect.width * offsetFactor,
+          y: d.sceneRect.y - directionVector.y * d.sceneRect.height * offsetFactor,
           w: d.sceneRect.width,
           h: d.sceneRect.height,
+        },
+        maxParticles: p,
+        frequency: (minLifetime + maxLifetime) / 2 / p,
+        lifetime: {
+          min: minLifetime,
+          max: maxLifetime,
         },
       },
       { inplace: false },
@@ -112,12 +107,6 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
         min: 80,
         max: 100,
       },
-      lifetime: {
-        min: 20,
-        max: 120,
-      },
-      frequency: 0.5,
-      maxParticles: 100,
       blendMode: "normal",
       emitterLifetime: -1,
     },
