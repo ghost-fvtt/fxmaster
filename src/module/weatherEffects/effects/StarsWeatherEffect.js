@@ -52,7 +52,7 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
       "./modules/fxmaster/assets/weatherEffects/effects/star_08.png",
       "./modules/fxmaster/assets/weatherEffects/effects/star_09.png",
     ];
-    var emitter = new PIXI.particles.Emitter(parent, art, config);
+    const emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);
     return emitter;
   }

@@ -71,7 +71,7 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
       ],
       loop: true,
     };
-    var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
+    const emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
     emitter.particleConstructor = PIXI.particles.AnimatedParticle;
     return emitter;
   }

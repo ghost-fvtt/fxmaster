@@ -40,7 +40,7 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
     this.applyOptionsToConfig(config);
 
     const art = ["./modules/fxmaster/assets/weatherEffects/effects/bubbles.png"];
-    var emitter = new PIXI.particles.Emitter(parent, art, config);
+    const emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }
 
