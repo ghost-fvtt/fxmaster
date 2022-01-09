@@ -28,10 +28,6 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
       this.constructor.CONFIG,
       {
         spawnType: "ring",
-        lifetime: {
-          min: 0.3,
-          max: 0.7,
-        },
         speed: {
           start: d.width / 3,
           end: d.height / 4,
@@ -83,6 +79,10 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
       startRotation: {
         min: 180,
         max: 180,
+      },
+      lifetime: {
+        min: 0.3,
+        max: 0.7,
       },
       blendMode: "normal",
       emitterLifetime: -1,
