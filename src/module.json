@@ -2,7 +2,7 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "author": "U~man, Johannes Loher (ghost#2000)",
   "authors": [
     {
@@ -75,7 +75,7 @@
   "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
   "allowBugReporter": true,
   "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
-  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.1.2/module.zip",
+  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.2.0/module.zip",
   "license": "https://github.com/ghost-fvtt/fxmaster/blob/master/LICENSE.md",
   "readme": "https://github.com/ghost-fvtt/fxmaster#readme",
   "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",

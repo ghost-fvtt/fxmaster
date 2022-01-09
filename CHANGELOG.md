@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.2...v2.2.0) (2022-01-09)
+
+
+### Features
+
+* add additional selectable animations for the bird weather effect ([9cb8bd2](https://github.com/ghost-fvtt/fxmaster/commit/9cb8bd2cef8a580e13865f3ce898a8c1d8644667)), closes [#65](https://github.com/ghost-fvtt/fxmaster/issues/65)
+* add density option for clouds ([da139c5](https://github.com/ghost-fvtt/fxmaster/commit/da139c50f84b908146e69c63fd00448073214b33)), closes [#121](https://github.com/ghost-fvtt/fxmaster/issues/121)
+* add eagles weather effect ([2f7f0ca](https://github.com/ghost-fvtt/fxmaster/commit/2f7f0ca71de69d272fbd4526e1392eebb4202f15))
+* add the ability to adjust the lifetime of particles in weather effects ([edc7972](https://github.com/ghost-fvtt/fxmaster/commit/edc7972f384bed048fd1ba6728c47126cb6dd4b7))
+* adjust weather effects according to scene offset ([0dbd3fe](https://github.com/ghost-fvtt/fxmaster/commit/0dbd3fe33b508dc2fccc9b970c89cf90bb7163ef)), closes [#146](https://github.com/ghost-fvtt/fxmaster/issues/146)
+* improve the Topdown Rain weather effect ([f8eb819](https://github.com/ghost-fvtt/fxmaster/commit/f8eb8199b61f0505b93cf923db45c7daf8b5264a))
+* make make handling of weather and filter effects more robust against unknown types ([3ebee9d](https://github.com/ghost-fvtt/fxmaster/commit/3ebee9d1c7547ffbb092cbbd31f60545ce23cfd9))
+* scale life time inversely proportional with speed ([6974d31](https://github.com/ghost-fvtt/fxmaster/commit/6974d31a66422b6c2d58a7520e5293b693903d49))
+
+
+### Bug Fixes
+
+* adjust frequency of snow and snowstorm weather effects to avoid lull ([147ca32](https://github.com/ghost-fvtt/fxmaster/commit/147ca321ff9b69d1d246607bdb23c093469c735c)), closes [#122](https://github.com/ghost-fvtt/fxmaster/issues/122)
+* use the correct default value for direction in the weather config ([9c60715](https://github.com/ghost-fvtt/fxmaster/commit/9c6071559d0c44f1109a00cf7a38ba04d6446ede))
+
 ### [2.1.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.1...v2.1.2) (2022-01-05)
 
 

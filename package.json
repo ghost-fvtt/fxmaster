@@ -1,6 +1,6 @@
 {
   "name": "fxmaster",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Adds various weather and filter effects.",
   "private": true,
   "scripts": {
