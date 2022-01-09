@@ -16,9 +16,9 @@ export class AbstractWeatherEffect extends SpecialEffect {
         label: "FXMASTER.Direction",
         type: "range",
         min: 0,
-        value: (this.CONFIG.startRotation.min + this.CONFIG.startRotation.min) / 2,
+        value: (this.CONFIG.startRotation.min + this.CONFIG.startRotation.max) / 2,
         max: 360,
-        step: 10,
+        step: 5,
         decimals: 0,
       },
       speed: {
