@@ -70,7 +70,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
       },
       speed: {
         start: 40,
-        end: 25,
+        end: 40,
         minimumSpeedMultiplier: 0.6,
       },
       color: {
@@ -79,15 +79,10 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
           { value: "f72100", time: 1 },
         ],
       },
-      acceleration: {
-        x: 1,
-        y: 1,
-      },
       startRotation: {
         min: 0,
         max: 360,
       },
-      rotation: 180,
       rotationSpeed: {
         min: 100,
         max: 200,

@@ -79,7 +79,6 @@ export class BubblesWeatherEffect extends AbstractWeatherEffect {
         min: 0,
         max: 360,
       },
-      rotation: 180,
       rotationSpeed: {
         min: 100,
         max: 200,

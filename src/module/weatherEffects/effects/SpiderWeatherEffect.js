@@ -87,27 +87,16 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
         end: 25,
         minimumSpeedMultiplier: 0.6,
       },
-      acceleration: {
-        x: 0,
-        y: 0,
-      },
       startRotation: {
         min: 0,
         max: 360,
-      },
-      rotation: 0,
-      rotationSpeed: {
-        min: 0,
-        max: 0,
       },
       lifetime: {
         min: 5,
         max: 10,
       },
-      addAtBack: false,
       blendMode: "normal",
       emitterLifetime: -1,
-      orderedArt: true,
     },
     { inplace: false },
   );

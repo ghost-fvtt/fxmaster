@@ -114,18 +114,9 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
         end: 260,
         minimumSpeedMultiplier: 0.8,
       },
-      acceleration: {
-        x: 0,
-        y: 0,
-      },
       startRotation: {
         min: 0,
         max: 360,
-      },
-      rotation: 180,
-      rotationSpeed: {
-        min: 0,
-        max: 0,
       },
       lifetime: {
         min: 20,
@@ -133,7 +124,6 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
       },
       blendMode: "normal",
       emitterLifetime: -1,
-      orderedArt: true,
     },
     { inplace: false },
   );

@@ -134,18 +134,9 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
         end: 100,
         minimumSpeedMultiplier: 0.6,
       },
-      acceleration: {
-        x: 0,
-        y: 0,
-      },
       startRotation: {
         min: 0,
         max: 360,
-      },
-      rotation: 180,
-      rotationSpeed: {
-        min: 0,
-        max: 0,
       },
       lifetime: {
         min: 20,
@@ -153,7 +144,6 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
       },
       blendMode: "normal",
       emitterLifetime: -1,
-      orderedArt: true,
     },
     { inplace: false },
   );

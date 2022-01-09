@@ -87,17 +87,9 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
         min: 0,
         max: 360,
       },
-      rotation: {
-        min: 0,
-        max: 360,
-      },
       rotationSpeed: {
         min: 0.15,
         max: 0.35,
-      },
-      acceleration: {
-        x: 0,
-        y: 0,
       },
       lifetime: {
         min: 10,
