@@ -38,7 +38,15 @@ class FilterManager {
     if (!canvas.scene) {
       return;
     }
-    this.filterInfos = canvas.scene.getFlag("fxmaster", "filters") ?? {};
+    this.filterInfos = Object.fromEntries(
+      Object.entries(canvas.scene.getFlag("fxmaster", "filters") ?? {}).filter(([id, filterInfo]) => {
+        if (!(filterInfo.type in CONFIG.fxmaster.filters)) {
+          logger.warn(`Filter effect '${id}' is of unknown type '${filterInfo.type}', skipping it.`);
+          return false;
+        }
+        return true;
+      }),
+    );
     this.filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? this.filteredLayers;
 
     const filtersToCreate = Object.keys(this.filterInfos).filter((key) => !(key in this.filters));
@@ -140,8 +148,9 @@ class FilterManager {
       return;
     }
     const filter = this.filters[name];
-    if (filter === undefined) return;
-    await filter.stop();
+    if (filter) {
+      await filter.stop();
+    }
     const rmFilter = {
       [`-=${name}`]: null,
     };

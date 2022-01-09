@@ -1,3 +1,4 @@
+import { logger } from "../logger.js";
 import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration.js";
 import { intersectRectangles } from "../pixi-helpers.js";
 
@@ -207,6 +208,10 @@ export class WeatherLayer extends CanvasLayer {
     // Updating scene weather
     const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
     for (const id in flags) {
+      if (!(flags[id].type in CONFIG.fxmaster.weather)) {
+        logger.warn(`Weather effect '${id}' is of unknown type '${flags[id].type}', skipping it.`);
+        continue;
+      }
       const options = Object.fromEntries(
         Object.entries(flags[id].options).map(([optionName, value]) => [optionName, { value }]),
       );
