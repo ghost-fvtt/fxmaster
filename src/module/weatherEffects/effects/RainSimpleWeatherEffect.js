@@ -60,11 +60,6 @@ export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
         min: 75,
         max: 75,
       },
-      rotation: 90,
-      rotationSpeed: {
-        min: 0,
-        max: 0,
-      },
       lifetime: {
         min: 0.5,
         max: 0.5,

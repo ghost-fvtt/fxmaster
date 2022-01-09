@@ -112,14 +112,6 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
         min: 80,
         max: 100,
       },
-      rotation: {
-        min: 0,
-        max: 360,
-      },
-      acceleration: {
-        x: 0,
-        y: 0,
-      },
       lifetime: {
         min: 20,
         max: 120,

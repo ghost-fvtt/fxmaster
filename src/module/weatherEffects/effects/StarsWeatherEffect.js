@@ -80,7 +80,7 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
       },
       speed: {
         start: 5,
-        end: 0,
+        end: 5,
         minimumSpeedMultiplier: 0.6,
       },
       color: {
@@ -89,15 +89,10 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
           { value: "d0e8ec", time: 1 },
         ],
       },
-      acceleration: {
-        x: 1,
-        y: 1,
-      },
       startRotation: {
         min: 0,
         max: 360,
       },
-      rotation: 180,
       rotationSpeed: {
         min: 20,
         max: 50,

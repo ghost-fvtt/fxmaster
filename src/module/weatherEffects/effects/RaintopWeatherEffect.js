@@ -84,18 +84,6 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
         min: 180,
         max: 180,
       },
-      rotation: {
-        min: 0,
-        max: 0,
-      },
-      rotationSpeed: {
-        min: 0,
-        max: 0,
-      },
-      acceleration: {
-        x: 0,
-        y: 0,
-      },
       blendMode: "normal",
       emitterLifetime: -1,
     },

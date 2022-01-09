@@ -38,7 +38,6 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
         min: 50,
         max: 75,
       },
-      rotation: 90,
       rotationSpeed: {
         min: 0,
         max: 200,
