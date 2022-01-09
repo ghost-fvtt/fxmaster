@@ -67,7 +67,7 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
           h: d.height,
         },
         maxParticles: p,
-        frequency: 1 / p,
+        frequency: (this.constructor.CONFIG.lifetime.min + this.constructor.CONFIG.lifetime.max) / 2 / p,
       },
       { inplace: false },
     );
