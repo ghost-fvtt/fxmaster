@@ -52,7 +52,7 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
         texture: `./modules/fxmaster/assets/weatherEffects/effects/Spider.${String(i).padStart(4, "0")}.png`,
       });
     }
-    var emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
+    const emitter = new PIXI.particles.Emitter(parent, anim_sheet, config);
     emitter.particleConstructor = PIXI.particles.AnimatedParticle;
 
     return emitter;

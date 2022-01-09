@@ -51,7 +51,7 @@ export class RaintopWeatherEffect extends AbstractWeatherEffect {
     this.applyOptionsToConfig(config);
 
     const art = ["ui/particles/rain.png"];
-    var emitter = new PIXI.particles.Emitter(parent, art, config);
+    const emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;
   }
 
