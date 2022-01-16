@@ -45,27 +45,27 @@ export class CrowsWeatherEffect extends AbstractWeatherEffect {
       framerate: "15",
       textures: [
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven1.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven1.png",
           count: 20,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven2.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven2.png",
           count: 3,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven3.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven3.png",
           count: 2,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven4.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven4.png",
           count: 2,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven3.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven3.png",
           count: 2,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/raven2.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/raven2.png",
           count: 3,
         },
       ],

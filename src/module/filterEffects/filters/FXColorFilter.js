@@ -1,3 +1,5 @@
+import { packageId } from "../../constants.js";
+
 export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
   constructor(options, id) {
     super();
@@ -101,7 +103,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
 
   animateOptions(values = this.options) {
     const data = {
-      name: `fxmaster.${this.constructor.name}.${this.id}`,
+      name: `${packageId}.${this.constructor.name}.${this.id}`,
       duration: 4000,
     };
     const anim = Object.keys(values).reduce((arr, key) => {

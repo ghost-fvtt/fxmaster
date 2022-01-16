@@ -1,7 +1,8 @@
+import { packageId } from "./constants.js";
 import { onWorldMigrated } from "./migration.js";
 
 export const registerSettings = function () {
-  game.settings.register("fxmaster", "enable", {
+  game.settings.register(packageId, "enable", {
     name: "FXMASTER.Enable",
     default: true,
     scope: "client",
@@ -10,7 +11,7 @@ export const registerSettings = function () {
     onChange: debouncedReload,
   });
 
-  game.settings.register("fxmaster", "specialEffects", {
+  game.settings.register(packageId, "specialEffects", {
     name: "specialEffects",
     default: [],
     scope: "world",
@@ -18,7 +19,7 @@ export const registerSettings = function () {
     config: false,
   });
 
-  game.settings.register("fxmaster", "migration", {
+  game.settings.register(packageId, "migration", {
     name: "migration",
     default: -1,
     scope: "world",
@@ -27,7 +28,7 @@ export const registerSettings = function () {
     onChange: onWorldMigrated,
   });
 
-  game.settings.register("fxmaster", "clientMigration", {
+  game.settings.register(packageId, "clientMigration", {
     name: "clientMigration",
     default: -1,
     scope: "client",
@@ -35,7 +36,7 @@ export const registerSettings = function () {
     config: false,
   });
 
-  game.settings.register("fxmaster", "permission-create", {
+  game.settings.register(packageId, "permission-create", {
     name: "FXMASTER.PermissionCreate",
     hint: "FXMASTER.PermissionCreateHint",
     scope: "world",
@@ -51,7 +52,7 @@ export const registerSettings = function () {
     onChange: debouncedReload,
   });
 
-  game.settings.register("fxmaster", "disableAll", {
+  game.settings.register(packageId, "disableAll", {
     name: "FXMASTER.DisableAll",
     hint: "FXMASTER.DisableAllHint",
     default: false,

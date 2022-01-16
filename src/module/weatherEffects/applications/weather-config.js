@@ -1,5 +1,6 @@
 import { resetFlags } from "../../utils.js";
 import "../../../css/weather-config.css";
+import { packageId } from "../../constants.js";
 
 export class WeatherConfig extends FormApplication {
   constructor() {
@@ -29,7 +30,7 @@ export class WeatherConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentEffects = canvas.scene?.getFlag("fxmaster", "effects") ?? {};
+    const currentEffects = canvas.scene?.getFlag(packageId, "effects") ?? {};
 
     const activeEffects = Object.fromEntries(
       Object.values(currentEffects).map((effect) => [effect.type, effect.options]),

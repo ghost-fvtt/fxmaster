@@ -1,3 +1,4 @@
+import { packageId } from "../constants.js";
 import { logger } from "../logger.js";
 import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration.js";
 import { intersectRectangles } from "../pixi-helpers.js";
@@ -50,7 +51,7 @@ export class WeatherLayer extends CanvasLayer {
   _createInvertedMask() {
     const mask = new Graphics();
     canvas.drawings.placeables.forEach((drawing) => {
-      const isMask = drawing.document.getFlag("fxmaster", "masking");
+      const isMask = drawing.document.getFlag(packageId, "masking");
       if (!isMask) return;
       mask.beginFill(0x000000);
       const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
@@ -86,7 +87,7 @@ export class WeatherLayer extends CanvasLayer {
     mask.beginFill(0x000000).drawShape(canvas.dimensions.rect).endFill();
 
     canvas.drawings.placeables.forEach((drawing) => {
-      const isMask = drawing.document.getFlag("fxmaster", "masking");
+      const isMask = drawing.document.getFlag(packageId, "masking");
       if (!isMask) return;
       mask.beginHole();
       const shape = drawing.shape.geometry.graphicsData[0].shape.clone();
@@ -125,7 +126,7 @@ export class WeatherLayer extends CanvasLayer {
       this.weather.mask.destroy();
       this.weather.mask = null;
     }
-    const invert = canvas.scene.getFlag("fxmaster", "invert");
+    const invert = canvas.scene.getFlag(packageId, "invert");
 
     // Mask zones masked by drawings
     const mask = invert ? this._createInvertedMask() : this._createMask();
@@ -151,7 +152,7 @@ export class WeatherLayer extends CanvasLayer {
 
   /** @override */
   async draw() {
-    if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
+    if (!game.settings.get(packageId, "enable") || game.settings.get(packageId, "disableAll")) {
       return;
     }
     if (isOnTargetMigration()) {
@@ -206,7 +207,7 @@ export class WeatherLayer extends CanvasLayer {
     );
 
     // Updating scene weather
-    const flags = canvas.scene.getFlag("fxmaster", "effects") ?? {};
+    const flags = canvas.scene.getFlag(packageId, "effects") ?? {};
     for (const id in flags) {
       if (!(flags[id].type in CONFIG.fxmaster.weather)) {
         logger.warn(`Weather effect '${id}' is of unknown type '${flags[id].type}', skipping it.`);

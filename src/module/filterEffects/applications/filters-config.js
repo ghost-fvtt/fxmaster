@@ -1,3 +1,4 @@
+import { packageId } from "../../constants.js";
 import { resetFlags } from "../../utils.js";
 import "../../../css/filters-config.css";
 
@@ -25,12 +26,12 @@ export class FiltersConfig extends FormApplication {
    * @return {Object}   The data provided to the template when rendering the form
    */
   getData() {
-    const currentFilters = canvas.scene?.getFlag("fxmaster", "filters") ?? {};
+    const currentFilters = canvas.scene?.getFlag(packageId, "filters") ?? {};
     const activeFilters = Object.fromEntries(
       Object.values(currentFilters).map((filter) => [filter.type, filter.options]),
     );
 
-    const filteredLayers = canvas.scene?.getFlag("fxmaster", "filteredLayers") ?? {
+    const filteredLayers = canvas.scene?.getFlag(packageId, "filteredLayers") ?? {
       background: true,
       foreground: true,
       tokens: true,
@@ -139,7 +140,7 @@ export class FiltersConfig extends FormApplication {
       tokens: formData["tokens"],
     };
 
-    await canvas.scene.setFlag("fxmaster", "filteredLayers", filteredLayers);
+    await canvas.scene.setFlag(packageId, "filteredLayers", filteredLayers);
     resetFlags(canvas.scene, "filters", filters);
   }
 }

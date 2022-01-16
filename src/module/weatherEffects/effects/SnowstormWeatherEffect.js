@@ -40,8 +40,8 @@ export class SnowstormWeatherEffect extends AbstractWeatherEffect {
     this.applyOptionsToConfig(config);
 
     const art = [
-      "./modules/fxmaster/assets/weatherEffects/effects/snow_01.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/snow_02.png",
+      "modules/fxmaster/assets/weatherEffects/effects/snow_01.png",
+      "modules/fxmaster/assets/weatherEffects/effects/snow_02.png",
     ];
     const emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.particleConstructor = PIXI.particles.PathParticle;

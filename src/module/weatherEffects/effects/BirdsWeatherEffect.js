@@ -88,7 +88,7 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
       })),
     });
 
-    const textureFormatString = "./modules/fxmaster/assets/weatherEffects/effects/seagull_{0}.png";
+    const textureFormatString = "modules/fxmaster/assets/weatherEffects/effects/seagull_{0}.png";
 
     // Assets are selected randomly from the list for each particle
     const anims = (this.options.animations?.value ?? [])

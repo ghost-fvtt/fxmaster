@@ -1,11 +1,12 @@
+import { packageId } from "./constants.js";
 import { logger } from "./logger.js";
 import { formatString, resetFlags } from "./utils.js";
 
 export const registerHooks = function () {
   // ------------------------------------------------------------------
   // Hooks API
-  Hooks.on("fxmaster.switchWeather", onSwitchWeather);
-  Hooks.on("fxmaster.updateWeather", onUpdateWeather);
+  Hooks.on(`${packageId}.switchWeather`, onSwitchWeather);
+  Hooks.on(`${packageId}.updateWeather`, onUpdateWeather);
 
   // deprecated hooks
   Hooks.on("switchWeather", onSwitchWeatherDeprecated);
@@ -22,7 +23,7 @@ async function onSwitchWeather(parameters) {
   }
   const newEffect = { [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  let flags = (await canvas.scene.getFlag("fxmaster", "effects")) ?? {};
+  let flags = (await canvas.scene.getFlag(packageId, "effects")) ?? {};
   let effects = {};
 
   if (foundry.utils.hasProperty(flags, parameters.name)) {
@@ -32,7 +33,7 @@ async function onSwitchWeather(parameters) {
     effects = foundry.utils.mergeObject(flags, newEffect);
   }
   if (Object.keys(effects).length == 0) {
-    await canvas.scene.unsetFlag("fxmaster", "effects");
+    await canvas.scene.unsetFlag(packageId, "effects");
   } else {
     resetFlags(canvas.scene, "effects", effects);
   }
@@ -49,7 +50,7 @@ async function onUpdateWeather(parametersArray) {
 
 const deprecationFormatString =
   "The '{0}' hook is deprecated and will be removed in a future version. Please use the " +
-  "'fxmaster.{0}' hook instead. Be aware that the meaning of some options changed for the new hook. " +
+  `'${packageId}.{0}' hook instead. Be aware that the meaning of some options changed for the new hook. ` +
   "Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. " +
   "To get the same effect for this scene, the given parameters should look as follows for the new hook:";
 

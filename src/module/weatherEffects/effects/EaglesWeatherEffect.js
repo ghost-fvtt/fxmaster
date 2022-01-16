@@ -150,7 +150,7 @@ export class EaglesWeatherEffect extends AbstractWeatherEffect {
    */
   get _textures() {
     if (!this.constructor._textureCache) {
-      const spriteSheetTexture = PIXI.Texture.from("./modules/fxmaster/assets/weatherEffects/effects/eagle.png");
+      const spriteSheetTexture = PIXI.Texture.from("modules/fxmaster/assets/weatherEffects/effects/eagle.png");
       const spriteSheetData = {
         meta: {
           scale: "1",
