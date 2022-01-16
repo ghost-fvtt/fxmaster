@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.0...v2.2.1) (2022-01-16)
+
+
+### Bug Fixes
+
+* address conflict between SpecialsLayer and overhead tiles + walls ([faf7ac8](https://github.com/ghost-fvtt/fxmaster/commit/faf7ac8c043da47732270eaa7ce44e7aac944eb1)), closes [#173](https://github.com/ghost-fvtt/fxmaster/issues/173)
+* correctly animate multiple filters of the same type ([#175](https://github.com/ghost-fvtt/fxmaster/issues/175)) ([ff5fdd8](https://github.com/ghost-fvtt/fxmaster/commit/ff5fdd861bb0064696cda9635f56c8876009e896)), closes [#167](https://github.com/ghost-fvtt/fxmaster/issues/167)
+* use suitable values in example macros ([#174](https://github.com/ghost-fvtt/fxmaster/issues/174)) ([25c836a](https://github.com/ghost-fvtt/fxmaster/commit/25c836ad88d23a6a92381946e494075e0c1b4387))
+
 ## [2.2.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.1.2...v2.2.0) (2022-01-09)
 
 
