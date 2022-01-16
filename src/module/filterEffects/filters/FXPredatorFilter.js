@@ -1,6 +1,8 @@
 export class FXPredatorFilter extends PIXI.filters.CRTFilter {
-  constructor(options) {
+  constructor(options, id) {
     super();
+    this.id = id;
+
     this.enabled = false;
     this.vignetting = 0;
     this.curvature = 0;
