@@ -42,7 +42,7 @@ export class EmbersWeatherEffect extends AbstractWeatherEffect {
     this.applyOptionsToConfig(config);
 
     // Assets are selected randomly from the list for each particle
-    const art = ["./modules/fxmaster/assets/weatherEffects/effects/ember.png"];
+    const art = ["modules/fxmaster/assets/weatherEffects/effects/ember.png"];
     const emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);
     return emitter;

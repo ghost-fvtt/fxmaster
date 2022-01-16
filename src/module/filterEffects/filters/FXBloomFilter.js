@@ -1,3 +1,5 @@
+import { packageId } from "../../constants.js";
+
 export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
   constructor(options, id) {
     super();
@@ -85,7 +87,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
 
   animateOptions(values = this.options) {
     const data = {
-      name: `fxmaster.${this.constructor.name}.${this.id}`,
+      name: `${packageId}.${this.constructor.name}.${this.id}`,
       duration: 4000,
     };
     const anim = Object.keys(values).reduce((arr, key) => {
@@ -101,7 +103,7 @@ export class FXBloomFilter extends PIXI.filters.AdvancedBloomFilter {
 
   // So we can destroy object afterwards
   async stop() {
-    await CanvasAnimation.terminateAnimation("fxmaster.bloomFilter");
+    await CanvasAnimation.terminateAnimation(`${packageId}.${this.constructor.name}.${this.id}`);
     if (this.skipFading) {
       this.skipFading = false;
       this.enabled = false;

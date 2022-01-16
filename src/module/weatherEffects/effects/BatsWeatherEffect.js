@@ -45,35 +45,35 @@ export class BatsWeatherEffect extends AbstractWeatherEffect {
       framerate: "30",
       textures: [
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat0.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat0.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat1.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat1.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat2.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat2.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat3.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat3.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat4.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat4.png",
           count: 2,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat3.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat3.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat2.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat2.png",
           count: 1,
         },
         {
-          texture: "./modules/fxmaster/assets/weatherEffects/effects/bat1.png",
+          texture: "modules/fxmaster/assets/weatherEffects/effects/bat1.png",
           count: 1,
         },
       ],

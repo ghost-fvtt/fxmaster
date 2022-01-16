@@ -1,5 +1,6 @@
 import { SpecialCreate } from "./specials-create.js";
 import "../../../css/specials-config.css";
+import { packageId } from "../../constants.js";
 
 export class SpecialsConfig extends Application {
   static get defaultOptions() {
@@ -60,7 +61,7 @@ export class SpecialsConfig extends Application {
       const folderId = ev.currentTarget.closest(".folder").dataset["folderId"];
       const effectId = ev.currentTarget.closest(".special-effects").dataset["effectId"];
       const data = CONFIG.fxmaster.userSpecials[folderId].effects[effectId];
-      const settings = game.settings.get("fxmaster", "specialEffects");
+      const settings = game.settings.get(packageId, "specialEffects");
       const id = settings.findIndex((v) => {
         return v.label === data.label && v.folder === data.folder;
       });
@@ -68,7 +69,7 @@ export class SpecialsConfig extends Application {
         return;
       }
       settings.splice(id, 1);
-      game.settings.set("fxmaster", "specialEffects", settings).then(() => {
+      game.settings.set(packageId, "specialEffects", settings).then(() => {
         this.render(true);
       });
     });

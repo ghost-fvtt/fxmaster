@@ -1,5 +1,6 @@
 import { SpecialsConfig } from "./specials-config.js";
 import { easeFunctions } from "../../ease.js";
+import { packageId } from "../../constants.js";
 
 export class SpecialCreate extends FormApplication {
   static get defaultOptions() {
@@ -82,7 +83,7 @@ export class SpecialCreate extends FormApplication {
    * @private
    */
   _updateObject(_, formData) {
-    const fxs = game.settings.get("fxmaster", "specialEffects");
+    const fxs = game.settings.get(packageId, "specialEffects");
 
     const newData = {
       folder: formData["folder"],
@@ -112,7 +113,7 @@ export class SpecialCreate extends FormApplication {
     } else {
       fxs.push(newData);
     }
-    game.settings.set("fxmaster", "specialEffects", fxs).then(() => {
+    game.settings.set(packageId, "specialEffects", fxs).then(() => {
       Object.values(ui.windows).forEach((w) => {
         if (w instanceof SpecialsConfig) {
           w.render();

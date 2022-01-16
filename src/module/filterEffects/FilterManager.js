@@ -1,5 +1,6 @@
-import { resetFlags } from "../utils.js";
+import { packageId } from "../constants.js";
 import { logger } from "../logger.js";
+import { resetFlags } from "../utils.js";
 
 class FilterManager {
   constructor() {
@@ -39,7 +40,7 @@ class FilterManager {
       return;
     }
     this.filterInfos = Object.fromEntries(
-      Object.entries(canvas.scene.getFlag("fxmaster", "filters") ?? {}).filter(([id, filterInfo]) => {
+      Object.entries(canvas.scene.getFlag(packageId, "filters") ?? {}).filter(([id, filterInfo]) => {
         if (!(filterInfo.type in CONFIG.fxmaster.filters)) {
           logger.warn(`Filter effect '${id}' is of unknown type '${filterInfo.type}', skipping it.`);
           return false;
@@ -47,7 +48,7 @@ class FilterManager {
         return true;
       }),
     );
-    this.filteredLayers = canvas.scene.getFlag("fxmaster", "filteredLayers") ?? this.filteredLayers;
+    this.filteredLayers = canvas.scene.getFlag(packageId, "filteredLayers") ?? this.filteredLayers;
 
     const filtersToCreate = Object.keys(this.filterInfos).filter((key) => !(key in this.filters));
     const filtersToUpdate = Object.keys(this.filterInfos).filter((key) => key in this.filters);
@@ -154,7 +155,7 @@ class FilterManager {
     const rmFilter = {
       [`-=${name}`]: null,
     };
-    await canvas.scene.setFlag("fxmaster", "filters", rmFilter);
+    await canvas.scene.setFlag(packageId, "filters", rmFilter);
   }
 
   /**
@@ -166,7 +167,7 @@ class FilterManager {
     if (!canvas.scene) {
       return;
     }
-    await canvas.scene.unsetFlag("fxmaster", "filters");
+    await canvas.scene.unsetFlag(packageId, "filters");
   }
 
   /**

@@ -41,10 +41,10 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
 
     // Animation
     const art = [
-      "./modules/fxmaster/assets/weatherEffects/effects/cloud1.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/cloud2.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/cloud3.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/cloud4.png",
+      "modules/fxmaster/assets/weatherEffects/effects/cloud1.png",
+      "modules/fxmaster/assets/weatherEffects/effects/cloud2.png",
+      "modules/fxmaster/assets/weatherEffects/effects/cloud3.png",
+      "modules/fxmaster/assets/weatherEffects/effects/cloud4.png",
     ];
     const emitter = new PIXI.particles.Emitter(parent, art, config);
     return emitter;

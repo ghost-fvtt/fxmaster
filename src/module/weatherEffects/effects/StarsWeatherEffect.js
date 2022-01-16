@@ -43,14 +43,14 @@ export class StarsWeatherEffect extends AbstractWeatherEffect {
 
     // Assets are selected randomly from the list for each particle
     const art = [
-      "./modules/fxmaster/assets/weatherEffects/effects/star_01.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_02.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_04.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_05.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_06.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_07.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_08.png",
-      "./modules/fxmaster/assets/weatherEffects/effects/star_09.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_01.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_02.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_04.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_05.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_06.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_07.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_08.png",
+      "modules/fxmaster/assets/weatherEffects/effects/star_09.png",
     ];
     const emitter = new PIXI.particles.Emitter(parent, art, config);
     emitter.startColor = PIXI.particles.ParticleUtils.createSteppedGradient(config.color.list, true);

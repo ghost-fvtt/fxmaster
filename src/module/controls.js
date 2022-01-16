@@ -1,3 +1,4 @@
+import { packageId } from "./constants.js";
 import { filterManager } from "./filterEffects/FilterManager.js";
 import { WeatherConfig } from "./weatherEffects/applications/weather-config.js";
 import { SpecialsConfig } from "./specialEffects/applications/specials-config.js";
@@ -16,7 +17,7 @@ function getSceneControlButtons(controls) {
     title: "CONTROLS.Effects",
     icon: "fas fa-magic",
     layer: "specials",
-    visible: game.user.role >= game.settings.get("fxmaster", "permission-create"),
+    visible: game.user.role >= game.settings.get(packageId, "permission-create"),
     tools: [
       {
         name: "specials",
@@ -42,7 +43,7 @@ function getSceneControlButtons(controls) {
         title: "CONTROLS.SaveMacro",
         icon: "fas fa-save",
         onClick: () => {
-          let flags = canvas.scene?.getFlag("fxmaster", "effects") ?? {};
+          let flags = canvas.scene?.getFlag(packageId, "effects") ?? {};
           let objs = Object.values(flags);
           let img = "icons/svg/windmill.svg";
           let name = "Weather";
@@ -53,7 +54,7 @@ function getSceneControlButtons(controls) {
             }
             name = CONFIG.fxmaster.weather[effect.type].label;
           });
-          const command = `Hooks.call('fxmaster.updateWeather', ${JSON.stringify(objs)});`;
+          const command = `Hooks.call('${packageId}.updateWeather', ${JSON.stringify(objs)});`;
           Macro.create({ type: "script", name, command, img });
           ui.notifications.info(`Macro ${name} has been saved in the macro directory`);
         },
@@ -66,12 +67,12 @@ function getSceneControlButtons(controls) {
         icon: "fas fa-mask",
         onClick: () => {
           if (canvas.scene) {
-            const invert = canvas.scene.getFlag("fxmaster", "invert") ?? false;
-            canvas.scene.setFlag("fxmaster", "invert", !invert);
+            const invert = canvas.scene.getFlag(packageId, "invert") ?? false;
+            canvas.scene.setFlag(packageId, "invert", !invert);
           }
         },
         visible: game.user.isGM,
-        active: canvas.scene?.getFlag("fxmaster", "invert") ?? false,
+        active: canvas.scene?.getFlag(packageId, "invert") ?? false,
         toggle: true,
       },
       {
@@ -95,7 +96,7 @@ function getSceneControlButtons(controls) {
             yes: () => {
               if (canvas.scene) {
                 filterManager.removeAll();
-                canvas.scene.unsetFlag("fxmaster", "effects");
+                canvas.scene.unsetFlag(packageId, "effects");
               }
             },
             defaultYes: true,

@@ -1,4 +1,5 @@
 import { FXCanvasAnimation } from "../../canvasanimation.js";
+import { packageId } from "../../constants.js";
 import { easeFunctions } from "../../ease.js";
 
 export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
@@ -74,7 +75,7 @@ export class FXLightningFilter extends PIXI.filters.AdjustmentFilter {
           },
         ];
         return FXCanvasAnimation.animateSmooth(attributes, {
-          name: `fxmaster.${this.constructor.name}.${this.id}.${randomID()}`,
+          name: `${packageId}.${this.constructor.name}.${this.id}.${randomID()}`,
           context: this,
           duration: 100 + this.options.spark_duration * Math.random(),
           ease: easeFunctions.InOutBack,
