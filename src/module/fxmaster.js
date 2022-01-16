@@ -9,6 +9,7 @@ import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
 import { isV9OrLater } from "./utils.js";
 import { logger } from "./logger.js";
+import { registerWrappers } from "./wrappers/index.js";
 
 import "../css/common.css";
 
@@ -42,6 +43,7 @@ Hooks.once("init", function () {
   registerSettings();
   registerHooks();
   registerLayer();
+  registerWrappers();
   registerHelpers();
 
   // Adding filters, weathers and effects
