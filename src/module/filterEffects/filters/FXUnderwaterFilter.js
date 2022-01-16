@@ -1,7 +1,9 @@
 export class FXUnderwaterFilter extends PIXI.filters.DisplacementFilter {
-  constructor(options) {
+  constructor(options, id) {
     let dizzyMap = new PIXI.Sprite.from("/modules/fxmaster/assets/filterEffects/clouds.png");
     super(dizzyMap);
+    this.id = id;
+
     this.dizzyMap = dizzyMap;
 
     this.speedConfig = {};

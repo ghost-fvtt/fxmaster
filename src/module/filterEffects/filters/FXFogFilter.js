@@ -2,8 +2,10 @@ import { fog } from "./shaders/fog.js";
 import { customVertex2D } from "./shaders/customvertex2D.js";
 
 export class FXFogFilter extends PIXI.Filter {
-  constructor(options) {
+  constructor(options, id) {
     super(customVertex2D, fog);
+    this.id = id;
+
     this.enabled = false;
     this.skipFading = false;
 

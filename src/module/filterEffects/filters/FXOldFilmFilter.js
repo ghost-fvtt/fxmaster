@@ -1,6 +1,8 @@
 export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
-  constructor(options) {
+  constructor(options, id) {
     super();
+    this.id = id;
+
     this.enabled = false;
     this.skipFading = false;
 

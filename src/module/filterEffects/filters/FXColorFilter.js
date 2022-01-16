@@ -1,6 +1,8 @@
 export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
-  constructor(options) {
+  constructor(options, id) {
     super();
+    this.id = id;
+
     this.enabled = false;
     this.skipFading = false;
     this.configure(options);
@@ -99,7 +101,7 @@ export class FXColorFilter extends PIXI.filters.AdjustmentFilter {
 
   animateOptions(values = this.options) {
     const data = {
-      name: `fxmaster.${this.constructor.name}`,
+      name: `fxmaster.${this.constructor.name}.${this.id}`,
       duration: 4000,
     };
     const anim = Object.keys(values).reduce((arr, key) => {
