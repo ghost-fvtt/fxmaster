@@ -1,7 +1,8 @@
 import { FXCanvasAnimation } from "../canvasanimation.js";
+import { packageId } from "../constants.js";
 import { easeFunctions } from "../ease.js";
 
-export class SpecialsLayer extends PlaceablesLayer {
+export class SpecialsLayer extends CanvasLayer {
   constructor() {
     super();
     this.videos = [];
@@ -9,12 +10,10 @@ export class SpecialsLayer extends PlaceablesLayer {
     this.ruler = null;
     this.windowVisible = false;
     // Listen to the socket
-    game.socket.on("module.fxmaster", (data) => {
+    game.socket.on(`module.${packageId}`, (data) => {
       this.playVideo(data);
     });
   }
-
-  static documentName = "Tile";
 
   static get layerOptions() {
     return foundry.utils.mergeObject(super.layerOptions, {
@@ -23,12 +22,22 @@ export class SpecialsLayer extends PlaceablesLayer {
     });
   }
 
-  get hud() {
-    return null;
+  /** @override */
+  async draw() {
+    await super.draw();
+    this.ruler = this.addChild(new PIXI.Graphics());
+    this.visible = true;
+    return this;
   }
 
-  get tiles() {
-    return [];
+  /** @inheritdoc */
+  async tearDown() {
+    this.ruler = null;
+    for (const video of this.videos) {
+      video.remove();
+    }
+    this.videos = [];
+    return super.tearDown();
   }
 
   _configureProjectile(vidSprite, data) {
@@ -60,7 +69,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     }
     const animate = function () {
       FXCanvasAnimation.animateSmooth(attributes, {
-        name: `fxmaster.video.${randomID()}.move`,
+        name: `${packageId}.video.${randomID()}.move`,
         context: this,
         duration: animationDuration,
         ease: easeFunctions[data.ease],
@@ -87,7 +96,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     }
     const animate = function () {
       FXCanvasAnimation.animateSmooth(attributes, {
-        name: `fxmaster.video.${randomID()}.rotate`,
+        name: `${packageId}.video.${randomID()}.rotate`,
         context: this,
         duration: animationDuration,
         ease: easeFunctions[data.ease],
@@ -193,7 +202,7 @@ export class SpecialsLayer extends PlaceablesLayer {
       // No tokens are selected, play in a random position
       if (tokens.length === 0) {
         canvas.specials.playVideo(data);
-        game.socket.emit("module.fxmaster", data);
+        game.socket.emit("module.${packageId}", data);
         return;
       }
       const targets = game.user.targets;
@@ -212,7 +221,7 @@ export class SpecialsLayer extends PlaceablesLayer {
           y: t.position.y + t.h / 2
         };
         canvas.specials.playVideo(data);
-        game.socket.emit("module.fxmaster", data);
+        game.socket.emit("module.${packageId}", data);
       })
 
     `;
@@ -238,7 +247,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     effectData.distance = ray.distance;
     effectData.rotation = ray.angle;
     // Play to other clients
-    game.socket.emit("module.fxmaster", effectData);
+    game.socket.emit(`module.${packageId}`, effectData);
     // Play effect locally
     return this.playVideo(effectData);
   }
@@ -262,7 +271,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     const ray = new Ray(origin, target);
     effectData.rotation = ray.angle;
     // Play to other clients
-    game.socket.emit("module.fxmaster", effectData);
+    game.socket.emit(`module.${packageId}`, effectData);
     // Play effect locally
     return this.playVideo(effectData);
   }
@@ -301,7 +310,7 @@ export class SpecialsLayer extends PlaceablesLayer {
     };
 
     if (!event.data.destination) {
-      game.socket.emit("module.fxmaster", data);
+      game.socket.emit(`module.${packageId}`, data);
       return this.playVideo(data);
     }
 
@@ -331,7 +340,7 @@ export class SpecialsLayer extends PlaceablesLayer {
         break;
     }
 
-    game.socket.emit("module.fxmaster", data);
+    game.socket.emit(`module.${packageId}`, data);
     return this.playVideo(data);
   }
 
@@ -384,34 +393,5 @@ export class SpecialsLayer extends PlaceablesLayer {
       }
       this._dragging = false;
     }, 400);
-  }
-
-  /* -------------------------------------------- */
-  /*  Methods
-    /* -------------------------------------------- */
-
-  activate() {
-    super.activate();
-    this.ruler = this.addChild(new PIXI.Graphics());
-    return this;
-  }
-
-  deactivate() {
-    super.deactivate();
-    this.objects.visible = true;
-  }
-
-  async draw() {
-    await super.draw();
-    return this;
-  }
-
-  /** @override */
-  tearDown() {
-    for (const video of this.videos) {
-      video.remove();
-    }
-    this.videos = [];
-    return super.tearDown();
   }
 }
