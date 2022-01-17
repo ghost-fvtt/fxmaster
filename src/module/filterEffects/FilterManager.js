@@ -56,7 +56,7 @@ class FilterManager {
 
     for (const key of filtersToCreate) {
       const { type, options } = this.filterInfos[key];
-      this.filters[key] = new CONFIG.fxmaster.filters[type](options);
+      this.filters[key] = new CONFIG.fxmaster.filters[type](options, key);
       this.filters[key].skipFading = skipFading;
       this.filters[key].play();
     }
