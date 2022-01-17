@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.1...v2.2.2) (2022-01-17)
+
+
+### Bug Fixes
+
+* make multiple filters of the same type work correctly together—for real this time ([a46b56b](https://github.com/ghost-fvtt/fxmaster/commit/a46b56b8ed652e1fe4e9bf991a5c035aa0d3dfe2)), closes [#167](https://github.com/ghost-fvtt/fxmaster/issues/167)
+
 ### [2.2.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.0...v2.2.1) (2022-01-16)
 
 
