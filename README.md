@@ -54,22 +54,45 @@ You can then safely reactivate your modules.
 
 ## Developer API
 
-FXMaster provides helper functions to interact with filters and weather effects from other packages.
+FXMaster provides functionality to interact with filters and weather effects from other packages and macros.
 
 ### Filters
 
-```javascript
-FXMASTER.filters.switch("myfilterID", "color", { color: {value:"#ff00ff", apply:true}, gamma: 1.0, contrast: 1.0, brightness: 1.0, saturation: 0.2 });
-```
+* Adding a named filter
+  ```javascript
+  FXMASTER.filters.addFilter("myfilterID", "color", {
+    color: { value:"#ff00ff", apply: true },
+    gamma: 1.0,
+    contrast: 1.0,
+    brightness: 1.0,
+    saturation: 0.2
+  });
+  ```
+* Removing a named filter
+  ```javascript
+  FXMASTER.filters.removeFilter("myfilterID");
+  ```
+* Toggling a named filter on and off
+  ```javascript
+  FXMASTER.filters.switch("myfilterID", "color", {
+    color: { value:"#ff00ff", apply: true },
+    gamma: 1.0,
+    contrast: 1.0,
+    brightness: 1.0,
+    saturation: 0.2
+  });
+  ```
 
 #### Available Filters Effects
 
-* `lightning`
-* `underwater`
-* `predator`
-* `color`
-* `bloom`
-* `oldfilm`
+| Type         | Options                                                  |
+| ------------ | -------------------------------------------------------- |
+| `lightning`  | `frequency`, `spark_duration`, `brightness`              |
+| `underwater` | `speed`, `scale`                                         |
+| `predator`   | `noise`, `period`                                        |
+| `color`      | `color`, `saturation`, `contrast`, `brightness`, `gamma` |
+| `bloom`      | `blur`, `bloomScale`, `threshold`                        |
+| `oldfilm`    | `sepia`, `noise`                                         |
 
 You can get a complete list by typing `CONFIG.fxmaster.filters` in your web console.
 
