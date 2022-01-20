@@ -80,7 +80,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
   Hooks.call("fxmaster.switchWeather", {
     name: "myweatherID",
     type: "rain",
-    options: { density: 100 },
+    options: { density: 0.5 },
   });
   ```
 * Setting the active weather effects:
