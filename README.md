@@ -17,7 +17,7 @@ This module also provides ways to easily configure these effects.
 
 ## Installation Instructions
 
-To install FXMaster, find FXMaster in the module browser, or paste the following URL into the Install System dialog in
+To install FXMaster, find FXMaster in the module browser, or paste the following URL into the Install Module dialog in
 the Setup menu of the Foundry Virtual Tabletop:
 
 ```
