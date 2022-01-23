@@ -23,7 +23,7 @@ body:
     id: current
     attributes:
       label: Current Behavior
-      description: What is the current behavior, i.e., what happenes actually?
+      description: What is the current behavior, i.e., what happens actually?
     validations:
       required: true
   - type: textarea
@@ -54,7 +54,7 @@ body:
     attributes:
       label: Version
       description: Which version(s) of FXMaster are you seeing the problem on?
-      placeholder: v2.1.2
+      placeholder: v2.2.2
     validations:
       required: true
   - type: input
@@ -62,7 +62,7 @@ body:
     attributes:
       label: Foundry VTT Version
       description: Which version(s) and build of Foundry VTT are you seeing the problem on?
-      placeholder: v9.238
+      placeholder: v9.242
     validations:
       required: true
   - type: input
