@@ -109,7 +109,7 @@ jobs:
           allowUpdates: false
           name: ${{steps.extract_version.outputs.version}}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "./src/module.json, ./module.zip"
+          artifacts: "./module.json, ./module.zip"
 
       - name: Publish to Foundry Admin
         uses: Varriount/fvtt-autopublish@v1.0.6
@@ -118,4 +118,4 @@ jobs:
           password: ${{ secrets.FVTT_PASSWORD }}
           module-id: ${{ secrets.FVTT_PACKAGE_ID }}
           manifest-url: https://github.com/${{ github.repository }}/releases/download/v${{ steps.extract_version.outputs.version }}/module.json
-          manifest-file: ./src/module.json
+          manifest-file: ./module.json
