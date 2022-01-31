@@ -17,7 +17,7 @@
     }
   ],
   "scripts": ["libs/filters/pixi-filters.js"],
-  "esmodules": ["module/fxmaster.js"],
+  "esmodules": ["fxmaster.js"],
   "styles": ["css/fxmaster.css"],
   "packs": [
     {
