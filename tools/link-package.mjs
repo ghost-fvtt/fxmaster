@@ -3,7 +3,7 @@ import path from "node:path";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { destinationDirectory, distDirectory, foundryconfigFile, name, sourceDirectory } from "./const.mjs";
+import { destinationDirectory, distDirectory, foundryconfigFile, name } from "./const.mjs";
 
 /**
  * Get the data path of Foundry VTT based on what is configured in the {@link foundryconfigFile}.
@@ -25,7 +25,7 @@ function getDataPath() {
  * @param {boolean} clean Whether to remove the link instead of creating it
  */
 async function linkPackage(clean) {
-  if (!fs.existsSync(path.resolve(sourceDirectory, "module.json"))) {
+  if (!fs.existsSync(path.resolve("module.json"))) {
     throw new Error("Could not find module.json");
   }
 
