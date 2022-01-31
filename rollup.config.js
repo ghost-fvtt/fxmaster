@@ -5,7 +5,17 @@ import { terser } from "rollup-plugin-terser";
 
 import { distDirectory, name, sourceDirectory } from "./tools/const.mjs";
 
-const staticFiles = ["assets", "lang", "libs", "packs", "templates", "module.json"];
+const staticFiles = [
+  "assets",
+  "CHANGELOG.md",
+  "lang",
+  "libs",
+  "LICENSE.md",
+  "module.json",
+  "packs",
+  "README.md",
+  "templates",
+];
 const isProduction = process.env.NODE_ENV === "production";
 
 /**
