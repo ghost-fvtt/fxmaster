@@ -2,7 +2,6 @@
   "name": "fxmaster",
   "title": "FXMaster",
   "description": "<p>Adds various weather and filter effects</p>",
-  "version": "2.2.3",
   "author": "U~man, Johannes Loher (ghost#2000)",
   "authors": [
     {
@@ -16,18 +15,17 @@
       "ko-fi": "ghostfvtt"
     }
   ],
+  "url": "https://github.com/ghost-fvtt/fxmaster",
+  "license": "./LICENSE.md",
+  "readme": "./README.md",
+  "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
+  "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
+  "version": "2.2.3",
+  "minimumCoreVersion": "0.8.5",
+  "compatibleCoreVersion": "9",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": ["fxmaster.js"],
   "styles": ["css/fxmaster.css"],
-  "packs": [
-    {
-      "name": "fxmaster",
-      "label": "FXMaster",
-      "package": "fxmaster",
-      "path": "packs/macros.db",
-      "entity": "Macro"
-    }
-  ],
   "languages": [
     {
       "lang": "en",
@@ -70,15 +68,16 @@
       "path": "lang/ja.json"
     }
   ],
+  "packs": [
+    {
+      "name": "fxmaster",
+      "label": "FXMaster",
+      "path": "packs/macros.db",
+      "entity": "Macro"
+    }
+  ],
   "socket": true,
-  "url": "https://github.com/ghost-fvtt/fxmaster",
-  "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
   "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
   "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.2.3/module.zip",
-  "license": "./LICENSE.md",
-  "readme": "./README.md",
-  "changelog": "./CHANGELOG.md",
-  "compatibleCoreVersion": "9",
-  "minimumCoreVersion": "0.8.5",
   "manifestPlusVersion": "1.2.0"
 }
