@@ -20,7 +20,7 @@
   "readme": "./README.md",
   "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
   "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "minimumCoreVersion": "0.8.5",
   "compatibleCoreVersion": "9",
   "scripts": ["libs/filters/pixi-filters.js"],
@@ -78,6 +78,6 @@
   ],
   "socket": true,
   "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
-  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.2.3/module.zip",
+  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v2.2.4/module.zip",
   "manifestPlusVersion": "1.2.0"
 }
