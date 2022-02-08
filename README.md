@@ -36,7 +36,7 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
   into the direction you want to the effect to face.
 * You can mask your weather effects by creating drawings and then marking them as weather mask (open the HUD of the
   drawing and click on the cloud icon in the top left). The complete mask can be inverted by clicking the mask control
-  icon in the FXMaster controls.
+  icon in the FXMaster controls. Masking Filter effects is not supported at this time.
 
 
 ## ⚠ Warning Regarding Large Scenes
@@ -161,7 +161,7 @@ parameters:
 | `speed`          | `number \| "auto"`             | The speed at which the effect plays and moves.                                                                                                                                          |
 | `scale`          | `{x: number, y: number}`       | The scale of the effect. `x` and `y` are numbers between `0` and `1`, representing by how much the width and height of the effect are scaled.                                           |
 | `animationDelay` | `{start: number, end: number}` | Delays before and after the effect plays (if `speed > 0`).                                                                                                                              |
-| `ease`           | `string`                       | The easing function to use in order for the movement animation to look more natural. You can find the valid values in `easeFunctions` in [ease.js](./src/ease.js).               |
+| `ease`           | `string`                       | The easing function to use in order for the movement animation to look more natural. You can find the valid values in `easeFunctions` in [ease.js](./src/ease.js).                      |
 | `width`          | `number`                       | Sets the width of the sprite. For example, this can be used to stretch a beam towards a specific target.                                                                                |
 
 #### Playing a Video File on the Canvas
