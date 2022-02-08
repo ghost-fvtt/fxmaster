@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.4...v2.3.0) (2022-02-08)
+
+
+### Features
+
+* save filter effects to macro ([208b547](https://github.com/ghost-fvtt/fxmaster/commit/208b54791d2d1d3175fe23b933b678defe4b5fcb))
+
 ### [2.2.4](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.3...v2.2.4) (2022-02-01)
 
 ### [2.2.3](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.2...v2.2.3) (2022-01-31)
