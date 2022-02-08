@@ -16,10 +16,10 @@
     }
   ],
   "url": "https://github.com/ghost-fvtt/fxmaster",
-  "license": "./LICENSE.md",
-  "readme": "./README.md",
+  "license": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v2.2.4/LICENSE.md",
+  "readme": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v2.2.4/README.md",
   "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
-  "changelog": "https://github.com/ghost-fvtt/fxmaster/blob/master/CHANGELOG.md",
+  "changelog": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v2.2.4/CHANGELOG.md",
   "version": "2.2.4",
   "minimumCoreVersion": "0.8.5",
   "compatibleCoreVersion": "9",
