@@ -82,6 +82,13 @@ FXMaster provides functionality to interact with filters and weather effects fro
     saturation: 0.2
   });
   ```
+* Setting the list of active filters
+  ```javascript
+    FXMASTER.filters.setFilters([
+      { type: "color", options: { /* ... */ } },
+      { type: "lightning", options: { /* ... */ } },
+    ]);
+  ```
 
 #### Available Filters Effects
 
@@ -109,8 +116,8 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 * Setting the active weather effects:
   ```javascript
   Hooks.call("fxmaster.updateWeather", [
-    { type: "rain", options: {} },
-    { type: "bubbles", options: {} },
+    { type: "rain", options: { /* ... */ } },
+    { type: "bubbles", options: { /* ... */ } },
   ]);
   ```
 

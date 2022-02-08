@@ -184,6 +184,11 @@ class FilterManager {
     return this.addFilter(name, type, options);
   }
 
+  async setFilters(filterInfoArray) {
+    this.filterInfos = Object.fromEntries(filterInfoArray.map((filterInfo) => [foundry.utils.randomID(), filterInfo]));
+    await this.dump();
+  }
+
   _animate() {
     for (const key in this.filters) {
       this.filters[key].step();

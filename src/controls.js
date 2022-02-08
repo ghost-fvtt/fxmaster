@@ -3,6 +3,7 @@ import { filterManager } from "./filterEffects/FilterManager.js";
 import { WeatherConfig } from "./weatherEffects/applications/weather-config.js";
 import { SpecialsConfig } from "./specialEffects/applications/specials-config.js";
 import { FiltersConfig } from "./filterEffects/applications/filters-config.js";
+import { saveWeatherAndFiltersAsMacro } from "./macro.js";
 
 export function registerGetSceneControlButtonsHook() {
   Hooks.on("getSceneControlButtons", getSceneControlButtons);
@@ -39,29 +40,6 @@ function getSceneControlButtons(controls) {
         button: true,
       },
       {
-        name: "save",
-        title: "CONTROLS.SaveMacro",
-        icon: "fas fa-save",
-        onClick: () => {
-          let flags = canvas.scene?.getFlag(packageId, "effects") ?? {};
-          let objs = Object.values(flags);
-          let img = "icons/svg/windmill.svg";
-          let name = "Weather";
-          objs.forEach((effect) => {
-            let icon = CONFIG.fxmaster.weather[effect.type].icon;
-            if (icon) {
-              img = icon;
-            }
-            name = CONFIG.fxmaster.weather[effect.type].label;
-          });
-          const command = `Hooks.call('${packageId}.updateWeather', ${JSON.stringify(objs)});`;
-          Macro.create({ type: "script", name, command, img });
-          ui.notifications.info(`Macro ${name} has been saved in the macro directory`);
-        },
-        visible: game.user.isGM,
-        button: true,
-      },
-      {
         name: "invertmask",
         title: "CONTROLS.InvertMask",
         icon: "fas fa-mask",
@@ -82,6 +60,14 @@ function getSceneControlButtons(controls) {
         onClick: () => {
           new FiltersConfig().render(true);
         },
+        visible: game.user.isGM,
+        button: true,
+      },
+      {
+        name: "save",
+        title: "CONTROLS.SaveMacro",
+        icon: "fas fa-save",
+        onClick: saveWeatherAndFiltersAsMacro,
         visible: game.user.isGM,
         button: true,
       },
