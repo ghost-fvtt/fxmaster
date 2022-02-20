@@ -4,6 +4,7 @@ import { FXMASTER } from "./config.js";
 import { WeatherLayer } from "./weatherEffects/WeatherLayer.js";
 import { filterManager } from "./filterEffects/FilterManager.js";
 import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration, migrate } from "./migration.js";
+import { SpecialsConfig } from "./specialEffects/applications/specials-config.js";
 import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
 import { registerHelpers } from "./helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
@@ -188,6 +189,11 @@ Hooks.on("updateSetting", (data) => {
   if (data.data.key === "fxmaster.specialEffects") {
     parseSpecialEffects();
   }
+  Object.values(ui.windows).forEach((w) => {
+    if (w instanceof SpecialsConfig) {
+      w.render(false);
+    }
+  });
 });
 
 Hooks.on("renderDrawingHUD", (hud, html, data) => {

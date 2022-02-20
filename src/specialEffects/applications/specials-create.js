@@ -1,4 +1,3 @@
-import { SpecialsConfig } from "./specials-config.js";
 import { easeFunctions } from "../../ease.js";
 import { packageId } from "../../constants.js";
 
@@ -79,10 +78,10 @@ export class SpecialCreate extends FormApplication {
   /**
    * This method is called upon form submission after form data is validated
    * @param event {Event}       The initial triggering submission event
-   * @param formData {Object}   The object of validated form data with which to update the object
-   * @private
+   * @param formData {object}   The object of validated form data with which to update the object
+   * @protected
    */
-  _updateObject(_, formData) {
+  async _updateObject(_, formData) {
     const fxs = game.settings.get(packageId, "specialEffects");
 
     const newData = {
@@ -113,12 +112,6 @@ export class SpecialCreate extends FormApplication {
     } else {
       fxs.push(newData);
     }
-    game.settings.set(packageId, "specialEffects", fxs).then(() => {
-      Object.values(ui.windows).forEach((w) => {
-        if (w instanceof SpecialsConfig) {
-          w.render();
-        }
-      });
-    });
+    await game.settings.set(packageId, "specialEffects", fxs);
   }
 }

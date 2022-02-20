@@ -62,6 +62,6 @@ export const registerSettings = function () {
   });
 };
 
-export const debouncedReload = foundry.utils.debounce(() => {
+const debouncedReload = foundry.utils.debounce(() => {
   window.location.reload();
 }, 100);

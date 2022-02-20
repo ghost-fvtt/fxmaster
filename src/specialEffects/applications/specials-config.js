@@ -69,9 +69,7 @@ export class SpecialsConfig extends Application {
         return;
       }
       settings.splice(id, 1);
-      game.settings.set(packageId, "specialEffects", settings).then(() => {
-        this.render(true);
-      });
+      game.settings.set(packageId, "specialEffects", settings);
     });
 
     html.find(".edit-effect").click((ev) => {
