@@ -19,7 +19,7 @@ export class WeatherConfig extends FormApplication {
       height: "auto",
       template: "modules/fxmaster/templates/weather-config.hbs",
       id: "effects-config",
-      title: game.i18n.localize("WEATHERMANAGE.Title"),
+      title: game.i18n.localize("FXMASTER.WeatherConfigTitle"),
     });
   }
 

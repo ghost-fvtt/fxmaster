@@ -14,7 +14,7 @@ export class SpecialCreate extends FormApplication {
       height: "auto",
       template: "modules/fxmaster/templates/special-create.hbs",
       id: "add-effect",
-      title: game.i18n.localize("FXMASTER.AddEffect"),
+      title: game.i18n.localize("FXMASTER.AddSpecialEffect"),
     });
   }
 
