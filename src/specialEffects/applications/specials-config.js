@@ -17,7 +17,7 @@ export class SpecialsConfig extends Application {
       dragDrop: [{ dragSelector: ".special-effects" }],
       template: "modules/fxmaster/templates/specials-config.hbs",
       id: "specials-config",
-      title: game.i18n.localize("EFFECTCONTROLS.Title"),
+      title: game.i18n.localize("FXMASTER.SpecialsConfigTitle"),
     });
   }
 

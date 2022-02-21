@@ -77,8 +77,8 @@ function getSceneControlButtons(controls) {
         icon: "fas fa-trash",
         onClick: () => {
           Dialog.confirm({
-            title: game.i18n.localize("FXMASTER.Delete"),
-            content: game.i18n.localize("FXMASTER.DeleteConfirm"),
+            title: game.i18n.localize("FXMASTER.ClearWeatherAndFiltersTitle"),
+            content: game.i18n.localize("FXMASTER.ClearWeatherAndFiltersContent"),
             yes: () => {
               if (canvas.scene) {
                 filterManager.removeAll();

@@ -11,6 +11,7 @@ const staticFiles = [
   "lang",
   "libs",
   "LICENSE.md",
+  "media",
   "module.json",
   "packs",
   "README.md",
@@ -38,6 +39,7 @@ const config = {
       minimize: isProduction,
     }),
     copy({
+      verbose: true,
       targets: [{ src: staticFiles, dest: distDirectory }],
     }),
     isProduction && terser({ ecma: 2020, keep_fnames: true }),

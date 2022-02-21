@@ -15,7 +15,7 @@ export class FiltersConfig extends FormApplication {
       height: "auto",
       template: "modules/fxmaster/templates/filters-config.hbs",
       id: "filters-config",
-      title: game.i18n.localize("FILTERMANAGE.Title"),
+      title: game.i18n.localize("FXMASTER.FiltersConfigTitle"),
     });
   }
 

@@ -1,19 +1,13 @@
 {
   "I18N.LANGUAGE": "Catalonian",
   "I18N.MAINTAINERS": "Montver#9776",
-
-  "WEATHERMANAGE.Title": "Administració d'efectes de clima",
-  "FILTERMANAGE.Title": "Administració d'efectes de filtres",
-  "EFFECTCONTROLS.Title": "Efectes Especials",
+  "FXMASTER.WeatherConfigTitle": "Administració d'efectes de clima",
+  "FXMASTER.FiltersConfigTitle": "Administració d'efectes de filtres",
+  "FXMASTER.SpecialsConfigTitle": "Administració d'efectes especials",
   "CONTROLS.Effects": "Controls d'efectes",
-  "CONTROLS.Weather": "Controls de clima",
+  "CONTROLS.Weather": "Efectes de clima",
   "CONTROLS.Daylight": "Filtre Llum diürna",
-  "CONTROLS.Underwater": "Filtre submarí",
-  "CONTROLS.Predator": "Filtre Predator",
-  "CONTROLS.OldFilm": "Filtre pel·lícula antiga",
-  "CONTROLS.Bloom": "Filtre Floració",
   "CONTROLS.SpecialFX": "Efectes especials",
-  "CONTROLS.Colorize": "Efectes de coloració",
   "CONTROLS.SaveMacro": "Exportar clima com una macro",
   "CONTROLS.ClearFX": "Esborrar efectos i filtres",
   "FXMASTER.Density": "Densitat",
@@ -23,7 +17,7 @@
   "FXMASTER.Direction": "Direcció",
   "FXMASTER.SaveMacro": "Desar com macro",
   "FXMASTER.SaveChanges": "Desar canvis",
-  "FXMASTER.Delete": "Esborrar efectes",
-  "FXMASTER.DeleteConfirm": "<p><strong>Estàs segur?</strong> S'esborraran tots els efectes.</p>",
+  "FXMASTER.ClearWeatherAndFiltersTitle": "Esborrar efectes",
+  "FXMASTER.ClearWeatherAndFiltersContent": "<p><strong>Estàs segur?</strong> S'esborraran tots els efectes.</p>",
   "FXMASTER.Enable": "Activar efectes"
 }
