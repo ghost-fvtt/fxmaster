@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.1...v2.3.2) (2022-02-22)
+
+
+### Bug Fixes
+
+* load special effect files lazily ([5d29064](https://github.com/ghost-fvtt/fxmaster/commit/5d2906483d40a218fef78b9449923decf2e8a6af)), closes [#209](https://github.com/ghost-fvtt/fxmaster/issues/209)
+
 ### [2.3.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.0...v2.3.1) (2022-02-08)
 
 ## [2.3.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.2.4...v2.3.0) (2022-02-08)
