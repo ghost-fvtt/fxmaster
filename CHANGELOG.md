@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.2...v2.3.3) (2022-03-08)
+
+
+### Bug Fixes
+
+* remove non-existent lang from module.json ([723c5e7](https://github.com/ghost-fvtt/fxmaster/commit/723c5e7702dedbda83c033907ba62124456aa432))
+
 ### [2.3.2](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.1...v2.3.2) (2022-02-22)
 
 
