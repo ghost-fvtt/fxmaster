@@ -38,11 +38,6 @@
       "path": "lang/fr.json"
     },
     {
-      "lang": "zh-tw",
-      "name": "正體中文",
-      "path": "lang/zh-tw.json"
-    },
-    {
       "lang": "ca",
       "name": "Catalan",
       "path": "lang/ca.json"
