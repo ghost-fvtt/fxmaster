@@ -532,6 +532,8 @@ Many thanks to:
 * Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
 * The Seagull sprites used in the Birds weather effect are from [whtdragon].
 * The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
+* The rats icon is a derivative work of “Rat” by DataBase Center for Life Science (DBCLS) (https://togotv.dbcls.jp/en/togopic.2021.006.html), used under [CC BY-4.0], and licensed under [CC BY-4.0].
+* The rat sprites used in the Rats weather effects by crymoonster are licensed under [CC BY-4.0].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
 [JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
