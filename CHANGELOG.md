@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.3...v2.4.0) (2022-03-24)
+
+
+### Features
+
+* add rats weather effect ([7a0a68e](https://github.com/ghost-fvtt/fxmaster/commit/7a0a68e08fcdbcb216c8dad91ddbb967111efcd5))
+
 ### [2.3.3](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.2...v2.3.3) (2022-03-08)
 
 
