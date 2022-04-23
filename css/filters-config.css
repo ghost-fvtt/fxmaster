@@ -1,18 +1,18 @@
-.layer-toggle {
+.fxmaster-layer-toggle {
   text-align: center;
 }
-.layer-toggle span {
+
+.fxmaster-layer-toggle__icon {
   font-size: var(--font-size-12, 12px);
-  vertical-align: text-top;
 }
-.layer-toggle input[type="checkbox"] {
+
+.fxmaster-layer-toggle__checkbox[type="checkbox"] {
   flex: 0 0 var(--line-height-12, 12px);
   width: var(--line-height-12, 12px);
   height: var(--line-height-12, 12px);
   margin: 0 3px;
 }
 
-.fxmaster.filters.directory-list {
-  overflow-y: auto;
-  height: 35px;
+.fxmaster-list--filters {
+  height: 370px;
 }

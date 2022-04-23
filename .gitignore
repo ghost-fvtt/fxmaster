@@ -1,5 +1,6 @@
 fxmaster.lock
 node_modules/
+client
 foundry.js
 dist/
 .vscode/

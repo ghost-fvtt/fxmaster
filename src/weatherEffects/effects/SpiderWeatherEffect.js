@@ -9,6 +9,11 @@ export class SpiderWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/spiders.png";
   }
 
+  /** @override */
+  static get group() {
+    return "animals";
+  }
+
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.05, value: 0.3, max: 0.7, step: 0.05, decimals: 2 },

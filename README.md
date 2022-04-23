@@ -9,7 +9,8 @@
 
 FXMaster is a module for [Foundry Virtual Tabletop] that provides various types of effects:
 
-* Global effects, called _Weather Effects_, like rain, clouds, fog, and, snow, but also other particle effects such as crows or bats.
+* Global effects, called _Weather Effects_, like rain, clouds, fog, and, snow, but also other particle effects such as
+  crows or bats.
 * _Filter Effects_, including color overlays, underwater, and lightning.
 * Clickable _Special Effects_, using video files provided by external sources.
 
@@ -68,7 +69,8 @@ individual functionality of FXMaster has its own tool inside this scene control.
 
 _Special Effects_ are essentially video files that can be played on the canvas via clicking or dragging. FXMaster
 includes only a couple of example effects. If you want more, you will need to install a module providing animation files
-like [JB2A], [Jinker's Animated Art], or [Jack Kerouac's Animated Spell Effects]. All of them integrate with FXMaster. Alternatively, you can also [add your own _Special Effects_](#managing-custom-special-effects).
+like [JB2A], [Jinker's Animated Art], or [Jack Kerouac's Animated Spell Effects]. All of them integrate with FXMaster.
+Alternatively, you can also [add your own _Special Effects_](#managing-custom-special-effects).
 
 Clicking on this tool opens the _Special Effects Management_ dialog:
 
@@ -143,14 +145,20 @@ Clicking on this tool opens the _Weather Effects Management_ dialog:
 
 ![Weather Effects Management](./media/screenshots/weather-effects-management.png)
 
-With this dialog, you can activate individual weather effects by checking the corresponding checkbox and then clicking
+In this dialog, you can configure individual weather effects. They are sorted into different groups (“Animals”, “Other”,
+and “Weather”). By clicking on a group, you expand it, showing all effects in that group:
+
+![Weather Effects Management With Group Expanded](./media/screenshots/weather-effects-management-group-expanded.png)
+
+You can activate individual weather effects by checking the corresponding checkbox and then clicking
 on “Save Changes”.
 
 By clicking on the name of a _Weather Effect_, you expand it, showing the options for that effect:
 
 ![Weather Effect Options](./media/screenshots/weather-effect-options.png)
 
-The available options differ slightly between _Weather Effects_ because not all options make sense for all of them. The options are:
+The available options differ slightly between _Weather Effects_ because not all options make sense for all of them. The
+options are:
 | Option     | Description                                                                                                                 |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Scale      | A factor that scales the effect relative to its base size.                                                                  |
@@ -168,7 +176,8 @@ Once you are finished with adjusting the options, you can apply them by clicking
 By default, _Weather Effects_ are displayed all across the entire scene. However, it is possible to constrain them to
 specific areas. This can be achieved by creating drawings and then marking them as _Weather Mask_. To do that, open the
 HUD for the drawing (by right-clicking the drawing) and then click on the “Mask FXMaster Weather” control icon
-(<img src="./media/font-awesome/cloud.svg" alt="Mask FXMaster Weather Control Icon" height="20" />) on the left of the drawing HUD:
+(<img src="./media/font-awesome/cloud.svg" alt="Mask FXMaster Weather Control Icon" height="20" />) on the left of the
+drawing HUD:
 
 ![Drawing HUD with Weather Mask](./media/screenshots/drawing-hud-weather-mask.png)
 
@@ -250,7 +259,8 @@ current scene.
 
 ## Developer API
 
-FXMaster provides functionality to interact with _Filter Effects_, _Weather Effects_, and _Special Effects_ from other packages and macros.
+FXMaster provides functionality to interact with _Filter Effects_, _Weather Effects_, and _Special Effects_ from other
+packages and macros.
 
 ### Filters Effects
 
@@ -407,8 +417,8 @@ const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label =
 
 #### Playing a Video File Between Two Tokens
 
-You can use the `canvas.specials.drawSpecialToward` method with the speed set to `"auto"` to adapt the speed so that the video ends
-when the target is reached.
+You can use the `canvas.specials.drawSpecialToward` method with the speed set to `"auto"` to adapt the speed so that the
+video ends when the target is reached.
 
 ```javascript
 function castSpell(effect) {
@@ -532,7 +542,8 @@ Many thanks to:
 * Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
 * The Seagull sprites used in the Birds weather effect are from [whtdragon].
 * The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
-* The rats icon is a derivative work of “Rat” by DataBase Center for Life Science (DBCLS) (https://togotv.dbcls.jp/en/togopic.2021.006.html), used under [CC BY-4.0], and licensed under [CC BY-4.0].
+* The rats icon is a derivative work of “Rat” by DataBase Center for Life Science (DBCLS)
+  (https://togotv.dbcls.jp/en/togopic.2021.006.html), used under [CC BY-4.0], and licensed under [CC BY-4.0].
 * The rat sprites used in the Rats weather effects by crymoonster are licensed under [CC BY-4.0].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/

@@ -2,11 +2,16 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 
 export class RainSimpleWeatherEffect extends AbstractWeatherEffect {
   static get label() {
-    return "Rain without splash";
+    return "Rain Without Splash";
   }
 
   static get icon() {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
+  }
+
+  /** @override */
+  static get group() {
+    return "weather";
   }
 
   getParticleEmitters() {

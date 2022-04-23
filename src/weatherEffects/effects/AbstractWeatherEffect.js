@@ -1,6 +1,19 @@
 import { roundToDecimals } from "../../utils.js";
 
 export class AbstractWeatherEffect extends SpecialEffect {
+  /**
+   * The weather effect group this effect belongs to.
+   * @type {string}
+   */
+  static get group() {
+    return "other";
+  }
+
+  /** @type {string} */
+  static get icon() {
+    return "modules/fxmaster/assets/weatherEffects/icons/snow.png";
+  }
+
   static get parameters() {
     return {
       scale: {

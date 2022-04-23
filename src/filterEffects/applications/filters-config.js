@@ -1,12 +1,15 @@
-import { packageId } from "../../constants.js";
-import { resetFlags } from "../../utils.js";
 import "../../../css/filters-config.css";
 
-export class FiltersConfig extends FormApplication {
+import { packageId } from "../../constants.js";
+import { FormApplicationWithCollapsibles } from "../../form-with-collapsibles.js";
+import { resetFlags } from "../../utils.js";
+
+export class FiltersConfig extends FormApplicationWithCollapsibles {
+  /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["form", "fxmaster", "filters", "sidebar-popout"],
-      closeOnSubmit: true,
+      closeOnSubmit: false,
       submitOnChange: false,
       submitOnClose: false,
       popOut: true,
@@ -19,12 +22,7 @@ export class FiltersConfig extends FormApplication {
     });
   }
 
-  /* -------------------------------------------- */
-
-  /**
-   * Obtain module metadata and merge it with game settings which track current module visibility
-   * @return {Object}   The data provided to the template when rendering the form
-   */
+  /** @override */
   getData() {
     const currentFilters = canvas.scene?.getFlag(packageId, "filters") ?? {};
     const activeFilters = Object.fromEntries(
@@ -37,71 +35,19 @@ export class FiltersConfig extends FormApplication {
       tokens: true,
       drawings: true,
     };
-    // Return data to the template
+
+    const filters = Object.fromEntries(
+      Object.entries(CONFIG.fxmaster.filters).sort(([, clsA], [, clsB]) => clsA.label.localeCompare(clsB.label)),
+    );
+
     return {
-      filters: CONFIG.fxmaster.filters,
+      filters,
       activeFilters,
       filteredLayers,
     };
   }
 
-  /* -------------------------------------------- */
-  /*  Event Listeners and Handlers                */
-  /* -------------------------------------------- */
-
   /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".config.filter .collapse").click((event) => this._onFilterCollapse(event));
-    html.find('.config.filter input[type="range"]').on("input", (event) => this._onChangeRange(event));
-  }
-
-  /**
-   * Handle Weather collapse toggle
-   * @private
-   */
-  _onFilterCollapse(event) {
-    let li = $(event.currentTarget).parents(".config.filter"),
-      expanded = !li.children(".config.collapsible").hasClass("collapsed");
-    this._collapse(li, expanded);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Helper method to render the expansion or collapse of playlists
-   * @param {HTMLElement} li
-   * @param {boolean} collapse
-   * @param {number} speed
-   * @private
-   */
-  _collapse(li, collapse, speed = 250) {
-    li = $(li);
-    let ol = li.children(".config.collapsible"),
-      icon = li.find("header i.fa");
-    // Collapse the Playlist
-    if (collapse) {
-      ol.slideUp(speed, () => {
-        ol.addClass("collapsed");
-        icon.removeClass("fa-angle-up").addClass("fa-angle-down");
-      });
-    }
-
-    // Expand the Playlist
-    else {
-      ol.slideDown(speed, () => {
-        ol.removeClass("collapsed");
-        icon.removeClass("fa-angle-down").addClass("fa-angle-up");
-      });
-    }
-  }
-
-  /**
-   * This method is called upon form submission after form data is validated
-   * @param {Event}  event    The initial triggering submission event
-   * @param {object} formData The object of validated form data with which to update the object
-   * @private
-   */
   async _updateObject(_, formData) {
     if (!canvas.scene) {
       return;

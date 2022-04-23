@@ -10,6 +10,11 @@ export class CloudsWeatherEffect extends AbstractWeatherEffect {
   }
 
   /** @override */
+  static get group() {
+    return "weather";
+  }
+
+  /** @override */
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.001, value: 0.03, max: 0.2, step: 0.001, decimals: 3 },

@@ -10,6 +10,11 @@ export class BirdsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/crows.png";
   }
 
+  /** @override */
+  static get group() {
+    return "animals";
+  }
+
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.001, value: 0.006, max: 0.01, step: 0.001, decimals: 3 },

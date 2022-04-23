@@ -13,6 +13,11 @@ export class SnowWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/snow.png";
   }
 
+  /** @override */
+  static get group() {
+    return "weather";
+  }
+
   /**
    * Configuration of the particle emitter for snowflakes
    * @type {object}
