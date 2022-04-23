@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.4.0...v2.5.0) (2022-04-23)
+
+
+### Features
+
+* add line width parameter for predator filter ([621ccc7](https://github.com/ghost-fvtt/fxmaster/commit/621ccc7a2a54d2ad76fa99fb015386911b86e49d))
+
+
+### Bug Fixes
+
+* fix the old fil and predator filter vanishing over time ([3abd496](https://github.com/ghost-fvtt/fxmaster/commit/3abd4963799a6dd75961116c30ada64a01a8dac2))
+
 ## [2.4.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.3.3...v2.4.0) (2022-03-24)
 
 
