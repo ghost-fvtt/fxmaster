@@ -53,7 +53,7 @@ export class FXPredatorFilter extends PIXI.filters.CRTFilter {
   }
 
   step() {
-    this.seed += 1;
+    this.seed = Math.random();
     const frequency = 1.0 / this.options.period;
     this.time = canvas.app.ticker.lastTime / frequency;
   }
