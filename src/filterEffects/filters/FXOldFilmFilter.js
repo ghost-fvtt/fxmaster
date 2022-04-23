@@ -55,7 +55,7 @@ export class FXOldFilmFilter extends PIXI.filters.OldFilmFilter {
   }
 
   step() {
-    this.seed++;
+    this.seed = Math.random();
   }
 
   static get default() {
