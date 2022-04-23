@@ -1,27 +1,39 @@
 <form>
-  <div class="directory-list effects fxmaster">
-    {{#each effects as |effect type|}}
-    <li class="directory-item config weather">
+  <ol class="fxmaster-groups-list fxmaster-groups-list--weather-effects">
+    {{#each weatherEffectGroups as |group groupId|}}
+    <li class="fxmaster-groups-list__item">
       <header class="flexrow">
-        {{#if effect.icon}}<img class="icon" width="24" height="24" src="{{effect.icon}}">{{/if}}
-        <label class="collapse">{{effect.label}} <i class="fa
-                        fa-angle-down"></i></label>
-        <input type='checkbox' name='{{effect.label}}' id="{{effect.label}}" class="effect" {{checked (lookup
-          @root.activeEffects type)}} />
+        <label class="fxmaster-groups-list__collapse">{{localize group.label}} <i
+            class="fxmaster-groups-list__collapse-icon fa fa-angle-{{#if group.expanded}}down{{else}}up{{/if}}"></i></label>
       </header>
-      <ol class="config collapsible{{#unless (lookup @root.activeEffects type)}} collapsed{{/unless}}">
-        {{#each effect.parameters as |parameterConfig parameterName|}}
-        <li class="flexrow">
-          <span>{{localize parameterConfig.label}}</span>
-          {{{parameter effect parameterConfig parameterName (lookup @root.activeEffects type)}}}
+      <ol
+        class="fxmaster-groups-list__collapsible{{#unless group.expanded}} fxmaster-groups-list__collapsible--collapsed{{/unless}} fxmaster-list">
+        {{#each group.effects as |effect type|}}
+        <li class="fxmaster-list__item">
+          <header class="flexrow">
+            {{#if effect.icon}}<img class="fxmaster-list__icon" width="24" height="24" src="{{effect.icon}}">{{/if}}
+            <label class="fxmaster-list__collapse">{{effect.label}} <i
+                class="fxmaster-list__collapse-icon fa fa-angle-{{#if (lookup @root.activeEffects type)}}down{{else}}up{{/if}}"></i></label>
+            <input type="checkbox" name="{{effect.label}}" id="{{effect.label}}" {{checked (lookup @root.activeEffects
+              type)}} />
+          </header>
+          <ul
+            class="fxmaster-list__collapsible{{#unless (lookup @root.activeEffects type)}} fxmaster-list__collapsible--collapsed{{/unless}}">
+            {{#each effect.parameters as |parameterConfig parameterName|}}
+            <li class="flexrow">
+              <span>{{localize parameterConfig.label}}</span>
+              {{{parameter effect parameterConfig parameterName (lookup @root.activeEffects type)}}}
+            </li>
+            {{/each}}
+          </ul>
         </li>
         {{/each}}
       </ol>
     </li>
     {{/each}}
-  </div>
-  <footer class="form-footer">
-    <button type="submit" name="submit">
+  </ol>
+  <footer class="fxmaster-form-footer">
+    <button class="fxmaster-form-footer__button" type="submit" name="submit">
       <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
     </button>
   </footer>

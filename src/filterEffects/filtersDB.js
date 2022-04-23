@@ -7,11 +7,11 @@ import { FXBloomFilter } from "./filters/FXBloomFilter.js";
 // import {FXFogFilter} from "./filters/FXFogFilter.js"
 
 export const filtersDB = {
-  lightning: FXLightningFilter,
-  underwater: FXUnderwaterFilter,
-  predator: FXPredatorFilter,
-  color: FXColorFilter,
   bloom: FXBloomFilter,
-  oldfilm: FXOldFilmFilter,
+  color: FXColorFilter,
   // fog: FXFogFilter
+  lightning: FXLightningFilter,
+  oldfilm: FXOldFilmFilter,
+  predator: FXPredatorFilter,
+  underwater: FXUnderwaterFilter,
 };

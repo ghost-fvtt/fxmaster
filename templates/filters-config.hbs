@@ -1,45 +1,53 @@
 <form>
-  <header class="directory-header flexrow">
-    <div class="layer-toggle">
-      <span title="{{localize 'FXMASTER.FiltersActivateOnLayerBackground'}}"><i class="fas fa-road"></i></span>
-      <input type="checkbox" name="background" {{checked filteredLayers.background}} />
+  <header class="fxmaster-form-header flexrow">
+    <div class="fxmaster-layer-toggle">
+      <span class="fxmaster-layer-toggle__icon" title="{{localize 'FXMASTER.FiltersActivateOnLayerBackground'}}"><i
+          class="fas fa-road"></i></span>
+      <input class="fxmaster-layer-toggle__checkbox" type="checkbox" name="background" {{checked
+        filteredLayers.background}} />
     </div>
-    <div class="layer-toggle">
-      <span title="{{localize 'FXMASTER.FiltersActivateOnLayerForeground'}}"><i class="fas fa-home"></i></span>
-      <input type="checkbox" name="foreground" {{checked filteredLayers.foreground}} />
+    <div class="fxmaster-layer-toggle">
+      <span class="fxmaster-layer-toggle__icon" title="{{localize 'FXMASTER.FiltersActivateOnLayerForeground'}}"><i
+          class="fas fa-home"></i></span>
+      <input class="fxmaster-layer-toggle__checkbox" type="checkbox" name="foreground" {{checked
+        filteredLayers.foreground}} />
     </div>
-    <div class="layer-toggle">
-      <span title="{{localize 'FXMASTER.FiltersActivateOnLayerDrawings'}}"><i class="fas fa-pencil-alt"></i></span>
-      <input type="checkbox" name="drawings" {{checked filteredLayers.drawings}} />
+    <div class="fxmaster-layer-toggle">
+      <span class="fxmaster-layer-toggle__icon" title="{{localize 'FXMASTER.FiltersActivateOnLayerDrawings'}}"><i
+          class="fas fa-pencil-alt"></i></span>
+      <input class="fxmaster-layer-toggle__checkbox" type="checkbox" name="drawings" {{checked
+        filteredLayers.drawings}} />
     </div>
-    <div class="layer-toggle">
-      <span title="{{localize 'FXMASTER.FiltersActivateOnLayerTokens'}}"><i class="fas fa-user-alt"></i></span>
-      <input type="checkbox" name="tokens" {{checked filteredLayers.tokens}} />
+    <div class="fxmaster-layer-toggle">
+      <span class="fxmaster-layer-toggle__icon" title="{{localize 'FXMASTER.FiltersActivateOnLayerTokens'}}"><i
+          class="fas fa-user-alt"></i></span>
+      <input class="fxmaster-layer-toggle__checkbox" type="checkbox" name="tokens" {{checked filteredLayers.tokens}} />
     </div>
   </header>
-  <div class="directory-list effects fxmaster">
+  <ol class="fxmaster-list fxmaster-list--filters">
     {{#each filters as |filter type|}}
-    <li class="directory-item config filter">
+    <li class="fxmaster-list__item">
       <header class="flexrow">
-        <div class="icon"><i class="icon {{filter.faIcon}}"></i></div>
-        <label class="collapse">{{filter.label}} <i class="fa
-                        fa-angle-down"></i></label>
-        <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" class="effect" {{checked (lookup
-          @root.activeFilters type)}} />
+        <div class="fxmaster-list__icon"><i class="{{filter.faIcon}}"></i></div>
+        <label class="fxmaster-list__collapse">{{filter.label}} <i
+            class="fxmaster-list__collapse-icon fa fa-angle-{{#if (lookup @root.activeFilters type)}}down{{else}}up{{/if}}"></i></label>
+        <input type='checkbox' name='{{filter.label}}' id="{{filter.label}}" {{checked (lookup @root.activeFilters
+          type)}} />
       </header>
-      <ol class="config collapsible{{#unless (lookup @root.activeFilters type)}} collapsed{{/unless}}">
+      <ul
+        class="fxmaster-list__collapsible{{#unless (lookup @root.activeFilters type)}} fxmaster-list__collapsible--collapsed{{/unless}}">
         {{#each filter.parameters as |parameterConfig parameterName|}}
         <li class="flexrow">
           <span>{{localize parameterConfig.label}}</span>
           {{{parameter filter parameterConfig parameterName (lookup @root.activeFilters type)}}}
         </li>
         {{/each}}
-      </ol>
+      </ul>
     </li>
     {{/each}}
-  </div>
-  <footer class="form-footer">
-    <button type="submit" name="submit">
+  </ol>
+  <footer class="fxmaster-form-footer">
+    <button class="fxmaster-form-footer__button" type="submit" name="submit">
       <i class="fas fa-save"></i> {{localize "FXMASTER.SaveChanges"}}
     </button>
   </footer>

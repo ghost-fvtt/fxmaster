@@ -9,6 +9,11 @@ export class FogWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/fog.png";
   }
 
+  /** @override */
+  static get group() {
+    return "weather";
+  }
+
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.01, value: 0.08, max: 0.15, step: 0.01, decimals: 2 },

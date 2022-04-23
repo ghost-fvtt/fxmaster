@@ -2,11 +2,16 @@ import { AbstractWeatherEffect } from "./AbstractWeatherEffect.js";
 
 export class RaintopWeatherEffect extends AbstractWeatherEffect {
   static get label() {
-    return "Topdown Rain";
+    return "Rain Topdown";
   }
 
   static get icon() {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
+  }
+
+  /** @override */
+  static get group() {
+    return "weather";
   }
 
   static get parameters() {

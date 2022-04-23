@@ -16,22 +16,26 @@ import { SpiderWeatherEffect } from "./effects/SpiderWeatherEffect.js";
 import { EaglesWeatherEffect } from "./effects/EaglesWeatherEffect.js";
 import { RatsWeatherEffect } from "./effects/RatsWeatherEffect.js";
 
+/** @typedef {Record<string, typeof import("./effects/AbstractWeatherEffect.js").AbstractWeatherEffect>} WeatherDB */
+
 export const weatherDB = {
-  snowstorm: SnowstormWeatherEffect,
-  bubbles: BubblesWeatherEffect,
-  clouds: CloudsWeatherEffect,
-  embers: EmbersWeatherEffect,
-  rainsimple: RainSimpleWeatherEffect,
-  stars: StarsWeatherEffect,
-  crows: CrowsWeatherEffect,
   bats: BatsWeatherEffect,
-  spiders: SpiderWeatherEffect,
-  fog: FogWeatherEffect,
-  raintop: RaintopWeatherEffect,
   birds: BirdsWeatherEffect,
-  leaves: AutumnLeavesWeatherEffect,
-  rain: RainWeatherEffect,
-  snow: SnowWeatherEffect,
+  crows: CrowsWeatherEffect,
   eagles: EaglesWeatherEffect,
   rats: RatsWeatherEffect,
+  spiders: SpiderWeatherEffect,
+
+  bubbles: BubblesWeatherEffect,
+  embers: EmbersWeatherEffect,
+  stars: StarsWeatherEffect,
+
+  leaves: AutumnLeavesWeatherEffect,
+  clouds: CloudsWeatherEffect,
+  fog: FogWeatherEffect,
+  rain: RainWeatherEffect,
+  raintop: RaintopWeatherEffect,
+  rainsimple: RainSimpleWeatherEffect,
+  snow: SnowWeatherEffect,
+  snowstorm: SnowstormWeatherEffect,
 };

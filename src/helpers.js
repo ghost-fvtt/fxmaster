@@ -12,19 +12,21 @@ export const registerHelpers = function () {
               `;
       case "range":
         return `
-              <input type="range" step="${parameterConfig.step}" min="${parameterConfig.min}" max="${parameterConfig.max}" name="${effectCls.label}_${parameterName}" value="${_default}">
+              <input class="fxmaster-range-input" type="range" step="${parameterConfig.step}" min="${parameterConfig.min}" max="${parameterConfig.max}" name="${effectCls.label}_${parameterName}" value="${_default}">
               <span class="range-value">${_default}</span>
               `;
       case "number":
         return `
-              <input type="text" data-dtype="Number" name="${effectCls.label}_${parameterName}" value="${_default}">
+              <input class="fxmaster-text-input" type="text" data-dtype="Number" name="${effectCls.label}_${parameterName}" value="${_default}">
               `;
       case "multi-select":
-        return `<select class="multi-select" multiple name="${effectCls.label}_${parameterName}">${Object.entries(
-          parameterConfig.options,
-        ).map(
+        return `<select class="fxmaster-multi-select" multiple name="${
+          effectCls.label
+        }_${parameterName}">${Object.entries(parameterConfig.options).map(
           ([key, name]) =>
-            `<option value="${key}"${_default.includes(key) ? " selected" : ""}>${game.i18n.localize(name)}</option>`,
+            `<option class="fxmaster-multi-select__option" value="${key}"${
+              _default.includes(key) ? " selected" : ""
+            }>${game.i18n.localize(name)}</option>`,
         )}</select>`;
     }
     return "";

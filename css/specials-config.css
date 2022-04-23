@@ -1,3 +1,15 @@
+.fxmaster .directory-header {
+  box-shadow: 0 0 5px var(--color-shadow-dark, black);
+  line-height: var(--line-height-12, 12px);
+  font-size: var(--font-size-12, 12px);
+  margin: 0;
+  padding: 4px 0;
+}
+
+.fxmaster .directory-item.active {
+  background: #f56b0066;
+}
+
 .fxmaster.specials .directory-item.special-effects {
   line-height: inherit;
 }

@@ -13,6 +13,11 @@ export class RainWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rain.png";
   }
 
+  /** @override */
+  static get group() {
+    return "weather";
+  }
+
   /**
    * Configuration for the particle emitter for rain
    * @type {Object}

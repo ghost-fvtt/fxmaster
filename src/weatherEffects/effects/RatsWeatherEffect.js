@@ -9,6 +9,11 @@ export class RatsWeatherEffect extends AbstractWeatherEffect {
     return "modules/fxmaster/assets/weatherEffects/icons/rats.png";
   }
 
+  /** @override */
+  static get group() {
+    return "animals";
+  }
+
   static get parameters() {
     return foundry.utils.mergeObject(super.parameters, {
       density: { min: 0.001, value: 0.006, max: 0.1, step: 0.001, decimals: 3 },
