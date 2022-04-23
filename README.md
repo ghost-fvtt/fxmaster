@@ -292,7 +292,7 @@ FXMaster provides functionality to interact with _Filter Effects_, _Weather Effe
 | ------------ | -------------------------------------------------------- |
 | `lightning`  | `frequency`, `spark_duration`, `brightness`              |
 | `underwater` | `speed`, `scale`                                         |
-| `predator`   | `noise`, `period`                                        |
+| `predator`   | `noise`, `period`, `lineWidth`                            |
 | `color`      | `color`, `saturation`, `contrast`, `brightness`, `gamma` |
 | `bloom`      | `blur`, `bloomScale`, `threshold`                        |
 | `oldfilm`    | `sepia`, `noise`                                         |
