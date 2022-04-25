@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.6.0...v2.7.0) (2022-04-25)
+
+
+### Features
+
+* make the save button for the weather and filter managments disabled until a change is made ([8292b61](https://github.com/ghost-fvtt/fxmaster/commit/8292b6130b52b47844bb492238267aea7e21faea))
+
 ## [2.6.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.5.0...v2.6.0) (2022-04-23)
 
 
