@@ -1,10 +1,10 @@
 import "../../../css/filters-config.css";
 
 import { packageId } from "../../constants.js";
-import { FormApplicationWithCollapsibles } from "../../form-with-collapsibles.js";
+import { FXMasterBaseForm } from "../../base-form.js";
 import { resetFlags } from "../../utils.js";
 
-export class FiltersConfig extends FormApplicationWithCollapsibles {
+export class FiltersConfig extends FXMasterBaseForm {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

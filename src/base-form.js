@@ -1,5 +1,9 @@
 /**
- * An abstract FormApplication that handles FXMaster specific collapsable elements and range inputs.
+ * An abstract FormApplication that handles functionality common to multiple FXMaster forms.
+ * In particular, it provides the following functionality:
+ * * Handling of collapsible elements
+ * * Making slider changes for range inputs update the accompanying text box immediately
+ * * Handling the disabled state of the submission button
  *
  * @extends FormApplication
  * @abstract
@@ -8,7 +12,7 @@
  * @param {Object} object                     Some object which is the target data structure to be be updated by the form.
  * @param {FormApplicationOptions} [options]  Additional options which modify the rendering of the sheet.
  */
-export class FormApplicationWithCollapsibles extends FormApplication {
+export class FXMasterBaseForm extends FormApplication {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
@@ -75,5 +79,17 @@ export class FormApplicationWithCollapsibles extends FormApplication {
         icon?.removeClass("fa-angle-up").addClass("fa-angle-down");
       });
     }
+  }
+
+  /** @override */
+  async _onChangeInput(...args) {
+    this.element.find('button[type="submit"]').prop("disabled", false);
+    return super._onChangeInput(...args);
+  }
+
+  /** @override */
+  async _onSubmit(...args) {
+    this.element.find('button[type="submit"]').prop("disabled", true);
+    return super._onSubmit(...args);
   }
 }
