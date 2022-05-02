@@ -1,7 +1,7 @@
 {
   "name": "fxmaster",
   "version": "2.7.0",
-  "description": "Adds various weather and filter effects.",
+  "description": "Adds various particle and filter effects.",
   "private": true,
   "scripts": {
     "build": "run-s clean:files build:files",
@@ -11,9 +11,9 @@
     "clean": "run-p clean:files clean:link",
     "clean:files": "rimraf dist",
     "clean:link": "node ./tools/link-package.mjs --clean",
-    "lint": "eslint --ext .js,.mjs .",
-    "lint:fix": "eslint --ext .js,.mjs --fix .",
-    "format": "prettier --write \"./**/*.(js|mjs|json|css|yml)\"",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.mjs .",
+    "lint:fix": "eslint --ignore-path .gitignore --ext .js,.mjs --fix .",
+    "format": "prettier --ignore-path .gitignore --write \"./**/*.(js|mjs|json|css|yml)\"",
     "release": "standard-version",
     "postinstall": "husky install"
   },

@@ -1,13 +1,33 @@
 .fxmaster .directory-header {
-  box-shadow: 0 0 5px var(--color-shadow-dark, black);
-  line-height: var(--line-height-12, 12px);
-  font-size: var(--font-size-12, 12px);
+  box-shadow: 0 0 5px var(--color-shadow-dark);
+  color: var(--color-text-light-2);
+  line-height: var(--line-height-12);
+  font-size: var(--font-size-12);
   margin: 0;
   padding: 4px 0;
+  align-items: center;
+}
+
+.fxmaster-directory-header-attribute--elevation {
+  margin-left: 4px;
+  flex-basis: 5px;
+  position: relative;
+}
+
+.fxmaster-directory-header-attribute__icon {
+  position: absolute;
+  top: -3px;
+  left: -1px;
+}
+
+.fxmaster-directory-header-attribute__input[type="number"] {
+  color: var(--color-text-light-2);
+  line-height: var(--line-height-12);
+  font-size: var(--font-size-12);
 }
 
 .fxmaster .directory-item.active {
-  background: #f56b0066;
+  background: #ff640066;
 }
 
 .fxmaster.specials .directory-item.special-effects {
@@ -27,11 +47,11 @@
 }
 
 .fxmaster.specials .special-effects .description .author {
-  line-height: calc(var(--line-height-12, 12px) / 12 * 10);
-  color: var(--color-text-light-7, #888);
+  line-height: calc(var(--line-height-12) / 12 * 10);
+  color: var(--color-text-light-7);
   text-align: right;
-  font-size: calc(var(--font-size-12, 12px) / 12 * 10);
-  flex: 0 calc(var(--line-height-12, 12px) / 12 * 10);
+  font-size: calc(var(--font-size-12) / 12 * 10);
+  flex: 0 calc(var(--line-height-12) / 12 * 10);
 }
 
 .fxmaster.specials .special-effects .controls {
@@ -45,9 +65,9 @@
   height: 48px;
   flex: 0 0 48px;
   background: black;
-  border: 1px solid var(--color-text-light-7, #888);
+  border: 1px solid var(--color-text-light-7);
 }
 
 .fxmaster.specials .action-toggle.active {
-  color: #f56b00;
+  color: var(--color-border-highlight);
 }

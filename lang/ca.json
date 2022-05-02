@@ -1,11 +1,11 @@
 {
-  "I18N.LANGUAGE": "Catalonian",
+  "I18N.LANGUAGE": "Català",
   "I18N.MAINTAINERS": "Montver#9776",
-  "FXMASTER.WeatherConfigTitle": "Administració d'efectes de clima",
-  "FXMASTER.FiltersConfigTitle": "Administració d'efectes de filtres",
-  "FXMASTER.SpecialsConfigTitle": "Administració d'efectes especials",
+  "FXMASTER.ParticleEffectsManagementTitle": "Administració d'efectes de clima",
+  "FXMASTER.FilterEffectsManagementTitle": "Administració d'efectes de filtres",
+  "FXMASTER.SpecialEffectsManagementTitle": "Administració d'efectes especials",
   "CONTROLS.Effects": "Controls d'efectes",
-  "CONTROLS.Weather": "Efectes de clima",
+  "CONTROLS.ParticleEffects": "Efectes de clima",
   "CONTROLS.Daylight": "Filtre Llum diürna",
   "CONTROLS.SpecialFX": "Efectes especials",
   "CONTROLS.SaveMacro": "Exportar clima com una macro",
@@ -17,7 +17,7 @@
   "FXMASTER.Direction": "Direcció",
   "FXMASTER.SaveMacro": "Desar com macro",
   "FXMASTER.SaveChanges": "Desar canvis",
-  "FXMASTER.ClearWeatherAndFiltersTitle": "Esborrar efectes",
-  "FXMASTER.ClearWeatherAndFiltersContent": "<p><strong>Estàs segur?</strong> S'esborraran tots els efectes.</p>",
+  "FXMASTER.ClearParticleAndFilterEffectsTitle": "Esborrar efectes",
+  "FXMASTER.ClearParticleAndFilterEffectsContent": "<p><strong>Estàs segur?</strong> S'esborraran tots els efectes.</p>",
   "FXMASTER.Enable": "Activar efectes"
 }

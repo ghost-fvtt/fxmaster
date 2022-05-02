@@ -14,6 +14,14 @@ function getLoggingFunction(type = "info") {
 }
 
 /**
+ * Format a message for logging.
+ * @param {string} msg The message to format for logging.
+ */
+export function format(msg) {
+  return `${loggingContext} ${loggingSeparator} ${msg}`;
+}
+
+/**
  * A singleton logger object.
  */
 export const logger = Object.freeze({

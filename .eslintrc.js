@@ -18,10 +18,9 @@ module.exports = {
     PIXI: "readonly",
     CachedContainer: "readonly",
     InverseOcclusionMaskFilter: "readonly",
-  },
-
-  rules: {
-    // Specify any specific ESLint rules.
+    ParticleEffect: "readonly",
+    InteractionLayer: "readonly",
+    SpriteMesh: "readonly",
   },
 
   overrides: [

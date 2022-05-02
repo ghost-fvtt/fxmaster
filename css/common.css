@@ -2,14 +2,6 @@
   --fxmaster-color-bg-button: rgba(255, 255, 240, 0.8);
 }
 
-.fxmaster-form-header {
-  box-shadow: 0 0 5px var(--color-shadow-dark, black);
-  line-height: var(--line-height-12, 12px);
-  font-size: var(--font-size-12, 12px);
-  margin: 0;
-  padding: 4px 0;
-}
-
 .fxmaster-groups-list,
 .fxmaster-list {
   overflow-y: auto;
@@ -24,11 +16,11 @@
 }
 
 .fxmaster-groups-list__item {
-  border-bottom: 2px solid var(--color-border-dark-3, #333);
+  border-bottom: 2px solid var(--color-border-dark-3);
 }
 
 .fxmaster-list__item {
-  border-bottom: 1px solid var(--color-border-dark-3, #333);
+  border-bottom: 1px solid var(--color-border-dark-3);
 }
 
 .fxmaster-groups-list__item:last-of-type,
@@ -36,16 +28,27 @@
   border-bottom: none;
 }
 
+.fxmaster-list__item-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.fxmaster-list__item-header > * {
+  flex: 1;
+}
+
 .fxmaster-groups-list__collapse,
 .fxmaster-list__collapse {
-  font-size: var(--font-size-16, 16px);
+  font-size: var(--font-size-16);
   cursor: pointer;
   text-indent: 5px;
 }
 
 .fxmaster-groups-list__collapse:hover,
 .fxmaster-list__collapse:hover {
-  text-shadow: 0 0 4px var(--color-shadow-primary, #ff0000);
+  text-shadow: 0 0 4px var(--color-shadow-primary);
 }
 
 .fxmaster-groups-list__collapsible,
@@ -64,8 +67,8 @@
   border: none;
   flex: 0 0 18px;
   text-align: center;
-  line-height: var(--line-height-20, 20px);
-  font-size: var(--font-size-16, 16px);
+  line-height: var(--line-height-20);
+  font-size: var(--font-size-16);
 }
 
 .fxmaster-form-footer {
@@ -74,12 +77,12 @@
 
 .fxmaster-form-footer__button {
   background-color: var(--fxmaster-color-bg-button);
-  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  border: 1px solid var(--color-border-light-primary);
 }
 
 .fxmaster-multi-select {
-  border: 1px solid var(--color-border-light-primary, #b5b3a4);
-  color: var(--color-border-light-1, #ddd);
+  border: 1px solid var(--color-border-light-primary);
+  color: var(--color-border-light-1);
   background: transparent;
   border-radius: 0px;
 }
@@ -92,9 +95,14 @@
   background: transparent;
 }
 
+.fxmaster-multi-select__option:checked {
+  color: var(--color-text-light-highlight);
+  border: 1px solid var(--color-border-highlight);
+}
+
 .fxmaster-text-input[type="text"] {
-  color: var(--color-text-light-0, #fff);
-  border: 1px solid var(--color-border-light-primary, #b5b3a4);
+  color: var(--color-text-light-0);
+  border: 1px solid var(--color-border-light-primary);
   text-align: center;
   padding: 2px;
   height: 20px;
