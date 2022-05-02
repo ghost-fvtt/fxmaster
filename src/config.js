@@ -1,9 +1,9 @@
-import { weatherDB } from "./weatherEffects/weatherDB.js";
-import { filtersDB } from "./filterEffects/filtersDB.js";
-import { specialsDB } from "./specialEffects/specialsDB.js";
+import { filterEffects } from "./filter-effects/filter-effects-db.js";
+import { particleEffects } from "./particle-effects/particle-effects-db.js";
+import { specialEffects } from "./special-effects/special-effects-db.js";
 
 export const FXMASTER = {
-  weatherEffects: weatherDB,
-  filters: filtersDB,
-  specials: specialsDB,
+  filterEffects,
+  particleEffects,
+  specialEffects,
 };

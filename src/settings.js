@@ -1,7 +1,7 @@
 import { packageId } from "./constants.js";
-import { onWorldMigrated } from "./migration.js";
+import { onWorldMigrated } from "./migration/migration.js";
 
-export const registerSettings = function () {
+export function registerSettings() {
   game.settings.register(packageId, "enable", {
     name: "FXMASTER.Enable",
     default: true,
@@ -60,7 +60,7 @@ export const registerSettings = function () {
     type: Boolean,
     config: true,
   });
-};
+}
 
 const debouncedReload = foundry.utils.debounce(() => {
   window.location.reload();

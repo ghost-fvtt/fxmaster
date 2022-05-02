@@ -1,26 +1,27 @@
 import { registerSettings } from "./settings.js";
 import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js";
-import { WeatherLayer } from "./weatherEffects/WeatherLayer.js";
-import { filterManager } from "./filterEffects/FilterManager.js";
-import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration, migrate } from "./migration.js";
-import { SpecialsConfig } from "./specialEffects/applications/specials-config.js";
-import { SpecialsLayer } from "./specialEffects/SpecialsLayer.js";
-import { registerHelpers } from "./helpers.js";
+import { ParticleEffectsLayer } from "./particle-effects/particle-effects-layer.js";
+import { registeDrawingsMaskFunctionality } from "./particle-effects/drawings-mask.js";
+import { registerSceneMaskFunctionality } from "./particle-effects/scene-mask.js";
+import { filterManager } from "./filter-effects/filter-manager.js";
+import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration, migrate, migration } from "./migration/migration.js";
+import { SpecialEffectsManagement } from "./special-effects/applications/special-effects-management.js";
+import { SpecialEffectsLayer } from "./special-effects/special-effects-layer.js";
+import { registerHandlebarsHelpers } from "./handlebars-helpers.js";
 import { registerGetSceneControlButtonsHook } from "./controls.js";
-import { isV9OrLater } from "./utils.js";
-import { logger } from "./logger.js";
-import { registerWrappers } from "./wrappers/index.js";
+import { format } from "./logger.js";
 
 import "../css/common.css";
 
 window.FXMASTER = {
   filters: filterManager,
+  migration,
 };
 
-function registerLayer() {
-  CONFIG.Canvas.layers.fxmaster = isV9OrLater() ? { layerClass: WeatherLayer, group: "primary" } : WeatherLayer;
-  CONFIG.Canvas.layers.specials = isV9OrLater() ? { layerClass: SpecialsLayer, group: "primary" } : SpecialsLayer;
+function registerLayers() {
+  CONFIG.Canvas.layers.fxmaster = { layerClass: ParticleEffectsLayer, group: "primary" };
+  CONFIG.Canvas.layers.specials = { layerClass: SpecialEffectsLayer, group: "interface" };
 }
 
 function parseSpecialEffects() {
@@ -40,31 +41,58 @@ function parseSpecialEffects() {
 }
 
 Hooks.once("init", function () {
-  // Register custom system settings
   registerSettings();
   registerHooks();
-  registerLayer();
-  registerWrappers();
-  registerHelpers();
+  registerLayers();
+  registerHandlebarsHelpers();
 
-  // Adding filters, weathers and effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
+
+  const configDeprecations = {
+    weather: "particleEffects",
+    filters: "filterEffects",
+    specials: "specialEffects",
+  };
+
+  const getConfigDeprecationMessage = (old, replacement) =>
+    format(`CONFIG#fxmaster#${old} is deprecated in favor of CONFIG#fxmaster#${replacement}'`);
+
+  for (const [old, replacement] of Object.entries(configDeprecations)) {
+    if (CONFIG.fxmaster[old]) {
+      CONFIG.fxmaster[replacement] = CONFIG.fxmaster[old];
+      delete CONFIG.fxmaster[old];
+      const msg = getConfigDeprecationMessage(old, replacement);
+      foundry.utils.logCompatibilityWarning(msg, {
+        mod: foundry.CONST.COMPATIBILITY_MODES.WARNING,
+        since: "FXMaster v3.0.0",
+        until: "FXMaster v4.0.0",
+        stack: false,
+      });
+    }
+  }
+
   foundry.utils.mergeObject(CONFIG.fxmaster, {
-    filters: FXMASTER.filters,
-    specials: FXMASTER.specials,
-    weather: FXMASTER.weatherEffects,
+    filterEffects: FXMASTER.filterEffects,
+    particleEffects: FXMASTER.particleEffects,
+    specialEffects: FXMASTER.specialEffects,
   });
 
-  Object.defineProperty(CONFIG.fxmaster.weather, "nature", {
-    get: () => {
-      logger.warn(
-        `'CONFIG.fxmaster.weather.nature' is deprecated and will be removed in a future version. Please use 'CONFIG.fxmaster.weather.leaves' instead.`,
-      );
-      return CONFIG.fxmaster.weather.leaves;
-    },
-  });
+  for (const [old, replacement] of Object.entries(configDeprecations)) {
+    Object.defineProperty(CONFIG.fxmaster, old, {
+      get: () => {
+        const msg = getConfigDeprecationMessage(old, replacement);
+        foundry.utils.logCompatibilityWarning(msg, {
+          mod: foundry.CONST.COMPATIBILITY_MODES.WARNING,
+          since: "FXMaster v3.0.0",
+          until: "FXMaster v4.0.0",
+          stack: false,
+        });
+        return CONFIG.fxmaster[replacement];
+      },
+    });
+  }
 
-  foundry.utils.mergeObject(CONFIG.weatherEffects, FXMASTER.weatherEffects);
+  foundry.utils.mergeObject(CONFIG.weatherEffects, CONFIG.fxmaster.particleEffects);
 });
 
 Hooks.once("ready", () => {
@@ -97,24 +125,22 @@ Hooks.on("updateScene", (scene, data) => {
   ) {
     return;
   }
-  if (hasProperty(data, "flags.fxmaster.effects") || hasProperty(data, "flags.fxmaster.-=effects")) {
-    canvas.fxmaster.drawWeather({ soft: true });
-  }
-  if (hasProperty(data, "flags.fxmaster.invert") || hasProperty(data, "flags.fxmaster.-=invert")) {
-    canvas.fxmaster.updateMask();
+  if (
+    foundry.utils.hasProperty(data, "flags.fxmaster.effects") ||
+    foundry.utils.hasProperty(data, "flags.fxmaster.-=effects")
+  ) {
+    canvas.fxmaster.drawParticleEffects({ soft: true });
   }
   if (
-    hasProperty(data, "flags.fxmaster.filters") ||
-    hasProperty(data, "flags.fxmaster.-=filters") ||
-    hasProperty(data, "flags.fxmaster.filteredLayers") ||
-    hasProperty(data, "flags.fxmaster.-=filteredLayers")
+    foundry.utils.hasProperty(data, "flags.fxmaster.filters") ||
+    foundry.utils.hasProperty(data, "flags.fxmaster.-=filters")
   ) {
     filterManager.update();
   }
 });
 
 Hooks.on("dropCanvasData", async (canvas, data) => {
-  if (!(canvas.activeLayer instanceof SpecialsLayer) || !canvas.scene) return;
+  if (!(canvas.activeLayer instanceof SpecialEffectsLayer) || !canvas.scene) return;
   if (data.type !== "SpecialEffect") return;
 
   await new Promise((resolve) => {
@@ -154,7 +180,7 @@ Hooks.on("dropCanvasData", async (canvas, data) => {
 
 Hooks.on("hotbarDrop", (hotbar, data) => {
   if (data.type !== "SpecialEffect") return;
-  const macroCommand = SpecialsLayer._createMacro(data);
+  const macroCommand = SpecialEffectsLayer._createMacro(data);
   data.type = "Macro";
   data.data = {
     command: macroCommand,
@@ -164,53 +190,41 @@ Hooks.on("hotbarDrop", (hotbar, data) => {
   };
 });
 
-Hooks.on("updateDrawing", (drawing) => {
-  if (drawing.parent !== canvas.scene) {
-    return;
-  }
-  canvas.fxmaster.updateMask();
-});
-
-Hooks.on("createDrawing", (drawing) => {
-  if (drawing.parent !== canvas.scene) {
-    return;
-  }
-  canvas.fxmaster.updateMask();
-});
-
-Hooks.on("deleteDrawing", (drawing) => {
-  if (drawing.parent !== canvas.scene) {
-    return;
-  }
-  canvas.fxmaster.updateMask();
-});
-
-Hooks.on("updateSetting", (data) => {
-  if (data.data.key === "fxmaster.specialEffects") {
+Hooks.on("updateSetting", (setting) => {
+  if (setting.key === "fxmaster.specialEffects") {
     parseSpecialEffects();
   }
   Object.values(ui.windows).forEach((w) => {
-    if (w instanceof SpecialsConfig) {
+    if (w instanceof SpecialEffectsManagement) {
       w.render(false);
     }
   });
 });
 
-Hooks.on("renderDrawingHUD", (hud, html, data) => {
+Hooks.on("renderDrawingHUD", (hud, html) => {
   const maskToggle = document.createElement("div");
   maskToggle.classList.add("control-icon");
-  if (data?.flags?.fxmaster?.masking) {
+  if (hud.object.document.flags?.fxmaster?.masking) {
     maskToggle.classList.add("active");
   }
-  maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskWeather"));
+  maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskParticleEffects"));
   maskToggle.dataset.action = "mask";
-  maskToggle.innerHTML = "<i class='fas fa-cloud'></i>";
+  maskToggle.innerHTML = `<i class="fas fa-cloud"></i>`;
   html.find(".col.left").append(maskToggle);
 
-  html.find(".control-icon[data-action='mask']").click(async () => {
-    await hud.object.document.setFlag("fxmaster", "masking", !data?.flags?.fxmaster?.masking);
-    hud.render(true);
+  html.find(".control-icon[data-action='mask']").on("click", (event) => {
+    event.preventDefault();
+
+    const isMask = hud.object.document.flags?.fxmaster?.masking;
+    const updates = hud.layer.controlled.map((object) => {
+      return { _id: object.id, "flags.fxmaster.masking": !isMask };
+    });
+
+    event.currentTarget.classList.toggle("active", !isMask);
+    canvas.scene.updateEmbeddedDocuments(hud.object.document.documentName, updates);
   });
 });
 
 registerGetSceneControlButtonsHook();
+registerSceneMaskFunctionality();
+registeDrawingsMaskFunctionality();
