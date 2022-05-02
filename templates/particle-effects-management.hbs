@@ -1,0 +1,39 @@
+<form>
+  <ol class="fxmaster-groups-list fxmaster-groups-list--particle-effects">
+    {{#each particleEffectGroups as |group groupId|}}
+    <li class="fxmaster-groups-list__item">
+      <header class="flexrow">
+        <label class="fxmaster-groups-list__collapse">{{localize group.label}} <i
+            class="fxmaster-groups-list__collapse-icon fa fa-angle-{{#if group.expanded}}down{{else}}up{{/if}}"></i></label>
+      </header>
+      <ol
+        class="fxmaster-groups-list__collapsible{{#unless group.expanded}} fxmaster-groups-list__collapsible--collapsed{{/unless}} fxmaster-list">
+        {{#each group.effects as |effect type|}}
+        <li class="fxmaster-list__item">
+          <header class="fxmaster-list__item-header">
+            {{#if effect.icon}}<img class="fxmaster-list__icon" width="24" height="24" src="{{effect.icon}}">{{/if}}
+            <label class="fxmaster-list__collapse">{{localize effect.label}} <i
+                class="fxmaster-list__collapse-icon fa fa-angle-{{#if (lookup @root.activeEffects type)}}down{{else}}up{{/if}}"></i></label>
+            <input type="checkbox" name="{{type}}" {{checked (lookup @root.activeEffects type)}} />
+          </header>
+          <ul
+            class="fxmaster-list__collapsible{{#unless (lookup @root.activeEffects type)}} fxmaster-list__collapsible--collapsed{{/unless}}">
+            {{#each effect.parameters as |parameterConfig parameterName|}}
+            <li class="flexrow">
+              <span>{{localize parameterConfig.label}}</span>
+              {{{fxmasterParameter effect parameterConfig parameterName (lookup @root.activeEffects type)}}}
+            </li>
+            {{/each}}
+          </ul>
+        </li>
+        {{/each}}
+      </ol>
+    </li>
+    {{/each}}
+  </ol>
+  <footer class="fxmaster-form-footer">
+    <button class="fxmaster-form-footer__button" type="submit" name="submit" disabled>
+      <i class="fas fa-floppy-disk"></i> {{localize "FXMASTER.SaveChanges"}}
+    </button>
+  </footer>
+</form>

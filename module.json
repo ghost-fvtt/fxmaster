@@ -1,18 +1,18 @@
 {
+  "id": "fxmaster",
   "name": "fxmaster",
   "title": "FXMaster",
-  "description": "<p>Adds various weather and filter effects</p>",
-  "author": "U~man, Johannes Loher (ghost#2000)",
+  "description": "Adds various particle and filter effects",
   "authors": [
-    {
-      "name": "Emmanuel Ruaud (U~man)",
-      "discord": "U~man"
-    },
     {
       "name": "Johannes Loher (ghost)",
       "email": "johannes.loher@fg4f.de",
       "discord": "ghost#2000",
       "ko-fi": "ghostfvtt"
+    },
+    {
+      "name": "Emmanuel Ruaud (U~man)",
+      "discord": "U~man"
     }
   ],
   "url": "https://github.com/ghost-fvtt/fxmaster",
@@ -21,8 +21,12 @@
   "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
   "changelog": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v2.7.0/CHANGELOG.md",
   "version": "2.7.0",
-  "minimumCoreVersion": "0.8.5",
-  "compatibleCoreVersion": "9",
+  "compatibility": {
+    "minimum": "10.273",
+    "verified": "10"
+  },
+  "minimumCoreVersion": "10.273",
+  "compatibleCoreVersion": "10",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": ["fxmaster.js"],
   "styles": ["css/fxmaster.css"],
@@ -30,7 +34,7 @@
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "./lang/en.json"
     },
     {
       "lang": "fr",
@@ -68,7 +72,7 @@
       "name": "fxmaster",
       "label": "FXMaster",
       "path": "packs/macros.db",
-      "entity": "Macro"
+      "type": "Macro"
     }
   ],
   "socket": true,
