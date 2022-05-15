@@ -54,7 +54,7 @@
     "rollup-plugin-sourcemaps": "0.6.3",
     "rollup-plugin-styles": "4.0.0",
     "rollup-plugin-terser": "7.0.2",
-    "standard-version": "9.3.2",
+    "standard-version": "9.5.0",
     "stringify-package": "1.0.1"
   },
   "lint-staged": {
