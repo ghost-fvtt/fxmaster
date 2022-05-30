@@ -76,7 +76,7 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
   Special Effects are animations (video files) that can be played on your chosen location on the canvas.
 * Q: Can I provide my own effects?
 
-  A: You can provide your own Special Effects, as described in [Adding Your Own Special Effects to FXMaster](#adding-your-own-special-effects-to-fxmaster).
+  A: You can provide your own Special Effects, as described in [Managing Custom Special Effects](#managing-custom-special-effects).
   It's not possible to provide your own Weather Effects or Filter Effects at this point.
 * Q: I have installed a module that provides additional animation files, but they are not showing up as Special Effects.
   What do I need to do?
@@ -84,7 +84,7 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
   A: Some of these modules (e.g. [JB2A]) provide a setting to activate their integration with FXMaster, which is
   disabled by default. You can enable that setting in the module settings. If there is no such setting, the module may
   not provide direct integration with FXMaster. In that case, you can still use the animation files provided by the
-  module, but you need to configure them by yourself as described in [Adding Your Own Special Effects to FXMaster](#adding-your-own-special-effects-to-fxmaster).
+  module, but you need to configure them by yourself as described in [Managing Custom Special Effects](#managing-custom-special-effects).
 
 ## Usage
 
