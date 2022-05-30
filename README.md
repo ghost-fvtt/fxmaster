@@ -21,6 +21,7 @@ This module also provides ways to easily configure these effects.
 - [FXMaster](#fxmaster)
   - [Table of Contents](#table-of-contents)
   - [Installation Instructions](#installation-instructions)
+  - [FAQ](#faq)
   - [Usage](#usage)
     - [Special Effects <img src="./media/font-awesome/hat-wizard.svg" alt="Special Effects Icon" height="20" />](#special-effects-)
       - [Playing Special Effects](#playing-special-effects)
@@ -58,6 +59,32 @@ the Setup menu of Foundry Virtual Tabletop:
 ```
 https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
 ```
+
+## FAQ
+
+* Q: I have put a special effect onto a scene, and now I can't get rid of it anymore. How do I remove it?
+
+  A: Most likely, your created a permanently playing special effect by dragging a special effect onto the canvas, which
+  is just a regular [Tile](https://foundryvtt.com/article/tiles/) and not managed by FXMaster. To remove it, go to the
+  Tile Controls and remove the Tile there.
+* Q: What is the difference between Weather Effects, Filter Effects, and Special Effects?
+
+  A: Weather effects are global particle effects. Mostly they are actually weather effects, but they also include
+  animals and some other effects.<br>
+  Filter Effects are filters that adjust the whole scene in some way, e.g. by adjusting the color or distorting the
+  scene to look like it's underwater.<br>
+  Special Effects are animations (video files) that can be played on your chosen location on the canvas.
+* Q: Can I provide my own effects?
+
+  A: You can provide your own Special Effects, as described in [Adding Your Own Special Effects to FXMaster](#adding-your-own-special-effects-to-fxmaster).
+  It's not possible to provide your own Weather Effects or Filter Effects at this point.
+* Q: I have installed a module that provides additional animation files, but they are not showing up as Special Effects.
+  What do I need to do?
+
+  A: Some of these modules (e.g. [JB2A]) provide a setting to activate their integration with FXMaster, which is
+  disabled by default. You can enable that setting in the module settings. If there is no such setting, the module may
+  not provide direct integration with FXMaster. In that case, you can still use the animation files provided by the
+  module, but you need to configure them by yourself as described in [Adding Your Own Special Effects to FXMaster](#adding-your-own-special-effects-to-fxmaster).
 
 ## Usage
 
@@ -98,9 +125,10 @@ then results in the effect being played, facing the direction you dragged toward
 [_Cast Mode_](#cast-modes), the _Special Effect_ might also move or scale towards that direction.
 
 You can also create permanently playing variants of _Special Effects_. In order to do so, simply drag the
-_Special Effect_ from the _Special Effects Management_ onto the scene. This creates a tile with the video of the
-_Special Effect_. In particular, that means in order to remove it again, you need to go to the Tile Controls and delete
-it there.
+_Special Effect_ from the _Special Effects Management_ onto the scene. This creates a [Tile](https://foundryvtt.com/article/tiles/)
+with the video of the _Special Effect_. The Tile is not managed by FXMaster, it is just a regular Foundry Core Tile. In
+particular, this means that, in order to move, resize, or adjust it in any other way, or also to remove it, you need to
+go to the Tile Controls and perform the desired action there.
 
 #### Cast Modes
 
@@ -302,7 +330,7 @@ packages and macros.
 | ------------ | -------------------------------------------------------- |
 | `lightning`  | `frequency`, `spark_duration`, `brightness`              |
 | `underwater` | `speed`, `scale`                                         |
-| `predator`   | `noise`, `period`, `lineWidth`                            |
+| `predator`   | `noise`, `period`, `lineWidth`                           |
 | `color`      | `color`, `saturation`, `contrast`, `brightness`, `gamma` |
 | `bloom`      | `blur`, `bloomScale`, `threshold`                        |
 | `oldfilm`    | `sepia`, `noise`                                         |
