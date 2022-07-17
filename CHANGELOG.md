@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.7.0...v3.0.0) (2022-07-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* * Support for v9 has been dropped
+* Weather effects have been renamed to particle effects:
+  * The hooks `fxmaster.updateWeather`, `fxmaster.switchWeather` have been
+    replaced by `fxmaster.updateParticleEffects` and
+	`fxmaster.switchParticleEffect`. Compatibility shims exist but will be
+	removed in v4.
+  * Properties of `canvas.fxmaster` have been renamed (`weather` =>
+    `particleEffectsContainer`, `weatherEffects` => `particleEffects`,
+	`drawWeather` => `drawParticleEffects`)
+  * `CONFIG.fxmaster.weather` is deprecated and has been replaced by
+    `CONFIG.fxmaster.particleEffects`. A compatibility shim still exists
+	but it will be removed in v4.
+* The hook `fxmaster.drawWeather` has been removed
+* Many assets have been moved. For the most important things (e.g. macro
+  icons), there are migration, but not for everything.
+* The possibility to apply filters only to specific canvas layers has been
+  removed (unfortunately necessary due to changes in foundry core).
+* The implementation of the masking functionality has changed completely,
+  which very likely breaks compatibility with modules such as
+  Weather Blocker and Perfect Vision, which have been patching that
+  functionality.
+* The `updateMask` hook has been removed.
+
+### Features
+
+* add support for Foundry Virtual Tabletop v10 ([d8c48a4](https://github.com/ghost-fvtt/fxmaster/commit/d8c48a435ff42c73d9e5036b1c73cd4ba93f4766))
+
+
+### Bug Fixes
+
+* address a small issue in world migration 3 and improve french translation ([38ff166](https://github.com/ghost-fvtt/fxmaster/commit/38ff1665adf70f2f17ea7fe65b2cbdd5d3dc0b59))
+
 ## [2.7.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.6.0...v2.7.0) (2022-04-25)
 
 
