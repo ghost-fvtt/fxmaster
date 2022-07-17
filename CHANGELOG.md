@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.0.0...v3.1.0) (2022-07-17)
+
+
+### Features
+
+* **lang:** update brazilian portuguese translation ([9f500dc](https://github.com/ghost-fvtt/fxmaster/commit/9f500dca283c5f2ccd2fd26b1ef31d39c8e7ef54))
+
 ## [3.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.7.0...v3.0.0) (2022-07-17)
 
 
