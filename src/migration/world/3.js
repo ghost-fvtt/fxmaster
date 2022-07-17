@@ -16,10 +16,10 @@ async function migrateMacro(macro) {
   const { command, img } = macro;
 
   const newCommand = command
-    ?.replaceAll(`updateWeather`, `${packageId}.updateParticleEffects`)
-    .replaceAll(`${packageId}.updateWeather`, `${packageId}.updateParticleEffects`)
-    .replaceAll(`switchWeather`, `${packageId}.switchParticleEffect`)
+    ?.replaceAll(`${packageId}.updateWeather`, `${packageId}.updateParticleEffects`)
+    .replaceAll(`updateWeather`, `${packageId}.updateParticleEffects`)
     .replaceAll(`${packageId}.switchWeather`, `${packageId}.switchParticleEffect`)
+    .replaceAll(`switchWeather`, `${packageId}.switchParticleEffect`)
     .replaceAll("fxmaster/assets/specialEffects", "fxmaster/assets/special-effects")
     .replaceAll(
       "fxmaster/assets/special-effects/fxmaster/smokeBomb.webm",
