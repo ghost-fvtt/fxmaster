@@ -59,7 +59,7 @@ export class ParticleEffectsLayer extends CanvasLayer {
 
   /** @override */
   async _tearDown() {
-    Object.values(this.particleEffects).forEach(({ fx }) => fx.stop());
+    Object.values(this.particleEffects).forEach(({ fx }) => fx.destroy());
 
     this.particleEffectsContainer = undefined;
     this.particleEffects = {};
