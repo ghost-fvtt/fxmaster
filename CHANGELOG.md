@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.0...v3.1.1) (2022-07-22)
+
+
+### Bug Fixes
+
+* update for v10.274 ([8693c3b](https://github.com/ghost-fvtt/fxmaster/commit/8693c3ba95f705787766690b1ca736d6a6ec4fe3))
+
 ## [3.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.0.0...v3.1.0) (2022-07-17)
 
 
