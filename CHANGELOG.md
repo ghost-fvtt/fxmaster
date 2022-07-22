@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.2...v3.1.3) (2022-07-22)
+
+
+### Bug Fixes
+
+* make the filter area the whole screen ([40309d8](https://github.com/ghost-fvtt/fxmaster/commit/40309d8378e9f86bcbf9fd03e29b66eb220fe8f3))
+* translate filter effect name when saving a filter as a macro ([6ba8205](https://github.com/ghost-fvtt/fxmaster/commit/6ba820569f261f922684089d50961046b0431e18))
+
 ### [3.1.2](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.1...v3.1.2) (2022-07-22)
 
 ### [3.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.0...v3.1.1) (2022-07-22)
