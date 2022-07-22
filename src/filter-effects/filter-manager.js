@@ -201,6 +201,12 @@ export class FilterManager {
   }
 
   #registerHooks() {
+    Hooks.once("ready", () => {
+      if (isEnabled()) {
+        canvas.primary.filterArea = canvas.app.screen;
+      }
+    });
+
     Hooks.on("canvasInit", () => {
       if (isEnabled()) {
         this.#clear();
