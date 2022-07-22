@@ -40,7 +40,7 @@ function getMacroNameAndImg(particleEffects, filterEffects) {
       logger.warn(`Encountered unknown filter effect type '${type}' during macro creation, skipping it.`);
       return [];
     }
-    return [{ label: filterEffectCls.label }];
+    return [{ label: game.i18n.localize(filterEffectCls.label) }];
   });
 
   if (filterLabels.length === 0) {
