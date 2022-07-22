@@ -1,11 +1,11 @@
-import { registerSettings } from "./settings.js";
+import { isEnabled, registerSettings } from "./settings.js";
 import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js";
 import { ParticleEffectsLayer } from "./particle-effects/particle-effects-layer.js";
 import { registeDrawingsMaskFunctionality } from "./particle-effects/drawings-mask.js";
 import { registerSceneMaskFunctionality } from "./particle-effects/scene-mask.js";
-import { filterManager } from "./filter-effects/filter-manager.js";
-import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration, migrate, migration } from "./migration/migration.js";
+import { FilterManager } from "./filter-effects/filter-manager.js";
+import { isOnTargetMigration, migrate, migration } from "./migration/migration.js";
 import { SpecialEffectsManagement } from "./special-effects/applications/special-effects-management.js";
 import { SpecialEffectsLayer } from "./special-effects/special-effects-layer.js";
 import { registerHandlebarsHelpers } from "./handlebars-helpers.js";
@@ -15,7 +15,7 @@ import { format } from "./logger.js";
 import "../css/common.css";
 
 window.FXMASTER = {
-  filters: filterManager,
+  filters: FilterManager.instance,
   migration,
 };
 
@@ -100,29 +100,13 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("canvasInit", () => {
-  if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
-    return;
+  if (isEnabled()) {
+    parseSpecialEffects();
   }
-  parseSpecialEffects();
-  filterManager.clear();
-});
-
-Hooks.on("canvasReady", async () => {
-  executeWhenWorldIsMigratedToLatest(async () => {
-    if (!game.settings.get("fxmaster", "enable") || game.settings.get("fxmaster", "disableAll")) {
-      return;
-    }
-    await filterManager.activate();
-  });
 });
 
 Hooks.on("updateScene", (scene, data) => {
-  if (
-    !game.settings.get("fxmaster", "enable") ||
-    game.settings.get("fxmaster", "disableAll") ||
-    !isOnTargetMigration() ||
-    scene !== canvas.scene
-  ) {
+  if (!isEnabled() || !isOnTargetMigration() || scene !== canvas.scene) {
     return;
   }
   if (
@@ -130,12 +114,6 @@ Hooks.on("updateScene", (scene, data) => {
     foundry.utils.hasProperty(data, "flags.fxmaster.-=effects")
   ) {
     canvas.fxmaster.drawParticleEffects({ soft: true });
-  }
-  if (
-    foundry.utils.hasProperty(data, "flags.fxmaster.filters") ||
-    foundry.utils.hasProperty(data, "flags.fxmaster.-=filters")
-  ) {
-    filterManager.update();
   }
 });
 

@@ -1,5 +1,5 @@
 import { packageId } from "./constants.js";
-import { filterManager } from "./filter-effects/filter-manager.js";
+import { FilterManager } from "./filter-effects/filter-manager.js";
 import { ParticleEffectsManagement } from "./particle-effects/applications/particle-effects-management.js";
 import { SpecialEffectsManagement } from "./special-effects/applications/special-effects-management.js";
 import { FilterEffectsManagementConfig } from "./filter-effects/applications/filter-effects-management.js";
@@ -81,7 +81,7 @@ function getSceneControlButtons(controls) {
             content: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsContent"),
             yes: () => {
               if (canvas.scene) {
-                filterManager.removeAll();
+                FilterManager.instance.removeAll();
                 canvas.scene.unsetFlag(packageId, "effects");
               }
             },

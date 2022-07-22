@@ -1,6 +1,7 @@
 import { packageId } from "../constants.js";
 import { logger } from "../logger.js";
 import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration/migration.js";
+import { isEnabled } from "../settings.js";
 
 export class ParticleEffectsLayer extends CanvasLayer {
   /**
@@ -46,7 +47,7 @@ export class ParticleEffectsLayer extends CanvasLayer {
 
   /** @override */
   async _draw() {
-    if (!game.settings.get(packageId, "enable") || game.settings.get(packageId, "disableAll")) {
+    if (!isEnabled()) {
       return;
     }
     if (isOnTargetMigration()) {

@@ -1,12 +1,33 @@
 import { packageId } from "../constants.js";
 import { logger } from "../logger.js";
+import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration/migration.js";
+import { isEnabled } from "../settings.js";
 import { resetFlag } from "../utils.js";
 
-class FilterManager {
+export class FilterManager {
+  /** @private */
   constructor() {
     this.filterInfos = {};
     this.filters = {};
     this._ticker = false;
+    this.#registerHooks();
+  }
+
+  /**
+   * A private reference for the global {@link FilterManager} instance.
+   * @type {FilterManager | undefined}
+   */
+  static #instance;
+
+  /**
+   * The singleton {@link FilterManager} instance.
+   * @type {FilterManager}
+   */
+  static get instance() {
+    if (!this.#instance) {
+      this.#instance = new this();
+    }
+    return this.#instance;
   }
 
   /**
@@ -14,11 +35,11 @@ class FilterManager {
    * configured layers, starting their animations.
    * @returns {Promise<void>} A promise that resolves as soon as filters are activated
    */
-  async activate() {
-    await this.update({ skipFading: true });
+  async #activate() {
+    await this.#update({ skipFading: true });
 
     if (!this._ticker) {
-      canvas.app.ticker.add(this._animate, this);
+      canvas.app.ticker.add(this.#animate, this);
       this._ticker = true;
     }
   }
@@ -29,7 +50,7 @@ class FilterManager {
    * @param {boolean}                [options.skipFading] Whether or not newly created filters should skip their fading
    * @returns {Promise<void>}                             A promise that resolves as soon as the filters have been updated
    */
-  async update({ skipFading = false } = {}) {
+  async #update({ skipFading = false } = {}) {
     if (!canvas.scene) {
       return;
     }
@@ -66,18 +87,18 @@ class FilterManager {
       await filter.stop();
 
       // delete filters preemptively so that they disappear as soon as they have stopped
-      FilterManager._removeFilterFromContainer(canvas.primary, filter);
+      FilterManager.#removeFilterFromContainer(canvas.primary, filter);
       delete this.filters[key];
     });
     await Promise.all(deletePromises);
 
-    this.applyFilters();
+    this.#applyFilters();
   }
 
   /**
    * Apply the filters to the configured canvas layers.
    */
-  applyFilters() {
+  #applyFilters() {
     const filters = Object.values(this.filters);
     const otherFilters = canvas.primary.filters?.filter((f) => !filters.includes(f)) ?? [];
     canvas.primary.filters = otherFilters.concat(filters);
@@ -88,7 +109,7 @@ class FilterManager {
    * @param {PIXI.container} container A container
    * @param {PIXI.Filter} filter A filter
    */
-  static _removeFilterFromContainer(container, filter) {
+  static #removeFilterFromContainer(container, filter) {
     container.filters = container.filters?.filter((f) => f !== filter) ?? null;
   }
 
@@ -97,7 +118,7 @@ class FilterManager {
    * {@link FilterManager}.
    * @returns {Promise<void>} A promise that resolves as soon as the scene's fxmaster flags have been updated
    */
-  async dump() {
+  async #dump() {
     await resetFlag(canvas.scene, "filters", this.filterInfos);
   }
 
@@ -107,7 +128,7 @@ class FilterManager {
    * @returns {Promise<void>} A promise that resolves as soon as all filters have been stopped and removed from the
    *                          manager
    */
-  async clear() {
+  async #clear() {
     const promises = Object.values(this.filters).map((filter) => filter.stop());
     this.filters = {};
     await Promise.all(promises);
@@ -123,7 +144,7 @@ class FilterManager {
   async addFilter(name, type, options) {
     name = name ?? randomID();
     this.filterInfos[name] = { type, options };
-    await this.dump();
+    await this.#dump();
   }
 
   /**
@@ -170,14 +191,40 @@ class FilterManager {
 
   async setFilters(filterInfoArray) {
     this.filterInfos = Object.fromEntries(filterInfoArray.map((filterInfo) => [foundry.utils.randomID(), filterInfo]));
-    await this.dump();
+    await this.#dump();
   }
 
-  _animate() {
+  #animate() {
     for (const key in this.filters) {
       this.filters[key].step();
     }
   }
-}
 
-export const filterManager = new FilterManager();
+  #registerHooks() {
+    Hooks.on("canvasInit", () => {
+      if (isEnabled()) {
+        this.#clear();
+      }
+    });
+
+    Hooks.on("canvasReady", () => {
+      executeWhenWorldIsMigratedToLatest(async () => {
+        if (isEnabled()) {
+          await this.#activate();
+        }
+      });
+    });
+
+    Hooks.on("updateScene", (scene, data) => {
+      if (!isEnabled() || !isOnTargetMigration() || scene !== canvas.scene) {
+        return;
+      }
+      if (
+        foundry.utils.hasProperty(data, "flags.fxmaster.filters") ||
+        foundry.utils.hasProperty(data, "flags.fxmaster.-=filters")
+      ) {
+        this.#update();
+      }
+    });
+  }
+}

@@ -65,3 +65,7 @@ export function registerSettings() {
 const debouncedReload = foundry.utils.debounce(() => {
   window.location.reload();
 }, 100);
+
+export function isEnabled() {
+  return game.settings.get(packageId, "enable") && !game.settings.get(packageId, "disableAll");
+}
