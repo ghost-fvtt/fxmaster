@@ -23,6 +23,10 @@ module.exports = {
     SpriteMesh: "readonly",
   },
 
+  rules: {
+    "no-unused-vars": ["error", { vars: "all", args: "after-used", varsIgnorePattern: "^_" }],
+  },
+
   overrides: [
     {
       files: ["./*.js", "./tools/**/*"],
