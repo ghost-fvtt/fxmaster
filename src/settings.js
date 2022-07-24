@@ -8,7 +8,7 @@ export function registerSettings() {
     scope: "client",
     type: Boolean,
     config: true,
-    onChange: debouncedReload,
+    requiresReload: true,
   });
 
   game.settings.register(packageId, "specialEffects", {
@@ -49,7 +49,7 @@ export function registerSettings() {
       [foundry.CONST.USER_ROLES.ASSISTANT]: "USER.RoleAssistant",
       [foundry.CONST.USER_ROLES.GAMEMASTER]: "USER.RoleGamemaster",
     },
-    onChange: debouncedReload,
+    requiresReload: true,
   });
 
   game.settings.register(packageId, "disableAll", {
@@ -61,10 +61,6 @@ export function registerSettings() {
     config: true,
   });
 }
-
-const debouncedReload = foundry.utils.debounce(() => {
-  window.location.reload();
-}, 100);
 
 export function isEnabled() {
   return game.settings.get(packageId, "enable") && !game.settings.get(packageId, "disableAll");
