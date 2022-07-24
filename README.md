@@ -425,13 +425,13 @@ game.socket.emit("module.fxmaster", data);
 From module presets
 
 ```js
-const effectData = CONFIG.fxmaster.specials.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
+const effectData = CONFIG.fxmaster.specialEffects.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
 ```
 
 From custom presets
 
 ```js
-const effectData = CONFIG.fxmaster.specials.custom.effects.find(ef => ef.label === "Energy Circle");
+const effectData = CONFIG.fxmaster.specialEffects.custom.effects.find(ef => ef.label === "Energy Circle");
 ```
 
 #### Playing a Video File Between Two Tokens
@@ -522,16 +522,16 @@ export const effects = {
 };
 ```
 
-Then, in a second file, you add the previously created effects by merging them into the `CONFIG.fxmaster.specials`
+Then, in a second file, you add the previously created effects by merging them into the `CONFIG.fxmaster.specialEffects`
 object as follows:
 
 ```javascript
 import { effects } from "./effects.js";
 
 Hooks.once("init", function () {
-  // Adding specials
+  // Adding special effects
   if (!CONFIG.fxmaster) CONFIG.fxmaster = {};
-  foundry.utils.mergeObject(CONFIG.fxmaster, { specials: { MYMODULE: effects } });
+  foundry.utils.mergeObject(CONFIG.fxmaster, { specialEffects: { MYMODULE: effects } });
 });
 ```
 
