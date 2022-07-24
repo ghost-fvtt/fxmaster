@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.4](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.3...v3.1.4) (2022-07-24)
+
+
+### Bug Fixes
+
+* address deprecation warning about `CONFIG.fxmaster.specials` ([4f480f2](https://github.com/ghost-fvtt/fxmaster/commit/4f480f28af07e26ff409cec5e025b038a90a4813))
+* properly handle switching multiple effects with the `fxmaster.switchParticleEffect` hook ([36c42df](https://github.com/ghost-fvtt/fxmaster/commit/36c42df2f2ed15ddf5c84aa383217d187feefd8e)), closes [#320](https://github.com/ghost-fvtt/fxmaster/issues/320)
+
 ### [3.1.3](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.2...v3.1.3) (2022-07-22)
 
 
