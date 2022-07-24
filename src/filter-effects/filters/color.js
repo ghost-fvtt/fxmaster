@@ -97,18 +97,9 @@ export class ColorFilter extends PIXI.filters.AdjustmentFilter {
   }
 
   animateOptions(values = this.options) {
-    const data = {
-      name: `${packageId}.${this.constructor.name}.${this.id}`,
-      duration: 4000,
-    };
-    const anim = Object.keys(values).reduce((arr, key) => {
-      arr.push({
-        parent: this,
-        attribute: key,
-        to: values[key],
-      });
-      return arr;
-    }, []);
+    const name = `${packageId}.${this.constructor.name}.${this.id}`;
+    const data = { name, duration: 4000 };
+    const anim = Object.entries(values).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
     return CanvasAnimation.animate(anim, data);
   }
 
@@ -124,20 +115,18 @@ export class ColorFilter extends PIXI.filters.AdjustmentFilter {
     return this.animateOptions();
   }
 
-  // So we can destroy object afterwards
-  stop() {
-    return new Promise((resolve) => {
-      if (this.skipFading) {
-        this.skipFading = false;
-        this.enabled = false;
-        this.applyOptions(this.constructor.zeros);
-        resolve();
-        return;
+  async stop() {
+    if (this.skipFading) {
+      this.skipFading = false;
+      this.enabled = false;
+      this.applyOptions(this.constructor.zeros);
+    } else {
+      try {
+        await this.animateOptions(this.constructor.zeros);
+      } catch (e) {
+        logger.error(`Error while trying to animate ${this.constructor.name} for stopping.`, e);
       }
-      this.animateOptions(this.constructor.zeros).finally(() => {
-        this.enabled = false;
-        resolve();
-      });
-    });
+      this.enabled = false;
+    }
   }
 }

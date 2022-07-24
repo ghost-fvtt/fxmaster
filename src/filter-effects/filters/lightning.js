@@ -100,11 +100,8 @@ export class LightningFilter extends PIXI.filters.AdjustmentFilter {
     }
   }
 
-  // So we can destroy object afterwards
-  stop() {
-    return new Promise((resolve) => {
-      this.enabled = false;
-      resolve();
-    });
+  async stop() {
+    this.enabled = false;
+    this.applyOptions(this.constructor.zeros);
   }
 }

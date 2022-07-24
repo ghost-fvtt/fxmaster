@@ -1,4 +1,5 @@
 import { packageId } from "../../constants.js";
+import { logger } from "../../logger.js";
 
 export class BloomFilter extends PIXI.filters.AdvancedBloomFilter {
   constructor(options, id) {
@@ -81,32 +82,24 @@ export class BloomFilter extends PIXI.filters.AdvancedBloomFilter {
   }
 
   animateOptions(values = this.options) {
-    const data = {
-      name: `${packageId}.${this.constructor.name}.${this.id}`,
-      duration: 4000,
-    };
-    const anim = Object.keys(values).reduce((arr, key) => {
-      arr.push({
-        parent: this,
-        attribute: key,
-        to: values[key],
-      });
-      return arr;
-    }, []);
+    const name = `${packageId}.${this.constructor.name}.${this.id}`;
+    const data = { name, duration: 4000 };
+    const anim = Object.entries(values).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
     return CanvasAnimation.animate(anim, data);
   }
 
-  // So we can destroy object afterwards
   async stop() {
-    await CanvasAnimation.terminateAnimation(`${packageId}.${this.constructor.name}.${this.id}`);
     if (this.skipFading) {
       this.skipFading = false;
       this.enabled = false;
       this.applyOptions(this.constructor.zeros);
-      return;
-    }
-    this.animateOptions(this.constructor.zeros).finally(() => {
+    } else {
+      try {
+        await this.animateOptions(this.constructor.zeros);
+      } catch (e) {
+        logger.error(`Error while trying to animate ${this.constructor.name} for stopping.`, e);
+      }
       this.enabled = false;
-    });
+    }
   }
 }

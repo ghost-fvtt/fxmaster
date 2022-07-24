@@ -78,12 +78,9 @@ export class UnderwaterFilter extends PIXI.filters.DisplacementFilter {
     }
   }
 
-  // So we can destroy object afterwards
-  stop() {
-    return new Promise((resolve) => {
-      canvas.primary.removeChild(this.displacementMap);
-      this.enabled = false;
-      resolve();
-    });
+  async stop() {
+    canvas.primary.removeChild(this.displacementMap);
+    this.enabled = false;
+    this.applyOptions(this.constructor.zeros);
   }
 }
