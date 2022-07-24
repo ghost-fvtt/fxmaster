@@ -26,18 +26,18 @@ function registerLayers() {
 
 function parseSpecialEffects() {
   const effectData = game.settings.get("fxmaster", "specialEffects");
-  const specials = foundry.utils.deepClone(CONFIG.fxmaster.specials);
+  const specialEffects = foundry.utils.deepClone(CONFIG.fxmaster.specialEffects);
   effectData.reduce((acc, cur) => {
     if (!cur.folder) cur.folder = "Custom";
     const normalizedFolder = cur.folder.toLowerCase().replace(/ /g, "");
     if (!acc[normalizedFolder]) acc[normalizedFolder] = { label: cur.folder, effects: [] };
     acc[normalizedFolder].effects.push(cur);
     return acc;
-  }, specials);
-  Object.keys(specials).forEach((k) => {
-    specials[k].effects.sort((a, b) => ("" + a.label).localeCompare(b.label));
+  }, specialEffects);
+  Object.keys(specialEffects).forEach((k) => {
+    specialEffects[k].effects.sort((a, b) => ("" + a.label).localeCompare(b.label));
   });
-  CONFIG.fxmaster.userSpecials = specials;
+  CONFIG.fxmaster.userSpecials = specialEffects;
 }
 
 Hooks.once("init", function () {
