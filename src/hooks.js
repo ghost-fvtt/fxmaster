@@ -1,6 +1,6 @@
 import { packageId } from "./constants.js";
 import { logger } from "./logger.js";
-import { formatString, resetFlags } from "./utils.js";
+import { formatString, omit, resetFlags } from "./utils.js";
 
 export const registerHooks = function () {
   // ------------------------------------------------------------------
@@ -21,17 +21,13 @@ async function onSwitchWeather(parameters) {
   if (!canvas.scene) {
     return;
   }
-  const newEffect = { [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  let flags = (await canvas.scene.getFlag(packageId, "effects")) ?? {};
-  let effects = {};
+  const currentEffects = canvas.scene.getFlag(packageId, "effects") ?? {};
+  const shouldSwitchOff = parameters.name in currentEffects;
+  const effects = shouldSwitchOff
+    ? omit(currentEffects, parameters.name)
+    : { ...currentEffects, [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  if (foundry.utils.hasProperty(flags, parameters.name)) {
-    effects = flags;
-    delete effects[parameters.name];
-  } else {
-    effects = foundry.utils.mergeObject(flags, newEffect);
-  }
   if (Object.keys(effects).length == 0) {
     await canvas.scene.unsetFlag(packageId, "effects");
   } else {

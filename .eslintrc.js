@@ -21,7 +21,7 @@ module.exports = {
   },
 
   rules: {
-    // Specify any specific ESLint rules.
+    "no-unused-vars": ["error", { vars: "all", args: "after-used", varsIgnorePattern: "^_" }],
   },
 
   overrides: [

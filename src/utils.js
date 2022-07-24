@@ -23,3 +23,14 @@ export function isV9OrLater() {
 export function roundToDecimals(number, decimals) {
   return Number(Math.round(number + "e" + decimals) + "e-" + decimals);
 }
+
+/**
+ * Omit a specific key from an object.
+ * @param {object} object The object from which to omit
+ * @param {string|number|symbol} key The key to omit
+ * @returns {object} The object without the given key.
+ */
+export function omit(object, key) {
+  const { [key]: _omitted, ...rest } = object;
+  return rest;
+}
