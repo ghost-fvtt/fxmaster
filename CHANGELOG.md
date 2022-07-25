@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.5](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.4...v3.1.5) (2022-07-25)
+
+
+### Bug Fixes
+
+* improve updating filters and their animations ([6b5f4d6](https://github.com/ghost-fvtt/fxmaster/commit/6b5f4d66184f9e9c58c97d53554650b7d530ffde)), closes [#176](https://github.com/ghost-fvtt/fxmaster/issues/176)
+
 ### [3.1.4](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.3...v3.1.4) (2022-07-24)
 
 
