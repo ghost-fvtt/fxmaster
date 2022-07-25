@@ -36,7 +36,7 @@ This module also provides ways to easily configure these effects.
     - [Save Particle and Filter Effects as Macro <img src="./media/font-awesome/floppy-disk.svg" alt="Save Particle and Filter Effects as Macro Icon" height="20" />](#save-particle-and-filter-effects-as-macro-)
     - [Clear Particle and Filter Effects <img src="./media/font-awesome/trash.svg" alt="Clear Particle and Filter Effects Icon" height="20" />](#clear-particle-and-filter-effects-)
   - [Developer API](#developer-api)
-    - [Filters Effects](#filters-effects)
+    - [Filter Effects](#filter-effects)
       - [Available Filter Effects With Supported Options](#available-filter-effects-with-supported-options)
     - [Particle Effects](#particle-effects)
       - [Available Particle Effects With Supported Options](#available-particle-effects-with-supported-options)
@@ -280,9 +280,9 @@ current scene.
 FXMaster provides functionality to interact with _Filter Effects_, _Particle Effects_, and _Special Effects_ from other
 packages and macros.
 
-### Filters Effects
+### Filter Effects
 
-* Adding a named filter
+* Adding or updating a named filter
   ```javascript
   FXMASTER.filters.addFilter("myfilterID", "color", {
     color: { value:"#ff00ff", apply: true },

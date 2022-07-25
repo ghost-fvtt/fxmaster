@@ -7,7 +7,6 @@ import { resetFlag } from "../utils.js";
 export class FilterManager {
   /** @private */
   constructor() {
-    this.filterInfos = {};
     this.filters = {};
     this._ticker = false;
     this.#registerHooks();
@@ -54,7 +53,7 @@ export class FilterManager {
     if (!canvas.scene) {
       return;
     }
-    this.filterInfos = Object.fromEntries(
+    const filterInfos = Object.fromEntries(
       Object.entries(canvas.scene.getFlag(packageId, "filters") ?? {}).filter(([id, filterInfo]) => {
         if (!(filterInfo.type in CONFIG.fxmaster.filterEffects)) {
           logger.warn(`Filter effect '${id}' is of unknown type '${filterInfo.type}', skipping it.`);
@@ -64,18 +63,18 @@ export class FilterManager {
       }),
     );
 
-    const filtersToCreate = Object.keys(this.filterInfos).filter((key) => !(key in this.filters));
-    const filtersToUpdate = Object.keys(this.filterInfos).filter((key) => key in this.filters);
-    const filtersToDelete = Object.keys(this.filters).filter((key) => !(key in this.filterInfos));
+    const filtersToCreate = Object.keys(filterInfos).filter((key) => !(key in this.filters));
+    const filtersToUpdate = Object.keys(filterInfos).filter((key) => key in this.filters);
+    const filtersToDelete = Object.keys(this.filters).filter((key) => !(key in filterInfos));
 
     for (const key of filtersToCreate) {
-      const { type, options } = this.filterInfos[key];
+      const { type, options } = filterInfos[key];
       this.filters[key] = new CONFIG.fxmaster.filterEffects[type](options, key);
       this.filters[key].play({ skipFading });
     }
 
     for (const key of filtersToUpdate) {
-      const { options } = this.filterInfos[key];
+      const { options } = filterInfos[key];
       const filter = this.filters[key];
       filter.configure(options);
       filter.play({ skipFading });
@@ -83,11 +82,11 @@ export class FilterManager {
 
     const deletePromises = filtersToDelete.map(async (key) => {
       const filter = this.filters[key];
-      await filter.stop({ skipFading });
-
-      // delete filters preemptively so that they disappear as soon as they have stopped
-      FilterManager.#removeFilterFromContainer(canvas.primary, filter);
-      delete this.filters[key];
+      const completed = await filter.stop({ skipFading });
+      if (completed) {
+        delete this.filters[key];
+        FilterManager.#removeFilterFromContainer(canvas.primary, filter);
+      }
     });
     await Promise.all(deletePromises);
 
@@ -113,15 +112,6 @@ export class FilterManager {
   }
 
   /**
-   * Set the filters stored in the scene's fxmaster flags to the current values of `filterInfos` of this
-   * {@link FilterManager}.
-   * @returns {Promise<void>} A promise that resolves as soon as the scene's fxmaster flags have been updated
-   */
-  async #dump() {
-    await resetFlag(canvas.scene, "filters", this.filterInfos);
-  }
-
-  /**
    * Stop all filters and remove them from the manager.
    * @remarks This does _not_ remove the filters from the canvas layers.
    * @returns {Promise<void>} A promise that resolves as soon as all filters have been stopped and removed from the
@@ -135,15 +125,14 @@ export class FilterManager {
 
   /**
    * Add a named filter.
-   * @param {string} name    The name of the filter
-   * @param {string} type    The type of the filter
-   * @param {object} options The options for the filter
+   * @param {string | undefined} name The name of the filter
+   * @param {string} type             The type of the filter
+   * @param {object} options          The options for the filter
    * @returns {Prmise<void>} A promise that resolves as soon as the filter has been added to the scene's fxmaster flags
    */
   async addFilter(name, type, options) {
-    name = name ?? randomID();
-    this.filterInfos[name] = { type, options };
-    await this.#dump();
+    name = name ?? foundry.utils.randomID();
+    await canvas.scene?.setFlag(packageId, "filters", { [name]: { type, options } });
   }
 
   /**
@@ -152,17 +141,7 @@ export class FilterManager {
    * @returns {Promise<void>} A promise that resolves when the filter has been removed from the scene's fxmaster flags
    */
   async removeFilter(name) {
-    if (!canvas.scene) {
-      return;
-    }
-    const filter = this.filters[name];
-    if (filter) {
-      await filter.stop();
-    }
-    const rmFilter = {
-      [`-=${name}`]: null,
-    };
-    await canvas.scene.setFlag(packageId, "filters", rmFilter);
+    await canvas.scene?.setFlag(packageId, "filters", { [`-=${name}`]: null });
   }
 
   /**
@@ -182,15 +161,20 @@ export class FilterManager {
    * @returns {Promise<void>} A promise that resolves as soon as the filter has been toggled
    */
   async switch(name, type, options) {
-    if (this.filterInfos[name]) {
-      return this.removeFilter(name);
+    if (!canvas.scene) {
+      return;
     }
-    return this.addFilter(name, type, options);
+    const filterInfos = canvas.scene.getFlag(packageId, "filters") ?? {};
+    if (filterInfos[name]) {
+      return this.removeFilter(name);
+    } else {
+      return this.addFilter(name, type, options);
+    }
   }
 
   async setFilters(filterInfoArray) {
-    this.filterInfos = Object.fromEntries(filterInfoArray.map((filterInfo) => [foundry.utils.randomID(), filterInfo]));
-    await this.#dump();
+    const filterInfos = Object.fromEntries(filterInfoArray.map((filterInfo) => [foundry.utils.randomID(), filterInfo]));
+    await resetFlag(canvas.scene, "filters", filterInfos);
   }
 
   #animate() {

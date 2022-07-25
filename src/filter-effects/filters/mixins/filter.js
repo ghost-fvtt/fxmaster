@@ -104,10 +104,13 @@ export function FXMasterFilterEffectMixin(Base) {
     /**
      * Stop this filter.
      * @param {object} _options Additional options to adjust the stopping behavior
+     * @returns {Promise<boolean>} A promise that resolves to `true` once the stop operation has concluded or `false` if
+     *                             the operation was cancelled.
      */
     async stop(_options = {}) {
       this.enabled = false;
       this.applyOptions(this.constructor.neutral);
+      return true;
     }
 
     /**

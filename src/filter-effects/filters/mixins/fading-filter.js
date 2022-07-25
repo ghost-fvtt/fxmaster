@@ -14,15 +14,26 @@ import { FXMasterFilterEffectMixin } from "./filter";
 export function FadingFilterMixin(Base) {
   return class extends FXMasterFilterEffectMixin(Base) {
     /**
+     * The currently running animation, if any.
+     * @type {Promise<boolean> | undefined}
+     */
+    currentAnimation;
+
+    /**
      * Apply options to this filter effect as an animation.
      * @param {object} [options] The options to animate
      * @param {AnimationOptions} [animationOptions={}] Additional options to adjust the animation behavior
      */
-    animateOptions(options = this.options, { duration = 4_000 } = {}) {
+    async animateOptions(options = this.options, { duration = 4_000 } = {}) {
       const name = `${packageId}.${this.constructor.name}.${this.id}`;
+      if (this.currentAnimation !== undefined) {
+        CanvasAnimation.terminateAnimation(name);
+        await this.currentAnimation;
+      }
       const data = { name, duration };
       const anim = Object.entries(options).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
-      return CanvasAnimation.animate(anim, data);
+      this.currentAnimation = CanvasAnimation.animate(anim, data).finally(() => (this.currentAnimation = undefined));
+      return this.currentAnimation;
     }
 
     /** @override */
@@ -38,14 +49,13 @@ export function FadingFilterMixin(Base) {
     /** @override */
     async stop({ skipFading = false, ...otherOptions } = {}) {
       if (skipFading) {
-        await super.stop({ skipFading, ...otherOptions });
+        return super.stop({ skipFading, ...otherOptions });
       } else {
-        try {
-          await this.animateOptions(this.constructor.neutral);
-        } catch (e) {
-          logger.error(`Error while trying to animate ${this.constructor.name} for stopping.`, e);
+        const completed = await this.animateOptions(this.constructor.neutral);
+        if (completed) {
+          this.enabled = false;
         }
-        this.enabled = false;
+        return completed;
       }
     }
   };
