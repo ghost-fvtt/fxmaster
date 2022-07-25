@@ -24,7 +24,7 @@ module.exports = {
   },
 
   rules: {
-    "no-unused-vars": ["error", { vars: "all", args: "after-used", varsIgnorePattern: "^_" }],
+    "no-unused-vars": ["error", { vars: "all", args: "after-used", varsIgnorePattern: "^_", argsIgnorePattern: "^_" }],
   },
 
   overrides: [

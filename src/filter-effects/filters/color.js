@@ -1,18 +1,13 @@
-import { packageId } from "../../constants.js";
+import { FadingFilterMixin } from "./mixins/fading-filter.js";
 
-export class ColorFilter extends PIXI.filters.AdjustmentFilter {
-  constructor(options, id) {
-    super();
-    this.id = id;
-
-    this.enabled = false;
-    this.skipFading = false;
-    this.configure(options);
-  }
-
+export class ColorFilter extends FadingFilterMixin(PIXI.filters.AdjustmentFilter) {
+  /** @override */
   static label = "FXMASTER.FilterEffectColor";
+
+  /** @override */
   static icon = "fas fa-palette";
 
+  /** @override */
   static get parameters() {
     return {
       color: {
@@ -58,7 +53,8 @@ export class ColorFilter extends PIXI.filters.AdjustmentFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       red: 1,
       green: 1,
@@ -70,63 +66,13 @@ export class ColorFilter extends PIXI.filters.AdjustmentFilter {
     };
   }
 
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  configure(opts) {
-    if (opts.color.apply) {
-      const color = foundry.utils.Color.from(opts.color.value);
-      opts.red = color.r;
-      opts.green = color.g;
-      opts.blue = color.b;
-    } else {
-      opts.red = opts.green = opts.blue = 1;
-    }
-    this.options = { ...this.constructor.default, ...opts };
-  }
-
-  applyOptions(opts = this.options) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (const key of keys) {
-      this[key] = opts[key];
-    }
-  }
-
-  animateOptions(values = this.options) {
-    const name = `${packageId}.${this.constructor.name}.${this.id}`;
-    const data = { name, duration: 4000 };
-    const anim = Object.entries(values).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
-    return CanvasAnimation.animate(anim, data);
-  }
-
-  step() {}
-
-  play() {
-    this.enabled = true;
-    if (this.skipFading) {
-      this.skipFading = false;
-      this.applyOptions();
+  /** @override */
+  configure(options) {
+    if (!options) {
       return;
     }
-    return this.animateOptions();
-  }
-
-  async stop() {
-    if (this.skipFading) {
-      this.skipFading = false;
-      this.enabled = false;
-      this.applyOptions(this.constructor.zeros);
-    } else {
-      try {
-        await this.animateOptions(this.constructor.zeros);
-      } catch (e) {
-        logger.error(`Error while trying to animate ${this.constructor.name} for stopping.`, e);
-      }
-      this.enabled = false;
-    }
+    const { color, ...otherOptions } = options;
+    const { r: red, g: green, b: blue } = foundry.utils.Color.from(color.apply ? color.value : 0xffffff);
+    super.configure({ ...otherOptions, red, green, blue });
   }
 }

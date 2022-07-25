@@ -1,19 +1,13 @@
-import { packageId } from "../../constants.js";
-import { logger } from "../../logger.js";
+import { FadingFilterMixin } from "./mixins/fading-filter.js";
 
-export class BloomFilter extends PIXI.filters.AdvancedBloomFilter {
-  constructor(options, id) {
-    super();
-    this.id = id;
-
-    this.enabled = false;
-    this.skipFading = false;
-    this.configure(options);
-  }
-
+export class BloomFilter extends FadingFilterMixin(PIXI.filters.AdvancedBloomFilter) {
+  /** @override */
   static label = "FXMASTER.FilterEffectBloom";
+
+  /** @override */
   static icon = "fas fa-ghost";
 
+  /** @override */
   static get parameters() {
     return {
       blur: {
@@ -43,63 +37,12 @@ export class BloomFilter extends PIXI.filters.AdvancedBloomFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       noise: 0.0,
       bloomScale: 0.0,
       threshold: 1.0,
     };
-  }
-
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  play() {
-    this.enabled = true;
-    if (this.skipFading) {
-      this.skipFading = false;
-      this.applyOptions();
-      return;
-    }
-    return this.animateOptions();
-  }
-
-  step() {}
-
-  configure(opts) {
-    this.options = { ...this.constructor.default, ...opts };
-  }
-
-  applyOptions(opts = this.options) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (const key of keys) {
-      this[key] = opts[key];
-    }
-  }
-
-  animateOptions(values = this.options) {
-    const name = `${packageId}.${this.constructor.name}.${this.id}`;
-    const data = { name, duration: 4000 };
-    const anim = Object.entries(values).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
-    return CanvasAnimation.animate(anim, data);
-  }
-
-  async stop() {
-    if (this.skipFading) {
-      this.skipFading = false;
-      this.enabled = false;
-      this.applyOptions(this.constructor.zeros);
-    } else {
-      try {
-        await this.animateOptions(this.constructor.zeros);
-      } catch (e) {
-        logger.error(`Error while trying to animate ${this.constructor.name} for stopping.`, e);
-      }
-      this.enabled = false;
-    }
   }
 }
