@@ -1,23 +1,20 @@
 import { fog } from "./shaders/fog.js";
 import { customVertex2D } from "./shaders/customvertex2D.js";
+import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
 
-export class FogFilter extends PIXI.Filter {
+export class FogFilter extends FXMasterFilterEffectMixin(PIXI.Filter) {
   constructor(options, id) {
-    super(customVertex2D, fog);
-    this.id = id;
-
-    this.enabled = false;
-    this.skipFading = false;
-
+    super(options, id, customVertex2D, fog);
     this.color = new Float32Array([1.0, 0.4, 0.1, 0.55]);
     this.dimensions = new Float32Array([1.0, 1.0]);
     this.time = 0.0;
     this.density = 0.65;
-
-    this.configure(options);
   }
 
+  /** @override */
   static label = "FXMASTER.FilterEffectFog";
+
+  /** @override */
   static icon = "fas fa-cloud";
 
   apply(filterManager, input, output, clear) {
@@ -30,44 +27,19 @@ export class FogFilter extends PIXI.Filter {
     filterManager.applyFilter(this, input, output, clear);
   }
 
+  /** @override */
   static get parameters() {
     return {};
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {};
   }
 
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  configure(opts) {
-    this.options = { ...this.constructor.default, ...opts };
-  }
-
-  applyOptions(opts = this.options) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (const key of keys) {
-      this[key] = opts[key];
-    }
-  }
-
-  step() {
+  /** @override */
+  async step() {
     this.time = canvas.app.ticker.lastTime;
-  }
-
-  play() {
-    this.enabled = true;
-    this.applyOptions();
-    return;
-  }
-
-  async stop() {
-    this.enabled = false;
-    this.applyOptions(this.constructor.zeros);
+    await super.step();
   }
 }

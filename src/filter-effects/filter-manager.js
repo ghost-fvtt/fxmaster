@@ -71,20 +71,19 @@ export class FilterManager {
     for (const key of filtersToCreate) {
       const { type, options } = this.filterInfos[key];
       this.filters[key] = new CONFIG.fxmaster.filterEffects[type](options, key);
-      this.filters[key].skipFading = skipFading;
-      this.filters[key].play();
+      this.filters[key].play({ skipFading });
     }
 
     for (const key of filtersToUpdate) {
       const { options } = this.filterInfos[key];
       const filter = this.filters[key];
       filter.configure(options);
-      filter.play();
+      filter.play({ skipFading });
     }
 
     const deletePromises = filtersToDelete.map(async (key) => {
       const filter = this.filters[key];
-      await filter.stop();
+      await filter.stop({ skipFading });
 
       // delete filters preemptively so that they disappear as soon as they have stopped
       FilterManager.#removeFilterFromContainer(canvas.primary, filter);

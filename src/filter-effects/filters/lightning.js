@@ -1,20 +1,26 @@
 import { packageId } from "../../constants.js";
 import { easeFunctions } from "../../ease.js";
+import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
 
-export class LightningFilter extends PIXI.filters.AdjustmentFilter {
+export class LightningFilter extends FXMasterFilterEffectMixin(PIXI.filters.AdjustmentFilter) {
   constructor(options, id) {
-    super();
-    this.id = id;
-
-    this.enabled = false;
-    this.configure(options);
-
-    this.next = canvas.app.ticker.lastTime / 10;
+    super(options, id);
+    this.nextLigthningTime = canvas.app.ticker.lastTime / 10;
   }
 
+  /**
+   * The time when the next lightning flash should appear.
+   * @type {number}
+   */
+  nextLigthningTime;
+
+  /** @override */
   static label = "FXMASTER.FilterEffectLightning";
+
+  /** @override */
   static icon = "fas fa-bolt-lightning";
 
+  /** @override */
   static get parameters() {
     return {
       frequency: {
@@ -44,7 +50,8 @@ export class LightningFilter extends PIXI.filters.AdjustmentFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       frequency: 0.0,
       spark_duration: 0.0,
@@ -52,20 +59,23 @@ export class LightningFilter extends PIXI.filters.AdjustmentFilter {
     };
   }
 
-  play() {
+  /** @override */
+  play(_options = {}) {
+    // explicitly not applying the options, since it would change the brightness immediately
     this.enabled = true;
   }
 
-  step() {
-    if (canvas.app.ticker.lastTime / 10 > this.next) {
-      this.next = canvas.app.ticker.lastTime / 10 + 40 + this.options.frequency * Math.random();
+  /** @override */
+  async step() {
+    if (canvas.app.ticker.lastTime / 10 > this.nextLigthningTime) {
+      this.nextLigthningTime = canvas.app.ticker.lastTime / 10 + 40 + this.options.frequency * Math.random();
 
-      const animate = (target) => {
+      const animate = (value) => {
         const attributes = [
           {
             parent: this,
             attribute: "brightness",
-            to: target,
+            to: value,
           },
         ];
         return CanvasAnimation.animate(attributes, {
@@ -76,32 +86,9 @@ export class LightningFilter extends PIXI.filters.AdjustmentFilter {
         });
       };
 
-      animate(this.options.brightness).then(() => {
-        animate(1.0);
-      });
+      await animate(this.options.brightness);
+      await animate(1);
+      await super.step();
     }
-  }
-
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-  configure(opts) {
-    const merged = { ...this.constructor.default, ...opts };
-    this.options = merged;
-  }
-
-  applyOptions(opts = this.options) {
-    if (!opts) return;
-    const keys = Object.keys(opts);
-    for (const key of keys) {
-      this[key] = opts[key];
-    }
-  }
-
-  async stop() {
-    this.enabled = false;
-    this.applyOptions(this.constructor.zeros);
   }
 }

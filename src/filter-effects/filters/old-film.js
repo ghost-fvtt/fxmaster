@@ -1,20 +1,19 @@
-export class OldFilmFilter extends PIXI.filters.OldFilmFilter {
+import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
+
+export class OldFilmFilter extends FXMasterFilterEffectMixin(PIXI.filters.OldFilmFilter) {
   constructor(options, id) {
-    super();
-    this.id = id;
-
-    this.enabled = false;
-    this.skipFading = false;
-
+    super(options, id);
     this.vignetting = 0;
     this.vignettingAlpha = 0;
-
-    this.configure(options);
   }
 
+  /** @override */
   static label = "FXMASTER.FilterEffectOldFilm";
+
+  /** @override */
   static icon = "fas fa-film";
 
+  /** @override */
   static get parameters() {
     return {
       sepia: {
@@ -36,43 +35,23 @@ export class OldFilmFilter extends PIXI.filters.OldFilmFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       sepia: 0.0,
       noise: 0.0,
     };
   }
 
-  play() {
-    this.enabled = true;
+  /** @override */
+  play(options = {}) {
     this.seed = Math.random();
-    this.applyOptions();
+    super.play(options);
   }
 
-  step() {
+  /** @override */
+  async step() {
     this.seed = Math.random();
-  }
-
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  configure(opts) {
-    this.options = { ...this.constructor.default, ...opts };
-  }
-
-  applyOptions() {
-    if (!this.options) return;
-    const keys = Object.keys(this.options);
-    for (const key of keys) {
-      this[key] = this.options[key];
-    }
-  }
-
-  async stop() {
-    this.enabled = false;
-    this.applyOptions(this.constructor.zeros);
+    await super.step();
   }
 }

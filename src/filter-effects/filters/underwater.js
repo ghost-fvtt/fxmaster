@@ -1,27 +1,23 @@
-export class UnderwaterFilter extends PIXI.filters.DisplacementFilter {
+import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
+
+export class UnderwaterFilter extends FXMasterFilterEffectMixin(PIXI.filters.DisplacementFilter) {
   constructor(options, id) {
-    let displacemenntMap = new PIXI.Sprite.from(
+    const displacemenntMap = new PIXI.Sprite.from(
       "modules/fxmaster/assets/filter-effects/effects/underwater/displacement-map.png",
     );
-    super(displacemenntMap);
-    this.id = id;
+    super(options, id, displacemenntMap);
 
     this.displacementMap = displacemenntMap;
-
-    this.speedConfig = {};
-    this.configure(options);
-
     this.displacementMap.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
     this.displacementMap.anchor.set(0.5);
     this.displacementMap.x = canvas.scene.width / 2;
     this.displacementMap.y = canvas.scene.height / 2;
-    this.displacementMap.scale.x = 4;
-    this.displacementMap.scale.y = 4;
-
-    this.enabled = false;
   }
 
+  /** @override */
   static label = "FXMASTER.FilterEffectUnderwater";
+
+  /** @override */
   static icon = "fas fa-water";
 
   static get parameters() {
@@ -42,45 +38,36 @@ export class UnderwaterFilter extends PIXI.filters.DisplacementFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       speed: 0,
       scale: 1.0,
     };
   }
 
-  step() {
-    this.maskSprite.x += this.speedConfig.speed;
-  }
-
-  play() {
-    canvas.primary.addChild(this.displacementMap);
-    this.enabled = true;
-    this.displacementMap.scale.x = this.speedConfig.scale;
-    this.displacementMap.scale.y = this.speedConfig.scale;
-  }
-
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  configure(opts) {
-    this.speedConfig = { ...this.constructor.defaults, ...opts };
-  }
-
+  /** @override */
   applyOptions() {
-    if (!this.options) return;
-    const keys = Object.keys(this.options);
-    for (const key of keys) {
-      this[key] = this.options[key];
-    }
+    // explicitly do nothing because setting scale / speed on this breaks the DisplacementFilter
   }
 
-  async stop() {
+  /** @override */
+  play(options = {}) {
+    this.displacementMap.scale.x = this.options.scale;
+    this.displacementMap.scale.y = this.options.scale;
+    canvas.primary.addChild(this.displacementMap);
+    super.play(options);
+  }
+
+  /** @override */
+  async stop(options = {}) {
+    await super.stop(options);
     canvas.primary.removeChild(this.displacementMap);
-    this.enabled = false;
-    this.applyOptions(this.constructor.zeros);
+  }
+
+  /** @override */
+  async step() {
+    this.maskSprite.x += this.options.speed;
+    await super.step();
   }
 }

@@ -1,18 +1,19 @@
-export class PredatorFilter extends PIXI.filters.CRTFilter {
-  constructor(options, id) {
-    super();
-    this.id = id;
+import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
 
-    this.enabled = false;
+export class PredatorFilter extends FXMasterFilterEffectMixin(PIXI.filters.CRTFilter) {
+  constructor(options, id) {
+    super(options, id);
     this.vignetting = 0;
     this.curvature = 0;
-
-    this.configure(options);
   }
 
+  /** @override */
   static label = "FXMASTER.FilterEffectPredator";
+
+  /** @override */
   static icon = "fas fa-wave-square";
 
+  /** @override */
   static get parameters() {
     return {
       noise: {
@@ -42,45 +43,25 @@ export class PredatorFilter extends PIXI.filters.CRTFilter {
     };
   }
 
-  static get zeros() {
+  /** @override */
+  static get neutral() {
     return {
       noise: 0,
       period: 1000,
     };
   }
 
-  play() {
-    this.enabled = true;
+  /** @override */
+  play(options = {}) {
     this.seed = Math.random();
-    this.applyOptions();
+    super.play(options);
   }
 
-  step() {
+  /** @override */
+  async step() {
     this.seed = Math.random();
     const frequency = 1.0 / this.options.period;
     this.time = canvas.app.ticker.lastTime / frequency;
-  }
-
-  static get default() {
-    return Object.fromEntries(
-      Object.entries(this.parameters).map(([parameterName, parameterConfig]) => [parameterName, parameterConfig.value]),
-    );
-  }
-
-  configure(opts) {
-    this.options = { ...this.constructor.default, ...opts };
-  }
-
-  applyOptions() {
-    if (!this.options) return;
-    const keys = Object.keys(this.options);
-    for (const key of keys) {
-      this[key] = this.options[key];
-    }
-  }
-
-  async stop() {
-    this.enabled = false;
-    this.applyOptions(this.constructor.zeros);
+    await super.step();
   }
 }
