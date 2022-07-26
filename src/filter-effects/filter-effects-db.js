@@ -1,6 +1,6 @@
 import { BloomFilter } from "./filters/bloom.js";
 import { ColorFilter } from "./filters/color.js";
-// import { FogFilter } from "./filters/fog.js";
+import { FogFilter } from "./filters/fog.js";
 import { LightningFilter } from "./filters/lightning.js";
 import { OldFilmFilter } from "./filters/old-film.js";
 import { PredatorFilter } from "./filters/predator.js";
@@ -12,7 +12,7 @@ import { UnderwaterFilter } from "./filters/underwater.js";
 export const filterEffects = {
   bloom: BloomFilter,
   color: ColorFilter,
-  // fog: FXFogFilter
+  fog: FogFilter,
   lightning: LightningFilter,
   oldfilm: OldFilmFilter,
   predator: PredatorFilter,
