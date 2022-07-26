@@ -19,6 +19,9 @@ export function FadingFilterMixin(Base) {
      */
     currentAnimation;
 
+    /** Has this filter already been initialized? */
+    initialized = false;
+
     /**
      * Apply options to this filter effect as an animation.
      * @param {object} [options] The options to animate
@@ -31,7 +34,18 @@ export function FadingFilterMixin(Base) {
         await this.currentAnimation;
       }
       const data = { name, duration };
-      const anim = Object.entries(options).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
+
+      const [toAnimate, toSet] = Object.entries(options)
+        .partition(([key]) => !!this.constructor.parameters[key]?.skipInitialAnimation && !this.initialized)
+        .map(Object.fromEntries);
+
+      this.applyOptions(toSet);
+
+      const anim = Object.entries(toAnimate).map(([key, value]) => ({
+        parent: this.optionContext,
+        attribute: key,
+        to: value,
+      }));
       this.currentAnimation = CanvasAnimation.animate(anim, data).finally(() => (this.currentAnimation = undefined));
       return this.currentAnimation;
     }
@@ -44,6 +58,7 @@ export function FadingFilterMixin(Base) {
         this.enabled = true;
         this.animateOptions();
       }
+      this.initialized = true;
     }
 
     /** @override */

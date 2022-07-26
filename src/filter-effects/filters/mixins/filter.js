@@ -82,13 +82,21 @@ export function FXMasterFilterEffectMixin(Base) {
     }
 
     /**
+     * The context on which options should be applied.
+     * @type {object}
+     */
+    get optionContext() {
+      return this;
+    }
+
+    /**
      * Apply options to this filter effect, setting the corresponding properties on this effect itself.
      * @param {object} options The options to apply
      */
     applyOptions(options = this.options) {
       const keys = Object.keys(options);
       for (const key of keys) {
-        this[key] = options[key];
+        this.optionContext[key] = options[key];
       }
     }
 
