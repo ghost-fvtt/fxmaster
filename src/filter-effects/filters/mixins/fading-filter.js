@@ -31,7 +31,11 @@ export function FadingFilterMixin(Base) {
         await this.currentAnimation;
       }
       const data = { name, duration };
-      const anim = Object.entries(options).map(([key, value]) => ({ parent: this, attribute: key, to: value }));
+      const anim = Object.entries(options).map(([key, value]) => ({
+        parent: this.optionContext,
+        attribute: key,
+        to: value,
+      }));
       this.currentAnimation = CanvasAnimation.animate(anim, data).finally(() => (this.currentAnimation = undefined));
       return this.currentAnimation;
     }
