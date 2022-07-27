@@ -18,10 +18,13 @@ module.exports = {
     PIXI: "readonly",
     CachedContainer: "readonly",
     InverseOcclusionMaskFilter: "readonly",
+    ParticleEffect: "readonly",
+    InteractionLayer: "readonly",
+    SpriteMesh: "readonly",
   },
 
   rules: {
-    // Specify any specific ESLint rules.
+    "no-unused-vars": ["error", { vars: "all", args: "after-used", varsIgnorePattern: "^_", argsIgnorePattern: "^_" }],
   },
 
   overrides: [

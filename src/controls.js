@@ -1,9 +1,9 @@
 import { packageId } from "./constants.js";
-import { filterManager } from "./filterEffects/FilterManager.js";
-import { WeatherConfig } from "./weatherEffects/applications/weather-config.js";
-import { SpecialsConfig } from "./specialEffects/applications/specials-config.js";
-import { FiltersConfig } from "./filterEffects/applications/filters-config.js";
-import { saveWeatherAndFiltersAsMacro } from "./macro.js";
+import { FilterManager } from "./filter-effects/filter-manager.js";
+import { ParticleEffectsManagement } from "./particle-effects/applications/particle-effects-management.js";
+import { SpecialEffectsManagement } from "./special-effects/applications/special-effects-management.js";
+import { FilterEffectsManagementConfig } from "./filter-effects/applications/filter-effects-management.js";
+import { saveParticleAndFilterEffectsAsMacro } from "./macro.js";
 
 export function registerGetSceneControlButtonsHook() {
   Hooks.on("getSceneControlButtons", getSceneControlButtons);
@@ -16,7 +16,7 @@ function getSceneControlButtons(controls) {
   controls.push({
     name: "effects",
     title: "CONTROLS.Effects",
-    icon: "fas fa-magic",
+    icon: "fas fa-wand-magic-sparkles",
     layer: "specials",
     visible: game.user.role >= game.settings.get(packageId, "permission-create"),
     tools: [
@@ -25,16 +25,16 @@ function getSceneControlButtons(controls) {
         title: "CONTROLS.SpecialFX",
         icon: "fas fa-hat-wizard",
         onClick: () => {
-          new SpecialsConfig().render(true);
+          new SpecialEffectsManagement().render(true);
         },
         button: true,
       },
       {
-        name: "weather",
-        title: "CONTROLS.Weather",
+        name: "particle-effects",
+        title: "CONTROLS.ParticleEffects",
         icon: "fas fa-cloud-rain",
         onClick: () => {
-          new WeatherConfig().render(true);
+          new ParticleEffectsManagement().render(true);
         },
         visible: game.user.isGM,
         button: true,
@@ -58,7 +58,7 @@ function getSceneControlButtons(controls) {
         title: "CONTROLS.Filters",
         icon: "fas fa-filter",
         onClick: () => {
-          new FiltersConfig().render(true);
+          new FilterEffectsManagementConfig().render(true);
         },
         visible: game.user.isGM,
         button: true,
@@ -66,8 +66,8 @@ function getSceneControlButtons(controls) {
       {
         name: "save",
         title: "CONTROLS.SaveMacro",
-        icon: "fas fa-save",
-        onClick: saveWeatherAndFiltersAsMacro,
+        icon: "fas fa-floppy-disk",
+        onClick: saveParticleAndFilterEffectsAsMacro,
         visible: game.user.isGM,
         button: true,
       },
@@ -77,11 +77,11 @@ function getSceneControlButtons(controls) {
         icon: "fas fa-trash",
         onClick: () => {
           Dialog.confirm({
-            title: game.i18n.localize("FXMASTER.ClearWeatherAndFiltersTitle"),
-            content: game.i18n.localize("FXMASTER.ClearWeatherAndFiltersContent"),
+            title: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsTitle"),
+            content: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsContent"),
             yes: () => {
               if (canvas.scene) {
-                filterManager.removeAll();
+                FilterManager.instance.removeAll();
                 canvas.scene.unsetFlag(packageId, "effects");
               }
             },
@@ -92,5 +92,6 @@ function getSceneControlButtons(controls) {
         button: true,
       },
     ],
+    activeTool: "effect",
   });
 }

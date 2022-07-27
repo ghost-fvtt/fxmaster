@@ -1,14 +1,14 @@
 import { packageId } from "./constants.js";
-import { onWorldMigrated } from "./migration.js";
+import { onWorldMigrated } from "./migration/migration.js";
 
-export const registerSettings = function () {
+export function registerSettings() {
   game.settings.register(packageId, "enable", {
     name: "FXMASTER.Enable",
     default: true,
     scope: "client",
     type: Boolean,
     config: true,
-    onChange: debouncedReload,
+    requiresReload: true,
   });
 
   game.settings.register(packageId, "specialEffects", {
@@ -49,7 +49,7 @@ export const registerSettings = function () {
       [foundry.CONST.USER_ROLES.ASSISTANT]: "USER.RoleAssistant",
       [foundry.CONST.USER_ROLES.GAMEMASTER]: "USER.RoleGamemaster",
     },
-    onChange: debouncedReload,
+    requiresReload: true,
   });
 
   game.settings.register(packageId, "disableAll", {
@@ -60,8 +60,8 @@ export const registerSettings = function () {
     type: Boolean,
     config: true,
   });
-};
+}
 
-const debouncedReload = foundry.utils.debounce(() => {
-  window.location.reload();
-}, 100);
+export function isEnabled() {
+  return game.settings.get(packageId, "enable") && !game.settings.get(packageId, "disableAll");
+}

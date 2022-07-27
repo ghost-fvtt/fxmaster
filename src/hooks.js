@@ -1,82 +1,73 @@
 import { packageId } from "./constants.js";
-import { logger } from "./logger.js";
-import { formatString, resetFlags } from "./utils.js";
+import { format } from "./logger.js";
+import { omit, resetFlag } from "./utils.js";
 
 export const registerHooks = function () {
-  // ------------------------------------------------------------------
-  // Hooks API
-  Hooks.on(`${packageId}.switchWeather`, onSwitchWeather);
-  Hooks.on(`${packageId}.updateWeather`, onUpdateWeather);
-
-  // deprecated hooks
-  Hooks.on("switchWeather", onSwitchWeatherDeprecated);
-  Hooks.on("updateWeather", onUpdateWeatherDeprecated);
+  Hooks.on(`${packageId}.switchParticleEffect`, onSwitchParticleEffects);
+  Hooks.on(`${packageId}.updateParticleEffects`, onUpdateParticleEffects);
+  Object.keys(deprecations).forEach((hook) => Hooks.on(hook, onDeprecated(hook)));
 };
 
 /**
- * Handle a request to toggle named a weather effect in the current scene.
- * @param {{name: string, type: string, options: object}} parameters The parameters that define the named weather effect
+ * Handle a request to toggle named a particle effect in the current scene.
+ * @param {{name: string, type: string, options: object}} parameters The parameters that define the named particle effect
  */
-async function onSwitchWeather(parameters) {
+async function onSwitchParticleEffects(parameters) {
   if (!canvas.scene) {
     return;
   }
-  const newEffect = { [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  let flags = (await canvas.scene.getFlag(packageId, "effects")) ?? {};
-  let effects = {};
+  const currentEffects = canvas.scene.getFlag(packageId, "effects") ?? {};
+  const shouldSwitchOff = parameters.name in currentEffects;
+  const effects = shouldSwitchOff
+    ? omit(currentEffects, parameters.name)
+    : { ...currentEffects, [parameters.name]: { type: parameters.type, options: parameters.options } };
 
-  if (foundry.utils.hasProperty(flags, parameters.name)) {
-    effects = flags;
-    delete effects[parameters.name];
-  } else {
-    effects = foundry.utils.mergeObject(flags, newEffect);
-  }
   if (Object.keys(effects).length == 0) {
     await canvas.scene.unsetFlag(packageId, "effects");
   } else {
-    resetFlags(canvas.scene, "effects", effects);
+    resetFlag(canvas.scene, "effects", effects);
   }
 }
 
 /**
- * Handle a request to set the weather effects in the current scene.
+ * Handle a request to set the particle effects in the current scene.
  * @param {Array<object>} parametersArray The array of parameters defining the effects to be activated
  */
-async function onUpdateWeather(parametersArray) {
+async function onUpdateParticleEffects(parametersArray) {
   const effects = Object.fromEntries(parametersArray.map((parameters) => [foundry.utils.randomID(), parameters]));
-  resetFlags(canvas.scene, "effects", effects);
+  resetFlag(canvas.scene, "effects", effects);
 }
 
-const deprecationFormatString =
-  "The '{0}' hook is deprecated and will be removed in a future version. Please use the " +
-  `'${packageId}.{0}' hook instead. Be aware that the meaning of some options changed for the new hook. ` +
-  "Consult the documentation for more details: https://github.com/ghost-fvtt/fxmaster/blob/v2.0.0/README.md#weather-effect-options. " +
-  "To get the same effect for this scene, the given parameters should look as follows for the new hook:";
+const deprecations = {
+  updateWeather: {
+    replacedBy: `${packageId}.updateParticleEffects`,
+    callback: onUpdateParticleEffects,
+  },
+  switchWeather: {
+    replacedBy: `${packageId}.switchParticleEffects`,
+    callback: onSwitchParticleEffects,
+  },
+  [`${packageId}.updateWeather`]: {
+    replacedBy: `${packageId}.updateParticleEffects`,
+    callback: onUpdateParticleEffects,
+  },
+  [`${packageId}.switchWeather`]: {
+    replacedBy: `${packageId}.switchParticleEffects`,
+    callback: onSwitchParticleEffects,
+  },
+};
 
-async function onSwitchWeatherDeprecated(parameters) {
-  const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
-
-  const v2Parameters = {
-    ...parameters,
-    options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
+function onDeprecated(hook) {
+  return function (...args) {
+    const deprecation = deprecations[hook];
+    const msg = format(`The '${hook}' hook is deprecated in favor of the '${deprecation.replacedBy}' hook`);
+    foundry.utils.logCompatibilityWarning(msg, {
+      mod: foundry.CONST.COMPATIBILITY_MODES.WARNING,
+      since: "FXMaster v3.0.0",
+      until: "FXMaster v4.0.0",
+      stack: false,
+    });
+    deprecation.callback(...args);
   };
-
-  logger.warn(formatString(deprecationFormatString, "switchWeather"), v2Parameters);
-
-  return onSwitchWeather(v2Parameters);
-}
-
-async function onUpdateWeatherDeprecated(parametersArray) {
-  const v2ParametersArray = parametersArray.map((parameters) => {
-    const weatherEffectClass = CONFIG.fxmaster.weather[parameters.type];
-    return {
-      ...parameters,
-      options: weatherEffectClass.convertOptionsToV2(parameters.options, canvas.scene),
-    };
-  });
-
-  logger.warn(formatString(deprecationFormatString, "updateWeather"), v2ParametersArray);
-
-  return onUpdateWeather(v2ParametersArray);
 }
