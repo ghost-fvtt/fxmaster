@@ -22,10 +22,10 @@
   "changelog": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v3.1.5/CHANGELOG.md",
   "version": "3.1.5",
   "compatibility": {
-    "minimum": "10.275",
+    "minimum": "10.276",
     "verified": "10"
   },
-  "minimumCoreVersion": "10.275",
+  "minimumCoreVersion": "10.276",
   "compatibleCoreVersion": "10",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": ["fxmaster.js"],

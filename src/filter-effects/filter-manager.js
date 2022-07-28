@@ -19,6 +19,14 @@ export class FilterManager {
   static #instance;
 
   /**
+   * The container effects should be a pplied to.
+   * @type {PIXI.Container}
+   */
+  static get container() {
+    return canvas.environment;
+  }
+
+  /**
    * The singleton {@link FilterManager} instance.
    * @type {FilterManager}
    */
@@ -85,7 +93,7 @@ export class FilterManager {
       const completed = await filter.stop({ skipFading });
       if (completed) {
         delete this.filters[key];
-        FilterManager.#removeFilterFromContainer(canvas.primary, filter);
+        FilterManager.#removeFilterFromContainer(this.constructor.container, filter);
       }
     });
     await Promise.all(deletePromises);
@@ -98,8 +106,8 @@ export class FilterManager {
    */
   #applyFilters() {
     const filters = Object.values(this.filters);
-    const otherFilters = canvas.primary.filters?.filter((f) => !filters.includes(f)) ?? [];
-    canvas.primary.filters = otherFilters.concat(filters);
+    const otherFilters = this.constructor.container.filters?.filter((f) => !filters.includes(f)) ?? [];
+    this.constructor.container.filters = otherFilters.concat(filters);
   }
 
   /**
@@ -184,12 +192,6 @@ export class FilterManager {
   }
 
   #registerHooks() {
-    Hooks.once("ready", () => {
-      if (isEnabled()) {
-        canvas.primary.filterArea = canvas.app.screen;
-      }
-    });
-
     Hooks.on("canvasInit", () => {
       if (isEnabled()) {
         this.#clear();

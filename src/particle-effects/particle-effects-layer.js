@@ -5,8 +5,8 @@ import { isEnabled } from "../settings.js";
 
 export class ParticleEffectsLayer extends CanvasLayer {
   /**
-   * The particle overlay container
-   * @type {PIXI.Container | undefined}
+   * The particle overlay container.
+   * @type {FullCanvasContainer| undefined}
    */
   particleEffectsContainer;
 
@@ -17,7 +17,7 @@ export class ParticleEffectsLayer extends CanvasLayer {
   particleEffects = {};
 
   /**
-   * An occlusion filter that prevents particle effects from being displayed in certain regions
+   * An occlusion filter that prevents particle effects from being displayed in certain regions.
    * @type {InverseOcclusionMaskFilter | undefined}
    */
   particleEffectOcclusionFilter;
@@ -83,7 +83,10 @@ export class ParticleEffectsLayer extends CanvasLayer {
       return;
     }
     if (!this.particleEffectsContainer) {
-      this.particleEffectsContainer = this.addChild(new PIXI.Container());
+      const particleEffectsContainer = new FullCanvasContainer();
+      particleEffectsContainer.accessibleChildren = particleEffectsContainer.interactiveChildren = false;
+      particleEffectsContainer.filterArea = canvas.app.renderer.screen;
+      this.particleEffectsContainer = this.addChild(particleEffectsContainer);
       if (this.particleEffectOcclusionFilter) {
         this.particleEffectsContainer.filters = [this.particleEffectOcclusionFilter];
       }
