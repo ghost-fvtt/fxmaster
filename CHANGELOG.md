@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.5...v3.2.0) (2022-07-29)
+
+
+### Features
+
+* make filters apply to lighting ([5c3eab0](https://github.com/ghost-fvtt/fxmaster/commit/5c3eab06c262a62a88753ae526fbfdb6b5877cb5))
+
 ### [3.1.5](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.4...v3.1.5) (2022-07-25)
 
 
