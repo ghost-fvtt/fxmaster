@@ -79,4 +79,5 @@ void main(void) {
 
   vec4 fogPixel = contrastMatrix(3.0) * fog();
   gl_FragColor = mix(pixel, fogPixel, 1. * density) * pixel.a;
+  // gl_FragColor = mix(pixel, vec4(vFilterCoord, 0.0, 1), 1. * density) * pixel.a;
 }

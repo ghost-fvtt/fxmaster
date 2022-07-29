@@ -33,6 +33,14 @@ export class FogFilter extends FadingFilterMixin(PIXI.Filter) {
         step: 0.05,
         value: 0.65,
       },
+      speed: {
+        label: "FXMASTER.Speed",
+        type: "range",
+        max: 2,
+        min: 0,
+        step: 0.01,
+        value: 0.1,
+      },
       color: {
         label: "FXMASTER.Tint",
         type: "color",
@@ -111,7 +119,7 @@ export class FogFilter extends FadingFilterMixin(PIXI.Filter) {
 
   /** @override */
   async step() {
-    this.uniforms.time = canvas.app.ticker.lastTime / 10;
+    this.uniforms.time = canvas.app.ticker.lastTime * 0.0;
     await super.step();
   }
 
@@ -123,11 +131,25 @@ export class FogFilter extends FadingFilterMixin(PIXI.Filter) {
 
       filterMatrix.set(destinationFrame.width, 0, 0, destinationFrame.height, sourceFrame.x, sourceFrame.y);
 
-      const worldTransform = target.transform.worldTransform.copyTo(PIXI.Matrix.TEMP_MATRIX);
-
-      worldTransform.invert();
+      const worldTransform = PIXI.Matrix.TEMP_MATRIX;
 
       const localBounds = target.getLocalBounds(tempRect);
+
+      const transform = target.transform.localTransform;
+      worldTransform.a = transform.scale.x;
+      worldTransform.b = 0;
+      worldTransform.c = 0;
+      worldTransform.d = transform.scale.y;
+      worldTransform.tx = transform.position.x - transform.pivot.x * transform.scale.x;
+      worldTransform.ty = transform.position.y - transform.pivot.y * transform.scale.y;
+      worldTransform.prepend(target.parent.transform.worldTransform);
+      worldTransform.invert();
+
+      const scaleX = Math.hypot(worldTransform.a, worldTransform.b);
+      const scaleY = Math.hypot(worldTransform.c, worldTransform.d);
+
+      localBounds.pad(scaleX * this.boundsPadding.x, scaleY * this.boundsPadding.y);
+
       filterMatrix.prepend(worldTransform);
       filterMatrix.translate(-localBounds.x, -localBounds.y);
       filterMatrix.scale(1.0 / localBounds.width, 1.0 / localBounds.height);
