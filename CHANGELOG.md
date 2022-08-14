@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.2.0...v3.3.0) (2022-08-14)
+
+
+### Features
+
+* prewarm particle effects when loading a scene ([22930c4](https://github.com/ghost-fvtt/fxmaster/commit/22930c4cb4ced78a104a23ea64e16b3d388e3426))
+
+
+### Bug Fixes
+
+* address an issue where particle effects were not properly vanishing when they were disabled ([9fef0b5](https://github.com/ghost-fvtt/fxmaster/commit/9fef0b556d0f732de2a29dd4ec1e78d0caf978ab))
+
 ## [3.2.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.1.5...v3.2.0) (2022-07-29)
 
 
