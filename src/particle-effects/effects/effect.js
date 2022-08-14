@@ -251,7 +251,7 @@ export class FXMasterParticleEffect extends ParticleEffect {
     );
     const promises = [Promise.all(emitterPromises)];
     if (timeout !== undefined) {
-      promises.push(new Promise((resolve) => setTimeout(resolve, timeout)));
+      promises.push(new Promise((resolve) => setTimeout(resolve, timeout)).then(this.destroy.bind(this)));
     }
 
     await Promise.race(promises);
