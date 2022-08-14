@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.1](https://github.com/ghost-fvtt/fxmaster/compare/v2.7.0...v2.7.1) (2022-08-14)
+
+
+### Bug Fixes
+
+* properly handle switching multiple effects with the `fxmaster.switchWeather` hook ([de9b9d5](https://github.com/ghost-fvtt/fxmaster/commit/de9b9d5b78c9744ff606eb28cc9639b64f92485a)), closes [#320](https://github.com/ghost-fvtt/fxmaster/issues/320)
+
 ## [2.7.0](https://github.com/ghost-fvtt/fxmaster/compare/v2.6.0...v2.7.0) (2022-04-25)
 
 
