@@ -123,7 +123,7 @@ export class ParticleEffectsLayer extends CanvasLayer {
         type: flags[id].type,
         fx: new CONFIG.fxmaster.particleEffects[flags[id].type](this.particleEffectsContainer, options),
       };
-      this.particleEffects[id].fx.play();
+      this.particleEffects[id].fx.play({ prewarm: !soft });
     }
 
     await stopPromise;

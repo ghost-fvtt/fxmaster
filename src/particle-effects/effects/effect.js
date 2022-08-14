@@ -219,6 +219,19 @@ export class FXMasterParticleEffect extends ParticleEffect {
     }
   }
 
+  /** @override */
+  play({ prewarm = false } = {}) {
+    if (prewarm) {
+      this.emitters.forEach((emitter) => {
+        emitter.autoUpdate = false;
+        emitter.emit = true;
+        emitter.update(emitter.maxLifetime);
+        emitter.autoUpdate = true;
+      });
+    }
+    super.play();
+  }
+
   /**
    * Fade this effect out, playing it once and then stopping it.
    * @param {{timeout?: number}} [options]         Additional options to configure the fade out
