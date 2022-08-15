@@ -1,4 +1,5 @@
 import copy from "@guanghechen/rollup-plugin-copy";
+import livereload from "rollup-plugin-livereload";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import styles from "rollup-plugin-styles";
 import { terser } from "rollup-plugin-terser";
@@ -18,6 +19,7 @@ const staticFiles = [
   "templates",
 ];
 const isProduction = process.env.NODE_ENV === "production";
+const isWatch = process.env.ROLLUP_WATCH === "true";
 
 /**
  * @type {import('rollup').RollupOptions}
@@ -43,6 +45,7 @@ const config = {
       targets: [{ src: staticFiles, dest: distDirectory }],
     }),
     isProduction && terser({ ecma: 2020, keep_fnames: true }),
+    isWatch && livereload(distDirectory),
   ],
 };
 
