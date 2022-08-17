@@ -26,13 +26,15 @@ function drawDrawingsMaskIfCurrentScene(scene) {
 }
 
 function drawDrawingsMask() {
-  const msk = canvas.masks.tileOcclusion;
+  const msk = canvas.masks.depth;
   if (msk.fxmasterDrawingsMask) {
     msk.removeChild(msk.fxmasterDrawingsMask);
     delete msk.fxmasterDrawingsMask;
   }
   const invert = canvas.scene.getFlag(packageId, "invert");
   const mask = invert ? createInvertedMask() : createMask();
+  mask.mask = new PIXI.MaskData();
+  mask.mask.colorMask = PIXI.COLOR_MASK_BITS.BLUE;
   msk.fxmasterDrawingsMask = msk.addChild(mask);
 }
 

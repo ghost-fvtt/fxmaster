@@ -25,18 +25,17 @@ export class ParticleEffectsLayer extends CanvasLayer {
   /**
    * Define an elevation property on the ParticleEffectsLayer layer.
    * For now, it simply referenes the elevation property of the {@link WeatherEffects} provided by
-   * foundry and adds 0.5 to it, so that FXMaster particle effects are always rendered on top of the
-   * weather effects provided by foundry.
+   * foundry.
    * @type {number}
    */
   get elevation() {
-    return (canvas.weather?.elevation ?? 9999) + 0.5;
+    return canvas.weather?.elevation ?? Infinity;
   }
 
   set elevation(value) {
     const weatherEffects = canvas.weather;
     if (weatherEffects) {
-      weatherEffects.elevation = value - 0.5;
+      weatherEffects.elevation = value;
     }
   }
 
@@ -141,7 +140,7 @@ export class ParticleEffectsLayer extends CanvasLayer {
   #createParticleEffectOcclusionFilter() {
     const particleOcclusionFilter = InverseOcclusionMaskFilter.create({
       alphaOcclusion: 0,
-      uMaskSampler: canvas.masks.tileOcclusion.renderTexture,
+      uMaskSampler: canvas.masks.depth.renderTexture,
       channel: "b",
     });
     return particleOcclusionFilter;

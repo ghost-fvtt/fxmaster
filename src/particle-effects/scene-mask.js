@@ -3,7 +3,7 @@ export function registerSceneMaskFunctionality() {
 }
 
 function drawSceneMask() {
-  const msk = canvas.masks.tileOcclusion;
+  const msk = canvas.masks.depth;
   if (shouldMaskToScene()) {
     const mask = new PIXI.LegacyGraphics()
       .beginFill(0x0000ff)
@@ -12,6 +12,8 @@ function drawSceneMask() {
       .beginHole()
       .drawShape(canvas.dimensions.sceneRect.intersection(canvas.dimensions.rect))
       .endHole();
+    mask.mask = new PIXI.MaskData();
+    mask.mask.colorMask = PIXI.COLOR_MASK_BITS.BLUE;
     msk.fxmasterSceneMask = msk.addChild(mask);
   } else if (msk.fxmasterSceneMask) {
     msk.removeChild(msk.fxmasterSceneMask);

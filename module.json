@@ -25,7 +25,7 @@
     "minimum": "10.276",
     "verified": "10"
   },
-  "minimumCoreVersion": "10.276",
+  "minimumCoreVersion": "10.278",
   "compatibleCoreVersion": "10",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": ["fxmaster.js"],
