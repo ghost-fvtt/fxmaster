@@ -22,7 +22,7 @@
   "changelog": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v3.4.0/CHANGELOG.md",
   "version": "3.4.0",
   "compatibility": {
-    "minimum": "10.276",
+    "minimum": "10.278",
     "verified": "10"
   },
   "minimumCoreVersion": "10.278",
