@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.4.0...v3.5.0) (2022-09-01)
+
+
+### Features
+
+* add fog filter (experimental, might change at any time, use at your own risk) ([336eea5](https://github.com/ghost-fvtt/fxmaster/commit/336eea514808dcab290247310c9da767ead2a9a7)), closes [#67](https://github.com/ghost-fvtt/fxmaster/issues/67)
+
 ## [3.4.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.3.0...v3.4.0) (2022-08-17)
 
 
