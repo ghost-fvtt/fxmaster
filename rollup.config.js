@@ -5,7 +5,7 @@ import styles from "rollup-plugin-styles";
 import { string } from "rollup-plugin-string";
 import { terser } from "rollup-plugin-terser";
 
-import { distDirectory, name, sourceDirectory } from "./tools/const.mjs";
+import { distDirectory, packageId, sourceDirectory } from "./tools/const.mjs";
 
 const staticFiles = [
   "assets",
@@ -26,7 +26,7 @@ const isWatch = process.env.ROLLUP_WATCH === "true";
  * @type {import('rollup').RollupOptions}
  */
 const config = {
-  input: { [`${name}`]: `${sourceDirectory}/${name}.js` },
+  input: { [`${packageId}`]: `${sourceDirectory}/${packageId}.js` },
   output: {
     dir: distDirectory,
     format: "es",
@@ -36,7 +36,7 @@ const config = {
   plugins: [
     sourcemaps(),
     styles({
-      mode: ["extract", `css/${name}.css`],
+      mode: ["extract", `css/${packageId}.css`],
       url: false,
       sourceMap: true,
       minimize: isProduction,

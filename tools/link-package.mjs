@@ -3,25 +3,36 @@ import path from "node:path";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { destinationDirectory, distDirectory, foundryconfigFile, name } from "./const.mjs";
+import { destinationDirectory, distDirectory, foundryconfigFile, packageId } from "./const.mjs";
 
 /**
- * Get the data path of Foundry VTT based on what is configured in the {@link foundryconfigFile}.
+ * Get the data paths of Foundry VTT based on what is configured in the {@link foundryconfigFile}.
  */
-function getDataPath() {
+function getDataPaths() {
   const config = fs.readJSONSync(foundryconfigFile);
 
-  if (config?.dataPath) {
-    if (!fs.existsSync(path.resolve(config.dataPath))) {
-      throw new Error("User data path invalid, no Data directory found");
-    }
-    return path.resolve(config.dataPath);
+  const dataPath = config?.dataPath;
+
+  if (dataPath) {
+    const dataPaths = Array.isArray(dataPath) ? dataPath : [dataPath];
+
+    return dataPaths.map((dataPath) => {
+      if (typeof dataPath !== "string") {
+        throw new Error(
+          `Property dataPath in foundryconfig.json is expected to be a string or an array of strings, but found ${dataPath}`,
+        );
+      }
+      if (!fs.existsSync(path.resolve(dataPath))) {
+        throw new Error(`The dataPath ${dataPath} does not exist on the file system`);
+      }
+      return path.resolve(dataPath);
+    });
   } else {
-    throw new Error(`No user data path defined in ${foundryconfigFile}`);
+    throw new Error(`No dataPath defined in ${foundryconfigFile}`);
   }
 }
 /**
- * Link the built package to the user data folder.
+ * Link the built package to the user data folders.
  * @param {boolean} clean Whether to remove the link instead of creating it
  */
 async function linkPackage(clean) {
@@ -29,15 +40,21 @@ async function linkPackage(clean) {
     throw new Error("Could not find module.json");
   }
 
-  const linkDirectory = path.resolve(getDataPath(), "Data", destinationDirectory, name);
+  const linkDirectories = getDataPaths().map((dataPath) =>
+    path.resolve(dataPath, "Data", destinationDirectory, packageId),
+  );
 
-  if (clean) {
-    console.log(`Removing link to built package at ${linkDirectory}.`);
-    await fs.remove(linkDirectory);
-  } else if (!fs.existsSync(linkDirectory)) {
-    console.log(`Linking built package to ${linkDirectory}.`);
-    await fs.ensureDir(path.resolve(linkDirectory, ".."));
-    await fs.symlink(path.resolve(".", distDirectory), linkDirectory);
+  for (const linkDirectory of linkDirectories) {
+    if (clean) {
+      console.log(`Removing build in ${linkDirectory}.`);
+      await fs.remove(linkDirectory);
+    } else if (!fs.existsSync(linkDirectory)) {
+      console.log(`Linking dist to ${linkDirectory}.`);
+      await fs.ensureDir(path.resolve(linkDirectory, ".."));
+      await fs.symlink(path.resolve(distDirectory), linkDirectory);
+    } else {
+      console.log(`Skipped linking to ${linkDirectory}, as it already exists.`);
+    }
   }
 }
 
