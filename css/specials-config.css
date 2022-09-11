@@ -26,6 +26,10 @@
   font-size: var(--font-size-12);
 }
 
+.fxmaster.specials .directory-item.folder h3 {
+  border: none;
+}
+
 .fxmaster .directory-item.active {
   background: #ff640066;
 }
