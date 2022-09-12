@@ -11,7 +11,7 @@ export class OldFilmFilter extends FXMasterFilterEffectMixin(PIXI.filters.OldFil
   static label = "FXMASTER.FilterEffectOldFilm";
 
   /** @override */
-  static icon = "fas fa-film";
+  static icon = "fa-solid fa-film";
 
   /** @override */
   static get parameters() {

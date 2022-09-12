@@ -317,10 +317,9 @@ export class SpecialEffectsLayer extends InteractionLayer {
     const folder = active[0].closest(".folder").dataset.folderId;
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
 
-    const effectData = foundry.utils.deepClone(effect);
     const { x, y } = event.data.origin ?? savedOrigin;
     const data = {
-      ...effectData,
+      ...effect,
       position: { x, y },
       rotation: event.data.rotation,
       elevation: this.#elevation,

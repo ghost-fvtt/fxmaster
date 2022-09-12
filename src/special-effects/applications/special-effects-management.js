@@ -47,7 +47,9 @@ export class SpecialEffectsManagement extends Application {
     });
 
     html.find(".preview video").hover((ev) => {
-      ev.currentTarget.play();
+      /** @type {HTMLVideoElement} */
+      const video = ev.currentTarget;
+      video.play();
     });
 
     html.find(".del-effect").click((ev) => {

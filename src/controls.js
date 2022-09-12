@@ -16,14 +16,14 @@ function getSceneControlButtons(controls) {
   controls.push({
     name: "effects",
     title: "CONTROLS.Effects",
-    icon: "fas fa-wand-magic-sparkles",
+    icon: "fa-solid fa-wand-magic-sparkles",
     layer: "specials",
     visible: game.user.role >= game.settings.get(packageId, "permission-create"),
     tools: [
       {
-        name: "specials",
+        name: "special-effects",
         title: "CONTROLS.SpecialFX",
-        icon: "fas fa-hat-wizard",
+        icon: "fa-solid fa-hat-wizard",
         onClick: () => {
           new SpecialEffectsManagement().render(true);
         },
@@ -32,7 +32,7 @@ function getSceneControlButtons(controls) {
       {
         name: "particle-effects",
         title: "CONTROLS.ParticleEffects",
-        icon: "fas fa-cloud-rain",
+        icon: "fa-solid fa-cloud-rain",
         onClick: () => {
           new ParticleEffectsManagement().render(true);
         },
@@ -40,9 +40,9 @@ function getSceneControlButtons(controls) {
         button: true,
       },
       {
-        name: "invertmask",
+        name: "invert-mask",
         title: "CONTROLS.InvertMask",
-        icon: "fas fa-mask",
+        icon: "fa-solid fa-mask",
         onClick: () => {
           if (canvas.scene) {
             const invert = canvas.scene.getFlag(packageId, "invert") ?? false;
@@ -54,9 +54,9 @@ function getSceneControlButtons(controls) {
         toggle: true,
       },
       {
-        name: "filters",
+        name: "filter-effects",
         title: "CONTROLS.Filters",
-        icon: "fas fa-filter",
+        icon: "fa-solid fa-filter",
         onClick: () => {
           new FilterEffectsManagementConfig().render(true);
         },
@@ -66,7 +66,7 @@ function getSceneControlButtons(controls) {
       {
         name: "save",
         title: "CONTROLS.SaveMacro",
-        icon: "fas fa-floppy-disk",
+        icon: "fa-solid fa-floppy-disk",
         onClick: saveParticleAndFilterEffectsAsMacro,
         visible: game.user.isGM,
         button: true,
@@ -74,7 +74,7 @@ function getSceneControlButtons(controls) {
       {
         name: "clearfx",
         title: "CONTROLS.ClearFX",
-        icon: "fas fa-trash",
+        icon: "fa-solid fa-trash",
         onClick: () => {
           Dialog.confirm({
             title: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsTitle"),

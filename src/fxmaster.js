@@ -13,6 +13,7 @@ import { registerGetSceneControlButtonsHook } from "./controls.js";
 import { format } from "./logger.js";
 
 import "../css/common.css";
+import { registerTours } from "./tours/tours.js";
 
 window.FXMASTER = {
   filters: FilterManager.instance,
@@ -187,7 +188,7 @@ Hooks.on("renderDrawingHUD", (hud, html) => {
   }
   maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskParticleEffects"));
   maskToggle.dataset.action = "mask";
-  maskToggle.innerHTML = `<i class="fas fa-cloud"></i>`;
+  maskToggle.innerHTML = `<i class="fa-solid fa-cloud"></i>`;
   html.find(".col.left").append(maskToggle);
 
   html.find(".control-icon[data-action='mask']").on("click", (event) => {
@@ -206,3 +207,4 @@ Hooks.on("renderDrawingHUD", (hud, html) => {
 registerGetSceneControlButtonsHook();
 registerSceneMaskFunctionality();
 registeDrawingsMaskFunctionality();
+registerTours();

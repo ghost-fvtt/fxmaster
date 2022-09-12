@@ -95,9 +95,9 @@ individual functionality of FXMaster has its own tool inside this scene control.
 ### Special Effects <img src="./media/font-awesome/hat-wizard.svg" alt="Special Effects Icon" height="20" />
 
 _Special Effects_ are essentially video files that can be played on the canvas via clicking or dragging. FXMaster
-includes only a couple of example effects. If you want more, you will need to install a module providing animation files
-like [JB2A], [Jinker's Animated Art], or [Jack Kerouac's Animated Spell Effects]. All of them integrate with FXMaster.
-Alternatively, you can also [add your own _Special Effects_](#managing-custom-special-effects).
+includes only a couple of example effects. If you want more, you will need to install a module providing animation
+files, for example [JB2A], [Jinker’s Animated Art Pack], or [Jack Kerouac’s Animated Spell Effects]. All of these
+integrate with FXMaster. Alternatively, you can also [add your own _Special Effects_](#managing-custom-special-effects).
 
 Clicking on this tool opens the _Special Effects Management_ dialog:
 
@@ -147,7 +147,7 @@ _Cast Modes_ for _Special Effects_, simply by clicking on them. Here is an overv
 | Move to Target   |     <img src="./media/font-awesome/rocket.svg" alt="Move to Target Icon" height="20" />     | _Special Effects_ face and move towards the target.                                                                     |
 | Extend to Target | <img src="./media/font-awesome/angles-right.svg" alt="Extend to Target Icon" height="20" /> | _Special Effects_ face towards the target and extend to it.                                                             |
 | Expand to Target |   <img src="./media/font-awesome/maximize.svg" alt="Expand to Target Icon" height="20" />   | _Special Effects_ face towards the target and expand to it, scaling the whole effect up while keeping the aspect ratio. |
-| Rotate           |   <img src="./media/font-awesome/arrow-rotate-left.svg" alt="Rotate Icon" height="20" />    | _Special Effects_ rotate clockwise. The dragged distance specifies the rotation speed.                                  |
+| Rotate           |   <img src="./media/font-awesome/arrow-rotate-right.svg" alt="Rotate Icon" height="20" />    | _Special Effects_ rotate clockwise. The dragged distance specifies the rotation speed.                                  |
 
 #### Managing Custom Special Effects
 
@@ -566,9 +566,9 @@ Many thanks to:
 * The rat sprites used in the Rats particle effect by crymoonster are licensed under [CC BY-4.0].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
-[JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
-[Jinker's Animated Art]: https://github.com/jinkergm/JAA
-[Jack Kerouac's Animated Spell Effects]: https://github.com/jackkerouac/animated-spell-effects
+[JB2A]: https://foundryvtt.com/packages/JB2A_DnD5e
+[Jinker’s Animated Art Pack]: https://foundryvtt.com/packages/jaamod
+[Jack Kerouac’s Animated Spell Effects]: https://foundryvtt.com/packages/animated-spell-effects
 [FoundryVTT FXMaster Specials Demo Template]: https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template
 [U~man]: https://github.com/mesfoliesludiques
 [theripper93]: https://github.com/theripper93

@@ -5,7 +5,7 @@ export class BloomFilter extends FadingFilterMixin(PIXI.filters.AdvancedBloomFil
   static label = "FXMASTER.FilterEffectBloom";
 
   /** @override */
-  static icon = "fas fa-ghost";
+  static icon = "fa-solid fa-ghost";
 
   /** @override */
   static get parameters() {

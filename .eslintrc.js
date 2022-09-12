@@ -22,6 +22,8 @@ module.exports = {
     InteractionLayer: "readonly",
     SpriteMesh: "readonly",
     FullCanvasContainer: "readonly",
+    CanvasTour: "readonly",
+    Tour: "readonly",
   },
 
   rules: {
