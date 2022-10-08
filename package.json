@@ -42,7 +42,7 @@
     "@commitlint/config-conventional": "17.1.0",
     "@guanghechen/rollup-plugin-copy": "2.1.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
-    "eslint": "8.24.0",
+    "eslint": "8.25.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.1",
