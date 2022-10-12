@@ -18,7 +18,7 @@ export class UnderwaterFilter extends FXMasterFilterEffectMixin(PIXI.filters.Dis
   static label = "FXMASTER.FilterEffectUnderwater";
 
   /** @override */
-  static icon = "fas fa-water";
+  static icon = "fa-solid fa-water";
 
   static get parameters() {
     return {

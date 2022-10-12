@@ -5,7 +5,7 @@ export class ColorFilter extends FadingFilterMixin(PIXI.filters.AdjustmentFilter
   static label = "FXMASTER.FilterEffectColor";
 
   /** @override */
-  static icon = "fas fa-palette";
+  static icon = "fa-solid fa-palette";
 
   /** @override */
   static get parameters() {

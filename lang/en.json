@@ -1,6 +1,7 @@
 {
   "I18N.LANGUAGE": "English",
   "I18N.MAINTAINERS": "ghost#2000",
+
   "CONTROLS.Effects": "Effect Controls",
   "CONTROLS.SpecialFX": "Special Effects",
   "CONTROLS.ParticleEffects": "Particle Effects",
@@ -8,9 +9,11 @@
   "CONTROLS.Filters": "Filter Effects",
   "CONTROLS.SaveMacro": "Save Particle and Filter Effects as Macro",
   "CONTROLS.ClearFX": "Clear Particle and Filter Effects",
+
   "FXMASTER.ParticleEffectsGroupOther": "Other",
   "FXMASTER.ParticleEffectsGroupAnimals": "Animals",
   "FXMASTER.ParticleEffectsGroupWeather": "Weather",
+
   "FXMASTER.ParticleEffect": "Particle Effect",
   "FXMASTER.ParticleEffectBats": "Bats",
   "FXMASTER.ParticleEffectBirds": "Birds",
@@ -26,6 +29,7 @@
   "FXMASTER.ParticleEffectSnowstorm": "Snowstorm",
   "FXMASTER.ParticleEffectSpiders": "Spiders",
   "FXMASTER.ParticleEffectStars": "Stars",
+
   "FXMASTER.FilterEffect": "Filter Effect",
   "FXMASTER.FilterEffectBloom": "Bloom",
   "FXMASTER.FilterEffectColor": "Color",
@@ -34,10 +38,12 @@
   "FXMASTER.FilterEffectOldFilm": "Old Film",
   "FXMASTER.FilterEffectPredator": "Predator",
   "FXMASTER.FilterEffectUnderwater": "Underwater",
+
   "FXMASTER.SpecialEffectsManagementTitle": "Special Effects Management",
   "FXMASTER.ParticleEffectsManagementTitle": "Particle Effects Management",
   "FXMASTER.FilterEffectsManagementTitle": "Filter Effects Management",
   "FXMASTER.AddSpecialEffect": "Add a Special Effect",
+
   "FXMASTER.Saturation": "Saturation",
   "FXMASTER.Gamma": "Gamma",
   "FXMASTER.Period": "Period",
@@ -88,10 +94,55 @@
   "FXMASTER.ParicleEffectBirdsAnimationsGlide": "Glide",
   "FXMASTER.ParicleEffectBirdsAnimationsFlap": "Flap",
   "FXMASTER.ParicleEffectBirdsAnimationsMixed": "Mixed",
+
   "FXMASTER.MigrationWorldStart": "Performing world migrations for FXMaster. Please be patient and do not close your game or shut down your server.",
   "FXMASTER.MigrationWorldCompletedWithErrors": "World migrations for FXMaster completed with errors. For more details, please take a look at the developer console (F12). Effects have been disabled via the “Disable Effects For Everybody” setting to avoid any potential scene crashes. Only reactivate them if you are sure it’s safe to do so. You might want to remove all particle and filter effects from any affected scenes first.",
   "FXMASTER.MigrationWorldCompletedSuccessfully": "World migrations for FXMaster completed successfully.",
   "FXMASTER.MigrationClientStart": "Performing client migrations for FXMaster. Please be patient and do not close your game.",
   "FXMASTER.MigrationClientCompletedWithErrors": "Client migrations for FXMaster completed with errors. For more details, please take a look at the developer console (F12).",
-  "FXMASTER.MigrationClientCompletedSuccessfully": "Client migrations for FXMaster completed successfully."
+  "FXMASTER.MigrationClientCompletedSuccessfully": "Client migrations for FXMaster completed successfully.",
+
+  "FXMASTER.InfoWaitForStepToFinish": "Please wait for the step to finish.",
+
+  "FXMASTER.TourOverviewTitle": "FXMaster Overview",
+  "FXMASTER.TourOverviewDescription": "This Tour will give you a high level overview of FXMaster.",
+  "FXMASTER.TourOverviewWelcomeTitle": "Welcome, and thank you for installing FXMaster!",
+  "FXMASTER.TourOverviewWelcomeContent": "FXMaster provides various kinds of effects that you can use to make your game sessions in Foundry Virtual Tabletop a lot more immersive.\nThis tour will give you a high level overview over the different functionalities that are provided.\nLet’s get started!",
+  "FXMASTER.TourOverviewEffectControlsTitle": "Effect Controls",
+  "FXMASTER.TourOverviewEffectControlsContent": "The Effect Controls allow Gamemaster users and Player users with appropriate permissions to configure various types of effects.\nThere are <em>Special Effects</em>, <em>Particle Effects</em>, and <em>Filter Effects</em>.\nWe will now go through the different tools that are available, and briefly explain them.",
+  "FXMASTER.TourOverviewSpecialEffectsTitle": "Special Effects",
+  "FXMASTER.TourOverviewSpecialEffectsContent": "Special Effects are just video files that can be played on the canvas by clicking or dragging. It is also possible to create Tiles from these effects, in order to have permanently playing variants.\nFXMaster includes only a couple of example Special Effects. If you want more, you will need to install a module providing animation files, for example <a href='https://foundryvtt.com/packages/JB2A_DnD5e/' target='_blank'>JB2A</a>, <a href='https://foundryvtt.com/packages/jaamod' target='_blank'>Jinker’s Animated Art Pack</a>, or <a href='https://foundryvtt.com/packages/animated-spell-effects' target='_blank'>Jack Kerouac’s Animated Spell Effects</a>. All of these integrate directly with FXMaster.\nAlternatively, you can use your own video files and add them as Special Effects.",
+  "FXMASTER.TourOverviewParticleEffectsTitle": "Particle Effects",
+  "FXMASTER.TourOverviewParticleEffectsContent": "Particle Effects are global effects that are displayed all accross the scene. They include weather effects like rain, fog, clouds, and snow, but also other particle based effects, such as certain animals moving accross the scene, or floating bubbles.\nIt is also possible to limit the area in which these effects are displayed by using drawings to create a mask.",
+  "FXMASTER.TourOverviewInvertMaskTitle": "Invert Particle Effect Mask",
+  "FXMASTER.TourOverviewInvertMaskContent": "This is a toggle for whether Particle Effects are displayed <em>inside</em> or <em>outside</em> of drawings that are used for masking.",
+  "FXMASTER.TourOverviewFilterEffectsTitle": "Filter Effects",
+  "FXMASTER.TourOverviewFilterEffectsContent": "Filter Effects work similarly to Particle Effects. They are also displayed across the entire scene, but instead of displaying particles, they adjust the scene in specific ways, such as changing its color, or distorting it to create an underwater-like effect.\nIt is not possible to mask Filter Effects.",
+  "FXMASTER.TourOverviewSaveTitle": "Save as Macro",
+  "FXMASTER.TourOverviewSaveContent": "This creates a Macro from the current Particle and Filter Effects of the viewed Scene. When activated, it sets the Particle and Filter Effects of the viewed scene accordinlgy.\nThe macro is just put into the Macro Directory and not added to the Hotbar automatically.",
+  "FXMASTER.TourOverviewClearTitle": "Clear",
+  "FXMASTER.TourOverviewClearContent": "This clears all Particle and Filter Effects of the Scene.\nIt does not remove any permanently playing Special Effects. Since those are just Tiles, they need to be removed via the Tile Controls.",
+  "FXMASTER.TourOverviewHelpTitle": "Documentation and Help",
+  "FXMASTER.TourOverviewHelpContent": "Using FXMaster can seem a bit daunting at first, but we hope this and the other provided tours will help you with getting started.\nIn case you still have any open questions afterwards, all functionality is documented in the <a href='https://github.com/ghost-fvtt/fxmaster/blob/main/README.md' target='_blank'>Readme</a>, including the FXMaster API, which you can use to create your own custom Macros. And if you require more help, feel free to contact ghost#2000 on the official Foundry Virtual Tabletop <a href='https://discord.gg/FoundryVTT' target='_blank'>Discord server</a>.",
+
+  "FXMASTER.TourSpecialEffectsTitle": "Special Effects",
+  "FXMASTER.TourSpecialEffectsDescription": "This Tour will teach you how to use Special Effects.",
+  "FXMASTER.TourSpecialEffectsIntroductionTitle": "Introduction",
+  "FXMASTER.TourSpecialEffectsIntroductionContent": "Special Effects are animations (videos) that can be displayed on the Canvas by Gamemaster users and Player users with appropriate permissions. In this tour, we will explain the different ways in which these effects can be played, and how to manage the available effects.",
+  "FXMASTER.TourSpecialEffectsToolTitle": "Special Effects Tool",
+  "FXMASTER.TourSpecialEffectsToolContent": "This is the Special Effects Tool, which provides access to all functionality related to Special Effects. Clicking it will open the Special Effects Management window.",
+  "FXMASTER.TourSpecialEffectsListTitle": "List of Special Effects",
+  "FXMASTER.TourSpecialEffectsListContent": "This is the list of Special Effects that are currently available, sorted into different folders. By default, only a few effects provided by FXMaster are available, but you can add more by installing certain content modules, or creating your own ones.\nBut first, let’s explain how to actually use them. By clicking on a folder, it is expanded, and you can see the individual effects.",
+  "FXMASTER.TourSpecialEffectsSelectedTitle": "Selected Special Effect",
+  "FXMASTER.TourSpecialEffectsSelectedContent": "This is an entry for a Special Effect. It has already been selected by clicking on it.\nYou can see the label of the effect, as well as its author. By hovering over the black square, you will to see a preview of the animation. Let’s try it out by progressing to the next step!",
+  "FXMASTER.TourSpecialEffectsPlayingTitle": "Playing Special Effects",
+  "FXMASTER.TourSpecialEffectsPlayingContent": "Seeing the preview is pretty cool, but of course, we want to actually play the effect on the Canvas, visible to all Players. In order to do so, just click on the Canvas where you want the effect to be displayed. Alternatively, you can also drag on the Canvas, to specify the direction of the effect. Let's see it in action!",
+  "FXMASTER.TourSpecialEffectsPlayingOptionsTitle": "Playing Options",
+  "FXMASTER.TourSpecialEffectsPlayingOptionsContent": "There are a few different options regarding how Special Effects can be played:<ul><li><i class=\"fa-solid fa-angle-up fa-fw\"></i>: This number input specifies the elevantion at which the effect is played.</li><li><i class=\"fa-solid fa-compress fa-fw\"></i>: When selected, effects face towars the target.</li><li><i class=\"fa-solid fa-rocket fa-fw\"></i>: When selected, effects face and move towards the target.</li><li><i class=\"fa-solid fa-angles-right fa-fw\"></i>: When selected, effects face towards the target and extend to it.</li><li><i class=\"fa-solid fa-maximize fa-fw\"></i>: When selected, effects face towards the target and expand to it, retaining their aspect ration.</li><li><i class=\"fa-solid fa-arrow-rotate-right fa-fw\"></i>: When selected, effects rotate clockwise and the dragged distance specifies the rotation speed.</li></ul>",
+
+  "FXMASTER.TourParticleEffectsTitle": "Particle Effects",
+  "FXMASTER.TourParticleEffectsDescription": "This Tour will teach you how to use Particle Effects.",
+
+  "FXMASTER.TourFilterEffectsTitle": "Filter Effects",
+  "FXMASTER.TourFilterEffectsDescription": "This Tour will teach you how to use Filter Effects."
 }

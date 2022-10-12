@@ -18,7 +18,7 @@ export class LightningFilter extends FXMasterFilterEffectMixin(PIXI.filters.Adju
   static label = "FXMASTER.FilterEffectLightning";
 
   /** @override */
-  static icon = "fas fa-bolt-lightning";
+  static icon = "fa-solid fa-bolt-lightning";
 
   /** @override */
   static get parameters() {

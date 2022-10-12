@@ -11,7 +11,7 @@ export class PredatorFilter extends FXMasterFilterEffectMixin(PIXI.filters.CRTFi
   static label = "FXMASTER.FilterEffectPredator";
 
   /** @override */
-  static icon = "fas fa-wave-square";
+  static icon = "fa-solid fa-wave-square";
 
   /** @override */
   static get parameters() {

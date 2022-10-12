@@ -17,7 +17,7 @@ export class FogFilter extends FadingFilterMixin(PIXI.Filter) {
   static label = "FXMASTER.FilterEffectFog";
 
   /** @override */
-  static icon = "fas fa-cloud";
+  static icon = "fa-solid fa-cloud";
 
   /** @override */
   static get parameters() {

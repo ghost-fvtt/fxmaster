@@ -40,7 +40,7 @@ export function FXMasterFilterEffectMixin(Base) {
      * A Font Awesome icon to display for this filter effect in the {@link FilterEffectsManagementConfig}.
      * @type {string}
      */
-    static icon = "fas fa-filter";
+    static icon = "fa-solid fa-filter";
 
     /**
      * The set of parameters the filter effect supports.

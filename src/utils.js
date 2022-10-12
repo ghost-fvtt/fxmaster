@@ -39,3 +39,42 @@ export function omit(object, key) {
   const { [key]: _omitted, ...rest } = object;
   return rest;
 }
+
+/**
+ * Wait for the given timeout.
+ * @param {number} timeout The time to wait in milliseconds
+ * @returns {Promise<void>} A promise that resolves after the given timeout
+ */
+export function wait(timeout) {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+}
+
+/**
+ * Wait for a specific element to appear in the DOM.
+ * @param {string} selector       The selector for the element to wait for
+ * @param {number} [timeout=100]  The maximum time to wait in milliseconds
+ * @returns {Promise<HTMLElement>} A promise that resolves to the element, if it is found
+ */
+export function waitForElement(selector, timeout = 100) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(selector)) {
+      return resolve(document.querySelector(selector));
+    }
+
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(selector)) {
+        resolve(document.querySelector(selector));
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    wait(timeout).then(() =>
+      reject(new Error(`Timeout while waiting for an element that matches the selector ${selector}`)),
+    );
+  });
+}
