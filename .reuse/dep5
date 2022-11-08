@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: FXMaster
+Upstream-Contact: Johannes Loher <johannes.loher@fg4f.de>
+Source: https://github.com/ghost-fvtt/fxmaster
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...

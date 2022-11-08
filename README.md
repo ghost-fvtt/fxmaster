@@ -554,28 +554,32 @@ Many thanks to:
 
 ## Licensing
 
-* FXMaster is licensed under the BSD 3-Clause "New" or "Revised" License, a copy of which can be found at
-  [LICENSE.md](./LICENSE.md).
+* The software component of FXMaster is licensed under [BSD 3-Clause].
 * Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art] and are licensed as free
   for use.
 * Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
 * The Seagull sprites used in the Birds particle effect are from [whtdragon].
 * The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
-* The rats icon is a derivative work of “Rat” by DataBase Center for Life Science (DBCLS)
-  (https://togotv.dbcls.jp/en/togopic.2021.006.html), used under [CC BY-4.0], and licensed under [CC BY-4.0].
+* The icons for particle effects are by Rexard and licensed under [Rexard Game Dev Assets EULA].
 * The rat sprites used in the Rats particle effect by crymoonster are licensed under [CC BY-4.0].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
+
 [JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
 [Jinker's Animated Art]: https://github.com/jinkergm/JAA
 [Jack Kerouac's Animated Spell Effects]: https://github.com/jackkerouac/animated-spell-effects
+[Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
+
 [FoundryVTT FXMaster Specials Demo Template]: https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template
+
 [U~man]: https://github.com/mesfoliesludiques
 [theripper93]: https://github.com/theripper93
 [Wasp]: https://github.com/fantasycalendar
 [SecretFire]: https://github.com/Feu-Secret
-[Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
-[CC BY-NC-SA-4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 [whtdragon]: https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/
 [Font Awesome]: https://fontawesome.com/
-[CC BY-4.0]: https://creativecommons.org/licenses/by/4.0/
+
+[BSD 3-Clause]: ./LICENSES/BSD-3-Clause.txt
+[CC BY-NC-SA-4.0]: ./LICENSES/CC-BY-NC-SA-4.0.txt
+[CC BY-4.0]: ./LICENSES/CC-BY-4.0.txt
+[Rexard Game Dev Assets EULA]: ./LICENSES/LicenseRef-RexardGameDevAssetsEULA.txt

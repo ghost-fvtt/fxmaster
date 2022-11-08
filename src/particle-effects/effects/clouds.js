@@ -9,7 +9,7 @@ export class CloudsParticleEffect extends FXMasterParticleEffect {
 
   /** @override */
   static get icon() {
-    return "modules/fxmaster/assets/particle-effects/icons/fog.png";
+    return "modules/fxmaster/assets/particle-effects/icons/clouds.png";
   }
 
   /** @override */

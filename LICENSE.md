@@ -1,11 +1,19 @@
-Copyright 2021 Emmanuel Ruaud, Johannes Loher
+## Licensing
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+* The software component of FXMaster is licensed under [BSD 3-Clause].
+* Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art] and are licensed as free
+  for use.
+* Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
+* The Seagull sprites used in the Birds particle effect are from [whtdragon].
+* The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
+* The icons for particle effects are by Rexard and licensed under [Rexard Game Dev Assets EULA].
+* The rat sprites used in the Rats particle effect by crymoonster are licensed under [CC BY-4.0].
 
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+[Jinker's Animated Art]: https://github.com/jinkergm/JAA
 
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+[whtdragon]: https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/
 
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+[BSD 3-Clause]: ./LICENSES/BSD-3-Clause.txt
+[CC BY-NC-SA-4.0]: ./LICENSES/CC-BY-NC-SA-4.0.txt
+[CC BY-4.0]: ./LICENSES/CC-BY-4.0.txt
+[Rexard Game Dev Assets EULA]: ./LICENSES/LicenseRef-RexardGameDevAssetsEULA.txt
