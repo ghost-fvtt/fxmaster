@@ -4,6 +4,10 @@ export function registerSceneMaskFunctionality() {
 
 function drawSceneMask() {
   const msk = canvas.masks.depth;
+  if (msk.fxmasterSceneMask) {
+    msk.removeChild(msk.fxmasterSceneMask);
+    delete msk.fxmasterSceneMask;
+  }
   if (shouldMaskToScene()) {
     const mask = new PIXI.LegacyGraphics()
       .beginFill(0x0000ff)
@@ -15,9 +19,6 @@ function drawSceneMask() {
     mask.mask = new PIXI.MaskData();
     mask.mask.colorMask = PIXI.COLOR_MASK_BITS.BLUE;
     msk.fxmasterSceneMask = msk.addChild(mask);
-  } else if (msk.fxmasterSceneMask) {
-    msk.removeChild(msk.fxmasterSceneMask);
-    delete msk.fxmasterSceneMask;
   }
 }
 
