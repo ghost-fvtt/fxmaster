@@ -92,6 +92,7 @@ export class SnowParticleEffect extends FXMasterParticleEffect {
         data: { x: 0, y: -0.1 * d.height, w: d.width, h: d.height },
       },
     });
+    this.applyOptionsToConfig(options, config);
     return [this.createEmitter(config)];
   }
 }
