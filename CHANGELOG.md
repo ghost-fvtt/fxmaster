@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.2](https://github.com/ghost-fvtt/fxmaster/compare/v3.5.1...v3.5.2) (2022-12-17)
+
+
+### Bug Fixes
+
+* address issue that that snow particle effect wasn’t configurable ([bfb05d8](https://github.com/ghost-fvtt/fxmaster/commit/bfb05d80dd8923cc1dbc77c706584214974de8b7))
+
 ### [3.5.1](https://github.com/ghost-fvtt/fxmaster/compare/v3.5.0...v3.5.1) (2022-11-12)
 
 
