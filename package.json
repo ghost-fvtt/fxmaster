@@ -40,7 +40,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.4.2",
     "@commitlint/config-conventional": "17.4.2",
-    "@guanghechen/rollup-plugin-copy": "2.1.4",
+    "@guanghechen/rollup-plugin-copy": "3.0.2",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
     "eslint": "8.34.0",
     "eslint-config-prettier": "8.6.0",
