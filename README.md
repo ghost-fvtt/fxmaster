@@ -9,10 +9,10 @@
 
 FXMaster is a module for [Foundry Virtual Tabletop] that provides various types of effects:
 
-* _Particle Effects_, including weather (rain, clouds, fog, snow, etc.), animals (crows, bats, spiders, etc.), and a few
+- _Particle Effects_, including weather (rain, clouds, fog, snow, etc.), animals (crows, bats, spiders, etc.), and a few
   others.
-* _Filter Effects_, including color overlays, underwater, and lightning.
-* Clickable _Special Effects_, using video files provided by external sources.
+- _Filter Effects_, including color overlays, underwater, and lightning.
+- Clickable _Special Effects_, using video files provided by external sources.
 
 This module also provides ways to easily configure these effects.
 
@@ -62,23 +62,26 @@ https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json
 
 ## FAQ
 
-* Q: I have put a special effect onto a scene, and now I can't get rid of it anymore. How do I remove it?
+- Q: I have put a special effect onto a scene, and now I can't get rid of it anymore. How do I remove it?
 
   A: Most likely, your created a permanently playing special effect by dragging a special effect onto the canvas, which
   is just a regular [Tile](https://foundryvtt.com/article/tiles/) and not managed by FXMaster. To remove it, go to the
   Tile Controls and remove the Tile there.
-* Q: What is the difference between Particle Effects, Filter Effects, and Special Effects?
+
+- Q: What is the difference between Particle Effects, Filter Effects, and Special Effects?
 
   A: Particle Effects are global effects that display particles on the whole scene. Mostly they are weather effects, but
   they also include animals and some other effects.<br>
   Filter Effects are filters that adjust the whole scene in some way, e.g. by adjusting the color or distorting the
   scene to look like it's underwater.<br>
   Special Effects are animations (video files) that can be played on your chosen location on the canvas.
-* Q: Can I provide my own effects?
+
+- Q: Can I provide my own effects?
 
   A: You can provide your own Special Effects, as described in [Managing Custom Special Effects](#managing-custom-special-effects).
   It's not possible to provide your own Particle Effects or Filter Effects at this point.
-* Q: I have installed a module that provides additional animation files, but they are not showing up as Special Effects.
+
+- Q: I have installed a module that provides additional animation files, but they are not showing up as Special Effects.
   What do I need to do?
 
   A: Some of these modules (e.g. [JB2A]) provide a setting to activate their integration with FXMaster, which is
@@ -192,6 +195,7 @@ By clicking on the name of a _Particle Effect_, you expand it, showing the optio
 
 The available options differ slightly between _Particle Effects_ because not all options make sense for all of them. The
 options are:
+
 | Option     | Description                                                                                                                 |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Scale      | A factor that scales the effect relative to its base size.                                                                  |
@@ -282,36 +286,46 @@ packages and macros.
 
 ### Filter Effects
 
-* Adding or updating a named filter
+- Adding or updating a named filter
   ```javascript
   FXMASTER.filters.addFilter("myfilterID", "color", {
-    color: { value:"#ff00ff", apply: true },
+    color: { value: "#ff00ff", apply: true },
     gamma: 1.0,
     contrast: 1.0,
     brightness: 1.0,
-    saturation: 0.2
+    saturation: 0.2,
   });
   ```
-* Removing a named filter
+- Removing a named filter
   ```javascript
   FXMASTER.filters.removeFilter("myfilterID");
   ```
-* Toggling a named filter on and off
+- Toggling a named filter on and off
   ```javascript
   FXMASTER.filters.switch("myfilterID", "color", {
-    color: { value:"#ff00ff", apply: true },
+    color: { value: "#ff00ff", apply: true },
     gamma: 1.0,
     contrast: 1.0,
     brightness: 1.0,
-    saturation: 0.2
+    saturation: 0.2,
   });
   ```
-* Setting the list of active filters
+- Setting the list of active filters
   ```javascript
-    FXMASTER.filters.setFilters([
-      { type: "color", options: { /* ... */ } },
-      { type: "lightning", options: { /* ... */ } },
-    ]);
+  FXMASTER.filters.setFilters([
+    {
+      type: "color",
+      options: {
+        /* ... */
+      },
+    },
+    {
+      type: "lightning",
+      options: {
+        /* ... */
+      },
+    },
+  ]);
   ```
 
 #### Available Filter Effects With Supported Options
@@ -329,7 +343,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 
 ### Particle Effects
 
-* Switching a named particle effect on and off:
+- Switching a named particle effect on and off:
   ```javascript
   Hooks.call("fxmaster.switchParticleEffect", {
     name: "myParticleEffectID",
@@ -337,11 +351,21 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
     options: { density: 0.5 },
   });
   ```
-* Setting the active paticle effects:
+- Setting the active paticle effects:
   ```javascript
   Hooks.call("fxmaster.updateParticleEffects", [
-    { type: "rain", options: { /* ... */ } },
-    { type: "bubbles", options: { /* ... */ } },
+    {
+      type: "rain",
+      options: {
+        /* ... */
+      },
+    },
+    {
+      type: "bubbles",
+      options: {
+        /* ... */
+      },
+    },
   ]);
   ```
 
@@ -425,13 +449,13 @@ game.socket.emit("module.fxmaster", data);
 From module presets
 
 ```js
-const effectData = CONFIG.fxmaster.specialEffects.fxmaster.effects.find(ef => ef.label === "Blood Splatter");
+const effectData = CONFIG.fxmaster.specialEffects.fxmaster.effects.find((ef) => ef.label === "Blood Splatter");
 ```
 
 From custom presets
 
 ```js
-const effectData = CONFIG.fxmaster.specialEffects.custom.effects.find(ef => ef.label === "Energy Circle");
+const effectData = CONFIG.fxmaster.specialEffects.custom.effects.find((ef) => ef.label === "Energy Circle");
 ```
 
 #### Playing a Video File Between Two Tokens
@@ -452,8 +476,7 @@ function castSpell(effect) {
 }
 
 castSpell({
-  file:
-    "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
+  file: "modules/fxmaster/assets/specialEffects/jinker/dragonBornBlack-CopperAcid30x5Line.webm",
   anchor: {
     x: -0.08,
     y: 0.5,
@@ -546,39 +569,35 @@ requests for code changes.
 
 Many thanks to:
 
-* [U~man] for the original work on this module. Really, most of this is his work.
-* [theripper93] for contributing his ideas regarding handling particle effect masking elegantly.
-* [Wasp] for providing the [Sequencer] module that will inspire future updates.
-* [SecretFire] for exchanging ideas, providing help, and shaders for the filter effects. Donate
+- [U~man] for the original work on this module. Really, most of this is his work.
+- [theripper93] for contributing his ideas regarding handling particle effect masking elegantly.
+- [Wasp] for providing the [Sequencer] module that will inspire future updates.
+- [SecretFire] for exchanging ideas, providing help, and shaders for the filter effects. Donate
   [here](https://ko-fi.com/secretfire).
 
 ## Licensing
 
-* The software component of FXMaster is licensed under [BSD 3-Clause].
-* Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art] and are licensed as free
+- The software component of FXMaster is licensed under [BSD 3-Clause].
+- Jinker's Acid Line and Red Fire Cone video effects are borrowed from [Jinker's Animated Art] and are licensed as free
   for use.
-* Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
-* The Seagull sprites used in the Birds particle effect are from [whtdragon].
-* The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
-* The icons for particle effects are by Rexard and licensed under [Rexard Game Dev Assets EULA].
-* The rat sprites used in the Rats particle effect by crymoonster are licensed under [CC BY-4.0].
+- Jules and Ben's Witch Bolt effect is from [JB2A] and is licensed under [CC BY-NC-SA-4.0].
+- The Seagull sprites used in the Birds particle effect are from [whtdragon].
+- The control and tool icons are from [Font Awesome], licensed under the [CC BY-4.0].
+- The icons for particle effects are by Rexard and licensed under [Rexard Game Dev Assets EULA].
+- The rat sprites used in the Rats particle effect by crymoonster are licensed under [CC BY-4.0].
 
 [Foundry Virtual Tabletop]: https://foundryvtt.com/
-
 [JB2A]: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
 [Jinker's Animated Art]: https://github.com/jinkergm/JAA
 [Jack Kerouac's Animated Spell Effects]: https://github.com/jackkerouac/animated-spell-effects
 [Sequencer]: https://github.com/fantasycalendar/FoundryVTT-Sequencer
-
 [FoundryVTT FXMaster Specials Demo Template]: https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster-specials-template
-
 [U~man]: https://github.com/mesfoliesludiques
 [theripper93]: https://github.com/theripper93
 [Wasp]: https://github.com/fantasycalendar
 [SecretFire]: https://github.com/Feu-Secret
 [whtdragon]: https://forums.rpgmakerweb.com/index.php?threads/whtdragons-animals-and-running-horses-now-with-more-dragons.53552/
 [Font Awesome]: https://fontawesome.com/
-
 [BSD 3-Clause]: ./LICENSES/BSD-3-Clause.txt
 [CC BY-NC-SA-4.0]: ./LICENSES/CC-BY-NC-SA-4.0.txt
 [CC BY-4.0]: ./LICENSES/CC-BY-4.0.txt
