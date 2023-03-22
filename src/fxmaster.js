@@ -171,12 +171,12 @@ Hooks.on("hotbarDrop", (hotbar, data) => {
 Hooks.on("updateSetting", (setting) => {
   if (setting.key === "fxmaster.specialEffects") {
     parseSpecialEffects();
+    Object.values(ui.windows).forEach((w) => {
+      if (w instanceof SpecialEffectsManagement) {
+        w.render(false);
+      }
+    });
   }
-  Object.values(ui.windows).forEach((w) => {
-    if (w instanceof SpecialEffectsManagement) {
-      w.render(false);
-    }
-  });
 });
 
 Hooks.on("renderDrawingHUD", (hud, html) => {
