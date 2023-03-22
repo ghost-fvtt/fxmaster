@@ -1,9 +1,8 @@
 import copy from "@guanghechen/rollup-plugin-copy";
 import livereload from "rollup-plugin-livereload";
-import sourcemaps from "rollup-plugin-sourcemaps";
-import styles from "rollup-plugin-styles";
+import styles from "@ironkinoko/rollup-plugin-styles";
 import { string } from "rollup-plugin-string";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 
 import { distDirectory, packageId, sourceDirectory } from "./tools/const.mjs";
 
@@ -34,7 +33,6 @@ const config = {
     assetFileNames: "[name].[ext]",
   },
   plugins: [
-    sourcemaps(),
     styles({
       mode: ["extract", `css/${packageId}.css`],
       url: false,
