@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.5.2...v3.6.0) (2023-03-22)
+
+
+### Features
+
+* add German localization ([97012c8](https://github.com/ghost-fvtt/fxmaster/commit/97012c8a61a08ec07309d2924a9752bbbb9fd89d))
+* add opacity option to particle effects ([afa74ce](https://github.com/ghost-fvtt/fxmaster/commit/afa74ce9e0581cadf201127497d1b9bde5c98072)), closes [#305](https://github.com/ghost-fvtt/fxmaster/issues/305)
+
+
+### Bug Fixes
+
+* don't rerender Special Effects Management on every world setting change ([5a2984e](https://github.com/ghost-fvtt/fxmaster/commit/5a2984e7dffeba9c5326483ce1aeca5a11fa6b72)), closes [#438](https://github.com/ghost-fvtt/fxmaster/issues/438)
+
 ### [3.5.2](https://github.com/ghost-fvtt/fxmaster/compare/v3.5.1...v3.5.2) (2022-12-17)
 
 
