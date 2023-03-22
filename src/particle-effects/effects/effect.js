@@ -75,6 +75,15 @@ export class FXMasterParticleEffect extends ParticleEffect {
         step: 0.1,
         decimals: 1,
       },
+      alpha: {
+        label: "FXMASTER.Opacity",
+        type: "range",
+        min: 0,
+        value: 1,
+        max: 1,
+        step: 0.1,
+        decimals: 1,
+      },
       tint: {
         label: "FXMASTER.Tint",
         type: "color",
@@ -130,6 +139,7 @@ export class FXMasterParticleEffect extends ParticleEffect {
     this._applyDirectionToConfig(options, config);
     this._applyLifetimeToConfig(options, config);
     this._applyTintToConfig(options, config);
+    this._applyAlphaToConfig(options, config);
   }
 
   /** @protected */
@@ -217,6 +227,21 @@ export class FXMasterParticleEffect extends ParticleEffect {
           },
         });
     }
+  }
+
+  /** @protected */
+  _applyAlphaToConfig(options, config) {
+    const factor = options.alpha?.value ?? 1;
+
+    config.behaviors
+      .filter((behavior) => behavior.type === "alpha")
+      .forEach(({ config }) => this._applyFactorToValueList(config.alpha, factor));
+
+    config.behaviors
+      .filter((behavior) => behavior.type === "alphaStatic")
+      .forEach(({ config }) => {
+        config.alpha *= factor;
+      });
   }
 
   /** @override */

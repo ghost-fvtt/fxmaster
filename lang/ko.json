@@ -47,6 +47,7 @@
   "FXMASTER.Noise": "노이즈",
   "FXMASTER.LineWidth": "선 두께",
   "FXMASTER.Density": "밀도",
+  "FXMASTER.Opacity": "불투명도",
   "FXMASTER.Tint": "색상화",
   "FXMASTER.Scale": "크기",
   "FXMASTER.ScaleHint": "영상 크기 조절",

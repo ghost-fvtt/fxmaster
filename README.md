@@ -203,6 +203,7 @@ options are:
 | Speed      | A factor that adjusts the speed of the effect relative to its base speed.                                                   |
 | Lifetime   | A factor that adjusts the lifetime of the individual particles.                                                             |
 | Density    | The density of the effect. For most effects, it represents the number of particles per grid unit.                           |
+| Opacity    | A factor between 0 and 1 that adjusts the opacity of the particles.                                                         |
 | Tint       | Tint the effect with this color.                                                                                            |
 | Animations | A selection of animations from the list of animations for the effect to use. If it is empty, the default animation is used. |
 
@@ -371,24 +372,24 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 
 #### Available Particle Effects With Supported Options
 
-| Type         | `scale` | `direction` | `speed` | `lifetime` | `density` | `tint` |         `animations`         |
-| ------------ | :-----: | :---------: | :-----: | :--------: | :-------: | :----: | :--------------------------: |
-| `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `bubbles`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓      |           |   ✓    |                              |
-| `embers`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `stars`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `crows`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `bats`       |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `spiders`    |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `fog`        |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `raintop`    |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `birds`      |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    | ✓ (`glide`, `flap`, `mixed`) |
-| `leaves`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `rain`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `snow`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |   ✓    |                              |
-| `eagles`     |    ✓    |             |    ✓    |     ✓      |     ✓     |   ✓    |     ✓ (`glide`, `flap`)      |
+| Type         | `scale` | `direction` | `speed` | `lifetime` | `density` | `alpha` | `tint` |         `animations`         |
+| ------------ | :-----: | :---------: | :-----: | :--------: | :-------: | :-----: | :----: | :--------------------------: |
+| `snowstorm`  |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `bubbles`    |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `clouds`     |    ✓    |      ✓      |    ✓    |     ✓      |           |    ✓    |   ✓    |                              |
+| `embers`     |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `rainsimple` |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `stars`      |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `crows`      |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `bats`       |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `spiders`    |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `fog`        |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `raintop`    |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `birds`      |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    | ✓ (`glide`, `flap`, `mixed`) |
+| `leaves`     |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `rain`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `snow`       |    ✓    |      ✓      |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |                              |
+| `eagles`     |    ✓    |             |    ✓    |     ✓      |     ✓     |    ✓    |   ✓    |     ✓ (`glide`, `flap`)      |
 
 #### Particle Effect Options
 
@@ -399,6 +400,7 @@ You can get a complete list by typing `CONFIG.fxmaster.filters` in your web cons
 | `speed`      | `number`                          | A factor that adjusts the speed of the effect relative to its base speed.                                                           |
 | `lieftime`   | `number`                          | A factor that adjusts the lifetime of the individual particles.                                                                     |
 | `density`    | `number`                          | The density of the effect. For most effects, it represents the number of particles per grid unit.                                   |
+| `alpha`      | `number`                          | A factor between 0 and 1 that adjusts the opacity of the particles (this is called “Opacity” in the Particle Effects Management).   |
 | `tint`       | `{value: string, apply: boolean}` | Tint the effect with this color.                                                                                                    |
 | `animations` | `string[]`                        | An array of animations from list of animations for the effect to use. If it is empty or not defined, the default animation is used. |
 
