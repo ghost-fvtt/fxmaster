@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/ghost-fvtt/fxmaster#readme",
   "devDependencies": {
-    "@commitlint/cli": "17.6.0",
-    "@commitlint/config-conventional": "17.6.0",
+    "@commitlint/cli": "17.6.1",
+    "@commitlint/config-conventional": "17.6.1",
     "@guanghechen/rollup-plugin-copy": "4.7.4",
     "@ironkinoko/rollup-plugin-styles": "4.0.3",
     "@rollup/plugin-terser": "0.4.1",
