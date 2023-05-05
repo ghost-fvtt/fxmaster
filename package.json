@@ -44,7 +44,7 @@
     "@ironkinoko/rollup-plugin-styles": "4.0.3",
     "@rollup/plugin-terser": "0.4.1",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
-    "eslint": "8.39.0",
+    "eslint": "8.40.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
