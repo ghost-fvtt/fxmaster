@@ -99,7 +99,7 @@ jobs:
 
       - name: Extract version
         run: |
-          echo "::set-output name=version::$(jq -r '.version' package.json)"
+          echo "name=version::$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
         id: extract_version
 
       - name: Create release
