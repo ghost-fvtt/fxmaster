@@ -318,15 +318,15 @@ export class SpecialEffectsLayer extends InteractionLayer {
     const effect = CONFIG.fxmaster.userSpecials[folder].effects[id];
 
     const effectData = foundry.utils.deepClone(effect);
-    const { x, y } = event.data.origin ?? savedOrigin;
+    const { x, y } = event.interactionData.origin ?? savedOrigin;
     const data = {
       ...effectData,
       position: { x, y },
-      rotation: event.data.rotation,
+      rotation: event.interactionData.rotation,
       elevation: this.#elevation,
     };
 
-    if (!event.data.destination) {
+    if (!event.interactionData.destination) {
       game.socket.emit(`module.${packageId}`, data);
       return this.playVideo(data);
     }
@@ -334,7 +334,7 @@ export class SpecialEffectsLayer extends InteractionLayer {
     // Handling different casting modes
     const actionToggle = effectConfig.element.find(".action-toggle.active a");
     const mode = actionToggle[0].dataset.action;
-    const ray = new Ray(event.data.origin, event.data.destination);
+    const ray = new Ray(event.interactionData.origin, event.interactionData.destination);
     switch (mode) {
       case "cast-throw":
         data.distance = ray.distance;
@@ -364,11 +364,11 @@ export class SpecialEffectsLayer extends InteractionLayer {
   /** @override */
   _onDragLeftDrop(event) {
     const u = {
-      x: event.data.destination.x - event.data.origin.x,
-      y: event.data.destination.y - event.data.origin.y,
+      x: event.interactionData.destination.x - event.interactionData.origin.x,
+      y: event.interactionData.destination.y - event.interactionData.origin.y,
     };
     const cos = u.x / Math.hypot(u.x, u.y);
-    event.data.rotation = u.y > 0 ? Math.acos(cos) : -Math.acos(cos);
+    event.interactionData.rotation = u.y > 0 ? Math.acos(cos) : -Math.acos(cos);
     this._drawSpecial(event);
     this.ruler.clear();
   }
@@ -383,7 +383,7 @@ export class SpecialEffectsLayer extends InteractionLayer {
   /** @override */
   _onDragLeftMove(event) {
     if (!this.windowVisible) return;
-    const ray = new Ray(event.data.origin, event.data.destination);
+    const ray = new Ray(event.interactionData.origin, event.interactionData.destination);
     this.ruler.clear();
     this.ruler
       .lineStyle(3, 0xaa0033, 0.6)
@@ -403,11 +403,11 @@ export class SpecialEffectsLayer extends InteractionLayer {
   /** @override */
   _onClickLeft(event) {
     this._dragging = false;
-    const origin = event.data.origin;
+    const origin = event.interactionData.origin;
     setTimeout(() => {
       if (!this._dragging) {
-        event.data.rotation = 0;
-        event.data.destination = undefined;
+        event.interactionData.rotation = 0;
+        event.interactionData.destination = undefined;
         this._drawSpecial(event, origin);
       }
       this._dragging = false;

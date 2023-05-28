@@ -3,7 +3,6 @@ import { registerHooks } from "./hooks.js";
 import { FXMASTER } from "./config.js";
 import { ParticleEffectsLayer } from "./particle-effects/particle-effects-layer.js";
 import { registeDrawingsMaskFunctionality } from "./particle-effects/drawings-mask.js";
-import { registerSceneMaskFunctionality } from "./particle-effects/scene-mask.js";
 import { FilterManager } from "./filter-effects/filter-manager.js";
 import { isOnTargetMigration, migrate, migration } from "./migration/migration.js";
 import { SpecialEffectsManagement } from "./special-effects/applications/special-effects-management.js";
@@ -92,7 +91,18 @@ Hooks.once("init", function () {
     });
   }
 
-  foundry.utils.mergeObject(CONFIG.weatherEffects, CONFIG.fxmaster.particleEffects);
+  const weatherEffects = Object.fromEntries(
+    Object.entries(CONFIG.fxmaster.particleEffects).map(([id, effectClass]) => [
+      `fxmaster.${id}`,
+      {
+        id: `fxmaster.${id}`,
+        label: `${effectClass.label}WeatherEffectsConfig`,
+        effects: [{ id: `${id}Particles`, effectClass }],
+      },
+    ]),
+  );
+
+  CONFIG.weatherEffects = { ...CONFIG.weatherEffects, ...weatherEffects };
 });
 
 Hooks.once("ready", () => {
@@ -204,5 +214,4 @@ Hooks.on("renderDrawingHUD", (hud, html) => {
 });
 
 registerGetSceneControlButtonsHook();
-registerSceneMaskFunctionality();
 registeDrawingsMaskFunctionality();

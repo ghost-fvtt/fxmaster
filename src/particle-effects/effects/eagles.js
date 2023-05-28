@@ -330,10 +330,18 @@ export class EaglesParticleEffect extends FXMasterParticleEffect {
         },
       };
       const spriteSheet = new PIXI.Spritesheet(spriteSheetTexture, spriteSheetData);
-      spriteSheet.parse((textures) => {
-        this.constructor._textureCache = Object.values(textures);
-      }); // This is known to complete synchronously because there are only 20 textures and PIXI only starts batching when there are more than 1000.
+      this.constructor._textureCache = parseSpriteSheetSync.call(spriteSheet);
     }
     return this.constructor._textureCache;
   }
+}
+
+function parseSpriteSheetSync() {
+  let textures;
+  this._callback = (parsedTextures) => (textures = Object.values(parsedTextures));
+  this._batchIndex = 0;
+  this._processFrames(0);
+  this._processAnimations();
+  this._parseComplete();
+  return textures;
 }

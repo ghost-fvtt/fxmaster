@@ -3,24 +3,45 @@ import { logger } from "../logger.js";
 import { executeWhenWorldIsMigratedToLatest, isOnTargetMigration } from "../migration/migration.js";
 import { isEnabled } from "../settings.js";
 
-export class ParticleEffectsLayer extends CanvasLayer {
+export class ParticleEffectsLayer extends FullCanvasObjectMixin(CanvasLayer) {
+  constructor() {
+    super();
+    this.#initializeInverseOcclusionFilter();
+    this.mask = canvas.masks.scene;
+    this.sortableChildren = true;
+    this.eventMode = "none";
+  }
+
   /**
-   * The particle overlay container.
-   * @type {FullCanvasContainer| undefined}
+   * Initialize the inverse occlusion filter.
    */
-  particleEffectsContainer;
+  #initializeInverseOcclusionFilter() {
+    this.occlusionFilter = WeatherOcclusionMaskFilter.create({
+      occlusionTexture: canvas.masks.depth.renderTexture,
+    });
+    this.occlusionFilter.enabled = false;
+    this.occlusionFilter.elevation = this.elevation;
+    this.occlusionFilter.blendMode = PIXI.BLEND_MODES.NORMAL;
+    this.filterArea = canvas.app.renderer.screen;
+    this.filters = [this.occlusionFilter];
+  }
+
+  /** @override */
+  static get layerOptions() {
+    return foundry.utils.mergeObject(super.layerOptions, { name: "particle-effects" });
+  }
 
   /**
    * The currently active particle effects.
-   * @type {Record<string, {type: string, fx: import('./effects/effect.js').FXMasterParticleEffect}>}
+   * @type {Map<string, import('./effects/effect.js').FXMasterParticleEffect>}
    */
-  particleEffects = {};
+  particleEffects = new Map();
 
   /**
-   * An occlusion filter that prevents particle effects from being displayed in certain regions.
-   * @type {InverseOcclusionMaskFilter | undefined}
+   * The inverse occlusion mask filter bound to this container.
+   * @type {WeatherOcclusionMaskFilter}
    */
-  particleEffectOcclusionFilter;
+  occlusionFilter;
 
   /**
    * Define an elevation property on the ParticleEffectsLayer layer.
@@ -40,11 +61,6 @@ export class ParticleEffectsLayer extends CanvasLayer {
   }
 
   /** @override */
-  static get layerOptions() {
-    return foundry.utils.mergeObject(super.layerOptions, { name: "particle-effects" });
-  }
-
-  /** @override */
   async _draw() {
     if (!isEnabled()) {
       return;
@@ -59,21 +75,22 @@ export class ParticleEffectsLayer extends CanvasLayer {
 
   /** @override */
   async _tearDown() {
-    Object.values(this.particleEffects).forEach(({ fx }) => fx.destroy());
-
-    this.particleEffectsContainer = undefined;
-    this.particleEffects = {};
-    this.particleEffectOcclusionFilter = undefined;
-
+    this.#destroyEffects();
     return super._tearDown();
+  }
+
+  #destroyEffects() {
+    if (this.particleEffects.size === 0) return;
+    for (const ec of this.particleEffects.values()) {
+      ec.destroy();
+    }
+    this.particleEffects.clear();
   }
 
   /**
    * Actual implementation of drawing the layer.
-   * @private
    */
   async #draw() {
-    this.particleEffectOcclusionFilter = this.#createParticleEffectOcclusionFilter();
     await this.drawParticleEffects();
   }
 
@@ -81,68 +98,49 @@ export class ParticleEffectsLayer extends CanvasLayer {
     if (!canvas.scene) {
       return;
     }
-    if (!this.particleEffectsContainer) {
-      const particleEffectsContainer = new FullCanvasContainer();
-      particleEffectsContainer.accessibleChildren = particleEffectsContainer.interactiveChildren = false;
-      particleEffectsContainer.filterArea = canvas.app.renderer.screen;
-      this.particleEffectsContainer = this.addChild(particleEffectsContainer);
-      if (this.particleEffectOcclusionFilter) {
-        this.particleEffectsContainer.filters = [this.particleEffectOcclusionFilter];
-      }
-    }
+    let zIndex = 0;
 
     const stopPromise = Promise.all(
-      Object.entries(this.particleEffects).map(async ([id, effect]) => {
+      [...this.particleEffects.entries()].map(async ([id, effect]) => {
         if (soft) {
-          await effect.fx.fadeOut({ timeout: 20000 });
+          await effect.fadeOut({ timeout: 20000 });
         } else {
-          effect.fx.stop();
+          effect.stop();
         }
+        effect.destroy();
         // The check is needed because a new effect might have been set already.
-        if (this.particleEffects[id] === effect) {
-          delete this.particleEffects[id];
+        if (this.particleEffects.get(id) === effect) {
+          this.particleEffects.delete(id);
         }
       }),
     );
 
     const flags = canvas.scene.getFlag(packageId, "effects") ?? {};
     if (Object.keys(flags).length > 0) {
-      this.particleEffectOcclusionFilter.enabled = true;
+      this.occlusionFilter.enabled = true;
     }
-    for (const id in flags) {
-      if (!(flags[id].type in CONFIG.fxmaster.particleEffects)) {
+    for (const [id, { type, options: flagOptions }] of Object.entries(flags)) {
+      if (!(type in CONFIG.fxmaster.particleEffects)) {
         logger.warn(`Particle effect '${id}' is of unknown type '${flags[id].type}', skipping it.`);
         continue;
       }
       const options = Object.fromEntries(
-        Object.entries(flags[id].options).map(([optionName, value]) => [optionName, { value }]),
+        Object.entries(flagOptions).map(([optionName, value]) => [optionName, { value }]),
       );
 
-      this.particleEffects[id] = {
-        type: flags[id].type,
-        fx: new CONFIG.fxmaster.particleEffects[flags[id].type](this.particleEffectsContainer, options),
-      };
-      this.particleEffects[id].fx.play({ prewarm: !soft });
+      const ec = new CONFIG.fxmaster.particleEffects[type](options);
+      ec.zIndex = zIndex++;
+      ec.blendMode = PIXI.BLEND_MODES.NORMAL;
+
+      this.addChild(ec);
+      this.particleEffects.set(id, ec);
+      ec.play({ prewarm: !soft });
     }
 
     await stopPromise;
 
-    if (Object.keys(this.particleEffects).length === 0) {
-      this.particleEffectOcclusionFilter.enabled = false;
+    if (this.particleEffects.size === 0) {
+      this.occlusionFilter.enabled = false;
     }
-  }
-
-  /**
-   * Create the occlusion filter.
-   * @returns {InverseOcclusionMaskFilter} The occlusion filter
-   * @private
-   */
-  #createParticleEffectOcclusionFilter() {
-    const particleOcclusionFilter = InverseOcclusionMaskFilter.create({
-      alphaOcclusion: 0,
-      uMaskSampler: canvas.masks.depth.renderTexture,
-      channel: "b",
-    });
-    return particleOcclusionFilter;
   }
 }
