@@ -21,7 +21,8 @@ module.exports = {
     ParticleEffect: "readonly",
     InteractionLayer: "readonly",
     SpriteMesh: "readonly",
-    FullCanvasContainer: "readonly",
+    FullCanvasObjectMixin: "readonly",
+    WeatherOcclusionMaskFilter: "readonly",
   },
 
   rules: {

@@ -6,7 +6,7 @@ import { DefautlRectangleSpawnMixin } from "./mixins/default-retangle-spawn.js";
  */
 export class AutumnLeavesParticleEffect extends DefautlRectangleSpawnMixin(FXMasterParticleEffect) {
   /** @override */
-  static label = "WEATHER.AutumnLeaves";
+  static label = "FXMASTER.ParticleEffectLeaves";
 
   /** @override */
   static get icon() {

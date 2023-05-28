@@ -2,7 +2,7 @@ import { FXMasterFilterEffectMixin } from "./mixins/filter.js";
 
 export class UnderwaterFilter extends FXMasterFilterEffectMixin(PIXI.filters.DisplacementFilter) {
   constructor(options, id) {
-    const displacemenntMap = new PIXI.Sprite.from(
+    const displacemenntMap = PIXI.Sprite.from(
       "modules/fxmaster/assets/filter-effects/effects/underwater/displacement-map.png",
     );
     super(options, id, displacemenntMap);

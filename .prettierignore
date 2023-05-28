@@ -1,0 +1,15 @@
+
+.idea/
+.vscode/
+
+node_modules/
+
+dist/
+libs/
+
+/client
+/common
+/foundry.js
+/commons.js
+foundryconfig.json
+fxmaster.lock
