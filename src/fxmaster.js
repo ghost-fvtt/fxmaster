@@ -102,6 +102,7 @@ Hooks.once("init", function () {
     ]),
   );
 
+  CONFIG.originalWeatherEffects = CONFIG.weatherEffects;
   CONFIG.weatherEffects = { ...CONFIG.weatherEffects, ...weatherEffects };
 });
 
