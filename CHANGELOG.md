@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.0...v4.0.1) (2023-05-28)
+
+
+### Bug Fixes
+
+* add migration for scene weather configuration ([3df17a3](https://github.com/ghost-fvtt/fxmaster/commit/3df17a30f7132d2b24ecce77d1a9a8b9cf92db3a))
+
 ## [4.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v3.6.0...v4.0.0) (2023-05-28)
 
 
