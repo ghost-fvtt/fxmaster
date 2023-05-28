@@ -2,8 +2,9 @@
 import { packageId } from "../../constants.js";
 import { migrate2, migrationConfiguration2 } from "./2.js";
 import { migrate3, migrationConfiguration3 } from "./3.js";
+import { migrate4, migrationConfiguration4 } from "./4.js";
 
-export const targetServerMigration = 3;
+export const targetServerMigration = 4;
 
 export async function migrateWorld() {
   const migration = game.settings.get(packageId, "migration");
@@ -21,6 +22,8 @@ export async function migrateWorld() {
         isError |= await migrate2();
       case 2:
         isError |= await migrate3();
+      case 3:
+        isError |= await migrate4();
     }
 
     if (isError) {
@@ -45,5 +48,9 @@ export const worldMigrations = {
   3: {
     migrate: migrate3,
     config: migrationConfiguration3,
+  },
+  4: {
+    migrate: migrate4,
+    config: migrationConfiguration4,
   },
 };
