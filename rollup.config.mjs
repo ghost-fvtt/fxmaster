@@ -14,7 +14,6 @@ const staticFiles = [
   "LICENSE.md",
   "media",
   "module.json",
-  "packs",
   "README.md",
   "templates",
 ];
