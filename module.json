@@ -20,6 +20,12 @@
   "readme": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v4.0.1/README.md",
   "bugs": "https://github.com/ghost-fvtt/fxmaster/issues",
   "changelog": "https://raw.githubusercontent.com/ghost-fvtt/fxmaster/v4.0.1/CHANGELOG.md",
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["templates", "css", "lang"]
+    }
+  },
   "version": "4.0.1",
   "compatibility": {
     "minimum": "11.299",
