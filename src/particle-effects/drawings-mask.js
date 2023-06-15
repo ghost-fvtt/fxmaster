@@ -79,7 +79,9 @@ function drawShapeToMask(mask, drawing) {
       break;
     }
     case Drawing.SHAPE_TYPES.POLYGON: {
-      const points = drawing.document.shape.points.map((p, i) => (i % 2 === 0 ? p + drawing.x : p + drawing.y));
+      const points = drawing.document.shape.points.map((p, i) =>
+        i % 2 === 0 ? p + drawing.bounds.x : p + drawing.bounds.y,
+      );
       mask.drawPolygon(points);
       break;
     }
