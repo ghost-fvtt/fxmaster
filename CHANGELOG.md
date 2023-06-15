@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.1...v4.0.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* make the weather mask work properly for polygon drawings ([38d8f58](https://github.com/ghost-fvtt/fxmaster/commit/38d8f58c68eded53a55d39f4e1a5da5523c54de8)), closes [#521](https://github.com/ghost-fvtt/fxmaster/issues/521)
+
 ### [4.0.1](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.0...v4.0.1) (2023-05-28)
 
 
