@@ -98,8 +98,7 @@ jobs:
         run: zip -r ../module.zip .
 
       - name: Extract version
-        run: |
-          echo "name=version::$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
         id: extract_version
 
       - name: Create release
