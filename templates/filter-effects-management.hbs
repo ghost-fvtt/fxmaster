@@ -8,15 +8,17 @@
             class="fxmaster-list__collapse-icon fa fa-angle-{{#if (lookup @root.activeFilters type)}}down{{else}}up{{/if}}"></i></label>
         <input type="checkbox" name="{{type}}" {{checked (lookup @root.activeFilters type)}} />
       </header>
-      <ul
-        class="fxmaster-list__collapsible{{#unless (lookup @root.activeFilters type)}} fxmaster-list__collapsible--collapsed{{/unless}}">
-        {{#each filter.parameters as |parameterConfig parameterName|}}
-        <li class="flexrow">
-          <span>{{localize parameterConfig.label}}</span>
-          {{{fxmasterParameter filter parameterConfig parameterName (lookup @root.activeFilters type)}}}
-        </li>
-        {{/each}}
-      </ul>
+      <div class="fxmaster-list__collapsible" {{#unless (lookup @root.activeFilters type)}} aria-hidden="true"
+        {{/unless}}>
+        <ul>
+          {{#each filter.parameters as |parameterConfig parameterName|}}
+          <li class="flexrow">
+            <span>{{localize parameterConfig.label}}</span>
+            {{{fxmasterParameter filter parameterConfig parameterName (lookup @root.activeFilters type)}}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
     </li>
     {{/each}}
   </ol>

@@ -53,14 +53,21 @@
 
 .fxmaster-groups-list__collapsible,
 .fxmaster-list__collapsible {
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 250ms;
 }
 
-.fxmaster-groups-list__collapsible--collapsed,
-.fxmaster-list__collapsible--collapsed {
-  display: none;
+.fxmaster-groups-list__collapsible > *,
+.fxmaster-list__collapsible > * {
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.fxmaster-groups-list__collapsible[aria-hidden="true"],
+.fxmaster-list__collapsible[aria-hidden="true"] {
+  grid-template-rows: 0fr;
 }
 
 .fxmaster-list__icon {
