@@ -57,7 +57,7 @@
     "npm-run-all": "4.1.5",
     "prettier": "2.8.8",
     "rimraf": "5.0.5",
-    "rollup": "3.29.3",
+    "rollup": "3.29.4",
     "rollup-plugin-string": "3.0.0",
     "standard-version": "9.5.0",
     "stringify-package": "1.0.1"
