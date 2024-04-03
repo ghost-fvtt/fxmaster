@@ -111,7 +111,7 @@ jobs:
           artifacts: "./module.json, ./module.zip"
 
       - name: Publish to Foundry Admin
-        uses: Varriount/fvtt-autopublish@v2.0.1
+        uses: Varriount/fvtt-autopublish@v2.0.2
         with:
           username: ${{ secrets.FVTT_USERNAME }}
           password: ${{ secrets.FVTT_PASSWORD }}
