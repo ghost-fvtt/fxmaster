@@ -1,4 +1,4 @@
-embers.png, bubbles.png, stars.png, leaves.png
+eagles.png, crows.png, bats.png, embers.png, bubbles.png, stars.png, leaves.png
 
 From:
 https://game-icons.net/
