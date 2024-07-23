@@ -1,0 +1,10 @@
+embers.png, bubbles.png, stars.png, leaves.png
+
+From:
+https://game-icons.net/
+
+Authors:
+Lorc, Delapouite & contributors
+
+License:
+CC BY 3.0
