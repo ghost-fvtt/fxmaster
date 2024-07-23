@@ -1,4 +1,4 @@
-embers.png, bubbles.png, stars.png, leaves.png
+All icons in this directory 
 
 From:
 https://game-icons.net/
