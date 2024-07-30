@@ -16,7 +16,7 @@ export class EaglesParticleEffect extends FXMasterParticleEffect {
 
   /** @override */
   static get icon() {
-    return "modules/fxmaster/assets/particle-effects/icons/crows.png";
+    return "modules/fxmaster/assets/particle-effects/icons/eagles.png";
   }
 
   /** @override */
