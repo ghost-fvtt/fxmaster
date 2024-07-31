@@ -79,7 +79,7 @@ export class LightningFilter extends FXMasterFilterEffectMixin(PIXI.filters.Adju
           },
         ];
         return CanvasAnimation.animate(attributes, {
-          name: `${packageId}.${this.constructor.name}.${this.id}.${randomID()}`,
+          name: `${packageId}.${this.constructor.name}.${this.id}.${foundry.utils.randomID()}`,
           context: this,
           duration: 100 + this.options.spark_duration * Math.random(),
           easing: easeFunctions.InOutBack,

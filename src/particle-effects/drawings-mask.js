@@ -1,7 +1,9 @@
 import { packageId } from "../constants.js";
 
 export function registeDrawingsMaskFunctionality() {
-  Hooks.on("canvasReady", drawDrawingsMask);
+  Hooks.on("canvasReady", () => {
+    requestAnimationFrame(drawDrawingsMask);
+  });
 
   for (const hook of ["updateDrawing", "createDrawing", "deleteDrawing"]) {
     Hooks.on(hook, (drawing) => {

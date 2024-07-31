@@ -65,7 +65,7 @@ export class SpecialEffectsLayer extends InteractionLayer {
     if (foundry.utils.hasProperty(data, "animationDelay")) {
       animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
     }
-    const animationName = `${packageId}.video.${randomID()}.move`;
+    const animationName = `${packageId}.video.${foundry.utils.randomID()}.move`;
     const animate = function () {
       CanvasAnimation.animate(attributes, {
         name: animationName,
@@ -94,7 +94,7 @@ export class SpecialEffectsLayer extends InteractionLayer {
     if (foundry.utils.hasProperty(data, "animationDelay")) {
       animationDuration -= Math.max(0, 1000 * (data.animationDelay.end + data.animationDelay.start));
     }
-    const animationName = `${packageId}.video.${randomID()}.rotate`;
+    const animationName = `${packageId}.video.${foundry.utils.randomID()}.rotate`;
 
     const animate = function () {
       CanvasAnimation.animate(attributes, {
