@@ -151,7 +151,7 @@ Hooks.on("dropCanvasData", async (canvas, data) => {
     flags: {},
     height: data.height,
     hidden: false,
-    texture: {src: data.file},
+    texture: { src: data.file },
     locked: false,
     occlusion: { mode: 1, alpha: 0 },
     overHead: false,
