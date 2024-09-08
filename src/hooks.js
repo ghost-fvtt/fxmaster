@@ -26,7 +26,7 @@ async function onSwitchParticleEffects(parameters) {
   if (Object.keys(effects).length == 0) {
     await canvas.scene.unsetFlag(packageId, "effects");
   } else {
-    resetFlag(canvas.scene, "effects", effects);
+    await resetFlag(canvas.scene, "effects", effects);
   }
 }
 
@@ -36,7 +36,7 @@ async function onSwitchParticleEffects(parameters) {
  */
 async function onUpdateParticleEffects(parametersArray) {
   const effects = Object.fromEntries(parametersArray.map((parameters) => [foundry.utils.randomID(), parameters]));
-  resetFlag(canvas.scene, "effects", effects);
+  await resetFlag(canvas.scene, "effects", effects);
 }
 
 const deprecations = {
