@@ -350,7 +350,7 @@ export class SpecialEffectsLayer extends InteractionLayer {
         data.speed = 0;
         break;
       case "cast-rotate":
-        data.rotationSpeed = ray.distance / canvas.grid.w;
+        data.rotationSpeed = ray.distance / canvas.grid[game.release.generation >= 12 ? "sizeX" : "w"];
         data.speed = 0;
         break;
       case "cast-static":
