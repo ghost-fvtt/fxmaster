@@ -29,8 +29,10 @@
   "version": "4.0.2",
   "compatibility": {
     "minimum": "11.299",
-    "verified": "12.330"
+    "verified": "12"
   },
+  "minimumCoreVersion": "11.299",
+  "compatibleCoreVersion": "12",
   "scripts": ["libs/filters/pixi-filters.js"],
   "esmodules": ["fxmaster.js"],
   "styles": ["css/fxmaster.css"],
