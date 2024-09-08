@@ -6,7 +6,7 @@
   "scripts": {
     "build": "run-s clean:files build:rollup build:packs",
     "build:rollup": "rollup -c",
-    "build:packs": "fvtt package pack --compendiumName=macros --inputDirectory=./packs/macros --outputDirectory=./dist/packs",
+    "build:packs": "fvtt package pack --type=Module --id=fxmaster --compendiumName=macros --inputDirectory=./packs/macros --outputDirectory=./dist/packs",
     "watch": "run-p watch:rollup watch:packs",
     "watch:rollup": "rollup -c -w",
     "watch:packs": "nodemon --watch ./packs -x 'npm run build:packs'",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.4.1",
     "@commitlint/config-conventional": "19.4.1",
-    "@foundryvtt/foundryvtt-cli": "0.0.9",
+    "@foundryvtt/foundryvtt-cli": "1.0.3",
     "@guanghechen/rollup-plugin-copy": "5.0.12",
     "@rollup/plugin-terser": "0.4.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
