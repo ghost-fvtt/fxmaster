@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.2...v4.1.0) (2024-09-08)
+
+
+### Features
+
+* add support for v12 ([8e2f175](https://github.com/ghost-fvtt/fxmaster/commit/8e2f175bfe925e35ea6defb4ecae0be82f372b86))
+
+
+### Bug Fixes
+
+* add missing awaits ([ec1f2d2](https://github.com/ghost-fvtt/fxmaster/commit/ec1f2d2bdd08244d27f14a98995eb116e2f1051b)), closes [#761](https://github.com/ghost-fvtt/fxmaster/issues/761)
+
 ### [4.0.2](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.1...v4.0.2) (2023-06-15)
 
 
