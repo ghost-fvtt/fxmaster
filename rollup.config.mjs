@@ -1,5 +1,5 @@
 import copy from "@guanghechen/rollup-plugin-copy";
-import styles from "@ironkinoko/rollup-plugin-styles";
+import styles from "rollup-plugin-styler";
 import { string } from "rollup-plugin-string";
 import terser from "@rollup/plugin-terser";
 
