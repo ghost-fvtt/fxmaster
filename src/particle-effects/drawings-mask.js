@@ -2,7 +2,13 @@ import { packageId } from "../constants.js";
 
 export function registeDrawingsMaskFunctionality() {
   Hooks.on("canvasReady", () => {
-    requestAnimationFrame(drawDrawingsMask);
+    Hooks.once(`${packageId}.drawingsReady`, drawDrawingsMask);
+  });
+
+  Hooks.on("refreshDrawing", (drawing) => {
+    if (canvas.drawings.placeables.every(drawing => drawing.shape.geometry.graphicsData.length > 0)) {
+      Hooks.call(`${packageId}.drawingsReady`);
+    }
   });
 
   for (const hook of ["updateDrawing", "createDrawing", "deleteDrawing"]) {
