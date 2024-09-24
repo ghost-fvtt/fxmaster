@@ -5,8 +5,8 @@ export function registeDrawingsMaskFunctionality() {
     Hooks.once(`${packageId}.drawingsReady`, drawDrawingsMask);
   });
 
-  Hooks.on("refreshDrawing", (drawing) => {
-    if (canvas.drawings.placeables.every(drawing => drawing.shape.geometry.graphicsData.length > 0)) {
+  Hooks.on("refreshDrawing", () => {
+    if (canvas.drawings.placeables.every((drawing) => drawing.shape.geometry.graphicsData.length > 0)) {
       Hooks.call(`${packageId}.drawingsReady`);
     }
   });
