@@ -54,30 +54,25 @@ export class FXMasterBaseForm extends FormApplication {
     const parentItem = $(event.currentTarget).parents(`.${parentClass}`);
     const collapsible = parentItem.children(`.${collapsibleClass}`);
     const icon = iconClass !== undefined ? parentItem.find(`.${iconClass}`) : undefined;
-    this._collapse(collapsible, icon, `${collapsibleClass}--collapsed`);
+    this._collapse(collapsible[0], icon);
   }
 
   /**
    * Toggle the collapsed state of an element.
-   * @param {JQuery}      collapsible                 The element to collapse
+   * @param {HTMLElement} collapsible                 The element to collapse
    * @param {JQuery|null} [icon]                      An up/down arrow icon to be toggled
-   * @param {string}      [collapsedClass="collaped"] The CSS clas to use to mark the element as collapsed
    * @param {number}      [speed=250]                 The speed for sliding the element in and out, in milliseconds
    * @private
    */
-  _collapse(collapsible, icon, collapsedClass = "collapsed", speed = 250) {
-    const shouldCollapse = !collapsible.hasClass(collapsedClass);
+  _collapse(collapsible, icon) {
+    const shouldCollapse = collapsible.getAttribute("aria-hidden") !== "true";
 
     if (shouldCollapse) {
-      collapsible.slideUp(speed, () => {
-        collapsible.addClass(collapsedClass);
-        icon?.removeClass("fa-angle-down").addClass("fa-angle-up");
-      });
+      collapsible.setAttribute("aria-hidden", "true");
+      icon?.removeClass("fa-angle-down").addClass("fa-angle-up");
     } else {
-      collapsible.slideDown(speed, () => {
-        collapsible.removeClass(collapsedClass);
-        icon?.removeClass("fa-angle-up").addClass("fa-angle-down");
-      });
+      collapsible.removeAttribute("aria-hidden");
+      icon?.removeClass("fa-angle-up").addClass("fa-angle-down");
     }
   }
 
