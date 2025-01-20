@@ -43,7 +43,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
-    "@foundryvtt/foundryvtt-cli": "1.0.3",
+    "@foundryvtt/foundryvtt-cli": "1.0.4",
     "@guanghechen/rollup-plugin-copy": "6.0.3",
     "@rollup/plugin-terser": "0.4.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
