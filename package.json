@@ -56,7 +56,7 @@
     "npm-run-all2": "7.0.2",
     "prettier": "2.8.8",
     "rimraf": "6.0.1",
-    "rollup": "4.34.6",
+    "rollup": "4.34.7",
     "rollup-plugin-string": "3.0.0",
     "rollup-plugin-styler": "2.0.0",
     "standard-version": "9.5.0",
