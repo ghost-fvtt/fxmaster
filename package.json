@@ -44,7 +44,7 @@
     "@commitlint/cli": "19.7.1",
     "@commitlint/config-conventional": "19.7.1",
     "@foundryvtt/foundryvtt-cli": "1.0.4",
-    "@guanghechen/rollup-plugin-copy": "6.0.6",
+    "@guanghechen/rollup-plugin-copy": "6.0.7",
     "@rollup/plugin-terser": "0.4.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
     "eslint": "8.57.1",
