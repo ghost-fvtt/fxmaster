@@ -41,8 +41,8 @@
   },
   "homepage": "https://github.com/ghost-fvtt/fxmaster#readme",
   "devDependencies": {
-    "@commitlint/cli": "19.7.1",
-    "@commitlint/config-conventional": "19.7.1",
+    "@commitlint/cli": "19.8.0",
+    "@commitlint/config-conventional": "19.8.0",
     "@foundryvtt/foundryvtt-cli": "1.0.4",
     "@guanghechen/rollup-plugin-copy": "6.0.7",
     "@rollup/plugin-terser": "0.4.4",
