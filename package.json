@@ -54,7 +54,7 @@
     "lint-staged": "16.0.0",
     "nodemon": "3.1.10",
     "npm-run-all2": "8.0.2",
-    "prettier": "2.8.8",
+    "prettier": "3.5.3",
     "rimraf": "6.0.1",
     "rollup": "4.41.0",
     "rollup-plugin-string": "3.0.0",
