@@ -49,7 +49,7 @@
     "@typhonjs-fvtt/eslint-config-foundry.js": "0.8.0",
     "eslint": "8.57.1",
     "eslint-config-prettier": "10.1.5",
-    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-prettier": "5.4.0",
     "husky": "9.1.7",
     "lint-staged": "16.0.0",
     "nodemon": "3.1.10",
