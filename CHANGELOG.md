@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v4.1.0...v4.1.1) (2025-05-18)
+
 ## [4.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.2...v4.1.0) (2024-09-08)
 
 
