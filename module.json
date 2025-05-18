@@ -34,7 +34,7 @@
   "minimumCoreVersion": "11.299",
   "compatibleCoreVersion": "12",
   "scripts": ["libs/filters/pixi-filters.js"],
-  "esmodules": ["fxmaster.js"],
+  "esmodules": ["src/fxmaster.js"],
   "styles": ["css/fxmaster.css"],
   "languages": [
     {
