@@ -16,7 +16,7 @@ FXMaster is a module for [Foundry Virtual Tabletop] that provides various types 
 
 This module also provides ways to easily configure these effects.
 
-## Table of Contents
+## Table of Contents 2
 
 - [FXMaster](#fxmaster)
   - [Table of Contents](#table-of-contents)
