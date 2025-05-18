@@ -26,10 +26,10 @@
       "paths": ["templates", "css", "lang"]
     }
   },
-  "version": "4.1.1",
+  "version": "v5.1.0",
   "compatibility": {
     "minimum": "11.299",
-    "verified": "12"
+    "verified": "13"
   },
   "minimumCoreVersion": "11.299",
   "compatibleCoreVersion": "12",
@@ -92,6 +92,6 @@
     }
   ],
   "socket": true,
-  "manifest": "https://github.com/ghost-fvtt/fxmaster/releases/latest/download/module.json",
-  "download": "https://github.com/ghost-fvtt/fxmaster/releases/download/v4.1.1/module.zip"
+  "manifest": "https://github.com/evak2979/fxmaster/releases/latest/download/module.json",
+  "download": "https://github.com//evak2979/fxmaster/releases/download/v5.1.0/module.zip"
 }
