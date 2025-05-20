@@ -2,7 +2,7 @@ import { packageId } from "../constants.js";
 import { easeFunctions } from "../ease.js";
 import { SpecialEffectMesh } from "./mesh.js";
 
-export class SpecialEffectsLayer extends InteractionLayer {
+export class SpecialEffectsLayer extends foundry.canvas.layers.InteractionLayer {
   constructor() {
     super();
     this.videos = [];

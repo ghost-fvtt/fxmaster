@@ -25,9 +25,17 @@ export class SpecialEffectsManagement extends Application {
 
   /** @override */
   getData() {
-    return {
-      folders: CONFIG.fxmaster.userSpecials,
-    };
+    if(foundry.utils.isNewerVersion(game.version, "13.0.0")) {
+      const folders = Object.entries(CONFIG.fxmaster.userSpecials).map(
+        ([id, folder]) => ({ id, label: folder.label, effects: folder.effects })
+      );
+      return { folders };
+    }
+    else {
+      return {
+        folders: CONFIG.fxmaster.userSpecials,
+      };
+    }
   }
 
   /** @override */
