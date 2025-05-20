@@ -102,12 +102,14 @@ export class FilterManager {
   }
 
   /**
-   * Apply the filters to the configured canvas layers.
+   * Apply the filters to the configured canvas layers. Prevent un-wanted re-application of filters on scene switch.
    */
   #applyFilters() {
-    const filters = Object.values(this.filters);
-    const otherFilters = this.constructor.container.filters?.filter((f) => !filters.includes(f)) ?? [];
-    this.constructor.container.filters = otherFilters.concat(filters);
+    const container = this.constructor.container;
+    const fxFilters = Object.values(this.filters);
+    const fxClasses = fxFilters.map((f) => f.constructor);
+    const otherFilters = container.filters?.filter((f) => !fxClasses.includes(f.constructor)) ?? [];
+    container.filters = otherFilters.concat(fxFilters);
   }
 
   /**

@@ -163,13 +163,11 @@ export class EaglesParticleEffect extends FXMasterParticleEffect {
       })),
     });
 
-    const anims = (options.animations?.value ?? [])
-      .filter((animation) => Object.keys(animations).includes(animation))
-      .map((animation) => getAnim(animations[animation]));
+    const anims = (Array.isArray(options.animations?.value) ? options.animations.value : [])
+      .filter((a) => Object.prototype.hasOwnProperty.call(animations, a))
+      .map((a) => getAnim(animations[a]));
 
-    if (anims.length === 0) {
-      anims.push(getAnim(animations.glide));
-    }
+    if (!anims.length) anims.push(getAnim(animations.glide));
 
     return anims;
   }

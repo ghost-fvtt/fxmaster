@@ -17,7 +17,9 @@ export class SpecialEffectsManagement extends Application {
       height: 200,
       resizable: true,
       dragDrop: [{ dragSelector: ".special-effects" }],
-      template: "modules/fxmaster/templates/special-effects-management.hbs",
+      template: foundry.utils.isNewerVersion(game.version, "13.0.0")
+        ? "modules/fxmaster/templates/special-effects-management-v13.hbs"
+        : "modules/fxmaster/templates/special-effects-management.hbs",
       id: "specials-config",
       title: game.i18n.localize("FXMASTER.SpecialEffectsManagementTitle"),
     });
@@ -25,18 +27,9 @@ export class SpecialEffectsManagement extends Application {
 
   /** @override */
   getData() {
-    if (foundry.utils.isNewerVersion(game.version, "13.0.0")) {
-      const folders = Object.entries(CONFIG.fxmaster.userSpecials).map(([id, folder]) => ({
-        id,
-        label: folder.label,
-        effects: folder.effects,
-      }));
-      return { folders };
-    } else {
-      return {
-        folders: CONFIG.fxmaster.userSpecials,
-      };
-    }
+    return {
+      folders: CONFIG.fxmaster.userSpecials,
+    };
   }
 
   /** @override */

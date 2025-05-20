@@ -18,6 +18,11 @@ function getSceneControlButtons(t) {
     name: "effects",
     title: "CONTROLS.Effects",
     icon: "fas fa-wand-magic-sparkles",
+    layer: "specials",
+    [onEvent]: (_event, active) => {
+      if (!active) return;
+      canvas.layers.find((l) => l.options.name === "specials")?.activate();
+    },
     visible: game.user.role >= game.settings.get(packageId, "permission-create"),
     order: 100,
     tools: {
@@ -27,7 +32,10 @@ function getSceneControlButtons(t) {
         icon: "fas fa-hat-wizard",
         order: 10,
         button: true,
-        [onEvent]: (_evt, _active) => new SpecialEffectsManagement().render(true),
+        [onEvent]: (_event, active) => {
+          if (!active) return;
+          new SpecialEffectsManagement().render(true);
+        },
         visible: true,
       },
       "particle-effects": {
@@ -36,7 +44,7 @@ function getSceneControlButtons(t) {
         icon: "fas fa-cloud-rain",
         order: 20,
         button: true,
-        [onEvent]: (_evt, _active) => new ParticleEffectsManagement().render(true),
+        [onEvent]: (_event, _active) => new ParticleEffectsManagement().render(true),
         visible: game.user.isGM,
       },
       invertmask: {
@@ -91,6 +99,7 @@ function getSceneControlButtons(t) {
         button: true,
       },
     },
+    activeTool: "specials",
   };
 
   if (foundry.utils.isNewerVersion(game.version, "13.0.0")) {
