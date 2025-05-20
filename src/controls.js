@@ -84,13 +84,13 @@ function getSceneControlButtons(t) {
                 canvas.scene.unsetFlag(packageId, "effects");
               }
             },
-            defaultYes: true
+            defaultYes: true,
           });
         },
         visible: game.user.isGM,
         button: true,
-      }
-    }
+      },
+    },
   };
 
   if (foundry.utils.isNewerVersion(game.version, "13.0.0")) {
