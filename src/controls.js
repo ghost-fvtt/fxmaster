@@ -28,7 +28,7 @@ function getSceneControlButtons(t) {
         order: 10,
         button: true,
         [onEvent]: (_evt, _active) => new SpecialEffectsManagement().render(true),
-        visible: true
+        visible: true,
       },
       "particle-effects": {
         name: "particle-effects",
@@ -37,7 +37,7 @@ function getSceneControlButtons(t) {
         order: 20,
         button: true,
         [onEvent]: (_evt, _active) => new ParticleEffectsManagement().render(true),
-        visible: game.user.isGM
+        visible: game.user.isGM,
       },
       invertmask: {
         name: "invertmask",
@@ -50,7 +50,7 @@ function getSceneControlButtons(t) {
           const current = canvas.scene.getFlag(packageId, "invert") ?? false;
           canvas.scene.setFlag(packageId, "invert", !current);
         },
-        visible: game.user.isGM
+        visible: game.user.isGM,
       },
       filters: {
         name: "filters",
@@ -59,7 +59,7 @@ function getSceneControlButtons(t) {
         order: 40,
         button: true,
         [onEvent]: () => new FilterEffectsManagementConfig().render(true),
-        visible: game.user.isGM
+        visible: game.user.isGM,
       },
       save: {
         name: "save",
@@ -68,7 +68,7 @@ function getSceneControlButtons(t) {
         order: 50,
         button: true,
         [onEvent]: () => saveParticleAndFilterEffectsAsMacro(),
-        visible: game.user.isGM
+        visible: game.user.isGM,
       },
       clearfx: {
         name: "clearfx",
@@ -88,7 +88,7 @@ function getSceneControlButtons(t) {
           });
         },
         visible: game.user.isGM,
-        button: true
+        button: true,
       }
     }
   };
