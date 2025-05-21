@@ -44,7 +44,6 @@ function getSceneControlButtons(t) {
           if (!active) return;
           new SpecialEffectsManagement().render(true);
         },
-        //onToolChange: (event, active) => active = false,
         visible: true,
       },
       "particle-effects": {
@@ -108,7 +107,7 @@ function getSceneControlButtons(t) {
         button: true,
       },
     },
-    activeTool: "effects",
+    activeTool: "activation",
   };
 
   if (foundry.utils.isNewerVersion(game.version, "13.0.0")) {
