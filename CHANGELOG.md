@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v4.1.1...v5.0.0) (2025-05-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* v13 compatible release
+* v13 compatible release
+* v13 Compatability
+* V13 Compatability. Check the Github readme for more info
+* V13 Compatability. Visit the github for more info
+
+### Features
+
+* more v13 things ([77bb702](https://github.com/ghost-fvtt/fxmaster/commit/77bb70202e71cde06ea202b093868df4fdc48890))
+* official v13 release ([b0d7ef3](https://github.com/ghost-fvtt/fxmaster/commit/b0d7ef31e134b473046d96aa66f4010141f23007))
+* v13 Compatability ([ba3b0d1](https://github.com/ghost-fvtt/fxmaster/commit/ba3b0d1c851566f8dd5eb00a6a4015e1775009df))
+* V13 Compatability. Check the Github readme for more info ([7603a99](https://github.com/ghost-fvtt/fxmaster/commit/7603a99301bf391355c8b7e73f54a3291c4a8c41))
+* V13 Compatability. Visit the github for more info ([56edae9](https://github.com/ghost-fvtt/fxmaster/commit/56edae9268cc775ed8e5008406b62591fc1956f6))
+* v13 compatible release ([3421abb](https://github.com/ghost-fvtt/fxmaster/commit/3421abb87316596ed23b7ad45c5d2278e5b2ec64))
+* v13 compatible release ([4a58b9d](https://github.com/ghost-fvtt/fxmaster/commit/4a58b9d9e60f42cbe650563b70701103ebc2fbf1))
+
 ### [4.1.1](https://github.com/ghost-fvtt/fxmaster/compare/v4.1.0...v4.1.1) (2025-05-18)
 
 ## [4.1.0](https://github.com/ghost-fvtt/fxmaster/compare/v4.0.2...v4.1.0) (2024-09-08)
