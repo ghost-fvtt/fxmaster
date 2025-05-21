@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.1](https://github.com/ghost-fvtt/fxmaster/compare/v5.0.0...v5.0.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* include additional logic to prevent erroneous ui warning on token drop to canvas ([086ad9d](https://github.com/ghost-fvtt/fxmaster/commit/086ad9d907a5fd44f4440cbcf55cbff201f0c419))
+
 ## [5.0.0](https://github.com/ghost-fvtt/fxmaster/compare/v4.1.1...v5.0.0) (2025-05-21)
 
 
