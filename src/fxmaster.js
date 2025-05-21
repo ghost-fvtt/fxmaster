@@ -191,59 +191,33 @@ Hooks.on("updateSetting", (setting) => {
   }
 });
 
-if (foundry.utils.isNewerVersion(game.version, "12.0.0")) {
-  Hooks.on("renderDrawingHUD", (drawingHUD, html /* HTMLElement */) => {
-    const container = /** @type {HTMLElement} */ (html);
-    const leftCol = container.querySelector(".col.left");
-    if (!leftCol) return;
+Hooks.on("renderDrawingHUD", (hud, html) => {
+  // Normalize raw DOM element for v13
+  const container = html instanceof jQuery ? html[0] : html;
+  if (!(container instanceof HTMLElement)) return;
 
-    const maskToggle = document.createElement("div");
-    maskToggle.classList.add("control-icon");
-    if (drawingHUD.object.document.flags?.fxmaster?.masking) {
-      maskToggle.classList.add("active");
-    }
-    maskToggle.title = game.i18n.localize("FXMASTER.MaskParticleEffects");
-    maskToggle.dataset.action = "mask";
-    maskToggle.innerHTML = `<div style="text-align: center;"><i class="fas fa-cloud fa-xs"></i></div>`;
+  const leftCol = container.querySelector(".col.left");
+  if (!leftCol) return;
 
-    leftCol.appendChild(maskToggle);
+  const maskToggle = document.createElement("div");
+  maskToggle.classList.add("control-icon");
+  if (hud.object.document.flags?.fxmaster?.masking) maskToggle.classList.add("active");
+  maskToggle.title = game.i18n.localize("FXMASTER.MaskParticleEffects");
+  maskToggle.dataset.action = "mask";
+  maskToggle.innerHTML = `<div style="text-align:center;"><i class="fas fa-cloud fa-xs"></i></div>`;
 
-    maskToggle.addEventListener("click", (event) => {
-      event.preventDefault();
-      const isMask = drawingHUD.object.document.flags?.fxmaster?.masking;
-      const updates = drawingHUD.layer.controlled.map((o) => ({
-        _id: o.id,
-        "flags.fxmaster.masking": !isMask,
-      }));
-      maskToggle.classList.toggle("active", !isMask);
-      canvas.scene.updateEmbeddedDocuments(drawingHUD.object.document.documentName, updates);
-    });
+  leftCol.appendChild(maskToggle);
+  maskToggle.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    const isMask = hud.object.document.flags?.fxmaster?.masking;
+    const updates = hud.layer.controlled.map((o) => ({
+      _id: o.id,
+      "flags.fxmaster.masking": !isMask,
+    }));
+    maskToggle.classList.toggle("active", !isMask);
+    canvas.scene.updateEmbeddedDocuments(hud.object.document.documentName, updates);
   });
-} else {
-  Hooks.on("renderDrawingHUD", (hud, html) => {
-    const maskToggle = document.createElement("div");
-    maskToggle.classList.add("control-icon");
-    if (hud.object.document.flags?.fxmaster?.masking) {
-      maskToggle.classList.add("active");
-    }
-    maskToggle.setAttribute("title", game.i18n.localize("FXMASTER.MaskParticleEffects"));
-    maskToggle.dataset.action = "mask";
-    maskToggle.innerHTML = `<i class="fas fa-cloud"></i>`;
-    html.find(".col.left").append(maskToggle);
-
-    html.find(".control-icon[data-action='mask']").on("click", (event) => {
-      event.preventDefault();
-
-      const isMask = hud.object.document.flags?.fxmaster?.masking;
-      const updates = hud.layer.controlled.map((object) => {
-        return { _id: object.id, "flags.fxmaster.masking": !isMask };
-      });
-
-      event.currentTarget.classList.toggle("active", !isMask);
-      canvas.scene.updateEmbeddedDocuments(hud.object.document.documentName, updates);
-    });
-  });
-}
+});
 
 registerGetSceneControlButtonsHook();
 registeDrawingsMaskFunctionality();

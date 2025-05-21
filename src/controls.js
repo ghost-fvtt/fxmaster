@@ -14,6 +14,97 @@ function getSceneControlButtons(t) {
 
   const onEvent = foundry.utils.isNewerVersion(game.version, "13.0.0") ? "onChange" : "onClick";
 
+  let tools = {
+    activation: {
+      name: "activation",
+      title: "Tools Active",
+      icon: "fas fa-power-off",
+      toggle: true,
+      [onEvent]: (_event, active) => {
+        if (!active && foundry.utils.isNewerVersion(game.version, "13.0.0")) return;
+        canvas.layers.find((l) => l.options.name === "specials")?.activate();
+      },
+      visible: true,
+      order: 1,
+    },
+    specials: {
+      name: "specials",
+      title: "CONTROLS.SpecialFX",
+      icon: "fas fa-hat-wizard",
+      order: 10,
+      button: true,
+      [onEvent]: (_event, active) => {
+        if (!active && foundry.utils.isNewerVersion(game.version, "13.0.0")) return;
+        new SpecialEffectsManagement().render(true);
+      },
+      visible: true,
+    },
+    "particle-effects": {
+      name: "particle-effects",
+      title: "CONTROLS.ParticleEffects",
+      icon: "fas fa-cloud-rain",
+      order: 20,
+      button: true,
+      [onEvent]: (_event, _active) => new ParticleEffectsManagement().render(true),
+      visible: game.user.isGM,
+    },
+    invertmask: {
+      name: "invertmask",
+      title: "CONTROLS.InvertMask",
+      icon: "fas fa-mask",
+      order: 30,
+      toggle: true,
+      active: canvas.scene?.getFlag(packageId, "invert") ?? false,
+      [onEvent]: () => {
+        const current = canvas.scene.getFlag(packageId, "invert") ?? false;
+        canvas.scene.setFlag(packageId, "invert", !current);
+      },
+      visible: game.user.isGM,
+    },
+    filters: {
+      name: "filters",
+      title: "CONTROLS.Filters",
+      icon: "fas fa-filter",
+      order: 40,
+      button: true,
+      [onEvent]: () => new FilterEffectsManagementConfig().render(true),
+      visible: game.user.isGM,
+    },
+    save: {
+      name: "save",
+      title: "CONTROLS.SaveMacro",
+      icon: "fas fa-floppy-disk",
+      order: 50,
+      button: true,
+      [onEvent]: () => saveParticleAndFilterEffectsAsMacro(),
+      visible: game.user.isGM,
+    },
+    clearfx: {
+      name: "clearfx",
+      title: "CONTROLS.ClearFX",
+      icon: "fas fa-trash",
+      order: 60,
+      button: true,
+      [onEvent]: () => {
+        Dialog.confirm({
+          title: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsTitle"),
+          content: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsContent"),
+          yes: () => {
+            if (canvas.scene) {
+              FilterManager.instance.removeAll();
+              canvas.scene.unsetFlag(packageId, "effects");
+            }
+          },
+          defaultYes: true,
+        });
+      },
+      visible: game.user.isGM,
+    },
+  };
+
+  if (!foundry.utils.isNewerVersion(game.version, "13.0.0"))
+    tools = Object.values(tools).sort((a, b) => a.order - b.order);
+
   const fxControl = {
     name: "effects",
     title: "CONTROLS.Effects",
@@ -21,93 +112,9 @@ function getSceneControlButtons(t) {
     [onEvent]: (_event, _active) => {},
     visible: game.user.role >= game.settings.get(packageId, "permission-create"),
     order: 100,
-    tools: {
-      activation: {
-        name: "activation",
-        title: "Tools Activated",
-        icon: "fas fa-power-off",
-        toggle: true,
-        [onEvent]: (_event, active) => {
-          if (!active) return;
-          canvas.layers.find((l) => l.options.name === "specials")?.activate();
-        },
-        visible: true,
-        order: 1,
-      },
-      specials: {
-        name: "specials",
-        title: "CONTROLS.SpecialFX",
-        icon: "fas fa-hat-wizard",
-        order: 10,
-        button: true,
-        [onEvent]: (_event, active) => {
-          if (!active) return;
-          new SpecialEffectsManagement().render(true);
-        },
-        visible: true,
-      },
-      "particle-effects": {
-        name: "particle-effects",
-        title: "CONTROLS.ParticleEffects",
-        icon: "fas fa-cloud-rain",
-        order: 20,
-        button: true,
-        [onEvent]: (_event, _active) => new ParticleEffectsManagement().render(true),
-        visible: game.user.isGM,
-      },
-      invertmask: {
-        name: "invertmask",
-        title: "CONTROLS.InvertMask",
-        icon: "fas fa-mask",
-        order: 30,
-        toggle: true,
-        active: canvas.scene?.getFlag(packageId, "invert") ?? false,
-        [onEvent]: () => {
-          const current = canvas.scene.getFlag(packageId, "invert") ?? false;
-          canvas.scene.setFlag(packageId, "invert", !current);
-        },
-        visible: game.user.isGM,
-      },
-      filters: {
-        name: "filters",
-        title: "CONTROLS.Filters",
-        icon: "fas fa-filter",
-        order: 40,
-        button: true,
-        [onEvent]: () => new FilterEffectsManagementConfig().render(true),
-        visible: game.user.isGM,
-      },
-      save: {
-        name: "save",
-        title: "CONTROLS.SaveMacro",
-        icon: "fas fa-floppy-disk",
-        order: 50,
-        button: true,
-        [onEvent]: () => saveParticleAndFilterEffectsAsMacro(),
-        visible: game.user.isGM,
-      },
-      clearfx: {
-        name: "clearfx",
-        title: "CONTROLS.ClearFX",
-        icon: "fas fa-trash",
-        [onEvent]: () => {
-          Dialog.confirm({
-            title: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsTitle"),
-            content: game.i18n.localize("FXMASTER.ClearParticleAndFilterEffectsContent"),
-            yes: () => {
-              if (canvas.scene) {
-                FilterManager.instance.removeAll();
-                canvas.scene.unsetFlag(packageId, "effects");
-              }
-            },
-            defaultYes: true,
-          });
-        },
-        visible: game.user.isGM,
-        button: true,
-      },
-    },
+    tools: tools,
     activeTool: "activation",
+    layer: "specials",
   };
 
   if (foundry.utils.isNewerVersion(game.version, "13.0.0")) {
