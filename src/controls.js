@@ -17,7 +17,7 @@ function getSceneControlButtons(t) {
   let tools = {
     activation: {
       name: "activation",
-      title: "Tools Active",
+      title: "CONTROLS.ToolsActive",
       icon: "fas fa-power-off",
       toggle: true,
       [onEvent]: (_event, active) => {

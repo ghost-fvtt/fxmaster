@@ -114,5 +114,7 @@
   "FXMASTER.MigrationWorldCompletedSuccessfully": "World migrations for FXMaster completed successfully.",
   "FXMASTER.MigrationClientStart": "Performing client migrations for FXMaster. Please be patient and do not close your game.",
   "FXMASTER.MigrationClientCompletedWithErrors": "Client migrations for FXMaster completed with errors. For more details, please take a look at the developer console (F12).",
-  "FXMASTER.MigrationClientCompletedSuccessfully": "Client migrations for FXMaster completed successfully."
+  "FXMASTER.MigrationClientCompletedSuccessfully": "Client migrations for FXMaster completed successfully.",
+  "FXMASTER.EffectControlsDropWarning": "You must be on the Effect Controls tab on a scene to drag and drop an effect.",
+  "CONTROLS.ToolsActive": "Tools Active"
 }

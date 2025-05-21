@@ -129,8 +129,8 @@ Hooks.on("updateScene", (scene, data) => {
 });
 
 Hooks.on("dropCanvasData", async (canvas, data) => {
-  if (!(canvas.activeLayer instanceof SpecialEffectsLayer) || !canvas.scene)
-    return ui.notifications.warn("You must be on the Effect Controls tab on a scene to drag and drop an effect.");
+  if ((!(canvas.activeLayer instanceof SpecialEffectsLayer) || !canvas.scene) && data.type === "SpecialEffect")
+    return ui.notifications.warn("FXMASTER.EffectControlsDropWarning", { localize: true, permanent: true });
   if (data.type !== "SpecialEffect") return;
 
   await new Promise((resolve) => {
