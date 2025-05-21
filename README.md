@@ -3,8 +3,8 @@
 <h2 style="text-align: center;">Supporting The Module</h2>
 <p style="text-align: center;"><a href="https://ko-fi.com/gambit07" target="_blank" rel="nofollow noopener"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi" /></a> <a href="https://www.patreon.com/GambitsLounge" target="_blank" rel="nofollow noopener"> <img src="https://img.shields.io/badge/Patreon-Gambits Lounge-F96854?style=for-the-badge&amp;logo=patreon" alt="Patreon Gambits Lounge" /> </a></p>
 <hr/>
-<p>Welcome to all FXMaster users, my name is Gambit and I've taken over the FXMaster module! Huge thanks to the creator of the module SecretFire, and the previous maintainer Ghost for all their wonderful work supporting this module.</p>
-<p>I've released a V13 compatible version of the module with bugfixes for most of the existing outstanding issues on the github repo. Moving forward I'll be converting FXMaster to Foundry's appV2 infrastructure for a dedicated V13 release with design improvements, feel free to join my Discord above if you have any questions or would like to keep track of that progress!</p>
+<p>Welcome to all FXMaster users, my name is Gambit and I've taken over the FXMaster module! Huge thanks to the creator of the module, SecretFire, and the previous maintainer Ghost for all their wonderful work supporting this module.</p>
+<p>I've released a V13 compatible version of the module with bugfixes for most of the outstanding issues on the github repo. Moving forward I'll be converting FXMaster to Foundry's appV2 infrastructure for a dedicated V13 release with design improvements. Feel free to join my Discord above if you have any questions or would like to keep track of that progress!</p>
 <hr/>
 
 FXMaster is a module for [Foundry Virtual Tabletop] that provides various types of effects:
