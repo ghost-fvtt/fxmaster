@@ -114,5 +114,7 @@
   "FXMASTER.MigrationWorldCompletedSuccessfully": "Migrações do mundo para o FXMaster concluídas com sucesso.",
   "FXMASTER.MigrationClientStart": "Executando as migrações dos clientes para o FXMaster. Por favor, seja paciente e não feche seu jogo.",
   "FXMASTER.MigrationClientCompletedWithErrors": "Migrações de clientes para o FXMaster concluídas com erros. Para mais detalhes, por favor dê uma olhada no console (F12).",
-  "FXMASTER.MigrationClientCompletedSuccessfully": "Migrações de cliente para o FXMaster concluídas com sucesso."
+  "FXMASTER.MigrationClientCompletedSuccessfully": "Migrações de cliente para o FXMaster concluídas com sucesso.",
+  "FXMASTER.EffectControlsDropWarning": "Você deve estar na aba Controles de Efeito em uma cena para arrastar e soltar um efeito.",
+  "CONTROLS.ToolsActive": "Ferramentas Ativas"
 }
